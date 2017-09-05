@@ -1,3 +1,7 @@
+#
+# this just stops me uploading stuff on targets I've downloaded from elswhere;
+# links should all be in the documentation, eventually...
+#
 docs/obr
 docs/health
 docs/nrs
