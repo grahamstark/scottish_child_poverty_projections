@@ -1,0 +1,20 @@
+-- see: http://docs.adacore.com/gnatcoll-docs/traces.html
+-- + on next line: enable everything by default
++
+-- log to this file
+>ukds.log
+--
+--  core modules
+--
+DB_COMMONS=no
+CONNECTION_POOL=no
+--
+-- testsuite
+--
+UKDS_TEST=yes
+--
+-- io packages
+--
+-- 
+-- === CUSTOM LOGGING START ===
+-- === CUSTOM LOGGING END ===

@@ -1,0 +1,57 @@
+--
+-- Project file for Soton model
+--
+--
+with "florist.gpr";
+with "aws.gpr";
+with "aunit.gpr";
+with "gnatcoll_full.gpr";
+
+with "tb_2012.gpr";
+with "tb_uk_tests.gpr";
+
+-- with "queuing/queues.gpr";
+
+-- === CUSTOM PROJECTS END ===
+
+project ScotCP is
+
+   for Languages use ("Ada");
+   for Source_Dirs use ("src/**", "tests/", "database/src", "drivers" );
+   for Object_Dir use "bin/";
+   -- for Exec_Dir use "bin/";
+
+   for Main use ( 
+      "initial.adb" );
+   
+   IncludeOpt := "";
+   LibOpt     := "";
+
+   
+   package Compiler is
+      for Default_Switches ("ada") use ("-g", IncludeOPT, "-gnato", "-E", "-fstack-check" );
+   end Compiler;
+
+   package Binder is
+      for Default_Switches ("ada") use ("-static", "-E" );
+   end Binder;
+
+   package Linker is
+      -- for gnatmake 
+      for Linker_Options use ( "-lpq", "-lgnatcoll_postgres" );
+      
+      -- in GPRBuild, this is used by any project that *imports* this one
+      for Default_Switches ("ada") use ("-g", "-ftest-coverage" );
+      
+      -- equivalent for gprbuild
+      for Switches( "ada" ) use( "-lpq", "-lgnatcoll_postgres", "-g", "-ftest-coverage" );
+      
+   end Linker;
+
+   package Builder is
+      for Default_Switches ("ada")
+      use ("-g", "-gnatQ", IncludeOPT, "-x",  "-E" ); 
+      
+   end Builder;
+
+end Msc;
