@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-05 20:57:18.167513
+-- Created by ada_generator.py on 2017-09-06 17:20:41.354608
 -- 
 with Ukds;
 with DB_Commons;
@@ -96,7 +96,6 @@ package Ukds.Frs.Benunit_IO is
    function Retrieve_Child_Ukds_Frs_Pianon1415( a_benunit : Ukds.Frs.Benunit; connection : Database_Connection := null) return Ukds.Frs.Pianon1415;
    function Retrieve_Child_Ukds_Frs_Pianon1314( a_benunit : Ukds.Frs.Benunit; connection : Database_Connection := null) return Ukds.Frs.Pianon1314;
    function Retrieve_Associated_Ukds_Frs_Prscrptns( a_benunit : Ukds.Frs.Benunit; connection : Database_Connection := null ) return Ukds.Frs.Prscrptn_List;
-   function Retrieve_Child_Ukds_Frs_Frs1516( a_benunit : Ukds.Frs.Benunit; connection : Database_Connection := null) return Ukds.Frs.Frs1516;
    function Retrieve_Associated_Ukds_Frs_Chldcares( a_benunit : Ukds.Frs.Benunit; connection : Database_Connection := null ) return Ukds.Frs.Chldcare_List;
    function Retrieve_Associated_Ukds_Frs_Accouts( a_benunit : Ukds.Frs.Benunit; connection : Database_Connection := null ) return Ukds.Frs.Accouts_List;
    function Retrieve_Associated_Ukds_Frs_Oddjobs( a_benunit : Ukds.Frs.Benunit; connection : Database_Connection := null ) return Ukds.Frs.Oddjob_List;

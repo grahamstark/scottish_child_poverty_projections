@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-05 20:57:19.548868
+-- Created by ada_generator.py on 2017-09-06 17:20:42.387904
 -- 
 with Ukds;
 
@@ -110,8 +110,8 @@ package body Ukds.Frs.Pianon1314_IO is
            12 => ( Parameter_Integer, 0 ),   --  : oahcdec (Integer)
            13 => ( Parameter_Integer, 0 ),   --  : sexsp (Integer)
            14 => ( Parameter_Integer, 0 ),   --  : newfamb2 (Integer)
-           15 => ( Parameter_Integer, 0 ),   --  : pidefbhc (Integer)
-           16 => ( Parameter_Integer, 0 ),   --  : pidefahc (Integer)
+           15 => ( Parameter_Float, 0.0 ),   --  : pidefbhc (Amount)
+           16 => ( Parameter_Float, 0.0 ),   --  : pidefahc (Amount)
            17 => ( Parameter_Integer, 0 ),   --  : pigrosbu (Integer)
            18 => ( Parameter_Integer, 0 ),   --  : pinincbu (Integer)
            19 => ( Parameter_Integer, 0 ),   --  : pigoccbu (Integer)
@@ -131,26 +131,26 @@ package body Ukds.Frs.Pianon1314_IO is
            33 => ( Parameter_Integer, 0 ),   --  : rrpen (Integer)
            34 => ( Parameter_Integer, 0 ),   --  : newfambu2 (Integer)
            35 => ( Parameter_Integer, 0 ),   --  : dummy (Integer)
-           36 => ( Parameter_Integer, 0 ),   --  : coup_q1 (Integer)
-           37 => ( Parameter_Integer, 0 ),   --  : coup_q2 (Integer)
-           38 => ( Parameter_Integer, 0 ),   --  : coup_q3 (Integer)
-           39 => ( Parameter_Integer, 0 ),   --  : coup_q4 (Integer)
-           40 => ( Parameter_Integer, 0 ),   --  : coup_q5 (Integer)
-           41 => ( Parameter_Integer, 0 ),   --  : acou_q1 (Integer)
-           42 => ( Parameter_Integer, 0 ),   --  : acou_q2 (Integer)
-           43 => ( Parameter_Integer, 0 ),   --  : acou_q3 (Integer)
-           44 => ( Parameter_Integer, 0 ),   --  : acou_q4 (Integer)
-           45 => ( Parameter_Integer, 0 ),   --  : acou_q5 (Integer)
-           46 => ( Parameter_Integer, 0 ),   --  : sing_q1 (Integer)
-           47 => ( Parameter_Integer, 0 ),   --  : sing_q2 (Integer)
-           48 => ( Parameter_Integer, 0 ),   --  : sing_q3 (Integer)
-           49 => ( Parameter_Integer, 0 ),   --  : sing_q4 (Integer)
-           50 => ( Parameter_Integer, 0 ),   --  : sing_q5 (Integer)
-           51 => ( Parameter_Integer, 0 ),   --  : asin_q1 (Integer)
-           52 => ( Parameter_Integer, 0 ),   --  : asin_q2 (Integer)
-           53 => ( Parameter_Integer, 0 ),   --  : asin_q3 (Integer)
-           54 => ( Parameter_Integer, 0 ),   --  : asin_q4 (Integer)
-           55 => ( Parameter_Integer, 0 ),   --  : asin_q5 (Integer)
+           36 => ( Parameter_Float, 0.0 ),   --  : coup_q1 (Amount)
+           37 => ( Parameter_Float, 0.0 ),   --  : coup_q2 (Amount)
+           38 => ( Parameter_Float, 0.0 ),   --  : coup_q3 (Amount)
+           39 => ( Parameter_Float, 0.0 ),   --  : coup_q4 (Amount)
+           40 => ( Parameter_Float, 0.0 ),   --  : coup_q5 (Amount)
+           41 => ( Parameter_Float, 0.0 ),   --  : acou_q1 (Amount)
+           42 => ( Parameter_Float, 0.0 ),   --  : acou_q2 (Amount)
+           43 => ( Parameter_Float, 0.0 ),   --  : acou_q3 (Amount)
+           44 => ( Parameter_Float, 0.0 ),   --  : acou_q4 (Amount)
+           45 => ( Parameter_Float, 0.0 ),   --  : acou_q5 (Amount)
+           46 => ( Parameter_Float, 0.0 ),   --  : sing_q1 (Amount)
+           47 => ( Parameter_Float, 0.0 ),   --  : sing_q2 (Amount)
+           48 => ( Parameter_Float, 0.0 ),   --  : sing_q3 (Amount)
+           49 => ( Parameter_Float, 0.0 ),   --  : sing_q4 (Amount)
+           50 => ( Parameter_Float, 0.0 ),   --  : sing_q5 (Amount)
+           51 => ( Parameter_Float, 0.0 ),   --  : asin_q1 (Amount)
+           52 => ( Parameter_Float, 0.0 ),   --  : asin_q2 (Amount)
+           53 => ( Parameter_Float, 0.0 ),   --  : asin_q3 (Amount)
+           54 => ( Parameter_Float, 0.0 ),   --  : asin_q4 (Amount)
+           55 => ( Parameter_Float, 0.0 ),   --  : asin_q5 (Amount)
            56 => ( Parameter_Integer, 0 ),   --  : clust (Integer)
            57 => ( Parameter_Integer, 0 ),   --  : strat (Integer)
            58 => ( Parameter_Integer, 0 ),   --  : agehd80 (Integer)
@@ -159,7 +159,7 @@ package body Ukds.Frs.Pianon1314_IO is
            61 => ( Parameter_Integer, 0 ),   --  : edition (Integer)
            62 => ( Parameter_Integer, 0 ),   --  : year (Integer)
            63 => ( Parameter_Integer, 0 ),   --  : benunit (Integer)
-           64 => ( Parameter_Integer, 0 )   --  : sernum (Integer)
+           64 => ( Parameter_Bigint, 0 )   --  : sernum (Sernum_Value)
       ) else (
             1 => ( Parameter_Integer, 0 ),   --  : user_id (Integer)
             2 => ( Parameter_Integer, 0 ),   --  : edition (Integer)
@@ -179,8 +179,8 @@ package body Ukds.Frs.Pianon1314_IO is
            16 => ( Parameter_Integer, 0 ),   --  : oahcdec (Integer)
            17 => ( Parameter_Integer, 0 ),   --  : sexsp (Integer)
            18 => ( Parameter_Integer, 0 ),   --  : newfamb2 (Integer)
-           19 => ( Parameter_Integer, 0 ),   --  : pidefbhc (Integer)
-           20 => ( Parameter_Integer, 0 ),   --  : pidefahc (Integer)
+           19 => ( Parameter_Float, 0.0 ),   --  : pidefbhc (Amount)
+           20 => ( Parameter_Float, 0.0 ),   --  : pidefahc (Amount)
            21 => ( Parameter_Integer, 0 ),   --  : pigrosbu (Integer)
            22 => ( Parameter_Integer, 0 ),   --  : pinincbu (Integer)
            23 => ( Parameter_Integer, 0 ),   --  : pigoccbu (Integer)
@@ -200,31 +200,31 @@ package body Ukds.Frs.Pianon1314_IO is
            37 => ( Parameter_Integer, 0 ),   --  : rrpen (Integer)
            38 => ( Parameter_Integer, 0 ),   --  : newfambu2 (Integer)
            39 => ( Parameter_Integer, 0 ),   --  : dummy (Integer)
-           40 => ( Parameter_Integer, 0 ),   --  : coup_q1 (Integer)
-           41 => ( Parameter_Integer, 0 ),   --  : coup_q2 (Integer)
-           42 => ( Parameter_Integer, 0 ),   --  : coup_q3 (Integer)
-           43 => ( Parameter_Integer, 0 ),   --  : coup_q4 (Integer)
-           44 => ( Parameter_Integer, 0 ),   --  : coup_q5 (Integer)
-           45 => ( Parameter_Integer, 0 ),   --  : acou_q1 (Integer)
-           46 => ( Parameter_Integer, 0 ),   --  : acou_q2 (Integer)
-           47 => ( Parameter_Integer, 0 ),   --  : acou_q3 (Integer)
-           48 => ( Parameter_Integer, 0 ),   --  : acou_q4 (Integer)
-           49 => ( Parameter_Integer, 0 ),   --  : acou_q5 (Integer)
-           50 => ( Parameter_Integer, 0 ),   --  : sing_q1 (Integer)
-           51 => ( Parameter_Integer, 0 ),   --  : sing_q2 (Integer)
-           52 => ( Parameter_Integer, 0 ),   --  : sing_q3 (Integer)
-           53 => ( Parameter_Integer, 0 ),   --  : sing_q4 (Integer)
-           54 => ( Parameter_Integer, 0 ),   --  : sing_q5 (Integer)
-           55 => ( Parameter_Integer, 0 ),   --  : asin_q1 (Integer)
-           56 => ( Parameter_Integer, 0 ),   --  : asin_q2 (Integer)
-           57 => ( Parameter_Integer, 0 ),   --  : asin_q3 (Integer)
-           58 => ( Parameter_Integer, 0 ),   --  : asin_q4 (Integer)
-           59 => ( Parameter_Integer, 0 ),   --  : asin_q5 (Integer)
+           40 => ( Parameter_Float, 0.0 ),   --  : coup_q1 (Amount)
+           41 => ( Parameter_Float, 0.0 ),   --  : coup_q2 (Amount)
+           42 => ( Parameter_Float, 0.0 ),   --  : coup_q3 (Amount)
+           43 => ( Parameter_Float, 0.0 ),   --  : coup_q4 (Amount)
+           44 => ( Parameter_Float, 0.0 ),   --  : coup_q5 (Amount)
+           45 => ( Parameter_Float, 0.0 ),   --  : acou_q1 (Amount)
+           46 => ( Parameter_Float, 0.0 ),   --  : acou_q2 (Amount)
+           47 => ( Parameter_Float, 0.0 ),   --  : acou_q3 (Amount)
+           48 => ( Parameter_Float, 0.0 ),   --  : acou_q4 (Amount)
+           49 => ( Parameter_Float, 0.0 ),   --  : acou_q5 (Amount)
+           50 => ( Parameter_Float, 0.0 ),   --  : sing_q1 (Amount)
+           51 => ( Parameter_Float, 0.0 ),   --  : sing_q2 (Amount)
+           52 => ( Parameter_Float, 0.0 ),   --  : sing_q3 (Amount)
+           53 => ( Parameter_Float, 0.0 ),   --  : sing_q4 (Amount)
+           54 => ( Parameter_Float, 0.0 ),   --  : sing_q5 (Amount)
+           55 => ( Parameter_Float, 0.0 ),   --  : asin_q1 (Amount)
+           56 => ( Parameter_Float, 0.0 ),   --  : asin_q2 (Amount)
+           57 => ( Parameter_Float, 0.0 ),   --  : asin_q3 (Amount)
+           58 => ( Parameter_Float, 0.0 ),   --  : asin_q4 (Amount)
+           59 => ( Parameter_Float, 0.0 ),   --  : asin_q5 (Amount)
            60 => ( Parameter_Integer, 0 ),   --  : clust (Integer)
            61 => ( Parameter_Integer, 0 ),   --  : strat (Integer)
            62 => ( Parameter_Integer, 0 ),   --  : agehd80 (Integer)
            63 => ( Parameter_Integer, 0 ),   --  : agesp80 (Integer)
-           64 => ( Parameter_Integer, 0 )   --  : sernum (Integer)
+           64 => ( Parameter_Bigint, 0 )   --  : sernum (Sernum_Value)
       
       ));
    begin
@@ -250,7 +250,7 @@ package body Ukds.Frs.Pianon1314_IO is
             2 => ( Parameter_Integer, 0 ),   --  : edition (Integer)
             3 => ( Parameter_Integer, 0 ),   --  : year (Integer)
             4 => ( Parameter_Integer, 0 ),   --  : benunit (Integer)
-            5 => ( Parameter_Integer, 0 )   --  : sernum (Integer)
+            5 => ( Parameter_Bigint, 0 )   --  : sernum (Sernum_Value)
       );
    begin
       return params;
@@ -449,9 +449,9 @@ package body Ukds.Frs.Pianon1314_IO is
    -- 
    -- Next highest avaiable value of sernum - useful for saving  
    --
-   function Next_Free_sernum( connection : Database_Connection := null) return Integer is
+   function Next_Free_sernum( connection : Database_Connection := null) return Sernum_Value is
       cursor              : gse.Forward_Cursor;
-      ai                  : Integer;
+      ai                  : Sernum_Value;
       local_connection    : Database_Connection;
       is_local_connection : Boolean;
    begin
@@ -466,7 +466,7 @@ package body Ukds.Frs.Pianon1314_IO is
       cursor.Fetch( local_connection, Next_Free_sernum_ps );
       Check_Result( local_connection );
       if( gse.Has_Row( cursor ))then
-         ai := gse.Integer_Value( cursor, 0, 0 );
+         ai := Sernum_Value'Value( gse.Value( cursor, 0 ));
 
       end if;
       if( is_local_connection )then
@@ -494,7 +494,7 @@ package body Ukds.Frs.Pianon1314_IO is
    -- returns the single Ukds.Frs.Pianon1314 matching the primary key fields, or the Ukds.Frs.Null_Pianon1314 record
    -- if no such record exists
    --
-   function Retrieve_By_PK( user_id : Integer; edition : Integer; year : Integer; benunit : Integer; sernum : Integer; connection : Database_Connection := null ) return Ukds.Frs.Pianon1314 is
+   function Retrieve_By_PK( user_id : Integer; edition : Integer; year : Integer; benunit : Integer; sernum : Sernum_Value; connection : Database_Connection := null ) return Ukds.Frs.Pianon1314 is
       l : Ukds.Frs.Pianon1314_List;
       a_pianon1314 : Ukds.Frs.Pianon1314;
       c : d.Criteria;
@@ -521,7 +521,7 @@ package body Ukds.Frs.Pianon1314_IO is
         "select 1 from frs.pianon1314 where user_id = $1 and edition = $2 and year = $3 and benunit = $4 and sernum = $5", 
         On_Server => True );
         
-   function Exists( user_id : Integer; edition : Integer; year : Integer; benunit : Integer; sernum : Integer; connection : Database_Connection := null ) return Boolean  is
+   function Exists( user_id : Integer; edition : Integer; year : Integer; benunit : Integer; sernum : Sernum_Value; connection : Database_Connection := null ) return Boolean  is
       params : gse.SQL_Parameters := Get_Configured_Retrieve_Params;
       cursor : gse.Forward_Cursor;
       local_connection : Database_Connection;
@@ -539,7 +539,7 @@ package body Ukds.Frs.Pianon1314_IO is
       params( 2 ) := "+"( Integer'Pos( edition ));
       params( 3 ) := "+"( Integer'Pos( year ));
       params( 4 ) := "+"( Integer'Pos( benunit ));
-      params( 5 ) := "+"( Integer'Pos( sernum ));
+      params( 5 ) := As_Bigint( sernum );
       cursor.Fetch( local_connection, EXISTS_PS, params );
       Check_Result( local_connection );
       found := gse.Has_Row( cursor );
@@ -620,10 +620,10 @@ package body Ukds.Frs.Pianon1314_IO is
          a_pianon1314.newfamb2 := gse.Integer_Value( cursor, 17 );
       end if;
       if not gse.Is_Null( cursor, 18 )then
-         a_pianon1314.pidefbhc := gse.Integer_Value( cursor, 18 );
+         a_pianon1314.pidefbhc:= Amount'Value( gse.Value( cursor, 18 ));
       end if;
       if not gse.Is_Null( cursor, 19 )then
-         a_pianon1314.pidefahc := gse.Integer_Value( cursor, 19 );
+         a_pianon1314.pidefahc:= Amount'Value( gse.Value( cursor, 19 ));
       end if;
       if not gse.Is_Null( cursor, 20 )then
          a_pianon1314.pigrosbu := gse.Integer_Value( cursor, 20 );
@@ -683,64 +683,64 @@ package body Ukds.Frs.Pianon1314_IO is
          a_pianon1314.dummy := gse.Integer_Value( cursor, 38 );
       end if;
       if not gse.Is_Null( cursor, 39 )then
-         a_pianon1314.coup_q1 := gse.Integer_Value( cursor, 39 );
+         a_pianon1314.coup_q1:= Amount'Value( gse.Value( cursor, 39 ));
       end if;
       if not gse.Is_Null( cursor, 40 )then
-         a_pianon1314.coup_q2 := gse.Integer_Value( cursor, 40 );
+         a_pianon1314.coup_q2:= Amount'Value( gse.Value( cursor, 40 ));
       end if;
       if not gse.Is_Null( cursor, 41 )then
-         a_pianon1314.coup_q3 := gse.Integer_Value( cursor, 41 );
+         a_pianon1314.coup_q3:= Amount'Value( gse.Value( cursor, 41 ));
       end if;
       if not gse.Is_Null( cursor, 42 )then
-         a_pianon1314.coup_q4 := gse.Integer_Value( cursor, 42 );
+         a_pianon1314.coup_q4:= Amount'Value( gse.Value( cursor, 42 ));
       end if;
       if not gse.Is_Null( cursor, 43 )then
-         a_pianon1314.coup_q5 := gse.Integer_Value( cursor, 43 );
+         a_pianon1314.coup_q5:= Amount'Value( gse.Value( cursor, 43 ));
       end if;
       if not gse.Is_Null( cursor, 44 )then
-         a_pianon1314.acou_q1 := gse.Integer_Value( cursor, 44 );
+         a_pianon1314.acou_q1:= Amount'Value( gse.Value( cursor, 44 ));
       end if;
       if not gse.Is_Null( cursor, 45 )then
-         a_pianon1314.acou_q2 := gse.Integer_Value( cursor, 45 );
+         a_pianon1314.acou_q2:= Amount'Value( gse.Value( cursor, 45 ));
       end if;
       if not gse.Is_Null( cursor, 46 )then
-         a_pianon1314.acou_q3 := gse.Integer_Value( cursor, 46 );
+         a_pianon1314.acou_q3:= Amount'Value( gse.Value( cursor, 46 ));
       end if;
       if not gse.Is_Null( cursor, 47 )then
-         a_pianon1314.acou_q4 := gse.Integer_Value( cursor, 47 );
+         a_pianon1314.acou_q4:= Amount'Value( gse.Value( cursor, 47 ));
       end if;
       if not gse.Is_Null( cursor, 48 )then
-         a_pianon1314.acou_q5 := gse.Integer_Value( cursor, 48 );
+         a_pianon1314.acou_q5:= Amount'Value( gse.Value( cursor, 48 ));
       end if;
       if not gse.Is_Null( cursor, 49 )then
-         a_pianon1314.sing_q1 := gse.Integer_Value( cursor, 49 );
+         a_pianon1314.sing_q1:= Amount'Value( gse.Value( cursor, 49 ));
       end if;
       if not gse.Is_Null( cursor, 50 )then
-         a_pianon1314.sing_q2 := gse.Integer_Value( cursor, 50 );
+         a_pianon1314.sing_q2:= Amount'Value( gse.Value( cursor, 50 ));
       end if;
       if not gse.Is_Null( cursor, 51 )then
-         a_pianon1314.sing_q3 := gse.Integer_Value( cursor, 51 );
+         a_pianon1314.sing_q3:= Amount'Value( gse.Value( cursor, 51 ));
       end if;
       if not gse.Is_Null( cursor, 52 )then
-         a_pianon1314.sing_q4 := gse.Integer_Value( cursor, 52 );
+         a_pianon1314.sing_q4:= Amount'Value( gse.Value( cursor, 52 ));
       end if;
       if not gse.Is_Null( cursor, 53 )then
-         a_pianon1314.sing_q5 := gse.Integer_Value( cursor, 53 );
+         a_pianon1314.sing_q5:= Amount'Value( gse.Value( cursor, 53 ));
       end if;
       if not gse.Is_Null( cursor, 54 )then
-         a_pianon1314.asin_q1 := gse.Integer_Value( cursor, 54 );
+         a_pianon1314.asin_q1:= Amount'Value( gse.Value( cursor, 54 ));
       end if;
       if not gse.Is_Null( cursor, 55 )then
-         a_pianon1314.asin_q2 := gse.Integer_Value( cursor, 55 );
+         a_pianon1314.asin_q2:= Amount'Value( gse.Value( cursor, 55 ));
       end if;
       if not gse.Is_Null( cursor, 56 )then
-         a_pianon1314.asin_q3 := gse.Integer_Value( cursor, 56 );
+         a_pianon1314.asin_q3:= Amount'Value( gse.Value( cursor, 56 ));
       end if;
       if not gse.Is_Null( cursor, 57 )then
-         a_pianon1314.asin_q4 := gse.Integer_Value( cursor, 57 );
+         a_pianon1314.asin_q4:= Amount'Value( gse.Value( cursor, 57 ));
       end if;
       if not gse.Is_Null( cursor, 58 )then
-         a_pianon1314.asin_q5 := gse.Integer_Value( cursor, 58 );
+         a_pianon1314.asin_q5:= Amount'Value( gse.Value( cursor, 58 ));
       end if;
       if not gse.Is_Null( cursor, 59 )then
          a_pianon1314.clust := gse.Integer_Value( cursor, 59 );
@@ -755,7 +755,7 @@ package body Ukds.Frs.Pianon1314_IO is
          a_pianon1314.agesp80 := gse.Integer_Value( cursor, 62 );
       end if;
       if not gse.Is_Null( cursor, 63 )then
-         a_pianon1314.sernum := gse.Integer_Value( cursor, 63 );
+         a_pianon1314.sernum := Sernum_Value'Value( gse.Value( cursor, 63 ));
       end if;
       return a_pianon1314;
    end Map_From_Cursor;
@@ -827,8 +827,8 @@ package body Ukds.Frs.Pianon1314_IO is
       params( 12 ) := "+"( Integer'Pos( a_pianon1314.oahcdec ));
       params( 13 ) := "+"( Integer'Pos( a_pianon1314.sexsp ));
       params( 14 ) := "+"( Integer'Pos( a_pianon1314.newfamb2 ));
-      params( 15 ) := "+"( Integer'Pos( a_pianon1314.pidefbhc ));
-      params( 16 ) := "+"( Integer'Pos( a_pianon1314.pidefahc ));
+      params( 15 ) := "+"( Float( a_pianon1314.pidefbhc ));
+      params( 16 ) := "+"( Float( a_pianon1314.pidefahc ));
       params( 17 ) := "+"( Integer'Pos( a_pianon1314.pigrosbu ));
       params( 18 ) := "+"( Integer'Pos( a_pianon1314.pinincbu ));
       params( 19 ) := "+"( Integer'Pos( a_pianon1314.pigoccbu ));
@@ -848,26 +848,26 @@ package body Ukds.Frs.Pianon1314_IO is
       params( 33 ) := "+"( Integer'Pos( a_pianon1314.rrpen ));
       params( 34 ) := "+"( Integer'Pos( a_pianon1314.newfambu2 ));
       params( 35 ) := "+"( Integer'Pos( a_pianon1314.dummy ));
-      params( 36 ) := "+"( Integer'Pos( a_pianon1314.coup_q1 ));
-      params( 37 ) := "+"( Integer'Pos( a_pianon1314.coup_q2 ));
-      params( 38 ) := "+"( Integer'Pos( a_pianon1314.coup_q3 ));
-      params( 39 ) := "+"( Integer'Pos( a_pianon1314.coup_q4 ));
-      params( 40 ) := "+"( Integer'Pos( a_pianon1314.coup_q5 ));
-      params( 41 ) := "+"( Integer'Pos( a_pianon1314.acou_q1 ));
-      params( 42 ) := "+"( Integer'Pos( a_pianon1314.acou_q2 ));
-      params( 43 ) := "+"( Integer'Pos( a_pianon1314.acou_q3 ));
-      params( 44 ) := "+"( Integer'Pos( a_pianon1314.acou_q4 ));
-      params( 45 ) := "+"( Integer'Pos( a_pianon1314.acou_q5 ));
-      params( 46 ) := "+"( Integer'Pos( a_pianon1314.sing_q1 ));
-      params( 47 ) := "+"( Integer'Pos( a_pianon1314.sing_q2 ));
-      params( 48 ) := "+"( Integer'Pos( a_pianon1314.sing_q3 ));
-      params( 49 ) := "+"( Integer'Pos( a_pianon1314.sing_q4 ));
-      params( 50 ) := "+"( Integer'Pos( a_pianon1314.sing_q5 ));
-      params( 51 ) := "+"( Integer'Pos( a_pianon1314.asin_q1 ));
-      params( 52 ) := "+"( Integer'Pos( a_pianon1314.asin_q2 ));
-      params( 53 ) := "+"( Integer'Pos( a_pianon1314.asin_q3 ));
-      params( 54 ) := "+"( Integer'Pos( a_pianon1314.asin_q4 ));
-      params( 55 ) := "+"( Integer'Pos( a_pianon1314.asin_q5 ));
+      params( 36 ) := "+"( Float( a_pianon1314.coup_q1 ));
+      params( 37 ) := "+"( Float( a_pianon1314.coup_q2 ));
+      params( 38 ) := "+"( Float( a_pianon1314.coup_q3 ));
+      params( 39 ) := "+"( Float( a_pianon1314.coup_q4 ));
+      params( 40 ) := "+"( Float( a_pianon1314.coup_q5 ));
+      params( 41 ) := "+"( Float( a_pianon1314.acou_q1 ));
+      params( 42 ) := "+"( Float( a_pianon1314.acou_q2 ));
+      params( 43 ) := "+"( Float( a_pianon1314.acou_q3 ));
+      params( 44 ) := "+"( Float( a_pianon1314.acou_q4 ));
+      params( 45 ) := "+"( Float( a_pianon1314.acou_q5 ));
+      params( 46 ) := "+"( Float( a_pianon1314.sing_q1 ));
+      params( 47 ) := "+"( Float( a_pianon1314.sing_q2 ));
+      params( 48 ) := "+"( Float( a_pianon1314.sing_q3 ));
+      params( 49 ) := "+"( Float( a_pianon1314.sing_q4 ));
+      params( 50 ) := "+"( Float( a_pianon1314.sing_q5 ));
+      params( 51 ) := "+"( Float( a_pianon1314.asin_q1 ));
+      params( 52 ) := "+"( Float( a_pianon1314.asin_q2 ));
+      params( 53 ) := "+"( Float( a_pianon1314.asin_q3 ));
+      params( 54 ) := "+"( Float( a_pianon1314.asin_q4 ));
+      params( 55 ) := "+"( Float( a_pianon1314.asin_q5 ));
       params( 56 ) := "+"( Integer'Pos( a_pianon1314.clust ));
       params( 57 ) := "+"( Integer'Pos( a_pianon1314.strat ));
       params( 58 ) := "+"( Integer'Pos( a_pianon1314.agehd80 ));
@@ -876,7 +876,7 @@ package body Ukds.Frs.Pianon1314_IO is
       params( 61 ) := "+"( Integer'Pos( a_pianon1314.edition ));
       params( 62 ) := "+"( Integer'Pos( a_pianon1314.year ));
       params( 63 ) := "+"( Integer'Pos( a_pianon1314.benunit ));
-      params( 64 ) := "+"( Integer'Pos( a_pianon1314.sernum ));
+      params( 64 ) := As_Bigint( a_pianon1314.sernum );
       
       gse.Execute( local_connection, UPDATE_PS, params );
       Check_Result( local_connection );
@@ -929,8 +929,8 @@ package body Ukds.Frs.Pianon1314_IO is
       params( 16 ) := "+"( Integer'Pos( a_pianon1314.oahcdec ));
       params( 17 ) := "+"( Integer'Pos( a_pianon1314.sexsp ));
       params( 18 ) := "+"( Integer'Pos( a_pianon1314.newfamb2 ));
-      params( 19 ) := "+"( Integer'Pos( a_pianon1314.pidefbhc ));
-      params( 20 ) := "+"( Integer'Pos( a_pianon1314.pidefahc ));
+      params( 19 ) := "+"( Float( a_pianon1314.pidefbhc ));
+      params( 20 ) := "+"( Float( a_pianon1314.pidefahc ));
       params( 21 ) := "+"( Integer'Pos( a_pianon1314.pigrosbu ));
       params( 22 ) := "+"( Integer'Pos( a_pianon1314.pinincbu ));
       params( 23 ) := "+"( Integer'Pos( a_pianon1314.pigoccbu ));
@@ -950,31 +950,31 @@ package body Ukds.Frs.Pianon1314_IO is
       params( 37 ) := "+"( Integer'Pos( a_pianon1314.rrpen ));
       params( 38 ) := "+"( Integer'Pos( a_pianon1314.newfambu2 ));
       params( 39 ) := "+"( Integer'Pos( a_pianon1314.dummy ));
-      params( 40 ) := "+"( Integer'Pos( a_pianon1314.coup_q1 ));
-      params( 41 ) := "+"( Integer'Pos( a_pianon1314.coup_q2 ));
-      params( 42 ) := "+"( Integer'Pos( a_pianon1314.coup_q3 ));
-      params( 43 ) := "+"( Integer'Pos( a_pianon1314.coup_q4 ));
-      params( 44 ) := "+"( Integer'Pos( a_pianon1314.coup_q5 ));
-      params( 45 ) := "+"( Integer'Pos( a_pianon1314.acou_q1 ));
-      params( 46 ) := "+"( Integer'Pos( a_pianon1314.acou_q2 ));
-      params( 47 ) := "+"( Integer'Pos( a_pianon1314.acou_q3 ));
-      params( 48 ) := "+"( Integer'Pos( a_pianon1314.acou_q4 ));
-      params( 49 ) := "+"( Integer'Pos( a_pianon1314.acou_q5 ));
-      params( 50 ) := "+"( Integer'Pos( a_pianon1314.sing_q1 ));
-      params( 51 ) := "+"( Integer'Pos( a_pianon1314.sing_q2 ));
-      params( 52 ) := "+"( Integer'Pos( a_pianon1314.sing_q3 ));
-      params( 53 ) := "+"( Integer'Pos( a_pianon1314.sing_q4 ));
-      params( 54 ) := "+"( Integer'Pos( a_pianon1314.sing_q5 ));
-      params( 55 ) := "+"( Integer'Pos( a_pianon1314.asin_q1 ));
-      params( 56 ) := "+"( Integer'Pos( a_pianon1314.asin_q2 ));
-      params( 57 ) := "+"( Integer'Pos( a_pianon1314.asin_q3 ));
-      params( 58 ) := "+"( Integer'Pos( a_pianon1314.asin_q4 ));
-      params( 59 ) := "+"( Integer'Pos( a_pianon1314.asin_q5 ));
+      params( 40 ) := "+"( Float( a_pianon1314.coup_q1 ));
+      params( 41 ) := "+"( Float( a_pianon1314.coup_q2 ));
+      params( 42 ) := "+"( Float( a_pianon1314.coup_q3 ));
+      params( 43 ) := "+"( Float( a_pianon1314.coup_q4 ));
+      params( 44 ) := "+"( Float( a_pianon1314.coup_q5 ));
+      params( 45 ) := "+"( Float( a_pianon1314.acou_q1 ));
+      params( 46 ) := "+"( Float( a_pianon1314.acou_q2 ));
+      params( 47 ) := "+"( Float( a_pianon1314.acou_q3 ));
+      params( 48 ) := "+"( Float( a_pianon1314.acou_q4 ));
+      params( 49 ) := "+"( Float( a_pianon1314.acou_q5 ));
+      params( 50 ) := "+"( Float( a_pianon1314.sing_q1 ));
+      params( 51 ) := "+"( Float( a_pianon1314.sing_q2 ));
+      params( 52 ) := "+"( Float( a_pianon1314.sing_q3 ));
+      params( 53 ) := "+"( Float( a_pianon1314.sing_q4 ));
+      params( 54 ) := "+"( Float( a_pianon1314.sing_q5 ));
+      params( 55 ) := "+"( Float( a_pianon1314.asin_q1 ));
+      params( 56 ) := "+"( Float( a_pianon1314.asin_q2 ));
+      params( 57 ) := "+"( Float( a_pianon1314.asin_q3 ));
+      params( 58 ) := "+"( Float( a_pianon1314.asin_q4 ));
+      params( 59 ) := "+"( Float( a_pianon1314.asin_q5 ));
       params( 60 ) := "+"( Integer'Pos( a_pianon1314.clust ));
       params( 61 ) := "+"( Integer'Pos( a_pianon1314.strat ));
       params( 62 ) := "+"( Integer'Pos( a_pianon1314.agehd80 ));
       params( 63 ) := "+"( Integer'Pos( a_pianon1314.agesp80 ));
-      params( 64 ) := "+"( Integer'Pos( a_pianon1314.sernum ));
+      params( 64 ) := As_Bigint( a_pianon1314.sernum );
       gse.Execute( local_connection, SAVE_PS, params );  
       Check_Result( local_connection );
       if( is_local_connection )then
@@ -1166,15 +1166,15 @@ package body Ukds.Frs.Pianon1314_IO is
    end Add_newfamb2;
 
 
-   procedure Add_pidefbhc( c : in out d.Criteria; pidefbhc : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
-   elem : d.Criterion := d.Make_Criterion_Element( "pidefbhc", op, join, pidefbhc );
+   procedure Add_pidefbhc( c : in out d.Criteria; pidefbhc : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "pidefbhc", op, join, Long_Float( pidefbhc ) );
    begin
       d.add_to_criteria( c, elem );
    end Add_pidefbhc;
 
 
-   procedure Add_pidefahc( c : in out d.Criteria; pidefahc : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
-   elem : d.Criterion := d.Make_Criterion_Element( "pidefahc", op, join, pidefahc );
+   procedure Add_pidefahc( c : in out d.Criteria; pidefahc : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "pidefahc", op, join, Long_Float( pidefahc ) );
    begin
       d.add_to_criteria( c, elem );
    end Add_pidefahc;
@@ -1313,141 +1313,141 @@ package body Ukds.Frs.Pianon1314_IO is
    end Add_dummy;
 
 
-   procedure Add_coup_q1( c : in out d.Criteria; coup_q1 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
-   elem : d.Criterion := d.Make_Criterion_Element( "coup_q1", op, join, coup_q1 );
+   procedure Add_coup_q1( c : in out d.Criteria; coup_q1 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "coup_q1", op, join, Long_Float( coup_q1 ) );
    begin
       d.add_to_criteria( c, elem );
    end Add_coup_q1;
 
 
-   procedure Add_coup_q2( c : in out d.Criteria; coup_q2 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
-   elem : d.Criterion := d.Make_Criterion_Element( "coup_q2", op, join, coup_q2 );
+   procedure Add_coup_q2( c : in out d.Criteria; coup_q2 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "coup_q2", op, join, Long_Float( coup_q2 ) );
    begin
       d.add_to_criteria( c, elem );
    end Add_coup_q2;
 
 
-   procedure Add_coup_q3( c : in out d.Criteria; coup_q3 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
-   elem : d.Criterion := d.Make_Criterion_Element( "coup_q3", op, join, coup_q3 );
+   procedure Add_coup_q3( c : in out d.Criteria; coup_q3 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "coup_q3", op, join, Long_Float( coup_q3 ) );
    begin
       d.add_to_criteria( c, elem );
    end Add_coup_q3;
 
 
-   procedure Add_coup_q4( c : in out d.Criteria; coup_q4 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
-   elem : d.Criterion := d.Make_Criterion_Element( "coup_q4", op, join, coup_q4 );
+   procedure Add_coup_q4( c : in out d.Criteria; coup_q4 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "coup_q4", op, join, Long_Float( coup_q4 ) );
    begin
       d.add_to_criteria( c, elem );
    end Add_coup_q4;
 
 
-   procedure Add_coup_q5( c : in out d.Criteria; coup_q5 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
-   elem : d.Criterion := d.Make_Criterion_Element( "coup_q5", op, join, coup_q5 );
+   procedure Add_coup_q5( c : in out d.Criteria; coup_q5 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "coup_q5", op, join, Long_Float( coup_q5 ) );
    begin
       d.add_to_criteria( c, elem );
    end Add_coup_q5;
 
 
-   procedure Add_acou_q1( c : in out d.Criteria; acou_q1 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
-   elem : d.Criterion := d.Make_Criterion_Element( "acou_q1", op, join, acou_q1 );
+   procedure Add_acou_q1( c : in out d.Criteria; acou_q1 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "acou_q1", op, join, Long_Float( acou_q1 ) );
    begin
       d.add_to_criteria( c, elem );
    end Add_acou_q1;
 
 
-   procedure Add_acou_q2( c : in out d.Criteria; acou_q2 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
-   elem : d.Criterion := d.Make_Criterion_Element( "acou_q2", op, join, acou_q2 );
+   procedure Add_acou_q2( c : in out d.Criteria; acou_q2 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "acou_q2", op, join, Long_Float( acou_q2 ) );
    begin
       d.add_to_criteria( c, elem );
    end Add_acou_q2;
 
 
-   procedure Add_acou_q3( c : in out d.Criteria; acou_q3 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
-   elem : d.Criterion := d.Make_Criterion_Element( "acou_q3", op, join, acou_q3 );
+   procedure Add_acou_q3( c : in out d.Criteria; acou_q3 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "acou_q3", op, join, Long_Float( acou_q3 ) );
    begin
       d.add_to_criteria( c, elem );
    end Add_acou_q3;
 
 
-   procedure Add_acou_q4( c : in out d.Criteria; acou_q4 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
-   elem : d.Criterion := d.Make_Criterion_Element( "acou_q4", op, join, acou_q4 );
+   procedure Add_acou_q4( c : in out d.Criteria; acou_q4 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "acou_q4", op, join, Long_Float( acou_q4 ) );
    begin
       d.add_to_criteria( c, elem );
    end Add_acou_q4;
 
 
-   procedure Add_acou_q5( c : in out d.Criteria; acou_q5 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
-   elem : d.Criterion := d.Make_Criterion_Element( "acou_q5", op, join, acou_q5 );
+   procedure Add_acou_q5( c : in out d.Criteria; acou_q5 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "acou_q5", op, join, Long_Float( acou_q5 ) );
    begin
       d.add_to_criteria( c, elem );
    end Add_acou_q5;
 
 
-   procedure Add_sing_q1( c : in out d.Criteria; sing_q1 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
-   elem : d.Criterion := d.Make_Criterion_Element( "sing_q1", op, join, sing_q1 );
+   procedure Add_sing_q1( c : in out d.Criteria; sing_q1 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "sing_q1", op, join, Long_Float( sing_q1 ) );
    begin
       d.add_to_criteria( c, elem );
    end Add_sing_q1;
 
 
-   procedure Add_sing_q2( c : in out d.Criteria; sing_q2 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
-   elem : d.Criterion := d.Make_Criterion_Element( "sing_q2", op, join, sing_q2 );
+   procedure Add_sing_q2( c : in out d.Criteria; sing_q2 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "sing_q2", op, join, Long_Float( sing_q2 ) );
    begin
       d.add_to_criteria( c, elem );
    end Add_sing_q2;
 
 
-   procedure Add_sing_q3( c : in out d.Criteria; sing_q3 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
-   elem : d.Criterion := d.Make_Criterion_Element( "sing_q3", op, join, sing_q3 );
+   procedure Add_sing_q3( c : in out d.Criteria; sing_q3 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "sing_q3", op, join, Long_Float( sing_q3 ) );
    begin
       d.add_to_criteria( c, elem );
    end Add_sing_q3;
 
 
-   procedure Add_sing_q4( c : in out d.Criteria; sing_q4 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
-   elem : d.Criterion := d.Make_Criterion_Element( "sing_q4", op, join, sing_q4 );
+   procedure Add_sing_q4( c : in out d.Criteria; sing_q4 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "sing_q4", op, join, Long_Float( sing_q4 ) );
    begin
       d.add_to_criteria( c, elem );
    end Add_sing_q4;
 
 
-   procedure Add_sing_q5( c : in out d.Criteria; sing_q5 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
-   elem : d.Criterion := d.Make_Criterion_Element( "sing_q5", op, join, sing_q5 );
+   procedure Add_sing_q5( c : in out d.Criteria; sing_q5 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "sing_q5", op, join, Long_Float( sing_q5 ) );
    begin
       d.add_to_criteria( c, elem );
    end Add_sing_q5;
 
 
-   procedure Add_asin_q1( c : in out d.Criteria; asin_q1 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
-   elem : d.Criterion := d.Make_Criterion_Element( "asin_q1", op, join, asin_q1 );
+   procedure Add_asin_q1( c : in out d.Criteria; asin_q1 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "asin_q1", op, join, Long_Float( asin_q1 ) );
    begin
       d.add_to_criteria( c, elem );
    end Add_asin_q1;
 
 
-   procedure Add_asin_q2( c : in out d.Criteria; asin_q2 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
-   elem : d.Criterion := d.Make_Criterion_Element( "asin_q2", op, join, asin_q2 );
+   procedure Add_asin_q2( c : in out d.Criteria; asin_q2 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "asin_q2", op, join, Long_Float( asin_q2 ) );
    begin
       d.add_to_criteria( c, elem );
    end Add_asin_q2;
 
 
-   procedure Add_asin_q3( c : in out d.Criteria; asin_q3 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
-   elem : d.Criterion := d.Make_Criterion_Element( "asin_q3", op, join, asin_q3 );
+   procedure Add_asin_q3( c : in out d.Criteria; asin_q3 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "asin_q3", op, join, Long_Float( asin_q3 ) );
    begin
       d.add_to_criteria( c, elem );
    end Add_asin_q3;
 
 
-   procedure Add_asin_q4( c : in out d.Criteria; asin_q4 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
-   elem : d.Criterion := d.Make_Criterion_Element( "asin_q4", op, join, asin_q4 );
+   procedure Add_asin_q4( c : in out d.Criteria; asin_q4 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "asin_q4", op, join, Long_Float( asin_q4 ) );
    begin
       d.add_to_criteria( c, elem );
    end Add_asin_q4;
 
 
-   procedure Add_asin_q5( c : in out d.Criteria; asin_q5 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
-   elem : d.Criterion := d.Make_Criterion_Element( "asin_q5", op, join, asin_q5 );
+   procedure Add_asin_q5( c : in out d.Criteria; asin_q5 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "asin_q5", op, join, Long_Float( asin_q5 ) );
    begin
       d.add_to_criteria( c, elem );
    end Add_asin_q5;
@@ -1481,8 +1481,8 @@ package body Ukds.Frs.Pianon1314_IO is
    end Add_agesp80;
 
 
-   procedure Add_sernum( c : in out d.Criteria; sernum : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
-   elem : d.Criterion := d.Make_Criterion_Element( "sernum", op, join, sernum );
+   procedure Add_sernum( c : in out d.Criteria; sernum : Sernum_Value; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "sernum", op, join, Big_Int( sernum ) );
    begin
       d.add_to_criteria( c, elem );
    end Add_sernum;

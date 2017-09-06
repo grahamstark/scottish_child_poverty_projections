@@ -1,7 +1,7 @@
 -- Sample project file; you'll need to modify this heavily. Should ultimately
 -- live in the root dir of the project
 --
--- Created by ada_generator.py on 2017-09-05 20:57:19.673850
+-- Created by ada_generator.py on 2017-09-06 17:20:42.602951
 -- 
 with "aunit";
 with "gnatcoll";

@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-05 20:57:19.455755
+-- Created by ada_generator.py on 2017-09-06 17:20:42.119560
 -- 
 with Ukds;
 
@@ -98,12 +98,12 @@ package body Ukds.Frs.Nimigra_IO is
            10 => ( Parameter_Integer, 0 ),   --  : user_id (Integer)
            11 => ( Parameter_Integer, 0 ),   --  : edition (Integer)
            12 => ( Parameter_Integer, 0 ),   --  : year (Integer)
-           13 => ( Parameter_Integer, 0 )   --  : sernum (Integer)
+           13 => ( Parameter_Bigint, 0 )   --  : sernum (Sernum_Value)
       ) else (
             1 => ( Parameter_Integer, 0 ),   --  : user_id (Integer)
             2 => ( Parameter_Integer, 0 ),   --  : edition (Integer)
             3 => ( Parameter_Integer, 0 ),   --  : year (Integer)
-            4 => ( Parameter_Integer, 0 ),   --  : sernum (Integer)
+            4 => ( Parameter_Bigint, 0 ),   --  : sernum (Sernum_Value)
             5 => ( Parameter_Integer, 0 ),   --  : miper (Integer)
             6 => ( Parameter_Integer, 0 ),   --  : issue (Integer)
             7 => ( Parameter_Integer, 0 ),   --  : miage (Integer)
@@ -137,7 +137,7 @@ package body Ukds.Frs.Nimigra_IO is
             1 => ( Parameter_Integer, 0 ),   --  : user_id (Integer)
             2 => ( Parameter_Integer, 0 ),   --  : edition (Integer)
             3 => ( Parameter_Integer, 0 ),   --  : year (Integer)
-            4 => ( Parameter_Integer, 0 )   --  : sernum (Integer)
+            4 => ( Parameter_Bigint, 0 )   --  : sernum (Sernum_Value)
       );
    begin
       return params;
@@ -302,9 +302,9 @@ package body Ukds.Frs.Nimigra_IO is
    -- 
    -- Next highest avaiable value of sernum - useful for saving  
    --
-   function Next_Free_sernum( connection : Database_Connection := null) return Integer is
+   function Next_Free_sernum( connection : Database_Connection := null) return Sernum_Value is
       cursor              : gse.Forward_Cursor;
-      ai                  : Integer;
+      ai                  : Sernum_Value;
       local_connection    : Database_Connection;
       is_local_connection : Boolean;
    begin
@@ -319,7 +319,7 @@ package body Ukds.Frs.Nimigra_IO is
       cursor.Fetch( local_connection, Next_Free_sernum_ps );
       Check_Result( local_connection );
       if( gse.Has_Row( cursor ))then
-         ai := gse.Integer_Value( cursor, 0, 0 );
+         ai := Sernum_Value'Value( gse.Value( cursor, 0 ));
 
       end if;
       if( is_local_connection )then
@@ -347,7 +347,7 @@ package body Ukds.Frs.Nimigra_IO is
    -- returns the single Ukds.Frs.Nimigra matching the primary key fields, or the Ukds.Frs.Null_Nimigra record
    -- if no such record exists
    --
-   function Retrieve_By_PK( user_id : Integer; edition : Integer; year : Integer; sernum : Integer; connection : Database_Connection := null ) return Ukds.Frs.Nimigra is
+   function Retrieve_By_PK( user_id : Integer; edition : Integer; year : Integer; sernum : Sernum_Value; connection : Database_Connection := null ) return Ukds.Frs.Nimigra is
       l : Ukds.Frs.Nimigra_List;
       a_nimigra : Ukds.Frs.Nimigra;
       c : d.Criteria;
@@ -373,7 +373,7 @@ package body Ukds.Frs.Nimigra_IO is
         "select 1 from frs.nimigra where user_id = $1 and edition = $2 and year = $3 and sernum = $4", 
         On_Server => True );
         
-   function Exists( user_id : Integer; edition : Integer; year : Integer; sernum : Integer; connection : Database_Connection := null ) return Boolean  is
+   function Exists( user_id : Integer; edition : Integer; year : Integer; sernum : Sernum_Value; connection : Database_Connection := null ) return Boolean  is
       params : gse.SQL_Parameters := Get_Configured_Retrieve_Params;
       cursor : gse.Forward_Cursor;
       local_connection : Database_Connection;
@@ -390,7 +390,7 @@ package body Ukds.Frs.Nimigra_IO is
       params( 1 ) := "+"( Integer'Pos( user_id ));
       params( 2 ) := "+"( Integer'Pos( edition ));
       params( 3 ) := "+"( Integer'Pos( year ));
-      params( 4 ) := "+"( Integer'Pos( sernum ));
+      params( 4 ) := As_Bigint( sernum );
       cursor.Fetch( local_connection, EXISTS_PS, params );
       Check_Result( local_connection );
       found := gse.Has_Row( cursor );
@@ -426,7 +426,7 @@ package body Ukds.Frs.Nimigra_IO is
          a_nimigra.year := gse.Integer_Value( cursor, 2 );
       end if;
       if not gse.Is_Null( cursor, 3 )then
-         a_nimigra.sernum := gse.Integer_Value( cursor, 3 );
+         a_nimigra.sernum := Sernum_Value'Value( gse.Value( cursor, 3 ));
       end if;
       if not gse.Is_Null( cursor, 4 )then
          a_nimigra.miper := gse.Integer_Value( cursor, 4 );
@@ -523,7 +523,7 @@ package body Ukds.Frs.Nimigra_IO is
       params( 10 ) := "+"( Integer'Pos( a_nimigra.user_id ));
       params( 11 ) := "+"( Integer'Pos( a_nimigra.edition ));
       params( 12 ) := "+"( Integer'Pos( a_nimigra.year ));
-      params( 13 ) := "+"( Integer'Pos( a_nimigra.sernum ));
+      params( 13 ) := As_Bigint( a_nimigra.sernum );
       
       gse.Execute( local_connection, UPDATE_PS, params );
       Check_Result( local_connection );
@@ -561,7 +561,7 @@ package body Ukds.Frs.Nimigra_IO is
       params( 1 ) := "+"( Integer'Pos( a_nimigra.user_id ));
       params( 2 ) := "+"( Integer'Pos( a_nimigra.edition ));
       params( 3 ) := "+"( Integer'Pos( a_nimigra.year ));
-      params( 4 ) := "+"( Integer'Pos( a_nimigra.sernum ));
+      params( 4 ) := As_Bigint( a_nimigra.sernum );
       params( 5 ) := "+"( Integer'Pos( a_nimigra.miper ));
       params( 6 ) := "+"( Integer'Pos( a_nimigra.issue ));
       params( 7 ) := "+"( Integer'Pos( a_nimigra.miage ));
@@ -656,8 +656,8 @@ package body Ukds.Frs.Nimigra_IO is
    end Add_year;
 
 
-   procedure Add_sernum( c : in out d.Criteria; sernum : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
-   elem : d.Criterion := d.Make_Criterion_Element( "sernum", op, join, sernum );
+   procedure Add_sernum( c : in out d.Criteria; sernum : Sernum_Value; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "sernum", op, join, Big_Int( sernum ) );
    begin
       d.add_to_criteria( c, elem );
    end Add_sernum;

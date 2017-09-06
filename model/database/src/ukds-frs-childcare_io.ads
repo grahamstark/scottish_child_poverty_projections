@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-05 20:57:18.495726
+-- Created by ada_generator.py on 2017-09-06 17:20:41.900766
 -- 
 with Ukds;
 with DB_Commons;
@@ -39,7 +39,7 @@ package Ukds.Frs.Childcare_IO is
    function Next_Free_user_id( connection : Database_Connection := null) return Integer;
    function Next_Free_edition( connection : Database_Connection := null) return Integer;
    function Next_Free_year( connection : Database_Connection := null) return Integer;
-   function Next_Free_sernum( connection : Database_Connection := null) return Integer;
+   function Next_Free_sernum( connection : Database_Connection := null) return Sernum_Value;
    function Next_Free_benunit( connection : Database_Connection := null) return Integer;
    function Next_Free_person( connection : Database_Connection := null) return Integer;
    function Next_Free_chlook( connection : Database_Connection := null) return Integer;
@@ -53,11 +53,11 @@ package Ukds.Frs.Childcare_IO is
    -- returns the single a_childcare matching the primary key fields, or the Ukds.Frs.Null_Childcare record
    -- if no such record exists
    --
-   function Retrieve_By_PK( user_id : Integer; edition : Integer; year : Integer; sernum : Integer; benunit : Integer; person : Integer; chlook : Integer; connection : Database_Connection := null ) return Ukds.Frs.Childcare;
+   function Retrieve_By_PK( user_id : Integer; edition : Integer; year : Integer; sernum : Sernum_Value; benunit : Integer; person : Integer; chlook : Integer; connection : Database_Connection := null ) return Ukds.Frs.Childcare;
    --
    -- Returns true if record with the given primary key exists
    --
-   function Exists( user_id : Integer; edition : Integer; year : Integer; sernum : Integer; benunit : Integer; person : Integer; chlook : Integer; connection : Database_Connection := null ) return Boolean ;
+   function Exists( user_id : Integer; edition : Integer; year : Integer; sernum : Sernum_Value; benunit : Integer; person : Integer; chlook : Integer; connection : Database_Connection := null ) return Boolean ;
    
    --
    -- Retrieves a list of Ukds.Frs.Childcare matching the criteria, or throws an exception
@@ -98,11 +98,11 @@ package Ukds.Frs.Childcare_IO is
    procedure Add_user_id( c : in out d.Criteria; user_id : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_edition( c : in out d.Criteria; edition : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_year( c : in out d.Criteria; year : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
-   procedure Add_sernum( c : in out d.Criteria; sernum : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_sernum( c : in out d.Criteria; sernum : Sernum_Value; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_benunit( c : in out d.Criteria; benunit : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_person( c : in out d.Criteria; person : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_chlook( c : in out d.Criteria; chlook : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
-   procedure Add_chamt( c : in out d.Criteria; chamt : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_chamt( c : in out d.Criteria; chamt : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_chhr( c : in out d.Criteria; chhr : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_chpd( c : in out d.Criteria; chpd : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_cost( c : in out d.Criteria; cost : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
@@ -137,11 +137,11 @@ package Ukds.Frs.Childcare_IO is
    --    1 : user_id                  : Parameter_Integer  : Integer              :        0 
    --    2 : edition                  : Parameter_Integer  : Integer              :        0 
    --    3 : year                     : Parameter_Integer  : Integer              :        0 
-   --    4 : sernum                   : Parameter_Integer  : Integer              :        0 
+   --    4 : sernum                   : Parameter_Bigint   : Sernum_Value         :        0 
    --    5 : benunit                  : Parameter_Integer  : Integer              :        0 
    --    6 : person                   : Parameter_Integer  : Integer              :        0 
    --    7 : chlook                   : Parameter_Integer  : Integer              :        0 
-   --    8 : chamt                    : Parameter_Integer  : Integer              :        0 
+   --    8 : chamt                    : Parameter_Float    : Amount               :      0.0 
    --    9 : chhr                     : Parameter_Integer  : Integer              :        0 
    --   10 : chpd                     : Parameter_Integer  : Integer              :        0 
    --   11 : cost                     : Parameter_Integer  : Integer              :        0 
@@ -168,7 +168,7 @@ package Ukds.Frs.Childcare_IO is
    --    1 : user_id                  : Parameter_Integer  : Integer              :        0 
    --    2 : edition                  : Parameter_Integer  : Integer              :        0 
    --    3 : year                     : Parameter_Integer  : Integer              :        0 
-   --    4 : sernum                   : Parameter_Integer  : Integer              :        0 
+   --    4 : sernum                   : Parameter_Bigint   : Sernum_Value         :        0 
    --    5 : benunit                  : Parameter_Integer  : Integer              :        0 
    --    6 : person                   : Parameter_Integer  : Integer              :        0 
    --    7 : chlook                   : Parameter_Integer  : Integer              :        0 

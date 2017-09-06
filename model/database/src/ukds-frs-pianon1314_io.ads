@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-05 20:57:19.538645
+-- Created by ada_generator.py on 2017-09-06 17:20:42.358392
 -- 
 with Ukds;
 with DB_Commons;
@@ -40,7 +40,7 @@ package Ukds.Frs.Pianon1314_IO is
    function Next_Free_edition( connection : Database_Connection := null) return Integer;
    function Next_Free_year( connection : Database_Connection := null) return Integer;
    function Next_Free_benunit( connection : Database_Connection := null) return Integer;
-   function Next_Free_sernum( connection : Database_Connection := null) return Integer;
+   function Next_Free_sernum( connection : Database_Connection := null) return Sernum_Value;
 
    --
    -- returns true if the primary key parts of a_pianon1314 match the defaults in Ukds.Frs.Null_Pianon1314
@@ -51,11 +51,11 @@ package Ukds.Frs.Pianon1314_IO is
    -- returns the single a_pianon1314 matching the primary key fields, or the Ukds.Frs.Null_Pianon1314 record
    -- if no such record exists
    --
-   function Retrieve_By_PK( user_id : Integer; edition : Integer; year : Integer; benunit : Integer; sernum : Integer; connection : Database_Connection := null ) return Ukds.Frs.Pianon1314;
+   function Retrieve_By_PK( user_id : Integer; edition : Integer; year : Integer; benunit : Integer; sernum : Sernum_Value; connection : Database_Connection := null ) return Ukds.Frs.Pianon1314;
    --
    -- Returns true if record with the given primary key exists
    --
-   function Exists( user_id : Integer; edition : Integer; year : Integer; benunit : Integer; sernum : Integer; connection : Database_Connection := null ) return Boolean ;
+   function Exists( user_id : Integer; edition : Integer; year : Integer; benunit : Integer; sernum : Sernum_Value; connection : Database_Connection := null ) return Boolean ;
    
    --
    -- Retrieves a list of Ukds.Frs.Pianon1314 matching the criteria, or throws an exception
@@ -111,8 +111,8 @@ package Ukds.Frs.Pianon1314_IO is
    procedure Add_oahcdec( c : in out d.Criteria; oahcdec : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_sexsp( c : in out d.Criteria; sexsp : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_newfamb2( c : in out d.Criteria; newfamb2 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
-   procedure Add_pidefbhc( c : in out d.Criteria; pidefbhc : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
-   procedure Add_pidefahc( c : in out d.Criteria; pidefahc : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_pidefbhc( c : in out d.Criteria; pidefbhc : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_pidefahc( c : in out d.Criteria; pidefahc : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_pigrosbu( c : in out d.Criteria; pigrosbu : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_pinincbu( c : in out d.Criteria; pinincbu : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_pigoccbu( c : in out d.Criteria; pigoccbu : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
@@ -132,31 +132,31 @@ package Ukds.Frs.Pianon1314_IO is
    procedure Add_rrpen( c : in out d.Criteria; rrpen : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_newfambu2( c : in out d.Criteria; newfambu2 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_dummy( c : in out d.Criteria; dummy : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
-   procedure Add_coup_q1( c : in out d.Criteria; coup_q1 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
-   procedure Add_coup_q2( c : in out d.Criteria; coup_q2 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
-   procedure Add_coup_q3( c : in out d.Criteria; coup_q3 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
-   procedure Add_coup_q4( c : in out d.Criteria; coup_q4 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
-   procedure Add_coup_q5( c : in out d.Criteria; coup_q5 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
-   procedure Add_acou_q1( c : in out d.Criteria; acou_q1 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
-   procedure Add_acou_q2( c : in out d.Criteria; acou_q2 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
-   procedure Add_acou_q3( c : in out d.Criteria; acou_q3 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
-   procedure Add_acou_q4( c : in out d.Criteria; acou_q4 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
-   procedure Add_acou_q5( c : in out d.Criteria; acou_q5 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
-   procedure Add_sing_q1( c : in out d.Criteria; sing_q1 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
-   procedure Add_sing_q2( c : in out d.Criteria; sing_q2 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
-   procedure Add_sing_q3( c : in out d.Criteria; sing_q3 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
-   procedure Add_sing_q4( c : in out d.Criteria; sing_q4 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
-   procedure Add_sing_q5( c : in out d.Criteria; sing_q5 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
-   procedure Add_asin_q1( c : in out d.Criteria; asin_q1 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
-   procedure Add_asin_q2( c : in out d.Criteria; asin_q2 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
-   procedure Add_asin_q3( c : in out d.Criteria; asin_q3 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
-   procedure Add_asin_q4( c : in out d.Criteria; asin_q4 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
-   procedure Add_asin_q5( c : in out d.Criteria; asin_q5 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_coup_q1( c : in out d.Criteria; coup_q1 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_coup_q2( c : in out d.Criteria; coup_q2 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_coup_q3( c : in out d.Criteria; coup_q3 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_coup_q4( c : in out d.Criteria; coup_q4 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_coup_q5( c : in out d.Criteria; coup_q5 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_acou_q1( c : in out d.Criteria; acou_q1 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_acou_q2( c : in out d.Criteria; acou_q2 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_acou_q3( c : in out d.Criteria; acou_q3 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_acou_q4( c : in out d.Criteria; acou_q4 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_acou_q5( c : in out d.Criteria; acou_q5 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_sing_q1( c : in out d.Criteria; sing_q1 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_sing_q2( c : in out d.Criteria; sing_q2 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_sing_q3( c : in out d.Criteria; sing_q3 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_sing_q4( c : in out d.Criteria; sing_q4 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_sing_q5( c : in out d.Criteria; sing_q5 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_asin_q1( c : in out d.Criteria; asin_q1 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_asin_q2( c : in out d.Criteria; asin_q2 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_asin_q3( c : in out d.Criteria; asin_q3 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_asin_q4( c : in out d.Criteria; asin_q4 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_asin_q5( c : in out d.Criteria; asin_q5 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_clust( c : in out d.Criteria; clust : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_strat( c : in out d.Criteria; strat : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_agehd80( c : in out d.Criteria; agehd80 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_agesp80( c : in out d.Criteria; agesp80 : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
-   procedure Add_sernum( c : in out d.Criteria; sernum : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_sernum( c : in out d.Criteria; sernum : Sernum_Value; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    --
    -- functions to add an ordering to a criteria
    --
@@ -248,8 +248,8 @@ package Ukds.Frs.Pianon1314_IO is
    --   16 : oahcdec                  : Parameter_Integer  : Integer              :        0 
    --   17 : sexsp                    : Parameter_Integer  : Integer              :        0 
    --   18 : newfamb2                 : Parameter_Integer  : Integer              :        0 
-   --   19 : pidefbhc                 : Parameter_Integer  : Integer              :        0 
-   --   20 : pidefahc                 : Parameter_Integer  : Integer              :        0 
+   --   19 : pidefbhc                 : Parameter_Float    : Amount               :      0.0 
+   --   20 : pidefahc                 : Parameter_Float    : Amount               :      0.0 
    --   21 : pigrosbu                 : Parameter_Integer  : Integer              :        0 
    --   22 : pinincbu                 : Parameter_Integer  : Integer              :        0 
    --   23 : pigoccbu                 : Parameter_Integer  : Integer              :        0 
@@ -269,31 +269,31 @@ package Ukds.Frs.Pianon1314_IO is
    --   37 : rrpen                    : Parameter_Integer  : Integer              :        0 
    --   38 : newfambu2                : Parameter_Integer  : Integer              :        0 
    --   39 : dummy                    : Parameter_Integer  : Integer              :        0 
-   --   40 : coup_q1                  : Parameter_Integer  : Integer              :        0 
-   --   41 : coup_q2                  : Parameter_Integer  : Integer              :        0 
-   --   42 : coup_q3                  : Parameter_Integer  : Integer              :        0 
-   --   43 : coup_q4                  : Parameter_Integer  : Integer              :        0 
-   --   44 : coup_q5                  : Parameter_Integer  : Integer              :        0 
-   --   45 : acou_q1                  : Parameter_Integer  : Integer              :        0 
-   --   46 : acou_q2                  : Parameter_Integer  : Integer              :        0 
-   --   47 : acou_q3                  : Parameter_Integer  : Integer              :        0 
-   --   48 : acou_q4                  : Parameter_Integer  : Integer              :        0 
-   --   49 : acou_q5                  : Parameter_Integer  : Integer              :        0 
-   --   50 : sing_q1                  : Parameter_Integer  : Integer              :        0 
-   --   51 : sing_q2                  : Parameter_Integer  : Integer              :        0 
-   --   52 : sing_q3                  : Parameter_Integer  : Integer              :        0 
-   --   53 : sing_q4                  : Parameter_Integer  : Integer              :        0 
-   --   54 : sing_q5                  : Parameter_Integer  : Integer              :        0 
-   --   55 : asin_q1                  : Parameter_Integer  : Integer              :        0 
-   --   56 : asin_q2                  : Parameter_Integer  : Integer              :        0 
-   --   57 : asin_q3                  : Parameter_Integer  : Integer              :        0 
-   --   58 : asin_q4                  : Parameter_Integer  : Integer              :        0 
-   --   59 : asin_q5                  : Parameter_Integer  : Integer              :        0 
+   --   40 : coup_q1                  : Parameter_Float    : Amount               :      0.0 
+   --   41 : coup_q2                  : Parameter_Float    : Amount               :      0.0 
+   --   42 : coup_q3                  : Parameter_Float    : Amount               :      0.0 
+   --   43 : coup_q4                  : Parameter_Float    : Amount               :      0.0 
+   --   44 : coup_q5                  : Parameter_Float    : Amount               :      0.0 
+   --   45 : acou_q1                  : Parameter_Float    : Amount               :      0.0 
+   --   46 : acou_q2                  : Parameter_Float    : Amount               :      0.0 
+   --   47 : acou_q3                  : Parameter_Float    : Amount               :      0.0 
+   --   48 : acou_q4                  : Parameter_Float    : Amount               :      0.0 
+   --   49 : acou_q5                  : Parameter_Float    : Amount               :      0.0 
+   --   50 : sing_q1                  : Parameter_Float    : Amount               :      0.0 
+   --   51 : sing_q2                  : Parameter_Float    : Amount               :      0.0 
+   --   52 : sing_q3                  : Parameter_Float    : Amount               :      0.0 
+   --   53 : sing_q4                  : Parameter_Float    : Amount               :      0.0 
+   --   54 : sing_q5                  : Parameter_Float    : Amount               :      0.0 
+   --   55 : asin_q1                  : Parameter_Float    : Amount               :      0.0 
+   --   56 : asin_q2                  : Parameter_Float    : Amount               :      0.0 
+   --   57 : asin_q3                  : Parameter_Float    : Amount               :      0.0 
+   --   58 : asin_q4                  : Parameter_Float    : Amount               :      0.0 
+   --   59 : asin_q5                  : Parameter_Float    : Amount               :      0.0 
    --   60 : clust                    : Parameter_Integer  : Integer              :        0 
    --   61 : strat                    : Parameter_Integer  : Integer              :        0 
    --   62 : agehd80                  : Parameter_Integer  : Integer              :        0 
    --   63 : agesp80                  : Parameter_Integer  : Integer              :        0 
-   --   64 : sernum                   : Parameter_Integer  : Integer              :        0 
+   --   64 : sernum                   : Parameter_Bigint   : Sernum_Value         :        0 
    function Get_Configured_Insert_Params( update_order : Boolean := False ) return GNATCOLL.SQL.Exec.SQL_Parameters;
 
 
@@ -314,7 +314,7 @@ package Ukds.Frs.Pianon1314_IO is
    --    2 : edition                  : Parameter_Integer  : Integer              :        0 
    --    3 : year                     : Parameter_Integer  : Integer              :        0 
    --    4 : benunit                  : Parameter_Integer  : Integer              :        0 
-   --    5 : sernum                   : Parameter_Integer  : Integer              :        0 
+   --    5 : sernum                   : Parameter_Bigint   : Sernum_Value         :        0 
    function Get_Configured_Retrieve_Params return GNATCOLL.SQL.Exec.SQL_Parameters;
 
 

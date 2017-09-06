@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-05 20:57:19.452202
+-- Created by ada_generator.py on 2017-09-06 17:20:42.112298
 -- 
 with Ukds;
 with DB_Commons;
@@ -39,7 +39,7 @@ package Ukds.Frs.Nimigra_IO is
    function Next_Free_user_id( connection : Database_Connection := null) return Integer;
    function Next_Free_edition( connection : Database_Connection := null) return Integer;
    function Next_Free_year( connection : Database_Connection := null) return Integer;
-   function Next_Free_sernum( connection : Database_Connection := null) return Integer;
+   function Next_Free_sernum( connection : Database_Connection := null) return Sernum_Value;
 
    --
    -- returns true if the primary key parts of a_nimigra match the defaults in Ukds.Frs.Null_Nimigra
@@ -50,11 +50,11 @@ package Ukds.Frs.Nimigra_IO is
    -- returns the single a_nimigra matching the primary key fields, or the Ukds.Frs.Null_Nimigra record
    -- if no such record exists
    --
-   function Retrieve_By_PK( user_id : Integer; edition : Integer; year : Integer; sernum : Integer; connection : Database_Connection := null ) return Ukds.Frs.Nimigra;
+   function Retrieve_By_PK( user_id : Integer; edition : Integer; year : Integer; sernum : Sernum_Value; connection : Database_Connection := null ) return Ukds.Frs.Nimigra;
    --
    -- Returns true if record with the given primary key exists
    --
-   function Exists( user_id : Integer; edition : Integer; year : Integer; sernum : Integer; connection : Database_Connection := null ) return Boolean ;
+   function Exists( user_id : Integer; edition : Integer; year : Integer; sernum : Sernum_Value; connection : Database_Connection := null ) return Boolean ;
    
    --
    -- Retrieves a list of Ukds.Frs.Nimigra matching the criteria, or throws an exception
@@ -95,7 +95,7 @@ package Ukds.Frs.Nimigra_IO is
    procedure Add_user_id( c : in out d.Criteria; user_id : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_edition( c : in out d.Criteria; edition : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_year( c : in out d.Criteria; year : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
-   procedure Add_sernum( c : in out d.Criteria; sernum : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_sernum( c : in out d.Criteria; sernum : Sernum_Value; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_miper( c : in out d.Criteria; miper : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_issue( c : in out d.Criteria; issue : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_miage( c : in out d.Criteria; miage : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
@@ -130,7 +130,7 @@ package Ukds.Frs.Nimigra_IO is
    --    1 : user_id                  : Parameter_Integer  : Integer              :        0 
    --    2 : edition                  : Parameter_Integer  : Integer              :        0 
    --    3 : year                     : Parameter_Integer  : Integer              :        0 
-   --    4 : sernum                   : Parameter_Integer  : Integer              :        0 
+   --    4 : sernum                   : Parameter_Bigint   : Sernum_Value         :        0 
    --    5 : miper                    : Parameter_Integer  : Integer              :        0 
    --    6 : issue                    : Parameter_Integer  : Integer              :        0 
    --    7 : miage                    : Parameter_Integer  : Integer              :        0 
@@ -159,7 +159,7 @@ package Ukds.Frs.Nimigra_IO is
    --    1 : user_id                  : Parameter_Integer  : Integer              :        0 
    --    2 : edition                  : Parameter_Integer  : Integer              :        0 
    --    3 : year                     : Parameter_Integer  : Integer              :        0 
-   --    4 : sernum                   : Parameter_Integer  : Integer              :        0 
+   --    4 : sernum                   : Parameter_Bigint   : Sernum_Value         :        0 
    function Get_Configured_Retrieve_Params return GNATCOLL.SQL.Exec.SQL_Parameters;
 
 

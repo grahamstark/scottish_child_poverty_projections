@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-05 20:57:18.499843
+-- Created by ada_generator.py on 2017-09-06 17:20:41.908990
 -- 
 with Ukds;
 
@@ -86,7 +86,7 @@ package body Ukds.Frs.Childcare_IO is
    function Get_Configured_Insert_Params( update_order : Boolean := False )  return GNATCOLL.SQL.Exec.SQL_Parameters is
    use GNATCOLL.SQL_Impl;
       params : constant SQL_Parameters( 1 .. 15 ) := ( if update_order then (
-            1 => ( Parameter_Integer, 0 ),   --  : chamt (Integer)
+            1 => ( Parameter_Float, 0.0 ),   --  : chamt (Amount)
             2 => ( Parameter_Integer, 0 ),   --  : chhr (Integer)
             3 => ( Parameter_Integer, 0 ),   --  : chpd (Integer)
             4 => ( Parameter_Integer, 0 ),   --  : cost (Integer)
@@ -97,7 +97,7 @@ package body Ukds.Frs.Childcare_IO is
             9 => ( Parameter_Integer, 0 ),   --  : user_id (Integer)
            10 => ( Parameter_Integer, 0 ),   --  : edition (Integer)
            11 => ( Parameter_Integer, 0 ),   --  : year (Integer)
-           12 => ( Parameter_Integer, 0 ),   --  : sernum (Integer)
+           12 => ( Parameter_Bigint, 0 ),   --  : sernum (Sernum_Value)
            13 => ( Parameter_Integer, 0 ),   --  : benunit (Integer)
            14 => ( Parameter_Integer, 0 ),   --  : person (Integer)
            15 => ( Parameter_Integer, 0 )   --  : chlook (Integer)
@@ -105,11 +105,11 @@ package body Ukds.Frs.Childcare_IO is
             1 => ( Parameter_Integer, 0 ),   --  : user_id (Integer)
             2 => ( Parameter_Integer, 0 ),   --  : edition (Integer)
             3 => ( Parameter_Integer, 0 ),   --  : year (Integer)
-            4 => ( Parameter_Integer, 0 ),   --  : sernum (Integer)
+            4 => ( Parameter_Bigint, 0 ),   --  : sernum (Sernum_Value)
             5 => ( Parameter_Integer, 0 ),   --  : benunit (Integer)
             6 => ( Parameter_Integer, 0 ),   --  : person (Integer)
             7 => ( Parameter_Integer, 0 ),   --  : chlook (Integer)
-            8 => ( Parameter_Integer, 0 ),   --  : chamt (Integer)
+            8 => ( Parameter_Float, 0.0 ),   --  : chamt (Amount)
             9 => ( Parameter_Integer, 0 ),   --  : chhr (Integer)
            10 => ( Parameter_Integer, 0 ),   --  : chpd (Integer)
            11 => ( Parameter_Integer, 0 ),   --  : cost (Integer)
@@ -141,7 +141,7 @@ package body Ukds.Frs.Childcare_IO is
             1 => ( Parameter_Integer, 0 ),   --  : user_id (Integer)
             2 => ( Parameter_Integer, 0 ),   --  : edition (Integer)
             3 => ( Parameter_Integer, 0 ),   --  : year (Integer)
-            4 => ( Parameter_Integer, 0 ),   --  : sernum (Integer)
+            4 => ( Parameter_Bigint, 0 ),   --  : sernum (Sernum_Value)
             5 => ( Parameter_Integer, 0 ),   --  : benunit (Integer)
             6 => ( Parameter_Integer, 0 ),   --  : person (Integer)
             7 => ( Parameter_Integer, 0 )   --  : chlook (Integer)
@@ -309,9 +309,9 @@ package body Ukds.Frs.Childcare_IO is
    -- 
    -- Next highest avaiable value of sernum - useful for saving  
    --
-   function Next_Free_sernum( connection : Database_Connection := null) return Integer is
+   function Next_Free_sernum( connection : Database_Connection := null) return Sernum_Value is
       cursor              : gse.Forward_Cursor;
-      ai                  : Integer;
+      ai                  : Sernum_Value;
       local_connection    : Database_Connection;
       is_local_connection : Boolean;
    begin
@@ -326,7 +326,7 @@ package body Ukds.Frs.Childcare_IO is
       cursor.Fetch( local_connection, Next_Free_sernum_ps );
       Check_Result( local_connection );
       if( gse.Has_Row( cursor ))then
-         ai := gse.Integer_Value( cursor, 0, 0 );
+         ai := Sernum_Value'Value( gse.Value( cursor, 0 ));
 
       end if;
       if( is_local_connection )then
@@ -456,7 +456,7 @@ package body Ukds.Frs.Childcare_IO is
    -- returns the single Ukds.Frs.Childcare matching the primary key fields, or the Ukds.Frs.Null_Childcare record
    -- if no such record exists
    --
-   function Retrieve_By_PK( user_id : Integer; edition : Integer; year : Integer; sernum : Integer; benunit : Integer; person : Integer; chlook : Integer; connection : Database_Connection := null ) return Ukds.Frs.Childcare is
+   function Retrieve_By_PK( user_id : Integer; edition : Integer; year : Integer; sernum : Sernum_Value; benunit : Integer; person : Integer; chlook : Integer; connection : Database_Connection := null ) return Ukds.Frs.Childcare is
       l : Ukds.Frs.Childcare_List;
       a_childcare : Ukds.Frs.Childcare;
       c : d.Criteria;
@@ -485,7 +485,7 @@ package body Ukds.Frs.Childcare_IO is
         "select 1 from frs.childcare where user_id = $1 and edition = $2 and year = $3 and sernum = $4 and benunit = $5 and person = $6 and chlook = $7", 
         On_Server => True );
         
-   function Exists( user_id : Integer; edition : Integer; year : Integer; sernum : Integer; benunit : Integer; person : Integer; chlook : Integer; connection : Database_Connection := null ) return Boolean  is
+   function Exists( user_id : Integer; edition : Integer; year : Integer; sernum : Sernum_Value; benunit : Integer; person : Integer; chlook : Integer; connection : Database_Connection := null ) return Boolean  is
       params : gse.SQL_Parameters := Get_Configured_Retrieve_Params;
       cursor : gse.Forward_Cursor;
       local_connection : Database_Connection;
@@ -502,7 +502,7 @@ package body Ukds.Frs.Childcare_IO is
       params( 1 ) := "+"( Integer'Pos( user_id ));
       params( 2 ) := "+"( Integer'Pos( edition ));
       params( 3 ) := "+"( Integer'Pos( year ));
-      params( 4 ) := "+"( Integer'Pos( sernum ));
+      params( 4 ) := As_Bigint( sernum );
       params( 5 ) := "+"( Integer'Pos( benunit ));
       params( 6 ) := "+"( Integer'Pos( person ));
       params( 7 ) := "+"( Integer'Pos( chlook ));
@@ -541,7 +541,7 @@ package body Ukds.Frs.Childcare_IO is
          a_childcare.year := gse.Integer_Value( cursor, 2 );
       end if;
       if not gse.Is_Null( cursor, 3 )then
-         a_childcare.sernum := gse.Integer_Value( cursor, 3 );
+         a_childcare.sernum := Sernum_Value'Value( gse.Value( cursor, 3 ));
       end if;
       if not gse.Is_Null( cursor, 4 )then
          a_childcare.benunit := gse.Integer_Value( cursor, 4 );
@@ -553,7 +553,7 @@ package body Ukds.Frs.Childcare_IO is
          a_childcare.chlook := gse.Integer_Value( cursor, 6 );
       end if;
       if not gse.Is_Null( cursor, 7 )then
-         a_childcare.chamt := gse.Integer_Value( cursor, 7 );
+         a_childcare.chamt:= Amount'Value( gse.Value( cursor, 7 ));
       end if;
       if not gse.Is_Null( cursor, 8 )then
          a_childcare.chhr := gse.Integer_Value( cursor, 8 );
@@ -632,7 +632,7 @@ package body Ukds.Frs.Childcare_IO is
           is_local_connection := False;
       end if;
 
-      params( 1 ) := "+"( Integer'Pos( a_childcare.chamt ));
+      params( 1 ) := "+"( Float( a_childcare.chamt ));
       params( 2 ) := "+"( Integer'Pos( a_childcare.chhr ));
       params( 3 ) := "+"( Integer'Pos( a_childcare.chpd ));
       params( 4 ) := "+"( Integer'Pos( a_childcare.cost ));
@@ -643,7 +643,7 @@ package body Ukds.Frs.Childcare_IO is
       params( 9 ) := "+"( Integer'Pos( a_childcare.user_id ));
       params( 10 ) := "+"( Integer'Pos( a_childcare.edition ));
       params( 11 ) := "+"( Integer'Pos( a_childcare.year ));
-      params( 12 ) := "+"( Integer'Pos( a_childcare.sernum ));
+      params( 12 ) := As_Bigint( a_childcare.sernum );
       params( 13 ) := "+"( Integer'Pos( a_childcare.benunit ));
       params( 14 ) := "+"( Integer'Pos( a_childcare.person ));
       params( 15 ) := "+"( Integer'Pos( a_childcare.chlook ));
@@ -684,11 +684,11 @@ package body Ukds.Frs.Childcare_IO is
       params( 1 ) := "+"( Integer'Pos( a_childcare.user_id ));
       params( 2 ) := "+"( Integer'Pos( a_childcare.edition ));
       params( 3 ) := "+"( Integer'Pos( a_childcare.year ));
-      params( 4 ) := "+"( Integer'Pos( a_childcare.sernum ));
+      params( 4 ) := As_Bigint( a_childcare.sernum );
       params( 5 ) := "+"( Integer'Pos( a_childcare.benunit ));
       params( 6 ) := "+"( Integer'Pos( a_childcare.person ));
       params( 7 ) := "+"( Integer'Pos( a_childcare.chlook ));
-      params( 8 ) := "+"( Integer'Pos( a_childcare.chamt ));
+      params( 8 ) := "+"( Float( a_childcare.chamt ));
       params( 9 ) := "+"( Integer'Pos( a_childcare.chhr ));
       params( 10 ) := "+"( Integer'Pos( a_childcare.chpd ));
       params( 11 ) := "+"( Integer'Pos( a_childcare.cost ));
@@ -784,8 +784,8 @@ package body Ukds.Frs.Childcare_IO is
    end Add_year;
 
 
-   procedure Add_sernum( c : in out d.Criteria; sernum : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
-   elem : d.Criterion := d.Make_Criterion_Element( "sernum", op, join, sernum );
+   procedure Add_sernum( c : in out d.Criteria; sernum : Sernum_Value; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "sernum", op, join, Big_Int( sernum ) );
    begin
       d.add_to_criteria( c, elem );
    end Add_sernum;
@@ -812,8 +812,8 @@ package body Ukds.Frs.Childcare_IO is
    end Add_chlook;
 
 
-   procedure Add_chamt( c : in out d.Criteria; chamt : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
-   elem : d.Criterion := d.Make_Criterion_Element( "chamt", op, join, chamt );
+   procedure Add_chamt( c : in out d.Criteria; chamt : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "chamt", op, join, Long_Float( chamt ) );
    begin
       d.add_to_criteria( c, elem );
    end Add_chamt;

@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-05 20:57:18.239230
+-- Created by ada_generator.py on 2017-09-06 17:20:41.473787
 -- 
 with Ukds;
 
@@ -32,7 +32,6 @@ with Ukds.Frs.Pianon1516_IO;
 with Ukds.Frs.Pianon1415_IO;
 with Ukds.Frs.Pianon1314_IO;
 with Ukds.Frs.Prscrptn_IO;
-with Ukds.Frs.Frs1516_IO;
 with Ukds.Frs.Chldcare_IO;
 with Ukds.Frs.Accouts_IO;
 with Ukds.Frs.Oddjob_IO;
@@ -4353,18 +4352,6 @@ package body Ukds.Frs.Benunit_IO is
       Ukds.Frs.Prscrptn_IO.Add_Benunit( c, a_benunit.Benunit );
       return Ukds.Frs.Prscrptn_IO.retrieve( c, connection );
    end Retrieve_Associated_Ukds_Frs_Prscrptns;
-
-
-   function Retrieve_Child_Ukds_Frs_Frs1516( a_benunit : Ukds.Frs.Benunit; connection : Database_Connection := null) return Ukds.Frs.Frs1516 is
-   begin
-      return Ukds.Frs.Frs1516_IO.retrieve_By_PK( 
-         Year => a_benunit.Year,
-         User_id => a_benunit.User_Id,
-         Edition => a_benunit.Edition,
-         Sernum => a_benunit.Sernum,
-         Benunit => a_benunit.Benunit,
-         Connection => connection );
-   end Retrieve_Child_Ukds_Frs_Frs1516;
 
 
    function Retrieve_Associated_Ukds_Frs_Chldcares( a_benunit : Ukds.Frs.Benunit; connection : Database_Connection := null ) return Ukds.Frs.Chldcare_List is
