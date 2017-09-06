@@ -22,7 +22,7 @@ project ScotCP is
    -- for Exec_Dir use "bin/";
 
    for Main use ( 
-      "initial.adb" );
+      "harness.adb" );
    
    IncludeOpt := "";
    LibOpt     := "";
@@ -54,4 +54,4 @@ project ScotCP is
       
    end Builder;
 
-end Msc;
+end ScotCP;
