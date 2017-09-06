@@ -196,7 +196,7 @@ def parseFRSDataset( )
         dataset = 'frs'
         startYear = 2013;
         connection  = getConnection()
-        stmt = "select distinct dataset,year,name from dictionaries.tables where dataset='#{dataset}' where year >= #{startYear} order by year,name"
+        stmt = "select distinct dataset,year,name from dictionaries.tables where dataset='#{dataset}' and year >= #{startYear} order by year,name"
         connection.fetch( stmt ).each{
                 |res|
                 year = res[:year].to_i

@@ -36,18 +36,24 @@ use Sequel rather than DBI.
    everywhere so headless version can run - old version creates to `.tab`, new version `.txt`; these are actually the same.
 
 2. `load_schemas_to_db.rb` to load the UKDS docs into our metadata dictionary. 
-
+   manually update the priorities in `dictionaries.tables` to reflect pk structure (e.g. `hhld` table is 1, `bu` is 2, etc.).
+   `update dictionaries.tables set priority=1 where dataset='frs' and name='househol';`
+   `update dictionaries.tables set priority=2 where dataset='frs' and name='benunit';`
+   `update dictionaries.tables set priority=3 where dataset='frs' and name='adult';`
+   `update dictionaries.tables set priority=4 where dataset='frs' and name='child';`
+   
 3. `infer_type.rb`. Change `todo` field at top as needed, and inspect and change years in various places.
    This adds type information to the metadata.
 
 4. `create_db_xml_schema.rb` - this creates load scripts for the TAB data, and [Mill](https://github.com/grahamstark/ada_mill) XML files.
 
-5. Run [Ada Mill](). In `database/` directory, run `python ../../../ada_mill/scripts/mill.py . native`
+5. Run [Ada Mill](https://github.com/grahamstark/ada_mill). In `database/` directory, run 
+    `python ../../../ada_mill/scripts/mill.py . native`
 
 6. create the database. SQL schema in `database/database`. Postgres only at the moment. 
-
 7. create cleaned up versions of the UKDS tabfiles. Run `tabFileFixer.rb`. Needs editing at bottom, and in each dataset
-   for years.
+   for years. TODO explain the CRM class; is target_list needed for FRS (No).
+   ** something about table load ordering/disable PKs temporarily**
 
 8. load data. If the datasets have been set up as above, the script `database/sql/postgres_load_statements.sql` should
    bulk-load everything.
