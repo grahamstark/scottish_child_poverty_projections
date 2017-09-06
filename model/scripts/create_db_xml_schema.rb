@@ -131,7 +131,7 @@ def getTypeDeclarations( tableName, var )
         #
         # FIXME we shouldn't need the query here
         #
-        return {'ada'=>'Ada.Calendar.Time', 'sql'=>'Date' } if var.data_type == DATE
+        return {'ada'=>'Ada.Calendar.Time', 'sql'=>'DATE' } if var.data_type == DATE
         return { 'ada'=>'Sernum_Value', 'sql'=> 'INTEGER', 'default'=> '0' } if( var.name == 'SERNUM' ) or (var.name == 'pserial')
         varname = var.name
         varname = KEYWORD_TRANSLATIONS_REVERSE[ var.name ] if KEYWORD_TRANSLATIONS_REVERSE.has_key?( var.name )
@@ -355,6 +355,7 @@ def createOneDatabase( millDoc, dataset )
                 year = res[:year]
                 tableName = res[:name ]
                 next if( dataset == 'elsa' and tableName == 'life_history_data')
+                next if ( dataset == 'frs' and tableName =~ /frs.*/ )
                 recordName = recordNameFromTableName( tableName )
                 table = loadTable( dataset, year, tableName )
                 crm = getCRM( targetDir, tableName )

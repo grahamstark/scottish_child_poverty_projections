@@ -17,7 +17,7 @@ if todo.include?( "hse" )then
 end
 if todo.include?( "frs" )then
         dataset = "frs"
-        (2014..2015).each{ # earlier years already done
+        (2013..2013).each{ # earlier years already done
                 |year|
                 targetdir = "#{UKDS_DATA_DIR}/frs/#{year}/tab/"
                 puts "dataset #{dataset}, year #{year}, targetdir #{targetdir}\n";
