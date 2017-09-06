@@ -42,4 +42,13 @@ use Sequel rather than DBI.
 
 4. `create_db_xml_schema.rb` - this creates load scripts for the TAB data, and [Mill](https://github.com/grahamstark/ada_mill) XML files.
 
-5. 
+5. Run [Ada Mill](). In `database/` directory, run `python ../../../ada_mill/scripts/mill.py . native`
+
+6. create the database. SQL schema in `database/database`. Postgres only at the moment. 
+
+7. create cleaned up versions of the UKDS tabfiles. Run `tabFileFixer.rb`. Needs editing at bottom, and in each dataset
+   for years.
+
+8. load data. If the datasets have been set up as above, the script `database/sql/postgres_load_statements.sql` should
+   bulk-load everything.
+
