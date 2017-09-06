@@ -1,5 +1,7 @@
 #!/usr/bin/ruby
-require 'dbi'
+
+require 'sequel'
+# require 'dbi'
 # require 'csv'
 require 'ukds_schema_utils'
 require 'utils'
@@ -192,14 +194,14 @@ end
 
 def parseFRSDataset( )
         dataset = 'frs'
+        startYear = 2013;
         connection  = getConnection()
-        stmt = "select distinct dataset,year,name from dictionaries.tables where dataset='#{dataset}' order by year,name"
-        rs = connection.execute( stmt )
-        rs.fetch_hash{
+        stmt = "select distinct dataset,year,name from dictionaries.tables where dataset='#{dataset}' where year >= #{startYear} order by year,name"
+        connection.fetch( stmt ).each{
                 |res|
-                year = res['year'].to_i
+                year = res[:year].to_i
                 puts "on year #{year} year #{year}"
-                tableName = res['name'].downcase()
+                tableName = res[:name].downcase()
                 table = loadTable( dataset, year, tableName )
                 dataPath = "#{UKDS_DATA_DIR}/#{dataset}/"
                 infileName = "#{dataPath}#{year}/tab/#{table.tableName}.tab" 
@@ -247,12 +249,11 @@ def parseELSADataset()
         dataset = 'elsa'
         connection  = getConnection()
         stmt = "select distinct dataset,year,name from dictionaries.tables where dataset='#{dataset}'"
-        rs = connection.execute( stmt )
-        rs.fetch_hash{
+        rs = connection.fetch( stmt ){
                 |res|
-                year = res['year'].to_i
+                year = res[:year].to_i
                 puts "on year #{year}"
-                tableName = res['name'].downcase()
+                tableName = res[:name].downcase()
                 if tableName == 'elsa_data'  then
                         next if tableName == 'life_history_data' ## too big to handle for now
                         dataPath = "#{UKDS_DATA_DIR}#{dataset}/"
@@ -288,12 +289,11 @@ def parseHSEDataset()
         dataset = 'hse'
         connection  = getConnection()
         stmt = "select distinct dataset,year,name from dictionaries.tables where dataset='#{dataset}'"
-        rs = connection.execute( stmt )
-        rs.fetch_hash{
+        rs = connection.fetch( stmt ){
                 |res|
-                year = res['year'].to_i
+                year = res[:year].to_i
                 puts "on year #{year}"
-                tableName = res['name'].downcase()
+                tableName = res[:name].downcase()
                 table = loadTable( dataset, year, tableName )
                 dataPath = "#{UKDS_DATA_DIR}#{dataset}/"
                 infileName = "#{tableName[0..2]}#{year}#{tableName[3..6]}.tab"
@@ -316,17 +316,16 @@ def parseWASDataset()
         dataset = 'was'
         connection  = getConnection()
         stmt = "select distinct dataset,year,name from dictionaries.tables where dataset='#{dataset}'"
-        rs = connection.execute( stmt )
-        rs.fetch_hash{
+        rs = connection.fetch( stmt ){
                 |res|
-                year = res['year'].to_i
+                year = res[:year].to_i
                 case year
                 when 2006 then wave='1'
                 when 2008 then wave='2'
                 when 2010 then wave='3'
                 end
                 puts "on year #{year}"
-                tableName = res['name'].downcase()
+                tableName = res[:name].downcase()
                 # if( year == 2010 and tableName = 'hhold')then
                         table = loadTable( dataset, year, tableName )
                         dataPath = "#{UKDS_DATA_DIR}#{dataset}/"
