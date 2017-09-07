@@ -1,0 +1,41 @@
+psql:frs/sql/postgres_load_statements.sql:18257: ERROR:  insert or update on table "childcare" violates foreign key constraint "childcare_fk_2"
+DETAIL:  Key (year, user_id, edition, sernum, benunit, person)=(2012, 1, 1, 1, 1, 3) is not present in table "adult".
+psql:frs/sql/postgres_load_statements.sql:18341: ERROR:  could not open file "/mnt/data//frs/2012/postgres_load_files/chldcare.csv" for reading: No such file or directory
+
+psql:frs/sql/postgres_load_statements.sql:20920: ERROR:  extra data after last expected column
+CONTEXT:  COPY job, line 2: "1,1,2008,1,2,1,1,1,1,100,-1,-1,-1,-1,-1,1,-1,-1,-1,-1,-1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1..."
+psql:frs/sql/postgres_load_statements.sql:20949: ERROR:  extra data after last expected column
+CONTEXT:  COPY job, line 2: "1,1,2007,1,100107011,1,2,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1..."
+psql:frs/sql/postgres_load_statements.sql:23321: ERROR:  could not open file "/mnt/data//frs/2012/postgres_load_files/nimigr.csv" for reading: No such file or directory
+
+psql:frs/sql/postgres_load_statements.sql:23406: ERROR:  duplicate key value violates unique constraint "nimigra_pkey"
+DETAIL:  Key (user_id, edition, year, sernum)=(1, 1, 2012, 1217) already exists.
+CONTEXT:  COPY nimigra, line 5
+psql:frs/sql/postgres_load_statements.sql:25688: ERROR:  extra data after last expected column
+
+CONTEXT:  COPY renter, line 2: "1,1,2013,2,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,2,2,-1,-1,-1,-1,3,79,2,1,1,-1,-1,2,260,-1,5,1,1..."
+psql:frs/sql/postgres_load_statements.sql:26338: ERROR:  insert or update on table "transact" violates foreign key constraint "transact_fk_0"
+DETAIL:  Key (year, user_id, edition, sernum)=(2007, 1, 1, 1402407051) is not present in table "househol".
+
+MISSING
+-------
+
+job 2007-8 (copy error)
+rtf dictionaries are truncated
+manual fix done - add fields to `postgres_load_statements.sql\
+
+renter 2013
+rtf dictionaries are truncated
+manual add 'month'
+
+childcare 2012 
+person is *the child*, not adult
+manual edit of `ukds.sql` to change FK reference - TODO change in script!
+
+
+
+
+
+
+
+
