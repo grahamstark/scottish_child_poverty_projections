@@ -70,85 +70,57 @@ procedure Basic_SCP_Driver is
    
    use Ada.Exceptions;
    use Ada.Calendar;
+   use UKDS;
    use Ada.Text_IO;
    use UKDS.FRS;
    use GNATCOLL.SQL.Exec;
    package d renames DB_Commons;
+   package frsh_io renames Househol_IO;
 
-   --
-   -- Select all variables; substring to be competed with output from some criteria
-   --
-   SELECT_PART : constant String := "select " &
-         "user_id, edition, year, sernum, acorn, bedroom, benunits, billrate, busroom, centfuel," &
-         "centheat, charge1, charge2, charge3, charge4, charge5, charge6, charge7, charge8, charge9," &
-         "chins, chrgamt1, chrgamt2, chrgamt3, chrgamt4, chrgamt5, chrgamt6, chrgamt7, chrgamt8, chrgamt9," &
-         "chrgpd1, chrgpd2, chrgpd3, chrgpd4, chrgpd5, chrgpd6, chrgpd7, chrgpd8, chrgpd9, contv1," &
-         "contv2, covoths, csewamt, csewamt1, ct25d50d, ctamt, ctannual, ctband, ctbwait, ctcondoc," &
-         "ctdisc, ctinstal, ctlvband, ctlvchk, ctreb, ctrebamt, ctrebpd, cttime, cwatamt, cwatamt1," &
-         "datyrago, entry1, entry2, entry3, entry4, estrtann, floor, givehelp, gor, gvtregn," &
-         "hhldr01, hhldr02, hhldr03, hhldr04, hhldr05, hhldr06, hhldr07, hhldr08, hhldr09, hhldr10," &
-         "hhldr11, hhldr12, hhldr13, hhldr14, hhldr97, hhstat, hrpnum, intdate, lac, mainacc," &
-         "mnthcode, modcon01, modcon02, modcon03, modcon04, modcon05, modcon06, modcon07, modcon08, modcon09," &
-         "modcon10, modcon11, modcon12, modcon13, modcon14, monlive, needhelp, nicoun, ninrv, nirate," &
-         "norate, onbsroom, orgsewam, orgwatam, payrate, premium, ptbsroom, rooms, roomshar, rtannual," &
-         "rtcheck, rtcondoc, rtdeduc, rtinstal, rtreb, rtrebamt, rtrebpd, rttime, sampqtr, schmeal," &
-         "schmilk, sewamt, sewanul, sewerpay, sewsep, sewtime, shelter, sobuy, sstrtreg, stramt1," &
-         "stramt2, strcov, strmort, stroths, strpd1, strpd2, suballow, sublet, sublety, subrent," &
-         "tenure, totadult, totchild, totdepdk, tvlic, typeacc, usevcl, watamt, watanul, watermet," &
-         "waterpay, watrb, wattime, welfmilk, whoctb01, whoctb02, whoctb03, whoctb04, whoctb05, whoctb06," &
-         "whoctb07, whoctb08, whoctb09, whoctb10, whoctb11, whoctb12, whoctb13, whoctb14, whoctbns, whoctbot," &
-         "whorsp01, whorsp02, whorsp03, whorsp04, whorsp05, whorsp06, whorsp07, whorsp08, whorsp09, whorsp10," &
-         "whorsp11, whorsp12, whorsp13, whorsp14, whynoct, wmintro, wsewamt, wsewanul, wsewtime, yearcode," &
-         "yearlive, month, actacch, adddahh, adulth, basacth, chddahh, curacth, cwatamtd, depchldh," &
-         "emp, emphrp, endowpay, equivahc, equivbhc, fsbndcth, gbhscost, gebacth, giltcth, gross2," &
-         "gross3, grossct, hbeninc, hbindhh, hcband, hdhhinc, hdtax, hearns, hhagegr2, hhagegrp," &
-         "hhcomp, hhcomps, hhdisben, hhethgr2, hhethgrp, hhinc, hhincbnd, hhinv, hhirben, hhkids," &
-         "hhnirben, hhothben, hhrent, hhrinc, hhrpinc, hhsize, hhtvlic, hhtxcred, hothinc, hpeninc," &
-         "hrband, hseinc, isacth, london, mortcost, mortint, mortpay, nddctb, nddishc, nihscost," &
-         "nsbocth, otbscth, pacctype, penage, penhrp, pepscth, poaccth, prbocth, ptentyp2, sayecth," &
-         "sclbcth, servpay, sick, sickhrp, sscth, struins, stshcth, tentyp2, tesscth, tuhhrent," &
-         "tuwatsew, untrcth, watsewrt, acornew, crunach, enomorth, dvadulth, dvtotad, urindew, urinds," &
-         "vehnumb, country, hbindhh2, pocardh, entry5, entry6, imd_e, imd_s, imd_w, numtv1," &
-         "numtv2, oac, bedroom6, rooms10, brma, issue, migrq1, migrq2, hhagegr3, hhagegr4," &
-         "capval, nidpnd, nochcr1, nochcr2, nochcr3, nochcr4, nochcr5, rt2rebam, rt2rebpd, rtdpa," &
-         "rtdpaamt, rtdpapd, rtlpa, rtlpaamt, rtlpapd, rtothamt, rtother, rtothpd, rtrtr, rtrtramt," &
-         "rtrtrpd, rttimepd, yrlvchk, gross3_x, hlthst, medpay, medwho01, medwho02, medwho03, medwho04," &
-         "medwho05, medwho06, medwho07, medwho08, medwho09, medwho10, medwho11, medwho12, medwho13, medwho14," &
-         "nmrmshar, roomshr, imd_ni, multi, nopay, orgid, rtene, rteneamt, rtgen, schbrk," &
-         "urb, urbrur, hhethgr3, niratlia, bankse, bathshow, burden, comco, comp1sc, compsc," &
-         "comwa, dwellno, elecin, elecinw, eulowest, flshtoil, grocse, gvtregno, heat, heatcen," &
-         "heatfire, kitchen, knsizeft, knsizem, laua, movef, movenxt, movereas, ovsat, plum1bin," &
-         "plumin, pluminw, postse, primh, pubtr, samesc, schfrt, selper, short, sizeft," &
-         "sizem, tvwhy, yearwhc, dischha1, dischhc1, diswhha1, diswhhc1, gross4, lldcare, urindni," &
-         "nhbeninc, nhhnirbn, nhhothbn, seramt1, seramt2, seramt3, seramt4, serpay1, serpay2, serpay3," &
-         "serpay4, serper1, serper2, serper3, serper4, utility, hheth, seramt5, sercomb, serpay5," &
-         "serper5, urbni " &
-         " from frs.househol ";
    
-   
-   stmt : constant String := SELECT_PART & " where year >= 2007 order by year,sernum";
-   
-   criteria  : d.Criteria;
-   startTime : Time;
-   endTime   : Time;
-   elapsed   : Duration;
-   cursor    : GNATCOLL.SQL.Exec.Forward_Cursor;
-   hh        : Househol;
-   ps        : GNATCOLL.SQL.Exec.Prepared_Statement;   
-   conn      : Database_Connection;
-   count     : Natural := 0;
+   startTime    : Time;
+   endTime      : Time;
+   elapsed      : Duration;
+   cursor       : GNATCOLL.SQL.Exec.Forward_Cursor;
+   household_r  : Househol;
+   ps           : GNATCOLL.SQL.Exec.Prepared_Statement;   
+   conn         : Database_Connection;
+   count        : Natural := 0;
+   frs_criteria : d.Criteria;
 begin
    startTime := Clock;
    Put_Line( "We're making a start on this.." );
-   Put_Line( stmt );
    Connection_Pool.Initialise;
    conn := Connection_Pool.Lease;
-   
-   cursor.Fetch( conn, stmt ); -- "select * from frs.househol where year >= 2011 order by year,sernum" );
+
+   Househol_IO.Add_User_Id( frs_criteria, 1 );
+   Househol_IO.Add_Edition( frs_criteria, 1 );
+   Househol_IO.Add_Year( frs_criteria, 2008, d.GE );
+   Househol_IO.Add_Year_To_Orderings( frs_criteria, d.Asc );
+   Househol_IO.Add_Sernum_To_Orderings( frs_criteria, d.Asc );
+   ps := Househol_IO.Get_Prepared_Retrieve_Statement( frs_criteria );  
+   cursor.Fetch( conn, ps ); -- "select * from frs.househol where year >= 2011 order by year,sernum" );
    while Has_Row( cursor ) loop 
+      household_r := Househol_IO.Map_From_Cursor( cursor );
+      declare
+         hh_crit : d.Criteria;
+      begin         
+         Househol_IO.Add_User_Id( hh_crit, household_r.user_id );
+         Househol_IO.Add_Edition( hh_crit, household_r.edition );
+         Househol_IO.Add_Year( hh_crit, household_r.year );
+         Househol_IO.Add_Sernum( hh_crit, household_r.sernum );
+         Adult_IO.Add_Person_To_Orderings( hh_crit, d.Asc );
+         Put_Line( d.To_String( hh_crit ));
+         Put_Line( "on year " & household_r.year'Img & " sernum " & household_r.sernum'Img );
+         declare
+            adult_l : FRS.Adult_List := Adult_IO.Retrieve( hh_crit );
+            child_l : FRS.Child_List := Child_IO.Retrieve( hh_crit );
+         begin
+            Put_Line( "num adults " & adult_l.Length'Img );
+            Put_Line( "num children " & child_l.Length'Img );
+         end;
+      end;
       count := count + 1;
-      hh := Househol_IO.Map_From_Cursor( cursor );
-      Put_Line( "on year " & hh.year'Img & " sernum " & hh.sernum'Img );
       Next( cursor );
    end loop;
    endTime := Clock;
