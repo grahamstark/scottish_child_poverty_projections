@@ -22,7 +22,8 @@ project ScotCP is
    -- for Exec_Dir use "bin/";
 
    for Main use ( 
-      "harness.adb" );
+      "harness.adb",
+      "basic_scp_driver.adb" );
    
    IncludeOpt := "";
    LibOpt     := "";

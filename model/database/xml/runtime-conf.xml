@@ -6,14 +6,14 @@
                 <name>/var/tmp/log/propel.log</name>
         </log>
         <propel>
-                <datasources default="msc_data">
-                        <datasource id="msc_data">
+                <datasources default="ukds">
+                        <datasource id="ukds">
                                 <adapter>postgres</adapter>
                                 <connection>
                                         <hostspec></hostspec> <!-- blank to use unix sockets, otherwise 'localhost|bigmac2' -->
-                                        <database>msc</database>
-                                        <username>msc</username>
-                                        <password>msc</password>
+                                        <database>ukds</database>
+                                        <username>ukds</username>
+                                        <password>ukds</password>
                                         <port>-1</port> <!-- unix socket; use 6432 for pgbouncer pool; 5432 for direct connection -->
                                 </connection>
                         </datasource>

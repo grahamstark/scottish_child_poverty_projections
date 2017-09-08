@@ -3220,6 +3220,7 @@
                         <column name='user_id' type='INTEGER' default='0' primaryKey='true'/>
                         <column name='edition' type='INTEGER' default='0' primaryKey='true'/>
                         <column name='year' type='INTEGER' default='0' primaryKey='true'/>
+                        <column name='counter' type='INTEGER' default='0' primaryKey='true'/>
                         <column description='Sernum' type='BIGINT' adaTypeName='Sernum_Value' primaryKey='true' name='sernum'/>
                         <column description='Person number of person who has left household' type='INTEGER' default='0' name='miper'/>
                         <column description='Whether Mainstage or Reissue' type='INTEGER' default='0' name='issue'/>
