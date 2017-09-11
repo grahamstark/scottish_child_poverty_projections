@@ -2461,7 +2461,7 @@ CREATE TABLE frs.childcare(
        PRIMARY KEY( user_id, edition, year, sernum, benunit, person, chlook ),
        CONSTRAINT childcare_FK_0 FOREIGN KEY( year, user_id, edition, sernum) references househol( year, user_id, edition, sernum ) on delete cascade on update cascade,
        CONSTRAINT childcare_FK_1 FOREIGN KEY( year, user_id, edition, sernum, benunit) references benunit( year, user_id, edition, sernum, benunit ) on delete cascade on update cascade,
-       CONSTRAINT childcare_FK_2 FOREIGN KEY( year, user_id, edition, sernum, benunit, person) references adult( year, user_id, edition, sernum, benunit, person ) on delete cascade on update cascade
+       CONSTRAINT childcare_FK_2 FOREIGN KEY( year, user_id, edition, sernum, benunit, person) references child( year, user_id, edition, sernum, benunit, person ) on delete cascade on update cascade
 );
 
 CREATE TABLE frs.chldcare( 

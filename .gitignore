@@ -7,3 +7,5 @@ docs/health
 docs/nrs
 docs/tender
 docs/world_bank
+model/tmp/*
+model/bin/*
