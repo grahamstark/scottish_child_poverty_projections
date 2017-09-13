@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-07 21:05:09.494415
+-- Created by ada_generator.py on 2017-09-13 23:07:57.998159
 -- 
 with Ukds;
 
@@ -61,16 +61,16 @@ package body Ukds.Frs.Nimigra_IO is
    -- Select all variables; substring to be competed with output from some criteria
    --
    SELECT_PART : constant String := "select " &
-         "user_id, edition, year, sernum, miper, issue, miage, misex, mnthleft, more1yr," &
-         "wherenow, month, miagegr " &
+         "user_id, edition, year, counter, sernum, miper, issue, miage, misex, mnthleft," &
+         "more1yr, wherenow, month, miagegr " &
          " from frs.nimigra " ;
    
    --
    -- Insert all variables; substring to be competed with output from some criteria
    --
    INSERT_PART : constant String := "insert into frs.nimigra (" &
-         "user_id, edition, year, sernum, miper, issue, miage, misex, mnthleft, more1yr," &
-         "wherenow, month, miagegr " &
+         "user_id, edition, year, counter, sernum, miper, issue, miage, misex, mnthleft," &
+         "more1yr, wherenow, month, miagegr " &
          " ) values " ;
 
    
@@ -85,7 +85,7 @@ package body Ukds.Frs.Nimigra_IO is
    UPDATE_PART : constant String := "update frs.nimigra set  ";
    function Get_Configured_Insert_Params( update_order : Boolean := False )  return GNATCOLL.SQL.Exec.SQL_Parameters is
    use GNATCOLL.SQL_Impl;
-      params : constant SQL_Parameters( 1 .. 13 ) := ( if update_order then (
+      params : constant SQL_Parameters( 1 .. 14 ) := ( if update_order then (
             1 => ( Parameter_Integer, 0 ),   --  : miper (Integer)
             2 => ( Parameter_Integer, 0 ),   --  : issue (Integer)
             3 => ( Parameter_Integer, 0 ),   --  : miage (Integer)
@@ -98,21 +98,23 @@ package body Ukds.Frs.Nimigra_IO is
            10 => ( Parameter_Integer, 0 ),   --  : user_id (Integer)
            11 => ( Parameter_Integer, 0 ),   --  : edition (Integer)
            12 => ( Parameter_Integer, 0 ),   --  : year (Integer)
-           13 => ( Parameter_Bigint, 0 )   --  : sernum (Sernum_Value)
+           13 => ( Parameter_Integer, 0 ),   --  : counter (Integer)
+           14 => ( Parameter_Bigint, 0 )   --  : sernum (Sernum_Value)
       ) else (
             1 => ( Parameter_Integer, 0 ),   --  : user_id (Integer)
             2 => ( Parameter_Integer, 0 ),   --  : edition (Integer)
             3 => ( Parameter_Integer, 0 ),   --  : year (Integer)
-            4 => ( Parameter_Bigint, 0 ),   --  : sernum (Sernum_Value)
-            5 => ( Parameter_Integer, 0 ),   --  : miper (Integer)
-            6 => ( Parameter_Integer, 0 ),   --  : issue (Integer)
-            7 => ( Parameter_Integer, 0 ),   --  : miage (Integer)
-            8 => ( Parameter_Integer, 0 ),   --  : misex (Integer)
-            9 => ( Parameter_Integer, 0 ),   --  : mnthleft (Integer)
-           10 => ( Parameter_Integer, 0 ),   --  : more1yr (Integer)
-           11 => ( Parameter_Integer, 0 ),   --  : wherenow (Integer)
-           12 => ( Parameter_Integer, 0 ),   --  : month (Integer)
-           13 => ( Parameter_Integer, 0 )   --  : miagegr (Integer)
+            4 => ( Parameter_Integer, 0 ),   --  : counter (Integer)
+            5 => ( Parameter_Bigint, 0 ),   --  : sernum (Sernum_Value)
+            6 => ( Parameter_Integer, 0 ),   --  : miper (Integer)
+            7 => ( Parameter_Integer, 0 ),   --  : issue (Integer)
+            8 => ( Parameter_Integer, 0 ),   --  : miage (Integer)
+            9 => ( Parameter_Integer, 0 ),   --  : misex (Integer)
+           10 => ( Parameter_Integer, 0 ),   --  : mnthleft (Integer)
+           11 => ( Parameter_Integer, 0 ),   --  : more1yr (Integer)
+           12 => ( Parameter_Integer, 0 ),   --  : wherenow (Integer)
+           13 => ( Parameter_Integer, 0 ),   --  : month (Integer)
+           14 => ( Parameter_Integer, 0 )   --  : miagegr (Integer)
       
       ));
    begin
@@ -123,7 +125,7 @@ package body Ukds.Frs.Nimigra_IO is
 
    function Get_Prepared_Insert_Statement return gse.Prepared_Statement is 
       ps : gse.Prepared_Statement; 
-      query : constant String := DB_Commons.Add_Schema_To_Query( INSERT_PART, SCHEMA_NAME ) & " ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13 )"; 
+      query : constant String := DB_Commons.Add_Schema_To_Query( INSERT_PART, SCHEMA_NAME ) & " ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14 )"; 
    begin 
       ps := gse.Prepare( query, On_Server => True ); 
       return ps; 
@@ -133,11 +135,12 @@ package body Ukds.Frs.Nimigra_IO is
 
    function Get_Configured_Retrieve_Params return GNATCOLL.SQL.Exec.SQL_Parameters is
    use GNATCOLL.SQL_Impl;
-      params : constant SQL_Parameters( 1 .. 4 ) := (
+      params : constant SQL_Parameters( 1 .. 5 ) := (
             1 => ( Parameter_Integer, 0 ),   --  : user_id (Integer)
             2 => ( Parameter_Integer, 0 ),   --  : edition (Integer)
             3 => ( Parameter_Integer, 0 ),   --  : year (Integer)
-            4 => ( Parameter_Bigint, 0 )   --  : sernum (Sernum_Value)
+            4 => ( Parameter_Integer, 0 ),   --  : counter (Integer)
+            5 => ( Parameter_Bigint, 0 )   --  : sernum (Sernum_Value)
       );
    begin
       return params;
@@ -146,7 +149,7 @@ package body Ukds.Frs.Nimigra_IO is
 
 
    function Get_Prepared_Retrieve_Statement return gse.Prepared_Statement is 
-      s : constant String := " where user_id = $1 and edition = $2 and year = $3 and sernum = $4"; 
+      s : constant String := " where user_id = $1 and edition = $2 and year = $3 and counter = $4 and sernum = $5"; 
    begin 
       return Get_Prepared_Retrieve_Statement( s ); 
    end Get_Prepared_Retrieve_Statement; 
@@ -170,7 +173,7 @@ package body Ukds.Frs.Nimigra_IO is
    function Get_Prepared_Update_Statement return gse.Prepared_Statement is 
       ps : gse.Prepared_Statement; 
       
-      query : constant String := DB_Commons.Add_Schema_To_Query( UPDATE_PART, SCHEMA_NAME ) & " miper = $1, issue = $2, miage = $3, misex = $4, mnthleft = $5, more1yr = $6, wherenow = $7, month = $8, miagegr = $9 where user_id = $10 and edition = $11 and year = $12 and sernum = $13"; 
+      query : constant String := DB_Commons.Add_Schema_To_Query( UPDATE_PART, SCHEMA_NAME ) & " miper = $1, issue = $2, miage = $3, misex = $4, mnthleft = $5, more1yr = $6, wherenow = $7, month = $8, miagegr = $9 where user_id = $10 and edition = $11 and year = $12 and counter = $13 and sernum = $14"; 
    begin 
       ps := gse.Prepare( 
         query, 
@@ -295,6 +298,40 @@ package body Ukds.Frs.Nimigra_IO is
    end Next_Free_year;
 
 
+   Next_Free_counter_query : constant String := 
+         DB_Commons.Add_Schema_To_Query( "select coalesce( max( counter ) + 1, 1 ) from frs.nimigra", SCHEMA_NAME );
+   Next_Free_counter_ps : gse.Prepared_Statement := 
+        gse.Prepare( Next_Free_counter_query, On_Server => True );
+   -- 
+   -- Next highest avaiable value of counter - useful for saving  
+   --
+   function Next_Free_counter( connection : Database_Connection := null) return Integer is
+      cursor              : gse.Forward_Cursor;
+      ai                  : Integer;
+      local_connection    : Database_Connection;
+      is_local_connection : Boolean;
+   begin
+      if( connection = null )then
+         local_connection := Connection_Pool.Lease;
+         is_local_connection := True;
+      else
+         local_connection := connection;          
+         is_local_connection := False;
+      end if;
+      
+      cursor.Fetch( local_connection, Next_Free_counter_ps );
+      Check_Result( local_connection );
+      if( gse.Has_Row( cursor ))then
+         ai := gse.Integer_Value( cursor, 0, 0 );
+
+      end if;
+      if( is_local_connection )then
+         Connection_Pool.Return_Connection( local_connection );
+      end if;
+      return ai;
+   end Next_Free_counter;
+
+
    Next_Free_sernum_query : constant String := 
          DB_Commons.Add_Schema_To_Query( "select coalesce( max( sernum ) + 1, 1 ) from frs.nimigra", SCHEMA_NAME );
    Next_Free_sernum_ps : gse.Prepared_Statement := 
@@ -347,7 +384,7 @@ package body Ukds.Frs.Nimigra_IO is
    -- returns the single Ukds.Frs.Nimigra matching the primary key fields, or the Ukds.Frs.Null_Nimigra record
    -- if no such record exists
    --
-   function Retrieve_By_PK( user_id : Integer; edition : Integer; year : Integer; sernum : Sernum_Value; connection : Database_Connection := null ) return Ukds.Frs.Nimigra is
+   function Retrieve_By_PK( user_id : Integer; edition : Integer; year : Integer; counter : Integer; sernum : Sernum_Value; connection : Database_Connection := null ) return Ukds.Frs.Nimigra is
       l : Ukds.Frs.Nimigra_List;
       a_nimigra : Ukds.Frs.Nimigra;
       c : d.Criteria;
@@ -355,6 +392,7 @@ package body Ukds.Frs.Nimigra_IO is
       Add_user_id( c, user_id );
       Add_edition( c, edition );
       Add_year( c, year );
+      Add_counter( c, counter );
       Add_sernum( c, sernum );
       l := Retrieve( c, connection );
       if( not Ukds.Frs.Nimigra_List_Package.is_empty( l ) ) then
@@ -370,10 +408,10 @@ package body Ukds.Frs.Nimigra_IO is
    -- Returns true if record with the given primary key exists
    --
    EXISTS_PS : constant gse.Prepared_Statement := gse.Prepare( 
-        "select 1 from frs.nimigra where user_id = $1 and edition = $2 and year = $3 and sernum = $4", 
+        "select 1 from frs.nimigra where user_id = $1 and edition = $2 and year = $3 and counter = $4 and sernum = $5", 
         On_Server => True );
         
-   function Exists( user_id : Integer; edition : Integer; year : Integer; sernum : Sernum_Value; connection : Database_Connection := null ) return Boolean  is
+   function Exists( user_id : Integer; edition : Integer; year : Integer; counter : Integer; sernum : Sernum_Value; connection : Database_Connection := null ) return Boolean  is
       params : gse.SQL_Parameters := Get_Configured_Retrieve_Params;
       cursor : gse.Forward_Cursor;
       local_connection : Database_Connection;
@@ -390,7 +428,8 @@ package body Ukds.Frs.Nimigra_IO is
       params( 1 ) := "+"( Integer'Pos( user_id ));
       params( 2 ) := "+"( Integer'Pos( edition ));
       params( 3 ) := "+"( Integer'Pos( year ));
-      params( 4 ) := As_Bigint( sernum );
+      params( 4 ) := "+"( Integer'Pos( counter ));
+      params( 5 ) := As_Bigint( sernum );
       cursor.Fetch( local_connection, EXISTS_PS, params );
       Check_Result( local_connection );
       found := gse.Has_Row( cursor );
@@ -426,34 +465,37 @@ package body Ukds.Frs.Nimigra_IO is
          a_nimigra.year := gse.Integer_Value( cursor, 2 );
       end if;
       if not gse.Is_Null( cursor, 3 )then
-         a_nimigra.sernum := Sernum_Value'Value( gse.Value( cursor, 3 ));
+         a_nimigra.counter := gse.Integer_Value( cursor, 3 );
       end if;
       if not gse.Is_Null( cursor, 4 )then
-         a_nimigra.miper := gse.Integer_Value( cursor, 4 );
+         a_nimigra.sernum := Sernum_Value'Value( gse.Value( cursor, 4 ));
       end if;
       if not gse.Is_Null( cursor, 5 )then
-         a_nimigra.issue := gse.Integer_Value( cursor, 5 );
+         a_nimigra.miper := gse.Integer_Value( cursor, 5 );
       end if;
       if not gse.Is_Null( cursor, 6 )then
-         a_nimigra.miage := gse.Integer_Value( cursor, 6 );
+         a_nimigra.issue := gse.Integer_Value( cursor, 6 );
       end if;
       if not gse.Is_Null( cursor, 7 )then
-         a_nimigra.misex := gse.Integer_Value( cursor, 7 );
+         a_nimigra.miage := gse.Integer_Value( cursor, 7 );
       end if;
       if not gse.Is_Null( cursor, 8 )then
-         a_nimigra.mnthleft := gse.Integer_Value( cursor, 8 );
+         a_nimigra.misex := gse.Integer_Value( cursor, 8 );
       end if;
       if not gse.Is_Null( cursor, 9 )then
-         a_nimigra.more1yr := gse.Integer_Value( cursor, 9 );
+         a_nimigra.mnthleft := gse.Integer_Value( cursor, 9 );
       end if;
       if not gse.Is_Null( cursor, 10 )then
-         a_nimigra.wherenow := gse.Integer_Value( cursor, 10 );
+         a_nimigra.more1yr := gse.Integer_Value( cursor, 10 );
       end if;
       if not gse.Is_Null( cursor, 11 )then
-         a_nimigra.month := gse.Integer_Value( cursor, 11 );
+         a_nimigra.wherenow := gse.Integer_Value( cursor, 11 );
       end if;
       if not gse.Is_Null( cursor, 12 )then
-         a_nimigra.miagegr := gse.Integer_Value( cursor, 12 );
+         a_nimigra.month := gse.Integer_Value( cursor, 12 );
+      end if;
+      if not gse.Is_Null( cursor, 13 )then
+         a_nimigra.miagegr := gse.Integer_Value( cursor, 13 );
       end if;
       return a_nimigra;
    end Map_From_Cursor;
@@ -523,7 +565,8 @@ package body Ukds.Frs.Nimigra_IO is
       params( 10 ) := "+"( Integer'Pos( a_nimigra.user_id ));
       params( 11 ) := "+"( Integer'Pos( a_nimigra.edition ));
       params( 12 ) := "+"( Integer'Pos( a_nimigra.year ));
-      params( 13 ) := As_Bigint( a_nimigra.sernum );
+      params( 13 ) := "+"( Integer'Pos( a_nimigra.counter ));
+      params( 14 ) := As_Bigint( a_nimigra.sernum );
       
       gse.Execute( local_connection, UPDATE_PS, params );
       Check_Result( local_connection );
@@ -551,7 +594,7 @@ package body Ukds.Frs.Nimigra_IO is
           local_connection := connection;          
           is_local_connection := False;
       end if;
-      if overwrite and Exists( a_nimigra.user_id, a_nimigra.edition, a_nimigra.year, a_nimigra.sernum ) then
+      if overwrite and Exists( a_nimigra.user_id, a_nimigra.edition, a_nimigra.year, a_nimigra.counter, a_nimigra.sernum ) then
          Update( a_nimigra, local_connection );
          if( is_local_connection )then
             Connection_Pool.Return_Connection( local_connection );
@@ -561,16 +604,17 @@ package body Ukds.Frs.Nimigra_IO is
       params( 1 ) := "+"( Integer'Pos( a_nimigra.user_id ));
       params( 2 ) := "+"( Integer'Pos( a_nimigra.edition ));
       params( 3 ) := "+"( Integer'Pos( a_nimigra.year ));
-      params( 4 ) := As_Bigint( a_nimigra.sernum );
-      params( 5 ) := "+"( Integer'Pos( a_nimigra.miper ));
-      params( 6 ) := "+"( Integer'Pos( a_nimigra.issue ));
-      params( 7 ) := "+"( Integer'Pos( a_nimigra.miage ));
-      params( 8 ) := "+"( Integer'Pos( a_nimigra.misex ));
-      params( 9 ) := "+"( Integer'Pos( a_nimigra.mnthleft ));
-      params( 10 ) := "+"( Integer'Pos( a_nimigra.more1yr ));
-      params( 11 ) := "+"( Integer'Pos( a_nimigra.wherenow ));
-      params( 12 ) := "+"( Integer'Pos( a_nimigra.month ));
-      params( 13 ) := "+"( Integer'Pos( a_nimigra.miagegr ));
+      params( 4 ) := "+"( Integer'Pos( a_nimigra.counter ));
+      params( 5 ) := As_Bigint( a_nimigra.sernum );
+      params( 6 ) := "+"( Integer'Pos( a_nimigra.miper ));
+      params( 7 ) := "+"( Integer'Pos( a_nimigra.issue ));
+      params( 8 ) := "+"( Integer'Pos( a_nimigra.miage ));
+      params( 9 ) := "+"( Integer'Pos( a_nimigra.misex ));
+      params( 10 ) := "+"( Integer'Pos( a_nimigra.mnthleft ));
+      params( 11 ) := "+"( Integer'Pos( a_nimigra.more1yr ));
+      params( 12 ) := "+"( Integer'Pos( a_nimigra.wherenow ));
+      params( 13 ) := "+"( Integer'Pos( a_nimigra.month ));
+      params( 14 ) := "+"( Integer'Pos( a_nimigra.miagegr ));
       gse.Execute( local_connection, SAVE_PS, params );  
       Check_Result( local_connection );
       if( is_local_connection )then
@@ -589,6 +633,7 @@ package body Ukds.Frs.Nimigra_IO is
       Add_user_id( c, a_nimigra.user_id );
       Add_edition( c, a_nimigra.edition );
       Add_year( c, a_nimigra.year );
+      Add_counter( c, a_nimigra.counter );
       Add_sernum( c, a_nimigra.sernum );
       Delete( c, connection );
       a_nimigra := Ukds.Frs.Null_Nimigra;
@@ -654,6 +699,13 @@ package body Ukds.Frs.Nimigra_IO is
    begin
       d.add_to_criteria( c, elem );
    end Add_year;
+
+
+   procedure Add_counter( c : in out d.Criteria; counter : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "counter", op, join, counter );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_counter;
 
 
    procedure Add_sernum( c : in out d.Criteria; sernum : Sernum_Value; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
@@ -749,6 +801,13 @@ package body Ukds.Frs.Nimigra_IO is
    begin
       d.add_to_criteria( c, elem );
    end Add_year_To_Orderings;
+
+
+   procedure Add_counter_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "counter", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_counter_To_Orderings;
 
 
    procedure Add_sernum_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   

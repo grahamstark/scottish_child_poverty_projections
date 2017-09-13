@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-07 21:05:08.566683
+-- Created by ada_generator.py on 2017-09-13 23:07:57.177867
 -- 
 with Ukds;
 
@@ -65,8 +65,8 @@ with Ukds.Frs.Pianom0809_IO;
 with Ukds.Frs.Pianon0910_IO;
 
 -- === CUSTOM IMPORTS START ===
-with Ada.Text_IO;use Ada.Text_IO; 
-with Ada.Calendar.Formatting; 
+with Ada.Text_IO;use Ada.Text_IO;    
+with Ada.Calendar.Formatting;    
 -- === CUSTOM IMPORTS END ===
 
 package body Ukds.Frs.Househol_IO is
@@ -3732,15 +3732,15 @@ package body Ukds.Frs.Househol_IO is
    end Retrieve_Associated_Ukds_Frs_Accounts;
 
 
-   function Retrieve_Child_Ukds_Frs_Nimigra( a_househol : Ukds.Frs.Househol; connection : Database_Connection := null) return Ukds.Frs.Nimigra is
+   function Retrieve_Associated_Ukds_Frs_Nimigras( a_househol : Ukds.Frs.Househol; connection : Database_Connection := null ) return Ukds.Frs.Nimigra_List is
+      c : d.Criteria;
    begin
-      return Ukds.Frs.Nimigra_IO.retrieve_By_PK( 
-         Year => a_househol.Year,
-         User_id => a_househol.User_Id,
-         Edition => a_househol.Edition,
-         Sernum => a_househol.Sernum,
-         Connection => connection );
-   end Retrieve_Child_Ukds_Frs_Nimigra;
+      Ukds.Frs.Nimigra_IO.Add_Year( c, a_househol.Year );
+      Ukds.Frs.Nimigra_IO.Add_User_Id( c, a_househol.User_Id );
+      Ukds.Frs.Nimigra_IO.Add_Edition( c, a_househol.Edition );
+      Ukds.Frs.Nimigra_IO.Add_Sernum( c, a_househol.Sernum );
+      return Ukds.Frs.Nimigra_IO.retrieve( c, connection );
+   end Retrieve_Associated_Ukds_Frs_Nimigras;
 
 
    function Retrieve_Associated_Ukds_Frs_Pianon1516s( a_househol : Ukds.Frs.Househol; connection : Database_Connection := null ) return Ukds.Frs.Pianon1516_List is

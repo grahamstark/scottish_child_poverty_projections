@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-07 21:05:08.151861
+-- Created by ada_generator.py on 2017-09-13 23:07:56.731885
 -- 
 
 with GNAT.Calendar.Time_IO;
@@ -814,6 +814,7 @@ package body Ukds.frs is
          "user_id = " & rec.user_id'Img &
          "edition = " & rec.edition'Img &
          "year = " & rec.year'Img &
+         "counter = " & rec.counter'Img &
          "sernum = " & rec.sernum'Img &
          "miper = " & rec.miper'Img &
          "issue = " & rec.issue'Img &

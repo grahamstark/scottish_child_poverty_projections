@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-07 21:05:08.409579
+-- Created by ada_generator.py on 2017-09-13 23:07:57.069757
 -- 
 with Ukds;
 with DB_Commons;
@@ -92,7 +92,7 @@ package Ukds.Frs.Househol_IO is
    function Retrieve_Associated_Ukds_Frs_Maints( a_househol : Ukds.Frs.Househol; connection : Database_Connection := null ) return Ukds.Frs.Maint_List;
    function Retrieve_Associated_Ukds_Frs_Owners( a_househol : Ukds.Frs.Househol; connection : Database_Connection := null ) return Ukds.Frs.Owner_List;
    function Retrieve_Associated_Ukds_Frs_Accounts( a_househol : Ukds.Frs.Househol; connection : Database_Connection := null ) return Ukds.Frs.Accounts_List;
-   function Retrieve_Child_Ukds_Frs_Nimigra( a_househol : Ukds.Frs.Househol; connection : Database_Connection := null) return Ukds.Frs.Nimigra;
+   function Retrieve_Associated_Ukds_Frs_Nimigras( a_househol : Ukds.Frs.Househol; connection : Database_Connection := null ) return Ukds.Frs.Nimigra_List;
    function Retrieve_Associated_Ukds_Frs_Pianon1516s( a_househol : Ukds.Frs.Househol; connection : Database_Connection := null ) return Ukds.Frs.Pianon1516_List;
    function Retrieve_Associated_Ukds_Frs_Pianon1415s( a_househol : Ukds.Frs.Househol; connection : Database_Connection := null ) return Ukds.Frs.Pianon1415_List;
    function Retrieve_Associated_Ukds_Frs_Rentconts( a_househol : Ukds.Frs.Househol; connection : Database_Connection := null ) return Ukds.Frs.Rentcont_List;

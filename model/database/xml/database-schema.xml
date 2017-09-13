@@ -4,179 +4,152 @@
         <adaTypePackage name='Base_Model_Types'/>
         <adaTypePackage name='Ada.Calendar'/>
         <schema name='target_data'>
-               <table name='forecast_variant'>
-                  <column name='name' type='CHAR' size='20'  primaryKey='true' />
-                  <column name='description' type='VARCHAR' />
-               </table>
+        
                
+                <table name="forecast_type">
+                        <column name="name" type="CHAR" size="120" description="e.g. macro forecast and so on" primaryKey="true"/>
+                        <column name="description" type="CHAR" size="120" description="e.g. macro item and so on" />
+                </table>
+
                <table name='country'>
                    <column name='name' type='CHAR' size='20' primaryKey='true'/>
                </table>
            
-                
-               <table name='target_candidates' description='One row for each Country/Year/Variant' >
+        
+               <table name='forecast_variant'>
+                  <column name='type' type='CHAR' size='20'  primaryKey='true' />
+                  <column name='variant' type='CHAR' size='20'  primaryKey='true' description='e.g. low fertility; pessimistic macro..' />
+                  <column name='country' type='CHAR' size='20'  primaryKey='true' />
+                  <column name='edition' type="INTEGER" adaTypeName="Year_Number" 
+                     description="A number indicating a release or base year; e.g. OBR 2017 release or NRS 2012 based projection" 
+                     primaryKey='true'/>
+                  
+                  <column name='source' type='CHAR' size='20'  description='e.g. OBR, NRS, etc.' />
+                  <column name='description' type='VARCHAR' />
+                  <column name='url' type='VARCHAR' />
+                  <column name='filename' type='VARCHAR' />
+                   <foreign-key foreignTable="country" onDelete='CASCADE' onUpdate='CASCADE'>
+                           <reference foreign="name" local="country" />
+                   </foreign-key>
+                   <foreign-key foreignTable="forecast_type" onDelete='CASCADE' onUpdate='CASCADE'>
+                           <reference foreign="name" local="type" />
+                   </foreign-key>
+               </table>
+               
+               <table name='demographic_candidates' description='Merged Household/Individual Population Data One row for each Country/Year/Variant' >
                
                    <column name='year' type='INTEGER' default='0' primaryKey='true'/>
+                   <column name='type' type='CHAR' default='persons' primaryKey='true'/>
                    <column name='variant' type='CHAR' size='20'  primaryKey='true' />
                    <column name='country' type='CHAR' size='20'  primaryKey='true' />
+                   <column name='edition' type="INTEGER" adaTypeName="Year_Number" description="a number indicating a release or base year" primaryKey='true'/>
+                   <column name='target_group' type='CHAR' size='20'  primaryKey='true' description='males,females,all, etc..'/>
                    
-                   <column name='genders_all_usual_residents' type='REAL' />
-                   <column name='genders_males' type='REAL' />
-                   <column name='genders_females' type='REAL' />
-                   <column name='genders_lives_in_a_household' type='REAL' />
-                   <column name='age_ranges_all_categories_age' type='REAL' />
-                   <column name='age_ranges_age_under_1' type='REAL' />
-                   <column name='age_ranges_age_1' type='REAL' />
-                   <column name='age_ranges_age_2' type='REAL' />
-                   <column name='age_ranges_age_3' type='REAL' />
-                   <column name='age_ranges_age_4' type='REAL' />
-                   <column name='age_ranges_age_5' type='REAL' />
-                   <column name='age_ranges_age_6' type='REAL' />
-                   <column name='age_ranges_age_7' type='REAL' />
-                   <column name='age_ranges_age_8' type='REAL' />
-                   <column name='age_ranges_age_9' type='REAL' />
-                   <column name='age_ranges_age_10' type='REAL' />
-                   <column name='age_ranges_age_11' type='REAL' />
-                   <column name='age_ranges_age_12' type='REAL' />
-                   <column name='age_ranges_age_13' type='REAL' />
-                   <column name='age_ranges_age_14' type='REAL' />
-                   <column name='age_ranges_age_15' type='REAL' />
-                   <column name='age_ranges_age_16' type='REAL' />
-                   <column name='age_ranges_age_17' type='REAL' />
-                   <column name='age_ranges_age_18' type='REAL' />
-                   <column name='age_ranges_age_19' type='REAL' />
-                   <column name='age_ranges_age_20' type='REAL' />
-                   <column name='age_ranges_age_21' type='REAL' />
-                   <column name='age_ranges_age_22' type='REAL' />
-                   <column name='age_ranges_age_23' type='REAL' />
-                   <column name='age_ranges_age_24' type='REAL' />
-                   <column name='age_ranges_age_25' type='REAL' />
-                   <column name='age_ranges_age_26' type='REAL' />
-                   <column name='age_ranges_age_27' type='REAL' />
-                   <column name='age_ranges_age_28' type='REAL' />
-                   <column name='age_ranges_age_29' type='REAL' />
-                   <column name='age_ranges_age_30' type='REAL' />
-                   <column name='age_ranges_age_31' type='REAL' />
-                   <column name='age_ranges_age_32' type='REAL' />
-                   <column name='age_ranges_age_33' type='REAL' />
-                   <column name='age_ranges_age_34' type='REAL' />
-                   <column name='age_ranges_age_35' type='REAL' />
-                   <column name='age_ranges_age_36' type='REAL' />
-                   <column name='age_ranges_age_37' type='REAL' />
-                   <column name='age_ranges_age_38' type='REAL' />
-                   <column name='age_ranges_age_39' type='REAL' />
-                   <column name='age_ranges_age_40' type='REAL' />
-                   <column name='age_ranges_age_41' type='REAL' />
-                   <column name='age_ranges_age_42' type='REAL' />
-                   <column name='age_ranges_age_43' type='REAL' />
-                   <column name='age_ranges_age_44' type='REAL' />
-                   <column name='age_ranges_age_45' type='REAL' />
-                   <column name='age_ranges_age_46' type='REAL' />
-                   <column name='age_ranges_age_47' type='REAL' />
-                   <column name='age_ranges_age_48' type='REAL' />
-                   <column name='age_ranges_age_49' type='REAL' />
-                   <column name='age_ranges_age_50' type='REAL' />
-                   <column name='age_ranges_age_51' type='REAL' />
-                   <column name='age_ranges_age_52' type='REAL' />
-                   <column name='age_ranges_age_53' type='REAL' />
-                   <column name='age_ranges_age_54' type='REAL' />
-                   <column name='age_ranges_age_55' type='REAL' />
-                   <column name='age_ranges_age_56' type='REAL' />
-                   <column name='age_ranges_age_57' type='REAL' />
-                   <column name='age_ranges_age_58' type='REAL' />
-                   <column name='age_ranges_age_59' type='REAL' />
-                   <column name='age_ranges_age_60' type='REAL' />
-                   <column name='age_ranges_age_61' type='REAL' />
-                   <column name='age_ranges_age_62' type='REAL' />
-                   <column name='age_ranges_age_63' type='REAL' />
-                   <column name='age_ranges_age_64' type='REAL' />
-                   <column name='age_ranges_age_65' type='REAL' />
-                   <column name='age_ranges_age_66' type='REAL' />
-                   <column name='age_ranges_age_67' type='REAL' />
-                   <column name='age_ranges_age_68' type='REAL' />
-                   <column name='age_ranges_age_69' type='REAL' />
-                   <column name='age_ranges_age_70' type='REAL' />
-                   <column name='age_ranges_age_71' type='REAL' />
-                   <column name='age_ranges_age_72' type='REAL' />
-                   <column name='age_ranges_age_73' type='REAL' />
-                   <column name='age_ranges_age_74' type='REAL' />
-                   <column name='age_ranges_age_75' type='REAL' />
-                   <column name='age_ranges_age_76' type='REAL' />
-                   <column name='age_ranges_age_77' type='REAL' />
-                   <column name='age_ranges_age_78' type='REAL' />
-                   <column name='age_ranges_age_79' type='REAL' />
-                   <column name='age_ranges_age_80_and_over' type='REAL' />
-                   <column name='ec_act_all_categories_economic_activity' type='REAL' />
-                   <column name='ec_act_active_total' type='REAL' />
-                   <column name='ec_act_active_employee_part_time' type='REAL' />
-                   <column name='ec_act_active_employee_full_time' type='REAL' />
-                   <column name='ec_act_active_self_employed_with_employees_part_time' type='REAL' />
-                   <column name='ec_act_active_self_employed_with_employees_full_time' type='REAL' />
-                   <column name='ec_act_active_self_employed_without_employees_part_time' type='REAL' />
-                   <column name='ec_act_active_self_employed_without_employees_full_time' type='REAL' />
-                   <column name='ec_act_active_unemployed' type='REAL' />
-                   <column name='ec_act_active_full_time_student' type='REAL' />
-                   <column name='ec_act_inactive_total' type='REAL' />
-                   <column name='ec_act_inactive_retired' type='REAL' />
-                   <column name='ec_act_inactive_student_including_full_time_students' type='REAL' />
-                   <column name='ec_act_inactive_looking_after_home_or_family' type='REAL' />
-                   <column name='ec_act_inactive_long_term_sick_or_disabled' type='REAL' />
-                   <column name='ec_act_inactive_other' type='REAL' />
-                   <column name='hcomp_all_categories_household_composition' type='REAL' />
-                   <column name='hcomp_one_person_household_total' type='REAL' />
-                   <column name='hcomp_one_person_household_aged_65_and_over' type='REAL' />
-                   <column name='hcomp_one_person_household_other' type='REAL' />
-                   <column name='hcomp_one_family_only_total' type='REAL' />
-                   <column name='hcomp_one_family_only_all_aged_65_and_over' type='REAL' />
-                   <column name='hcomp_one_family_only_married_cple_total' type='REAL' />
-                   <column name='hcomp_one_family_only_married_cple_no_kids' type='REAL' />
-                   <column name='hcomp_one_family_only_married_cple_one_dep_child' type='REAL' />
-                   <column name='hcomp_one_family_only_married_cple_two_or_more_dep_kids' type='REAL' />
-                   <column name='hcomp_one_family_only_married_cple_all_kids_non_dep' type='REAL' />
-                   <column name='hcomp_one_family_only_same_sex_civ_part_cple_total' type='REAL' />
-                   <column name='hcomp_one_family_only_same_sex_civ_part_cple_no_kids' type='REAL' />
-                   <column name='hcomp_same_sex_civ_part_cple_one_dep_child' type='REAL' />
-                   <column name='hcomp_same_sex_civ_part_cple_two_plus_dep_kids' type='REAL' />
-                   <column name='hcomp_one_family_only_same_sex_civ_part_cple_all_kids_non_dep' type='REAL' />
-                   <column name='hcomp_one_family_only_cohabiting_cple_total' type='REAL' />
-                   <column name='hcomp_one_family_only_cohabiting_cple_no_kids' type='REAL' />
-                   <column name='hcomp_one_family_only_cohabiting_cple_one_dep_child' type='REAL' />
-                   <column name='hcomp_one_family_only_cohabiting_cple_two_or_more_dep_kids' type='REAL' />
-                   <column name='hcomp_one_family_only_cohabiting_cple_all_kids_non_dep' type='REAL' />
-                   <column name='hcomp_one_family_only_lone_parent_total' type='REAL' />
-                   <column name='hcomp_one_family_only_lone_parent_one_dep_child' type='REAL' />
-                   <column name='hcomp_one_family_only_lone_parent_two_or_more_dep_kids' type='REAL' />
-                   <column name='hcomp_one_family_only_lone_parent_all_kids_non_dep' type='REAL' />
-                   <column name='hcomp_other_total' type='REAL' />
-                   <column name='hcomp_other_with_one_dep_child' type='REAL' />
-                   <column name='hcomp_other_with_two_or_more_dep_kids' type='REAL' />
-                   <column name='hcomp_other_all_full_time_students' type='REAL' />
-                   <column name='hcomp_other_all_aged_65_and_over' type='REAL' />
-                   <column name='hcomp_other_other' type='REAL' />
-                   <column name='tenure_all_categories_tenure' type='REAL' />
-                   <column name='tenure_owned_total' type='REAL' />
-                   <column name='tenure_owned_owned_outright' type='REAL' />
-                   <column name='tenure_owned_owned_with_a_mortgage_or_loan' type='REAL' />
-                   <column name='tenure_shared_ownership_part_owned_and_part_rented' type='REAL' />
-                   <column name='tenure_social_rented_total' type='REAL' />
-                   <column name='tenure_social_rented_rented_from_council_local_authority' type='REAL' />
-                   <column name='tenure_social_rented_other_social_rented' type='REAL' />
-                   <column name='tenure_private_rented_total' type='REAL' />
-                   <column name='tenure_private_rented_private_landlord_or_letting_agency' type='REAL' />
-                   <column name='tenure_private_rented_employer_of_a_household_member' type='REAL' />
-                   <column name='tenure_private_rented_relative_or_friend_of_household' type='REAL' />
-                   <column name='tenure_private_rented_other' type='REAL' />
-                   <column name='tenure_living_rent_free' type='REAL' />
+                   <column name='all_ages' type='REAL' />
+                   <column name='age_0' type='REAL' />
+                   <column name='age_1' type='REAL' />
+                   <column name='age_2' type='REAL' />
+                   <column name='age_3' type='REAL' />
+                   <column name='age_4' type='REAL' />
+                   <column name='age_5' type='REAL' />
+                   <column name='age_6' type='REAL' />
+                   <column name='age_7' type='REAL' />
+                   <column name='age_8' type='REAL' />
+                   <column name='age_9' type='REAL' />
+                   <column name='age_10' type='REAL' />
+                   <column name='age_11' type='REAL' />
+                   <column name='age_12' type='REAL' />
+                   <column name='age_13' type='REAL' />
+                   <column name='age_14' type='REAL' />
+                   <column name='age_15' type='REAL' />
+                   <column name='age_16' type='REAL' />
+                   <column name='age_17' type='REAL' />
+                   <column name='age_18' type='REAL' />
+                   <column name='age_19' type='REAL' />
+                   <column name='age_20' type='REAL' />
+                   <column name='age_21' type='REAL' />
+                   <column name='age_22' type='REAL' />
+                   <column name='age_23' type='REAL' />
+                   <column name='age_24' type='REAL' />
+                   <column name='age_25' type='REAL' />
+                   <column name='age_26' type='REAL' />
+                   <column name='age_27' type='REAL' />
+                   <column name='age_28' type='REAL' />
+                   <column name='age_29' type='REAL' />
+                   <column name='age_30' type='REAL' />
+                   <column name='age_31' type='REAL' />
+                   <column name='age_32' type='REAL' />
+                   <column name='age_33' type='REAL' />
+                   <column name='age_34' type='REAL' />
+                   <column name='age_35' type='REAL' />
+                   <column name='age_36' type='REAL' />
+                   <column name='age_37' type='REAL' />
+                   <column name='age_38' type='REAL' />
+                   <column name='age_39' type='REAL' />
+                   <column name='age_40' type='REAL' />
+                   <column name='age_41' type='REAL' />
+                   <column name='age_42' type='REAL' />
+                   <column name='age_43' type='REAL' />
+                   <column name='age_44' type='REAL' />
+                   <column name='age_45' type='REAL' />
+                   <column name='age_46' type='REAL' />
+                   <column name='age_47' type='REAL' />
+                   <column name='age_48' type='REAL' />
+                   <column name='age_49' type='REAL' />
+                   <column name='age_50' type='REAL' />
+                   <column name='age_51' type='REAL' />
+                   <column name='age_52' type='REAL' />
+                   <column name='age_53' type='REAL' />
+                   <column name='age_54' type='REAL' />
+                   <column name='age_55' type='REAL' />
+                   <column name='age_56' type='REAL' />
+                   <column name='age_57' type='REAL' />
+                   <column name='age_58' type='REAL' />
+                   <column name='age_59' type='REAL' />
+                   <column name='age_60' type='REAL' />
+                   <column name='age_61' type='REAL' />
+                   <column name='age_62' type='REAL' />
+                   <column name='age_63' type='REAL' />
+                   <column name='age_64' type='REAL' />
+                   <column name='age_65' type='REAL' />
+                   <column name='age_66' type='REAL' />
+                   <column name='age_67' type='REAL' />
+                   <column name='age_68' type='REAL' />
+                   <column name='age_69' type='REAL' />
+                   <column name='age_70' type='REAL' />
+                   <column name='age_71' type='REAL' />
+                   <column name='age_72' type='REAL' />
+                   <column name='age_73' type='REAL' />
+                   <column name='age_74' type='REAL' />
+                   <column name='age_75' type='REAL' />
+                   <column name='age_76' type='REAL' />
+                   <column name='age_77' type='REAL' />
+                   <column name='age_78' type='REAL' />
+                   <column name='age_79' type='REAL' />
+                   <column name='age_80' type='REAL' />
+                   <column name='age_81' type='REAL' />
+                   <column name='age_82' type='REAL' />
+                   <column name='age_83' type='REAL' />
+                   <column name='age_84' type='REAL' />
+                   <column name='age_85' type='REAL' />
+                   <column name='age_86' type='REAL' />
+                   <column name='age_87' type='REAL' />
+                   <column name='age_88' type='REAL' />
+                   <column name='age_89' type='REAL' />
+                   <column name='age_90_plus' type='REAL' />
                    
-                   <foreign-key foreignTable="forecast_variant" >
-                           <reference foreign="name" local="variant" onDelete='cascade' />
-                   </foreign-key>
-                   <foreign-key foreignTable="country" >
-                           <reference foreign="name" local="country" onDelete='cascade' />
+                   
+                   <foreign-key foreignTable="forecast_variant"  onDelete='CASCADE'  onUpdate='CASCADE'>
+                           <reference foreign="type" local="type" />
+                           <reference foreign="variant" local="variant" />
+                           <reference foreign="country" local="country" />
+                           <reference foreign="edition" local="edition" />
                    </foreign-key>
            </table>
         
         </schema>
+        
+        <!-- this is autogenerated -->
         <schema name='frs'>
                 <table name='househol' description='househol'>
                         <column name='user_id' type='INTEGER' default='0' primaryKey='true'/>

@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-07 21:05:09.487173
+-- Created by ada_generator.py on 2017-09-13 23:07:57.989952
 -- 
 with Ukds;
 with DB_Commons;
@@ -39,6 +39,7 @@ package Ukds.Frs.Nimigra_IO is
    function Next_Free_user_id( connection : Database_Connection := null) return Integer;
    function Next_Free_edition( connection : Database_Connection := null) return Integer;
    function Next_Free_year( connection : Database_Connection := null) return Integer;
+   function Next_Free_counter( connection : Database_Connection := null) return Integer;
    function Next_Free_sernum( connection : Database_Connection := null) return Sernum_Value;
 
    --
@@ -50,11 +51,11 @@ package Ukds.Frs.Nimigra_IO is
    -- returns the single a_nimigra matching the primary key fields, or the Ukds.Frs.Null_Nimigra record
    -- if no such record exists
    --
-   function Retrieve_By_PK( user_id : Integer; edition : Integer; year : Integer; sernum : Sernum_Value; connection : Database_Connection := null ) return Ukds.Frs.Nimigra;
+   function Retrieve_By_PK( user_id : Integer; edition : Integer; year : Integer; counter : Integer; sernum : Sernum_Value; connection : Database_Connection := null ) return Ukds.Frs.Nimigra;
    --
    -- Returns true if record with the given primary key exists
    --
-   function Exists( user_id : Integer; edition : Integer; year : Integer; sernum : Sernum_Value; connection : Database_Connection := null ) return Boolean ;
+   function Exists( user_id : Integer; edition : Integer; year : Integer; counter : Integer; sernum : Sernum_Value; connection : Database_Connection := null ) return Boolean ;
    
    --
    -- Retrieves a list of Ukds.Frs.Nimigra matching the criteria, or throws an exception
@@ -95,6 +96,7 @@ package Ukds.Frs.Nimigra_IO is
    procedure Add_user_id( c : in out d.Criteria; user_id : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_edition( c : in out d.Criteria; edition : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_year( c : in out d.Criteria; year : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_counter( c : in out d.Criteria; counter : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_sernum( c : in out d.Criteria; sernum : Sernum_Value; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_miper( c : in out d.Criteria; miper : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_issue( c : in out d.Criteria; issue : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
@@ -111,6 +113,7 @@ package Ukds.Frs.Nimigra_IO is
    procedure Add_user_id_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_edition_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_year_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_counter_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_sernum_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_miper_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_issue_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
@@ -125,21 +128,22 @@ package Ukds.Frs.Nimigra_IO is
    function Map_From_Cursor( cursor : GNATCOLL.SQL.Exec.Forward_Cursor ) return Ukds.Frs.Nimigra;
 
    -- 
-   -- returns an array of GNATColl SQL Parameters indexed 1 .. 13, as follows
+   -- returns an array of GNATColl SQL Parameters indexed 1 .. 14, as follows
    -- Pos  |       Name               | SQL Type           | Ada Type             | Default
    --    1 : user_id                  : Parameter_Integer  : Integer              :        0 
    --    2 : edition                  : Parameter_Integer  : Integer              :        0 
    --    3 : year                     : Parameter_Integer  : Integer              :        0 
-   --    4 : sernum                   : Parameter_Bigint   : Sernum_Value         :        0 
-   --    5 : miper                    : Parameter_Integer  : Integer              :        0 
-   --    6 : issue                    : Parameter_Integer  : Integer              :        0 
-   --    7 : miage                    : Parameter_Integer  : Integer              :        0 
-   --    8 : misex                    : Parameter_Integer  : Integer              :        0 
-   --    9 : mnthleft                 : Parameter_Integer  : Integer              :        0 
-   --   10 : more1yr                  : Parameter_Integer  : Integer              :        0 
-   --   11 : wherenow                 : Parameter_Integer  : Integer              :        0 
-   --   12 : month                    : Parameter_Integer  : Integer              :        0 
-   --   13 : miagegr                  : Parameter_Integer  : Integer              :        0 
+   --    4 : counter                  : Parameter_Integer  : Integer              :        0 
+   --    5 : sernum                   : Parameter_Bigint   : Sernum_Value         :        0 
+   --    6 : miper                    : Parameter_Integer  : Integer              :        0 
+   --    7 : issue                    : Parameter_Integer  : Integer              :        0 
+   --    8 : miage                    : Parameter_Integer  : Integer              :        0 
+   --    9 : misex                    : Parameter_Integer  : Integer              :        0 
+   --   10 : mnthleft                 : Parameter_Integer  : Integer              :        0 
+   --   11 : more1yr                  : Parameter_Integer  : Integer              :        0 
+   --   12 : wherenow                 : Parameter_Integer  : Integer              :        0 
+   --   13 : month                    : Parameter_Integer  : Integer              :        0 
+   --   14 : miagegr                  : Parameter_Integer  : Integer              :        0 
    function Get_Configured_Insert_Params( update_order : Boolean := False ) return GNATCOLL.SQL.Exec.SQL_Parameters;
 
 
@@ -154,12 +158,13 @@ package Ukds.Frs.Nimigra_IO is
    function Get_Prepared_Update_Statement return GNATCOLL.SQL.Exec.Prepared_Statement;
 
    -- 
-   -- returns an array of GNATColl SQL Parameters indexed 1 .. 4, as follows
+   -- returns an array of GNATColl SQL Parameters indexed 1 .. 5, as follows
    -- Pos  |       Name               | SQL Type           | Ada Type             | Default
    --    1 : user_id                  : Parameter_Integer  : Integer              :        0 
    --    2 : edition                  : Parameter_Integer  : Integer              :        0 
    --    3 : year                     : Parameter_Integer  : Integer              :        0 
-   --    4 : sernum                   : Parameter_Bigint   : Sernum_Value         :        0 
+   --    4 : counter                  : Parameter_Integer  : Integer              :        0 
+   --    5 : sernum                   : Parameter_Bigint   : Sernum_Value         :        0 
    function Get_Configured_Retrieve_Params return GNATCOLL.SQL.Exec.SQL_Parameters;
 
 

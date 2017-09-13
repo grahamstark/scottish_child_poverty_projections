@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-07 21:05:08.143126
+-- Created by ada_generator.py on 2017-09-13 23:07:56.715531
 -- 
 with Ada.Containers.Vectors;
 --
@@ -1793,6 +1793,7 @@ package Ukds.frs is
       user_id : Integer := 0;
       edition : Integer := 0;
       year : Integer := 0;
+      counter : Integer := 0;
       sernum : Sernum_Value := Sernum_Value'First;
       miper : Integer := 0;
       issue : Integer := 0;
@@ -1818,6 +1819,7 @@ package Ukds.frs is
          user_id => 0,
          edition => 0,
          year => 0,
+         counter => 0,
          sernum => Sernum_Value'First,
          miper => 0,
          issue => 0,

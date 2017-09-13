@@ -1,5 +1,5 @@
 --
--- created on 07-09-2017 by Mill
+-- created on 13-09-2017 by Mill
 --
 drop database if exists ukds;
 create database ukds with encoding 'UTF-8';
@@ -7,10 +7,146 @@ create database ukds with encoding 'UTF-8';
 \c ukds;
 
 
+drop schema if exists target_data cascade;
+create schema target_data;
+
 drop schema if exists frs cascade;
 create schema frs;
 
-set search_path=public,frs;
+set search_path=public,target_data,frs;
+
+--
+--
+-- tables for schema target_data  starts
+--
+--
+CREATE TABLE target_data.forecast_type( 
+       name TEXT not null,
+       description TEXT,
+       CONSTRAINT forecast_type_pk PRIMARY KEY( name )
+);
+
+CREATE TABLE target_data.country( 
+       name TEXT not null,
+       CONSTRAINT country_pk PRIMARY KEY( name )
+);
+
+CREATE TABLE target_data.forecast_variant( 
+       type TEXT not null,
+       variant TEXT not null,
+       country TEXT not null,
+       edition INTEGER not null,
+       source TEXT,
+       description TEXT,
+       url TEXT,
+       filename TEXT,
+       CONSTRAINT forecast_variant_pk PRIMARY KEY( type, variant, country, edition ),
+       CONSTRAINT forecast_variant_FK_0 FOREIGN KEY( country) references country( name ) on delete CASCADE on update CASCADE,
+       CONSTRAINT forecast_variant_FK_1 FOREIGN KEY( type) references forecast_type( name ) on delete CASCADE on update CASCADE
+);
+
+CREATE TABLE target_data.demographic_candidates( 
+       year INTEGER not null default 0,
+       type TEXT not null default 'persons',
+       variant TEXT not null,
+       country TEXT not null,
+       edition INTEGER not null,
+       target_group TEXT not null,
+       all_ages DOUBLE PRECISION,
+       age_0 DOUBLE PRECISION,
+       age_1 DOUBLE PRECISION,
+       age_2 DOUBLE PRECISION,
+       age_3 DOUBLE PRECISION,
+       age_4 DOUBLE PRECISION,
+       age_5 DOUBLE PRECISION,
+       age_6 DOUBLE PRECISION,
+       age_7 DOUBLE PRECISION,
+       age_8 DOUBLE PRECISION,
+       age_9 DOUBLE PRECISION,
+       age_10 DOUBLE PRECISION,
+       age_11 DOUBLE PRECISION,
+       age_12 DOUBLE PRECISION,
+       age_13 DOUBLE PRECISION,
+       age_14 DOUBLE PRECISION,
+       age_15 DOUBLE PRECISION,
+       age_16 DOUBLE PRECISION,
+       age_17 DOUBLE PRECISION,
+       age_18 DOUBLE PRECISION,
+       age_19 DOUBLE PRECISION,
+       age_20 DOUBLE PRECISION,
+       age_21 DOUBLE PRECISION,
+       age_22 DOUBLE PRECISION,
+       age_23 DOUBLE PRECISION,
+       age_24 DOUBLE PRECISION,
+       age_25 DOUBLE PRECISION,
+       age_26 DOUBLE PRECISION,
+       age_27 DOUBLE PRECISION,
+       age_28 DOUBLE PRECISION,
+       age_29 DOUBLE PRECISION,
+       age_30 DOUBLE PRECISION,
+       age_31 DOUBLE PRECISION,
+       age_32 DOUBLE PRECISION,
+       age_33 DOUBLE PRECISION,
+       age_34 DOUBLE PRECISION,
+       age_35 DOUBLE PRECISION,
+       age_36 DOUBLE PRECISION,
+       age_37 DOUBLE PRECISION,
+       age_38 DOUBLE PRECISION,
+       age_39 DOUBLE PRECISION,
+       age_40 DOUBLE PRECISION,
+       age_41 DOUBLE PRECISION,
+       age_42 DOUBLE PRECISION,
+       age_43 DOUBLE PRECISION,
+       age_44 DOUBLE PRECISION,
+       age_45 DOUBLE PRECISION,
+       age_46 DOUBLE PRECISION,
+       age_47 DOUBLE PRECISION,
+       age_48 DOUBLE PRECISION,
+       age_49 DOUBLE PRECISION,
+       age_50 DOUBLE PRECISION,
+       age_51 DOUBLE PRECISION,
+       age_52 DOUBLE PRECISION,
+       age_53 DOUBLE PRECISION,
+       age_54 DOUBLE PRECISION,
+       age_55 DOUBLE PRECISION,
+       age_56 DOUBLE PRECISION,
+       age_57 DOUBLE PRECISION,
+       age_58 DOUBLE PRECISION,
+       age_59 DOUBLE PRECISION,
+       age_60 DOUBLE PRECISION,
+       age_61 DOUBLE PRECISION,
+       age_62 DOUBLE PRECISION,
+       age_63 DOUBLE PRECISION,
+       age_64 DOUBLE PRECISION,
+       age_65 DOUBLE PRECISION,
+       age_66 DOUBLE PRECISION,
+       age_67 DOUBLE PRECISION,
+       age_68 DOUBLE PRECISION,
+       age_69 DOUBLE PRECISION,
+       age_70 DOUBLE PRECISION,
+       age_71 DOUBLE PRECISION,
+       age_72 DOUBLE PRECISION,
+       age_73 DOUBLE PRECISION,
+       age_74 DOUBLE PRECISION,
+       age_75 DOUBLE PRECISION,
+       age_76 DOUBLE PRECISION,
+       age_77 DOUBLE PRECISION,
+       age_78 DOUBLE PRECISION,
+       age_79 DOUBLE PRECISION,
+       age_80 DOUBLE PRECISION,
+       age_81 DOUBLE PRECISION,
+       age_82 DOUBLE PRECISION,
+       age_83 DOUBLE PRECISION,
+       age_84 DOUBLE PRECISION,
+       age_85 DOUBLE PRECISION,
+       age_86 DOUBLE PRECISION,
+       age_87 DOUBLE PRECISION,
+       age_88 DOUBLE PRECISION,
+       age_89 DOUBLE PRECISION,
+       age_90_plus DOUBLE PRECISION,
+       CONSTRAINT demographic_candidates_pk PRIMARY KEY( year, type, variant, country, edition, target_group ),
+       CONSTRAINT demographic_candidates_FK_0 FOREIGN KEY( type, variant, country, edition) references forecast_variant( type, variant, country, edition ) on delete CASCADE on update CASCADE
+);
 
 --
 --
@@ -450,7 +586,7 @@ CREATE TABLE frs.househol(
        serpay5 INTEGER default 0,
        serper5 INTEGER default 0,
        urbni INTEGER default 0,
-       PRIMARY KEY( user_id, edition, year, sernum )
+       CONSTRAINT househol_pk PRIMARY KEY( user_id, edition, year, sernum )
 );
 
 CREATE TABLE frs.benunit( 
@@ -964,7 +1100,7 @@ CREATE TABLE frs.benunit(
        oaholb INTEGER default 0,
        oaroast INTEGER default 0,
        ecostab2 INTEGER default 0,
-       PRIMARY KEY( user_id, edition, year, sernum, benunit ),
+       CONSTRAINT benunit_pk PRIMARY KEY( user_id, edition, year, sernum, benunit ),
        CONSTRAINT benunit_FK_0 FOREIGN KEY( year, user_id, edition, sernum) references househol( year, user_id, edition, sernum ) on delete cascade on update cascade
 );
 
@@ -1896,7 +2032,7 @@ CREATE TABLE frs.adult(
        skiwrk INTEGER default 0,
        slos INTEGER default 0,
        yjblev INTEGER default 0,
-       PRIMARY KEY( user_id, edition, year, sernum, benunit, person ),
+       CONSTRAINT adult_pk PRIMARY KEY( user_id, edition, year, sernum, benunit, person ),
        CONSTRAINT adult_FK_0 FOREIGN KEY( year, user_id, edition, sernum) references househol( year, user_id, edition, sernum ) on delete cascade on update cascade,
        CONSTRAINT adult_FK_1 FOREIGN KEY( year, user_id, edition, sernum, benunit) references benunit( year, user_id, edition, sernum, benunit ) on delete cascade on update cascade
 );
@@ -2170,7 +2306,7 @@ CREATE TABLE frs.child(
        webacnow INTEGER default 0,
        ntsctnow INTEGER default 0,
        skiwknow INTEGER default 0,
-       PRIMARY KEY( user_id, edition, year, sernum, benunit, person ),
+       CONSTRAINT child_pk PRIMARY KEY( user_id, edition, year, sernum, benunit, person ),
        CONSTRAINT child_FK_0 FOREIGN KEY( year, user_id, edition, sernum) references househol( year, user_id, edition, sernum ) on delete cascade on update cascade,
        CONSTRAINT child_FK_1 FOREIGN KEY( year, user_id, edition, sernum, benunit) references benunit( year, user_id, edition, sernum, benunit ) on delete cascade on update cascade
 );
@@ -2190,7 +2326,7 @@ CREATE TABLE frs.accounts(
        month INTEGER default 0,
        issue INTEGER default 0,
        gtwtot INTEGER default 0,
-       PRIMARY KEY( user_id, edition, year, sernum, benunit, person, account ),
+       CONSTRAINT accounts_pk PRIMARY KEY( user_id, edition, year, sernum, benunit, person, account ),
        CONSTRAINT accounts_FK_0 FOREIGN KEY( year, user_id, edition, sernum) references househol( year, user_id, edition, sernum ) on delete cascade on update cascade,
        CONSTRAINT accounts_FK_1 FOREIGN KEY( year, user_id, edition, sernum, benunit) references benunit( year, user_id, edition, sernum, benunit ) on delete cascade on update cascade,
        CONSTRAINT accounts_FK_2 FOREIGN KEY( year, user_id, edition, sernum, benunit, person) references adult( year, user_id, edition, sernum, benunit, person ) on delete cascade on update cascade
@@ -2210,7 +2346,7 @@ CREATE TABLE frs.accouts(
        issue INTEGER default 0,
        nsamt INTEGER default 0,
        month INTEGER default 0,
-       PRIMARY KEY( user_id, edition, year, sernum, benunit, person, account ),
+       CONSTRAINT accouts_pk PRIMARY KEY( user_id, edition, year, sernum, benunit, person, account ),
        CONSTRAINT accouts_FK_0 FOREIGN KEY( year, user_id, edition, sernum) references househol( year, user_id, edition, sernum ) on delete cascade on update cascade,
        CONSTRAINT accouts_FK_1 FOREIGN KEY( year, user_id, edition, sernum, benunit) references benunit( year, user_id, edition, sernum, benunit ) on delete cascade on update cascade,
        CONSTRAINT accouts_FK_2 FOREIGN KEY( year, user_id, edition, sernum, benunit, person) references adult( year, user_id, edition, sernum, benunit, person ) on delete cascade on update cascade
@@ -2282,7 +2418,7 @@ CREATE TABLE frs.admin(
        whotran5 INTEGER default 0,
        lngdf11 INTEGER default 0,
        whlang11 INTEGER default 0,
-       PRIMARY KEY( user_id, edition, year, sernum ),
+       CONSTRAINT admin_pk PRIMARY KEY( user_id, edition, year, sernum ),
        CONSTRAINT admin_FK_0 FOREIGN KEY( year, user_id, edition, sernum) references househol( year, user_id, edition, sernum ) on delete cascade on update cascade
 );
 
@@ -2307,7 +2443,7 @@ CREATE TABLE frs.assets(
        pd INTEGER default 0,
        month INTEGER default 0,
        issue INTEGER default 0,
-       PRIMARY KEY( user_id, edition, year, sernum, benunit, person, assetype, seq ),
+       CONSTRAINT assets_pk PRIMARY KEY( user_id, edition, year, sernum, benunit, person, assetype, seq ),
        CONSTRAINT assets_FK_0 FOREIGN KEY( year, user_id, edition, sernum) references househol( year, user_id, edition, sernum ) on delete cascade on update cascade,
        CONSTRAINT assets_FK_1 FOREIGN KEY( year, user_id, edition, sernum, benunit) references benunit( year, user_id, edition, sernum, benunit ) on delete cascade on update cascade,
        CONSTRAINT assets_FK_2 FOREIGN KEY( year, user_id, edition, sernum, benunit, person) references adult( year, user_id, edition, sernum, benunit, person ) on delete cascade on update cascade
@@ -2360,7 +2496,7 @@ CREATE TABLE frs.benefits(
        cbtax INTEGER default 0,
        cbtaxamt DOUBLE PRECISION default 0.0,
        cbtaxpd INTEGER default 0,
-       PRIMARY KEY( user_id, edition, year, counter, sernum, benunit, person, benefit ),
+       CONSTRAINT benefits_pk PRIMARY KEY( user_id, edition, year, counter, sernum, benunit, person, benefit ),
        CONSTRAINT benefits_FK_0 FOREIGN KEY( year, user_id, edition, sernum) references househol( year, user_id, edition, sernum ) on delete cascade on update cascade,
        CONSTRAINT benefits_FK_1 FOREIGN KEY( year, user_id, edition, sernum, benunit) references benunit( year, user_id, edition, sernum, benunit ) on delete cascade on update cascade
 );
@@ -2437,7 +2573,7 @@ CREATE TABLE frs.care(
        howlng19 INTEGER default 0,
        howlng20 INTEGER default 0,
        issue INTEGER default 0,
-       PRIMARY KEY( user_id, edition, year, counter, sernum, benunit ),
+       CONSTRAINT care_pk PRIMARY KEY( user_id, edition, year, counter, sernum, benunit ),
        CONSTRAINT care_FK_0 FOREIGN KEY( year, user_id, edition, sernum) references househol( year, user_id, edition, sernum ) on delete cascade on update cascade,
        CONSTRAINT care_FK_1 FOREIGN KEY( year, user_id, edition, sernum, benunit) references benunit( year, user_id, edition, sernum, benunit ) on delete cascade on update cascade
 );
@@ -2458,10 +2594,10 @@ CREATE TABLE frs.childcare(
        issue INTEGER default 0,
        registrd INTEGER default 0,
        month INTEGER default 0,
-       PRIMARY KEY( user_id, edition, year, sernum, benunit, person, chlook ),
+       CONSTRAINT childcare_pk PRIMARY KEY( user_id, edition, year, sernum, benunit, person, chlook ),
        CONSTRAINT childcare_FK_0 FOREIGN KEY( year, user_id, edition, sernum) references househol( year, user_id, edition, sernum ) on delete cascade on update cascade,
        CONSTRAINT childcare_FK_1 FOREIGN KEY( year, user_id, edition, sernum, benunit) references benunit( year, user_id, edition, sernum, benunit ) on delete cascade on update cascade,
-       CONSTRAINT childcare_FK_2 FOREIGN KEY( year, user_id, edition, sernum, benunit, person) references child( year, user_id, edition, sernum, benunit, person ) on delete cascade on update cascade
+       CONSTRAINT childcare_FK_2 FOREIGN KEY( year, user_id, edition, sernum, benunit, person) references adult( year, user_id, edition, sernum, benunit, person ) on delete cascade on update cascade
 );
 
 CREATE TABLE frs.chldcare( 
@@ -2497,7 +2633,7 @@ CREATE TABLE frs.chldcare(
        freccty4 INTEGER default 0,
        freccty5 INTEGER default 0,
        freccty6 INTEGER default 0,
-       PRIMARY KEY( user_id, edition, year, sernum, benunit, person, chlook ),
+       CONSTRAINT chldcare_pk PRIMARY KEY( user_id, edition, year, sernum, benunit, person, chlook ),
        CONSTRAINT chldcare_FK_0 FOREIGN KEY( year, user_id, edition, sernum) references househol( year, user_id, edition, sernum ) on delete cascade on update cascade,
        CONSTRAINT chldcare_FK_1 FOREIGN KEY( year, user_id, edition, sernum, benunit) references benunit( year, user_id, edition, sernum, benunit ) on delete cascade on update cascade
 );
@@ -2515,7 +2651,7 @@ CREATE TABLE frs.endowmnt(
        menstyr INTEGER default 0,
        month INTEGER default 0,
        issue INTEGER default 0,
-       PRIMARY KEY( user_id, edition, year, sernum, mortseq, endowseq ),
+       CONSTRAINT endowmnt_pk PRIMARY KEY( user_id, edition, year, sernum, mortseq, endowseq ),
        CONSTRAINT endowmnt_FK_0 FOREIGN KEY( year, user_id, edition, sernum) references househol( year, user_id, edition, sernum ) on delete cascade on update cascade
 );
 
@@ -2532,7 +2668,7 @@ CREATE TABLE frs.extchild(
        nhhpd INTEGER default 0,
        month INTEGER default 0,
        issue INTEGER default 0,
-       PRIMARY KEY( user_id, edition, year, sernum, benunit, extseq ),
+       CONSTRAINT extchild_pk PRIMARY KEY( user_id, edition, year, sernum, benunit, extseq ),
        CONSTRAINT extchild_FK_0 FOREIGN KEY( year, user_id, edition, sernum) references househol( year, user_id, edition, sernum ) on delete cascade on update cascade,
        CONSTRAINT extchild_FK_1 FOREIGN KEY( year, user_id, edition, sernum, benunit) references benunit( year, user_id, edition, sernum, benunit ) on delete cascade on update cascade
 );
@@ -2549,7 +2685,7 @@ CREATE TABLE frs.govpay(
        govpay INTEGER default 0,
        month INTEGER default 0,
        issue INTEGER default 0,
-       PRIMARY KEY( user_id, edition, year, counter, sernum, benunit, person, benefit ),
+       CONSTRAINT govpay_pk PRIMARY KEY( user_id, edition, year, counter, sernum, benunit, person, benefit ),
        CONSTRAINT govpay_FK_0 FOREIGN KEY( year, user_id, edition, sernum) references househol( year, user_id, edition, sernum ) on delete cascade on update cascade,
        CONSTRAINT govpay_FK_1 FOREIGN KEY( year, user_id, edition, sernum, benunit) references benunit( year, user_id, edition, sernum, benunit ) on delete cascade on update cascade,
        CONSTRAINT govpay_FK_2 FOREIGN KEY( year, user_id, edition, sernum, benunit, person) references adult( year, user_id, edition, sernum, benunit, person ) on delete cascade on update cascade
@@ -2575,7 +2711,7 @@ CREATE TABLE frs.insuranc(
        polpay INTEGER default 0,
        polpd INTEGER default 0,
        month INTEGER default 0,
-       PRIMARY KEY( user_id, edition, year, sernum, insseq ),
+       CONSTRAINT insuranc_pk PRIMARY KEY( user_id, edition, year, sernum, insseq ),
        CONSTRAINT insuranc_FK_0 FOREIGN KEY( year, user_id, edition, sernum) references househol( year, user_id, edition, sernum ) on delete cascade on update cascade
 );
 
@@ -2890,7 +3026,7 @@ CREATE TABLE frs.job(
        hrexc7 INTEGER default 0,
        hrexc8 INTEGER default 0,
        hrrate DOUBLE PRECISION default 0.0,
-       PRIMARY KEY( user_id, edition, year, counter, sernum, benunit, person, jobtype ),
+       CONSTRAINT job_pk PRIMARY KEY( user_id, edition, year, counter, sernum, benunit, person, jobtype ),
        CONSTRAINT job_FK_0 FOREIGN KEY( year, user_id, edition, sernum) references househol( year, user_id, edition, sernum ) on delete cascade on update cascade,
        CONSTRAINT job_FK_1 FOREIGN KEY( year, user_id, edition, sernum, benunit) references benunit( year, user_id, edition, sernum, benunit ) on delete cascade on update cascade,
        CONSTRAINT job_FK_2 FOREIGN KEY( year, user_id, edition, sernum, benunit, person) references adult( year, user_id, edition, sernum, benunit, person ) on delete cascade on update cascade
@@ -2931,7 +3067,7 @@ CREATE TABLE frs.maint(
        mrarr3 INTEGER default 0,
        mrarr4 INTEGER default 0,
        mrarr5 INTEGER default 0,
-       PRIMARY KEY( user_id, edition, year, sernum, benunit, person, maintseq ),
+       CONSTRAINT maint_pk PRIMARY KEY( user_id, edition, year, sernum, benunit, person, maintseq ),
        CONSTRAINT maint_FK_0 FOREIGN KEY( year, user_id, edition, sernum) references househol( year, user_id, edition, sernum ) on delete cascade on update cascade,
        CONSTRAINT maint_FK_1 FOREIGN KEY( year, user_id, edition, sernum, benunit) references benunit( year, user_id, edition, sernum, benunit ) on delete cascade on update cascade,
        CONSTRAINT maint_FK_2 FOREIGN KEY( year, user_id, edition, sernum, benunit, person) references adult( year, user_id, edition, sernum, benunit, person ) on delete cascade on update cascade
@@ -2950,7 +3086,7 @@ CREATE TABLE frs.mortcont(
        outspd INTEGER default 0,
        month INTEGER default 0,
        issue INTEGER default 0,
-       PRIMARY KEY( user_id, edition, year, sernum, mortseq, contseq ),
+       CONSTRAINT mortcont_pk PRIMARY KEY( user_id, edition, year, sernum, mortseq, contseq ),
        CONSTRAINT mortcont_FK_0 FOREIGN KEY( year, user_id, edition, sernum) references househol( year, user_id, edition, sernum ) on delete cascade on update cascade
 );
 
@@ -3021,7 +3157,7 @@ CREATE TABLE frs.mortgage(
        month INTEGER default 0,
        endwpri5 INTEGER default 0,
        issue INTEGER default 0,
-       PRIMARY KEY( user_id, edition, year, sernum, mortseq ),
+       CONSTRAINT mortgage_pk PRIMARY KEY( user_id, edition, year, sernum, mortseq ),
        CONSTRAINT mortgage_FK_0 FOREIGN KEY( year, user_id, edition, sernum) references househol( year, user_id, edition, sernum ) on delete cascade on update cascade
 );
 
@@ -3040,7 +3176,7 @@ CREATE TABLE frs.nimigr(
        wherenow INTEGER default 0,
        month INTEGER default 0,
        miagegr INTEGER default 0,
-       PRIMARY KEY( user_id, edition, year, counter, sernum, miper ),
+       CONSTRAINT nimigr_pk PRIMARY KEY( user_id, edition, year, counter, sernum, miper ),
        CONSTRAINT nimigr_FK_0 FOREIGN KEY( year, user_id, edition, sernum) references househol( year, user_id, edition, sernum ) on delete cascade on update cascade
 );
 
@@ -3048,6 +3184,7 @@ CREATE TABLE frs.nimigra(
        user_id INTEGER not null default 0,
        edition INTEGER not null default 0,
        year INTEGER not null default 0,
+       counter INTEGER not null default 0,
        sernum BIGINT not null,
        miper INTEGER default 0,
        issue INTEGER default 0,
@@ -3058,7 +3195,7 @@ CREATE TABLE frs.nimigra(
        wherenow INTEGER default 0,
        month INTEGER default 0,
        miagegr INTEGER default 0,
-       PRIMARY KEY( user_id, edition, year, sernum ),
+       CONSTRAINT nimigra_pk PRIMARY KEY( user_id, edition, year, counter, sernum ),
        CONSTRAINT nimigra_FK_0 FOREIGN KEY( year, user_id, edition, sernum) references househol( year, user_id, edition, sernum ) on delete cascade on update cascade
 );
 
@@ -3078,7 +3215,7 @@ CREATE TABLE frs.oddjob(
        month INTEGER default 0,
        issue INTEGER default 0,
        jobstat INTEGER default 0,
-       PRIMARY KEY( user_id, edition, year, counter, sernum, benunit, person, oddseq ),
+       CONSTRAINT oddjob_pk PRIMARY KEY( user_id, edition, year, counter, sernum, benunit, person, oddseq ),
        CONSTRAINT oddjob_FK_0 FOREIGN KEY( year, user_id, edition, sernum) references househol( year, user_id, edition, sernum ) on delete cascade on update cascade,
        CONSTRAINT oddjob_FK_1 FOREIGN KEY( year, user_id, edition, sernum, benunit) references benunit( year, user_id, edition, sernum, benunit ) on delete cascade on update cascade,
        CONSTRAINT oddjob_FK_2 FOREIGN KEY( year, user_id, edition, sernum, benunit, person) references adult( year, user_id, edition, sernum, benunit, person ) on delete cascade on update cascade
@@ -3112,7 +3249,7 @@ CREATE TABLE frs.owner(
        purcloan INTEGER default 0,
        month INTEGER default 0,
        issue INTEGER default 0,
-       PRIMARY KEY( user_id, edition, year, counter, sernum ),
+       CONSTRAINT owner_pk PRIMARY KEY( user_id, edition, year, counter, sernum ),
        CONSTRAINT owner_FK_0 FOREIGN KEY( year, user_id, edition, sernum) references househol( year, user_id, edition, sernum ) on delete cascade on update cascade
 );
 
@@ -3129,7 +3266,7 @@ CREATE TABLE frs.penamt(
        penq DOUBLE PRECISION default 0.0,
        month INTEGER default 0,
        issue INTEGER default 0,
-       PRIMARY KEY( user_id, edition, year, counter, sernum, benunit, person, benefit ),
+       CONSTRAINT penamt_pk PRIMARY KEY( user_id, edition, year, counter, sernum, benunit, person, benefit ),
        CONSTRAINT penamt_FK_0 FOREIGN KEY( year, user_id, edition, sernum) references househol( year, user_id, edition, sernum ) on delete cascade on update cascade,
        CONSTRAINT penamt_FK_1 FOREIGN KEY( year, user_id, edition, sernum, benunit) references benunit( year, user_id, edition, sernum, benunit ) on delete cascade on update cascade,
        CONSTRAINT penamt_FK_2 FOREIGN KEY( year, user_id, edition, sernum, benunit, person) references adult( year, user_id, edition, sernum, benunit, person ) on delete cascade on update cascade
@@ -3164,7 +3301,7 @@ CREATE TABLE frs.penprov(
        issue INTEGER default 0,
        penamtdt TIMESTAMP,
        penchk INTEGER default 0,
-       PRIMARY KEY( user_id, edition, year, counter, sernum, benunit, person, provseq ),
+       CONSTRAINT penprov_pk PRIMARY KEY( user_id, edition, year, counter, sernum, benunit, person, provseq ),
        CONSTRAINT penprov_FK_0 FOREIGN KEY( year, user_id, edition, sernum) references househol( year, user_id, edition, sernum ) on delete cascade on update cascade,
        CONSTRAINT penprov_FK_1 FOREIGN KEY( year, user_id, edition, sernum, benunit) references benunit( year, user_id, edition, sernum, benunit ) on delete cascade on update cascade,
        CONSTRAINT penprov_FK_2 FOREIGN KEY( year, user_id, edition, sernum, benunit, person) references adult( year, user_id, edition, sernum, benunit, person ) on delete cascade on update cascade
@@ -3194,7 +3331,7 @@ CREATE TABLE frs.pension(
        issue INTEGER default 0,
        penpd1 INTEGER default 0,
        penpd2 INTEGER default 0,
-       PRIMARY KEY( user_id, edition, year, sernum, benunit, person, penseq ),
+       CONSTRAINT pension_pk PRIMARY KEY( user_id, edition, year, sernum, benunit, person, penseq ),
        CONSTRAINT pension_FK_0 FOREIGN KEY( year, user_id, edition, sernum) references househol( year, user_id, edition, sernum ) on delete cascade on update cascade,
        CONSTRAINT pension_FK_1 FOREIGN KEY( year, user_id, edition, sernum, benunit) references benunit( year, user_id, edition, sernum, benunit ) on delete cascade on update cascade,
        CONSTRAINT pension_FK_2 FOREIGN KEY( year, user_id, edition, sernum, benunit, person) references adult( year, user_id, edition, sernum, benunit, person ) on delete cascade on update cascade
@@ -3265,7 +3402,7 @@ CREATE TABLE frs.pianom0809(
        agehd80 INTEGER default 0,
        agesp80 INTEGER default 0,
        sernum BIGINT not null,
-       PRIMARY KEY( user_id, edition, year, benunit, sernum ),
+       CONSTRAINT pianom0809_pk PRIMARY KEY( user_id, edition, year, benunit, sernum ),
        CONSTRAINT pianom0809_FK_0 FOREIGN KEY( year, user_id, edition, sernum) references househol( year, user_id, edition, sernum ) on delete cascade on update cascade,
        CONSTRAINT pianom0809_FK_1 FOREIGN KEY( year, user_id, edition, sernum, benunit) references benunit( year, user_id, edition, sernum, benunit ) on delete cascade on update cascade
 );
@@ -3335,7 +3472,7 @@ CREATE TABLE frs.pianon0910(
        agehd80 INTEGER default 0,
        agesp80 INTEGER default 0,
        sernum BIGINT not null,
-       PRIMARY KEY( user_id, edition, year, benunit, sernum ),
+       CONSTRAINT pianon0910_pk PRIMARY KEY( user_id, edition, year, benunit, sernum ),
        CONSTRAINT pianon0910_FK_0 FOREIGN KEY( year, user_id, edition, sernum) references househol( year, user_id, edition, sernum ) on delete cascade on update cascade
 );
 
@@ -3404,7 +3541,7 @@ CREATE TABLE frs.pianon1011(
        agehd80 INTEGER default 0,
        agesp80 INTEGER default 0,
        sernum BIGINT not null,
-       PRIMARY KEY( user_id, edition, year, benunit, sernum ),
+       CONSTRAINT pianon1011_pk PRIMARY KEY( user_id, edition, year, benunit, sernum ),
        CONSTRAINT pianon1011_FK_0 FOREIGN KEY( year, user_id, edition, sernum) references househol( year, user_id, edition, sernum ) on delete cascade on update cascade,
        CONSTRAINT pianon1011_FK_1 FOREIGN KEY( year, user_id, edition, sernum, benunit) references benunit( year, user_id, edition, sernum, benunit ) on delete cascade on update cascade
 );
@@ -3474,7 +3611,7 @@ CREATE TABLE frs.pianon1213(
        agehd80 INTEGER default 0,
        agesp80 INTEGER default 0,
        sernum BIGINT not null,
-       PRIMARY KEY( user_id, edition, year, benunit, sernum ),
+       CONSTRAINT pianon1213_pk PRIMARY KEY( user_id, edition, year, benunit, sernum ),
        CONSTRAINT pianon1213_FK_0 FOREIGN KEY( year, user_id, edition, sernum) references househol( year, user_id, edition, sernum ) on delete cascade on update cascade,
        CONSTRAINT pianon1213_FK_1 FOREIGN KEY( year, user_id, edition, sernum, benunit) references benunit( year, user_id, edition, sernum, benunit ) on delete cascade on update cascade
 );
@@ -3544,7 +3681,7 @@ CREATE TABLE frs.pianon1314(
        agehd80 INTEGER default 0,
        agesp80 INTEGER default 0,
        sernum BIGINT not null,
-       PRIMARY KEY( user_id, edition, year, benunit, sernum ),
+       CONSTRAINT pianon1314_pk PRIMARY KEY( user_id, edition, year, benunit, sernum ),
        CONSTRAINT pianon1314_FK_0 FOREIGN KEY( year, user_id, edition, sernum) references househol( year, user_id, edition, sernum ) on delete cascade on update cascade,
        CONSTRAINT pianon1314_FK_1 FOREIGN KEY( year, user_id, edition, sernum, benunit) references benunit( year, user_id, edition, sernum, benunit ) on delete cascade on update cascade
 );
@@ -3617,7 +3754,7 @@ CREATE TABLE frs.pianon1415(
        agehd80 INTEGER default 0,
        agesp80 INTEGER default 0,
        sernum BIGINT not null,
-       PRIMARY KEY( user_id, edition, year, benunit, sernum ),
+       CONSTRAINT pianon1415_pk PRIMARY KEY( user_id, edition, year, benunit, sernum ),
        CONSTRAINT pianon1415_FK_0 FOREIGN KEY( year, user_id, edition, sernum) references househol( year, user_id, edition, sernum ) on delete cascade on update cascade,
        CONSTRAINT pianon1415_FK_1 FOREIGN KEY( year, user_id, edition, sernum, benunit) references benunit( year, user_id, edition, sernum, benunit ) on delete cascade on update cascade
 );
@@ -3690,7 +3827,7 @@ CREATE TABLE frs.pianon1516(
        agehd80 INTEGER default 0,
        agesp80 INTEGER default 0,
        sernum BIGINT not null,
-       PRIMARY KEY( user_id, edition, year, benunit, sernum ),
+       CONSTRAINT pianon1516_pk PRIMARY KEY( user_id, edition, year, benunit, sernum ),
        CONSTRAINT pianon1516_FK_0 FOREIGN KEY( year, user_id, edition, sernum) references househol( year, user_id, edition, sernum ) on delete cascade on update cascade,
        CONSTRAINT pianon1516_FK_1 FOREIGN KEY( year, user_id, edition, sernum, benunit) references benunit( year, user_id, edition, sernum, benunit ) on delete cascade on update cascade
 );
@@ -3719,7 +3856,7 @@ CREATE TABLE frs.prscrptn(
        medrep INTEGER default 0,
        medrpnm INTEGER default 0,
        month INTEGER default 0,
-       PRIMARY KEY( user_id, edition, year, sernum, benunit, person ),
+       CONSTRAINT prscrptn_pk PRIMARY KEY( user_id, edition, year, sernum, benunit, person ),
        CONSTRAINT prscrptn_FK_0 FOREIGN KEY( year, user_id, edition, sernum) references househol( year, user_id, edition, sernum ) on delete cascade on update cascade,
        CONSTRAINT prscrptn_FK_1 FOREIGN KEY( year, user_id, edition, sernum, benunit) references benunit( year, user_id, edition, sernum, benunit ) on delete cascade on update cascade
 );
@@ -3736,7 +3873,7 @@ CREATE TABLE frs.rentcont(
        accpd INTEGER default 0,
        month INTEGER default 0,
        issue INTEGER default 0,
-       PRIMARY KEY( user_id, edition, year, sernum, rentseq ),
+       CONSTRAINT rentcont_pk PRIMARY KEY( user_id, edition, year, sernum, rentseq ),
        CONSTRAINT rentcont_FK_0 FOREIGN KEY( year, user_id, edition, sernum) references househol( year, user_id, edition, sernum ) on delete cascade on update cascade
 );
 
@@ -3812,7 +3949,7 @@ CREATE TABLE frs.renter(
        serinc7 INTEGER default 0,
        serinc8 INTEGER default 0,
        serincam INTEGER default 0,
-       PRIMARY KEY( user_id, edition, year, sernum ),
+       CONSTRAINT renter_pk PRIMARY KEY( user_id, edition, year, sernum ),
        CONSTRAINT renter_FK_0 FOREIGN KEY( year, user_id, edition, sernum) references househol( year, user_id, edition, sernum ) on delete cascade on update cascade
 );
 
@@ -3836,7 +3973,7 @@ CREATE TABLE frs.transact(
        trantype TEXT default '''',
        reason INTEGER default 0,
        rowid INTEGER not null default 0,
-       PRIMARY KEY( user_id, edition, year, sernum, rowid ),
+       CONSTRAINT transact_pk PRIMARY KEY( user_id, edition, year, sernum, rowid ),
        CONSTRAINT transact_FK_0 FOREIGN KEY( year, user_id, edition, sernum) references househol( year, user_id, edition, sernum ) on delete cascade on update cascade
 );
 
@@ -3849,7 +3986,7 @@ CREATE TABLE frs.vehicle(
        vehic INTEGER default 0,
        vehown INTEGER default 0,
        month INTEGER default 0,
-       PRIMARY KEY( user_id, edition, year, sernum, vehseq ),
+       CONSTRAINT vehicle_pk PRIMARY KEY( user_id, edition, year, sernum, vehseq ),
        CONSTRAINT vehicle_FK_0 FOREIGN KEY( year, user_id, edition, sernum) references househol( year, user_id, edition, sernum ) on delete cascade on update cascade
 );
 
