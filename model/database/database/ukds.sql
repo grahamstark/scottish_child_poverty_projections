@@ -1,5 +1,5 @@
 --
--- created on 13-09-2017 by Mill
+-- created on 14-09-2017 by Mill
 --
 drop database if exists ukds;
 create database ukds with encoding 'UTF-8';
@@ -45,7 +45,25 @@ CREATE TABLE target_data.forecast_variant(
        CONSTRAINT forecast_variant_FK_1 FOREIGN KEY( type) references forecast_type( name ) on delete CASCADE on update CASCADE
 );
 
-CREATE TABLE target_data.demographic_candidates( 
+CREATE TABLE target_data.households_forecasts( 
+       year INTEGER not null default 0,
+       type TEXT not null default 'households',
+       variant TEXT not null,
+       country TEXT not null,
+       edition INTEGER not null,
+       one_adult_male DOUBLE PRECISION,
+       one_adult_female DOUBLE PRECISION,
+       two_adults DOUBLE PRECISION,
+       one_adult_one_child DOUBLE PRECISION,
+       one_adult_two_plus_children DOUBLE PRECISION,
+       two_plus_adult_one_plus_children DOUBLE PRECISION,
+       three_plus_person_all_adult DOUBLE PRECISION,
+       all_households DOUBLE PRECISION,
+       CONSTRAINT households_forecasts_pk PRIMARY KEY( year, type, variant, country, edition ),
+       CONSTRAINT households_forecasts_FK_0 FOREIGN KEY( type, variant, country, edition) references forecast_variant( type, variant, country, edition ) on delete CASCADE on update CASCADE
+);
+
+CREATE TABLE target_data.population_forecasts( 
        year INTEGER not null default 0,
        type TEXT not null default 'persons',
        variant TEXT not null,
@@ -144,8 +162,8 @@ CREATE TABLE target_data.demographic_candidates(
        age_88 DOUBLE PRECISION,
        age_89 DOUBLE PRECISION,
        age_90_plus DOUBLE PRECISION,
-       CONSTRAINT demographic_candidates_pk PRIMARY KEY( year, type, variant, country, edition, target_group ),
-       CONSTRAINT demographic_candidates_FK_0 FOREIGN KEY( type, variant, country, edition) references forecast_variant( type, variant, country, edition ) on delete CASCADE on update CASCADE
+       CONSTRAINT population_forecasts_pk PRIMARY KEY( year, type, variant, country, edition, target_group ),
+       CONSTRAINT population_forecasts_FK_0 FOREIGN KEY( type, variant, country, edition) references forecast_variant( type, variant, country, edition ) on delete CASCADE on update CASCADE
 );
 
 --
