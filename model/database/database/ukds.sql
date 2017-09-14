@@ -32,7 +32,7 @@ CREATE TABLE target_data.country(
 );
 
 CREATE TABLE target_data.forecast_variant( 
-       type TEXT not null,
+       rec_type TEXT not null,
        variant TEXT not null,
        country TEXT not null,
        edition INTEGER not null,
@@ -40,14 +40,14 @@ CREATE TABLE target_data.forecast_variant(
        description TEXT,
        url TEXT,
        filename TEXT,
-       CONSTRAINT forecast_variant_pk PRIMARY KEY( type, variant, country, edition ),
+       CONSTRAINT forecast_variant_pk PRIMARY KEY( rec_type, variant, country, edition ),
        CONSTRAINT forecast_variant_FK_0 FOREIGN KEY( country) references country( name ) on delete CASCADE on update CASCADE,
-       CONSTRAINT forecast_variant_FK_1 FOREIGN KEY( type) references forecast_type( name ) on delete CASCADE on update CASCADE
+       CONSTRAINT forecast_variant_FK_1 FOREIGN KEY( rec_type) references forecast_type( name ) on delete CASCADE on update CASCADE
 );
 
 CREATE TABLE target_data.households_forecasts( 
        year INTEGER not null default 0,
-       type TEXT not null default 'households',
+       rec_type TEXT not null default 'households',
        variant TEXT not null,
        country TEXT not null,
        edition INTEGER not null,
@@ -59,13 +59,13 @@ CREATE TABLE target_data.households_forecasts(
        two_plus_adult_one_plus_children DOUBLE PRECISION,
        three_plus_person_all_adult DOUBLE PRECISION,
        all_households DOUBLE PRECISION,
-       CONSTRAINT households_forecasts_pk PRIMARY KEY( year, type, variant, country, edition ),
-       CONSTRAINT households_forecasts_FK_0 FOREIGN KEY( type, variant, country, edition) references forecast_variant( type, variant, country, edition ) on delete CASCADE on update CASCADE
+       CONSTRAINT households_forecasts_pk PRIMARY KEY( year, rec_type, variant, country, edition ),
+       CONSTRAINT households_forecasts_FK_0 FOREIGN KEY( rec_type, variant, country, edition) references forecast_variant( rec_type, variant, country, edition ) on delete CASCADE on update CASCADE
 );
 
 CREATE TABLE target_data.population_forecasts( 
        year INTEGER not null default 0,
-       type TEXT not null default 'persons',
+       rec_type TEXT not null default 'persons',
        variant TEXT not null,
        country TEXT not null,
        edition INTEGER not null,
@@ -162,8 +162,8 @@ CREATE TABLE target_data.population_forecasts(
        age_88 DOUBLE PRECISION,
        age_89 DOUBLE PRECISION,
        age_90_plus DOUBLE PRECISION,
-       CONSTRAINT population_forecasts_pk PRIMARY KEY( year, type, variant, country, edition, target_group ),
-       CONSTRAINT population_forecasts_FK_0 FOREIGN KEY( type, variant, country, edition) references forecast_variant( type, variant, country, edition ) on delete CASCADE on update CASCADE
+       CONSTRAINT population_forecasts_pk PRIMARY KEY( year, rec_type, variant, country, edition, target_group ),
+       CONSTRAINT population_forecasts_FK_0 FOREIGN KEY( rec_type, variant, country, edition) references forecast_variant( rec_type, variant, country, edition ) on delete CASCADE on update CASCADE
 );
 
 --
