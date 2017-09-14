@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-13 23:07:56.720903
+-- Created by ada_generator.py on 2017-09-14 11:23:38.989174
 -- 
 
 with GNAT.Calendar.Time_IO;
@@ -15,9 +15,9 @@ package body Ukds.target_data is
    -- === CUSTOM TYPES END ===
    
    
-   function To_String( rec : Demographic_Candidates ) return String is
+   function To_String( rec : Population_Forecasts ) return String is
    begin
-      return  "Demographic_Candidates: " &
+      return  "Population_Forecasts: " &
          "year = " & rec.year'Img &
          "type = " & To_String( rec.type ) &
          "variant = " & To_String( rec.variant ) &
@@ -116,6 +116,25 @@ package body Ukds.target_data is
          "age_88 = " & rec.age_88'Img &
          "age_89 = " & rec.age_89'Img &
          "age_90_plus = " & rec.age_90_plus'Img;
+   end to_String;
+
+
+   function To_String( rec : Households_Forecasts ) return String is
+   begin
+      return  "Households_Forecasts: " &
+         "year = " & rec.year'Img &
+         "type = " & To_String( rec.type ) &
+         "variant = " & To_String( rec.variant ) &
+         "country = " & To_String( rec.country ) &
+         "edition = " & rec.edition'Img &
+         "one_adult_male = " & rec.one_adult_male'Img &
+         "one_adult_female = " & rec.one_adult_female'Img &
+         "two_adults = " & rec.two_adults'Img &
+         "one_adult_one_child = " & rec.one_adult_one_child'Img &
+         "one_adult_two_plus_children = " & rec.one_adult_two_plus_children'Img &
+         "two_plus_adult_one_plus_children = " & rec.two_plus_adult_one_plus_children'Img &
+         "three_plus_person_all_adult = " & rec.three_plus_person_all_adult'Img &
+         "all_households = " & rec.all_households'Img;
    end to_String;
 
 

@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-13 23:07:57.016238
+-- Created by ada_generator.py on 2017-09-14 11:23:39.319642
 -- 
 with Ukds;
 with DB_Commons;
@@ -85,7 +85,8 @@ package Ukds.Target_Data.Forecast_Variant_IO is
    -- functions to retrieve records from tables with foreign keys
    -- referencing the table modelled by this package
    --
-   function Retrieve_Associated_Ukds_Target_Data_Demographic_Candidates( a_forecast_variant : Ukds.Target_Data.Forecast_Variant; connection : Database_Connection := null ) return Ukds.Target_Data.Demographic_Candidates_List;
+   function Retrieve_Associated_Ukds_Target_Data_Population_Forecasts( a_forecast_variant : Ukds.Target_Data.Forecast_Variant; connection : Database_Connection := null ) return Ukds.Target_Data.Population_Forecasts_List;
+   function Retrieve_Associated_Ukds_Target_Data_Households_Forecasts( a_forecast_variant : Ukds.Target_Data.Forecast_Variant; connection : Database_Connection := null ) return Ukds.Target_Data.Households_Forecasts_List;
 
    --
    -- functions to add something to a criteria

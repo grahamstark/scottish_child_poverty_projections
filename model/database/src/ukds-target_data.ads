@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-13 23:07:56.519056
+-- Created by ada_generator.py on 2017-09-14 11:23:38.778897
 -- 
 with Ada.Containers.Vectors;
 --
@@ -31,119 +31,119 @@ package Ukds.target_data is
 
 
    --
-   -- record modelling Demographic_Candidates : Merged Household/Individual Population Data One row for each Country/Year/Variant
+   -- record modelling Population_Forecasts : Population Data One row for each Country/Year/Variant/type [M/F/Both]
    --
-   type Demographic_Candidates is record
+   type Population_Forecasts is record
       year : Integer := 0;
       type : Unbounded_String := To_Unbounded_String( "persons" );
       variant : Unbounded_String := MISSING_W_KEY;
       country : Unbounded_String := MISSING_W_KEY;
       edition : Year_Number := Year_Number'First;
       target_group : Unbounded_String := MISSING_W_KEY;
-      all_ages : Long_Float := 0.0;
-      age_0 : Long_Float := 0.0;
-      age_1 : Long_Float := 0.0;
-      age_2 : Long_Float := 0.0;
-      age_3 : Long_Float := 0.0;
-      age_4 : Long_Float := 0.0;
-      age_5 : Long_Float := 0.0;
-      age_6 : Long_Float := 0.0;
-      age_7 : Long_Float := 0.0;
-      age_8 : Long_Float := 0.0;
-      age_9 : Long_Float := 0.0;
-      age_10 : Long_Float := 0.0;
-      age_11 : Long_Float := 0.0;
-      age_12 : Long_Float := 0.0;
-      age_13 : Long_Float := 0.0;
-      age_14 : Long_Float := 0.0;
-      age_15 : Long_Float := 0.0;
-      age_16 : Long_Float := 0.0;
-      age_17 : Long_Float := 0.0;
-      age_18 : Long_Float := 0.0;
-      age_19 : Long_Float := 0.0;
-      age_20 : Long_Float := 0.0;
-      age_21 : Long_Float := 0.0;
-      age_22 : Long_Float := 0.0;
-      age_23 : Long_Float := 0.0;
-      age_24 : Long_Float := 0.0;
-      age_25 : Long_Float := 0.0;
-      age_26 : Long_Float := 0.0;
-      age_27 : Long_Float := 0.0;
-      age_28 : Long_Float := 0.0;
-      age_29 : Long_Float := 0.0;
-      age_30 : Long_Float := 0.0;
-      age_31 : Long_Float := 0.0;
-      age_32 : Long_Float := 0.0;
-      age_33 : Long_Float := 0.0;
-      age_34 : Long_Float := 0.0;
-      age_35 : Long_Float := 0.0;
-      age_36 : Long_Float := 0.0;
-      age_37 : Long_Float := 0.0;
-      age_38 : Long_Float := 0.0;
-      age_39 : Long_Float := 0.0;
-      age_40 : Long_Float := 0.0;
-      age_41 : Long_Float := 0.0;
-      age_42 : Long_Float := 0.0;
-      age_43 : Long_Float := 0.0;
-      age_44 : Long_Float := 0.0;
-      age_45 : Long_Float := 0.0;
-      age_46 : Long_Float := 0.0;
-      age_47 : Long_Float := 0.0;
-      age_48 : Long_Float := 0.0;
-      age_49 : Long_Float := 0.0;
-      age_50 : Long_Float := 0.0;
-      age_51 : Long_Float := 0.0;
-      age_52 : Long_Float := 0.0;
-      age_53 : Long_Float := 0.0;
-      age_54 : Long_Float := 0.0;
-      age_55 : Long_Float := 0.0;
-      age_56 : Long_Float := 0.0;
-      age_57 : Long_Float := 0.0;
-      age_58 : Long_Float := 0.0;
-      age_59 : Long_Float := 0.0;
-      age_60 : Long_Float := 0.0;
-      age_61 : Long_Float := 0.0;
-      age_62 : Long_Float := 0.0;
-      age_63 : Long_Float := 0.0;
-      age_64 : Long_Float := 0.0;
-      age_65 : Long_Float := 0.0;
-      age_66 : Long_Float := 0.0;
-      age_67 : Long_Float := 0.0;
-      age_68 : Long_Float := 0.0;
-      age_69 : Long_Float := 0.0;
-      age_70 : Long_Float := 0.0;
-      age_71 : Long_Float := 0.0;
-      age_72 : Long_Float := 0.0;
-      age_73 : Long_Float := 0.0;
-      age_74 : Long_Float := 0.0;
-      age_75 : Long_Float := 0.0;
-      age_76 : Long_Float := 0.0;
-      age_77 : Long_Float := 0.0;
-      age_78 : Long_Float := 0.0;
-      age_79 : Long_Float := 0.0;
-      age_80 : Long_Float := 0.0;
-      age_81 : Long_Float := 0.0;
-      age_82 : Long_Float := 0.0;
-      age_83 : Long_Float := 0.0;
-      age_84 : Long_Float := 0.0;
-      age_85 : Long_Float := 0.0;
-      age_86 : Long_Float := 0.0;
-      age_87 : Long_Float := 0.0;
-      age_88 : Long_Float := 0.0;
-      age_89 : Long_Float := 0.0;
-      age_90_plus : Long_Float := 0.0;
+      all_ages : Amount := 0.0;
+      age_0 : Amount := 0.0;
+      age_1 : Amount := 0.0;
+      age_2 : Amount := 0.0;
+      age_3 : Amount := 0.0;
+      age_4 : Amount := 0.0;
+      age_5 : Amount := 0.0;
+      age_6 : Amount := 0.0;
+      age_7 : Amount := 0.0;
+      age_8 : Amount := 0.0;
+      age_9 : Amount := 0.0;
+      age_10 : Amount := 0.0;
+      age_11 : Amount := 0.0;
+      age_12 : Amount := 0.0;
+      age_13 : Amount := 0.0;
+      age_14 : Amount := 0.0;
+      age_15 : Amount := 0.0;
+      age_16 : Amount := 0.0;
+      age_17 : Amount := 0.0;
+      age_18 : Amount := 0.0;
+      age_19 : Amount := 0.0;
+      age_20 : Amount := 0.0;
+      age_21 : Amount := 0.0;
+      age_22 : Amount := 0.0;
+      age_23 : Amount := 0.0;
+      age_24 : Amount := 0.0;
+      age_25 : Amount := 0.0;
+      age_26 : Amount := 0.0;
+      age_27 : Amount := 0.0;
+      age_28 : Amount := 0.0;
+      age_29 : Amount := 0.0;
+      age_30 : Amount := 0.0;
+      age_31 : Amount := 0.0;
+      age_32 : Amount := 0.0;
+      age_33 : Amount := 0.0;
+      age_34 : Amount := 0.0;
+      age_35 : Amount := 0.0;
+      age_36 : Amount := 0.0;
+      age_37 : Amount := 0.0;
+      age_38 : Amount := 0.0;
+      age_39 : Amount := 0.0;
+      age_40 : Amount := 0.0;
+      age_41 : Amount := 0.0;
+      age_42 : Amount := 0.0;
+      age_43 : Amount := 0.0;
+      age_44 : Amount := 0.0;
+      age_45 : Amount := 0.0;
+      age_46 : Amount := 0.0;
+      age_47 : Amount := 0.0;
+      age_48 : Amount := 0.0;
+      age_49 : Amount := 0.0;
+      age_50 : Amount := 0.0;
+      age_51 : Amount := 0.0;
+      age_52 : Amount := 0.0;
+      age_53 : Amount := 0.0;
+      age_54 : Amount := 0.0;
+      age_55 : Amount := 0.0;
+      age_56 : Amount := 0.0;
+      age_57 : Amount := 0.0;
+      age_58 : Amount := 0.0;
+      age_59 : Amount := 0.0;
+      age_60 : Amount := 0.0;
+      age_61 : Amount := 0.0;
+      age_62 : Amount := 0.0;
+      age_63 : Amount := 0.0;
+      age_64 : Amount := 0.0;
+      age_65 : Amount := 0.0;
+      age_66 : Amount := 0.0;
+      age_67 : Amount := 0.0;
+      age_68 : Amount := 0.0;
+      age_69 : Amount := 0.0;
+      age_70 : Amount := 0.0;
+      age_71 : Amount := 0.0;
+      age_72 : Amount := 0.0;
+      age_73 : Amount := 0.0;
+      age_74 : Amount := 0.0;
+      age_75 : Amount := 0.0;
+      age_76 : Amount := 0.0;
+      age_77 : Amount := 0.0;
+      age_78 : Amount := 0.0;
+      age_79 : Amount := 0.0;
+      age_80 : Amount := 0.0;
+      age_81 : Amount := 0.0;
+      age_82 : Amount := 0.0;
+      age_83 : Amount := 0.0;
+      age_84 : Amount := 0.0;
+      age_85 : Amount := 0.0;
+      age_86 : Amount := 0.0;
+      age_87 : Amount := 0.0;
+      age_88 : Amount := 0.0;
+      age_89 : Amount := 0.0;
+      age_90_plus : Amount := 0.0;
    end record;
    --
-   -- container for Demographic_Candidates : Merged Household/Individual Population Data One row for each Country/Year/Variant
+   -- container for Population_Forecasts : Population Data One row for each Country/Year/Variant/type [M/F/Both]
    --
-   package Demographic_Candidates_List_Package is new Ada.Containers.Vectors
-      (Element_Type => Demographic_Candidates,
+   package Population_Forecasts_List_Package is new Ada.Containers.Vectors
+      (Element_Type => Population_Forecasts,
       Index_Type => Positive );
-   subtype Demographic_Candidates_List is Demographic_Candidates_List_Package.Vector;
+   subtype Population_Forecasts_List is Population_Forecasts_List_Package.Vector;
    --
-   -- default value for Demographic_Candidates : Merged Household/Individual Population Data One row for each Country/Year/Variant
+   -- default value for Population_Forecasts : Population Data One row for each Country/Year/Variant/type [M/F/Both]
    --
-   Null_Demographic_Candidates : constant Demographic_Candidates := (
+   Null_Population_Forecasts : constant Population_Forecasts := (
          year => 0,
          type => To_Unbounded_String( "persons" ),
          variant => MISSING_W_KEY,
@@ -244,9 +244,57 @@ package Ukds.target_data is
          age_90_plus => 0.0
    );
    --
-   -- simple print routine for Demographic_Candidates : Merged Household/Individual Population Data One row for each Country/Year/Variant
+   -- simple print routine for Population_Forecasts : Population Data One row for each Country/Year/Variant/type [M/F/Both]
    --
-   function To_String( rec : Demographic_Candidates ) return String;
+   function To_String( rec : Population_Forecasts ) return String;
+
+   --
+   -- record modelling Households_Forecasts : Household Data One row for each Country/Year/Variant
+   --
+   type Households_Forecasts is record
+      year : Integer := 0;
+      type : Unbounded_String := To_Unbounded_String( "households" );
+      variant : Unbounded_String := MISSING_W_KEY;
+      country : Unbounded_String := MISSING_W_KEY;
+      edition : Year_Number := Year_Number'First;
+      one_adult_male : Amount := 0.0;
+      one_adult_female : Amount := 0.0;
+      two_adults : Amount := 0.0;
+      one_adult_one_child : Amount := 0.0;
+      one_adult_two_plus_children : Amount := 0.0;
+      two_plus_adult_one_plus_children : Amount := 0.0;
+      three_plus_person_all_adult : Amount := 0.0;
+      all_households : Amount := 0.0;
+   end record;
+   --
+   -- container for Households_Forecasts : Household Data One row for each Country/Year/Variant
+   --
+   package Households_Forecasts_List_Package is new Ada.Containers.Vectors
+      (Element_Type => Households_Forecasts,
+      Index_Type => Positive );
+   subtype Households_Forecasts_List is Households_Forecasts_List_Package.Vector;
+   --
+   -- default value for Households_Forecasts : Household Data One row for each Country/Year/Variant
+   --
+   Null_Households_Forecasts : constant Households_Forecasts := (
+         year => 0,
+         type => To_Unbounded_String( "households" ),
+         variant => MISSING_W_KEY,
+         country => MISSING_W_KEY,
+         edition => Year_Number'First,
+         one_adult_male => 0.0,
+         one_adult_female => 0.0,
+         two_adults => 0.0,
+         one_adult_one_child => 0.0,
+         one_adult_two_plus_children => 0.0,
+         two_plus_adult_one_plus_children => 0.0,
+         three_plus_person_all_adult => 0.0,
+         all_households => 0.0
+   );
+   --
+   -- simple print routine for Households_Forecasts : Household Data One row for each Country/Year/Variant
+   --
+   function To_String( rec : Households_Forecasts ) return String;
 
    --
    -- record modelling Forecast_Variant : 
