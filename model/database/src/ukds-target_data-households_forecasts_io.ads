@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-14 11:23:39.331921
+-- Created by ada_generator.py on 2017-09-14 14:06:17.074812
 -- 
 with Ukds;
 with DB_Commons;
@@ -48,11 +48,11 @@ package Ukds.Target_Data.Households_Forecasts_IO is
    -- returns the single a_households_forecasts matching the primary key fields, or the Ukds.Target_Data.Null_Households_Forecasts record
    -- if no such record exists
    --
-   function Retrieve_By_PK( year : Integer; type : Unbounded_String; variant : Unbounded_String; country : Unbounded_String; edition : Year_Number; connection : Database_Connection := null ) return Ukds.Target_Data.Households_Forecasts;
+   function Retrieve_By_PK( year : Integer; rec_type : Unbounded_String; variant : Unbounded_String; country : Unbounded_String; edition : Year_Number; connection : Database_Connection := null ) return Ukds.Target_Data.Households_Forecasts;
    --
    -- Returns true if record with the given primary key exists
    --
-   function Exists( year : Integer; type : Unbounded_String; variant : Unbounded_String; country : Unbounded_String; edition : Year_Number; connection : Database_Connection := null ) return Boolean ;
+   function Exists( year : Integer; rec_type : Unbounded_String; variant : Unbounded_String; country : Unbounded_String; edition : Year_Number; connection : Database_Connection := null ) return Boolean ;
    
    --
    -- Retrieves a list of Ukds.Target_Data.Households_Forecasts matching the criteria, or throws an exception
@@ -91,8 +91,8 @@ package Ukds.Target_Data.Households_Forecasts_IO is
    -- functions to add something to a criteria
    --
    procedure Add_year( c : in out d.Criteria; year : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
-   procedure Add_type( c : in out d.Criteria; type : Unbounded_String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
-   procedure Add_type( c : in out d.Criteria; type : String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_rec_type( c : in out d.Criteria; rec_type : Unbounded_String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_rec_type( c : in out d.Criteria; rec_type : String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_variant( c : in out d.Criteria; variant : Unbounded_String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_variant( c : in out d.Criteria; variant : String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_country( c : in out d.Criteria; country : Unbounded_String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
@@ -110,7 +110,7 @@ package Ukds.Target_Data.Households_Forecasts_IO is
    -- functions to add an ordering to a criteria
    --
    procedure Add_year_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
-   procedure Add_type_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_rec_type_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_variant_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_country_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_edition_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
@@ -129,7 +129,7 @@ package Ukds.Target_Data.Households_Forecasts_IO is
    -- returns an array of GNATColl SQL Parameters indexed 1 .. 13, as follows
    -- Pos  |       Name               | SQL Type           | Ada Type             | Default
    --    1 : year                     : Parameter_Integer  : Integer              :        0 
-   --    2 : type                     : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
+   --    2 : rec_type                 : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
    --    3 : variant                  : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
    --    4 : country                  : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
    --    5 : edition                  : Parameter_Integer  : Year_Number          :        0 
@@ -158,7 +158,7 @@ package Ukds.Target_Data.Households_Forecasts_IO is
    -- returns an array of GNATColl SQL Parameters indexed 1 .. 5, as follows
    -- Pos  |       Name               | SQL Type           | Ada Type             | Default
    --    1 : year                     : Parameter_Integer  : Integer              :        0 
-   --    2 : type                     : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
+   --    2 : rec_type                 : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
    --    3 : variant                  : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
    --    4 : country                  : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
    --    5 : edition                  : Parameter_Integer  : Year_Number          :        0 

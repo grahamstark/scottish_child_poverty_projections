@@ -17,7 +17,7 @@
            
         
                <table name='forecast_variant'>
-                  <column name='type' type='CHAR' size='20'  primaryKey='true' />
+                  <column name='rec_type' type='CHAR' size='20'  primaryKey='true' />
                   <column name='variant' type='CHAR' size='20'  primaryKey='true' description='e.g. low fertility; pessimistic macro..' />
                   <column name='country' type='CHAR' size='20'  primaryKey='true' />
                   <column name='edition' type="INTEGER" adaTypeName="Year_Number" 
@@ -32,13 +32,13 @@
                            <reference foreign="name" local="country" />
                    </foreign-key>
                    <foreign-key foreignTable="forecast_type" onDelete='CASCADE' onUpdate='CASCADE'>
-                           <reference foreign="name" local="type" />
+                           <reference foreign="name" local="rec_type" />
                    </foreign-key>
                </table>
                
                <table name='households_forecasts' description='Household Data One row for each Country/Year/Variant' >
                    <column name='year' type='INTEGER' default='0' primaryKey='true'/>
-                   <column name='type' type='CHAR' default='households' primaryKey='true'/>
+                   <column name='rec_type' type='CHAR' default='households' primaryKey='true'/>
                    <column name='variant' type='CHAR' size='20'  primaryKey='true' />
                    <column name='country' type='CHAR' size='20'  primaryKey='true' />
                    <column name='edition' type="INTEGER" adaTypeName="Year_Number" description="a number indicating a release or base year" primaryKey='true'/>
@@ -53,7 +53,7 @@
                   <column name='all_households' type='REAL' adaTypeName='Amount' />
 
                    <foreign-key foreignTable="forecast_variant"  onDelete='CASCADE'  onUpdate='CASCADE'>
-                           <reference foreign="type" local="type" />
+                           <reference foreign="rec_type" local="rec_type" />
                            <reference foreign="variant" local="variant" />
                            <reference foreign="country" local="country" />
                            <reference foreign="edition" local="edition" />
@@ -63,7 +63,7 @@
                <table name='population_forecasts' description='Population Data One row for each Country/Year/Variant/type [M/F/Both]' >
                
                    <column name='year' type='INTEGER' default='0' primaryKey='true'/>
-                   <column name='type' type='CHAR' default='persons' primaryKey='true'/>
+                   <column name='rec_type' type='CHAR' default='persons' primaryKey='true'/>
                    <column name='variant' type='CHAR' size='20'  primaryKey='true' />
                    <column name='country' type='CHAR' size='20'  primaryKey='true' />
                    <column name='edition' type="INTEGER" adaTypeName="Year_Number" description="a number indicating a release or base year" primaryKey='true'/>
@@ -162,7 +162,7 @@
                    <column name='age_89' type='REAL' adaTypeName='Amount'  />
                    <column name='age_90_plus' type='REAL' adaTypeName='Amount'  />
                    <foreign-key foreignTable="forecast_variant"  onDelete='CASCADE'  onUpdate='CASCADE'>
-                           <reference foreign="type" local="type" />
+                           <reference foreign="rec_type" local="rec_type" />
                            <reference foreign="variant" local="variant" />
                            <reference foreign="country" local="country" />
                            <reference foreign="edition" local="edition" />

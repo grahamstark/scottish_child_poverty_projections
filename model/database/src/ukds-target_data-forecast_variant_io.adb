@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-14 11:23:39.330076
+-- Created by ada_generator.py on 2017-09-14 14:06:17.072490
 -- 
 with Ukds;
 
@@ -63,14 +63,14 @@ package body Ukds.Target_Data.Forecast_Variant_IO is
    -- Select all variables; substring to be competed with output from some criteria
    --
    SELECT_PART : constant String := "select " &
-         "type, variant, country, edition, source, description, url, filename " &
+         "rec_type, variant, country, edition, source, description, url, filename " &
          " from target_data.forecast_variant " ;
    
    --
    -- Insert all variables; substring to be competed with output from some criteria
    --
    INSERT_PART : constant String := "insert into target_data.forecast_variant (" &
-         "type, variant, country, edition, source, description, url, filename " &
+         "rec_type, variant, country, edition, source, description, url, filename " &
          " ) values " ;
 
    
@@ -90,12 +90,12 @@ package body Ukds.Target_Data.Forecast_Variant_IO is
             2 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : description (Unbounded_String)
             3 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : url (Unbounded_String)
             4 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : filename (Unbounded_String)
-            5 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : type (Unbounded_String)
+            5 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : rec_type (Unbounded_String)
             6 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : variant (Unbounded_String)
             7 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : country (Unbounded_String)
             8 => ( Parameter_Integer, 0 )   --  : edition (Year_Number)
       ) else (
-            1 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : type (Unbounded_String)
+            1 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : rec_type (Unbounded_String)
             2 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : variant (Unbounded_String)
             3 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : country (Unbounded_String)
             4 => ( Parameter_Integer, 0 ),   --  : edition (Year_Number)
@@ -124,7 +124,7 @@ package body Ukds.Target_Data.Forecast_Variant_IO is
    function Get_Configured_Retrieve_Params return GNATCOLL.SQL.Exec.SQL_Parameters is
    use GNATCOLL.SQL_Impl;
       params : constant SQL_Parameters( 1 .. 4 ) := (
-            1 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : type (Unbounded_String)
+            1 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : rec_type (Unbounded_String)
             2 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : variant (Unbounded_String)
             3 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : country (Unbounded_String)
             4 => ( Parameter_Integer, 0 )   --  : edition (Year_Number)
@@ -136,7 +136,7 @@ package body Ukds.Target_Data.Forecast_Variant_IO is
 
 
    function Get_Prepared_Retrieve_Statement return gse.Prepared_Statement is 
-      s : constant String := " where type = $1 and variant = $2 and country = $3 and edition = $4"; 
+      s : constant String := " where rec_type = $1 and variant = $2 and country = $3 and edition = $4"; 
    begin 
       return Get_Prepared_Retrieve_Statement( s ); 
    end Get_Prepared_Retrieve_Statement; 
@@ -160,7 +160,7 @@ package body Ukds.Target_Data.Forecast_Variant_IO is
    function Get_Prepared_Update_Statement return gse.Prepared_Statement is 
       ps : gse.Prepared_Statement; 
       
-      query : constant String := DB_Commons.Add_Schema_To_Query( UPDATE_PART, SCHEMA_NAME ) & " source = $1, description = $2, url = $3, filename = $4 where type = $5 and variant = $6 and country = $7 and edition = $8"; 
+      query : constant String := DB_Commons.Add_Schema_To_Query( UPDATE_PART, SCHEMA_NAME ) & " source = $1, description = $2, url = $3, filename = $4 where rec_type = $5 and variant = $6 and country = $7 and edition = $8"; 
    begin 
       ps := gse.Prepare( 
         query, 
@@ -235,12 +235,12 @@ package body Ukds.Target_Data.Forecast_Variant_IO is
    -- returns the single Ukds.Target_Data.Forecast_Variant matching the primary key fields, or the Ukds.Target_Data.Null_Forecast_Variant record
    -- if no such record exists
    --
-   function Retrieve_By_PK( type : Unbounded_String; variant : Unbounded_String; country : Unbounded_String; edition : Year_Number; connection : Database_Connection := null ) return Ukds.Target_Data.Forecast_Variant is
+   function Retrieve_By_PK( rec_type : Unbounded_String; variant : Unbounded_String; country : Unbounded_String; edition : Year_Number; connection : Database_Connection := null ) return Ukds.Target_Data.Forecast_Variant is
       l : Ukds.Target_Data.Forecast_Variant_List;
       a_forecast_variant : Ukds.Target_Data.Forecast_Variant;
       c : d.Criteria;
    begin      
-      Add_type( c, type );
+      Add_rec_type( c, rec_type );
       Add_variant( c, variant );
       Add_country( c, country );
       Add_edition( c, edition );
@@ -258,12 +258,12 @@ package body Ukds.Target_Data.Forecast_Variant_IO is
    -- Returns true if record with the given primary key exists
    --
    EXISTS_PS : constant gse.Prepared_Statement := gse.Prepare( 
-        "select 1 from target_data.forecast_variant where type = $1 and variant = $2 and country = $3 and edition = $4", 
+        "select 1 from target_data.forecast_variant where rec_type = $1 and variant = $2 and country = $3 and edition = $4", 
         On_Server => True );
         
-   function Exists( type : Unbounded_String; variant : Unbounded_String; country : Unbounded_String; edition : Year_Number; connection : Database_Connection := null ) return Boolean  is
+   function Exists( rec_type : Unbounded_String; variant : Unbounded_String; country : Unbounded_String; edition : Year_Number; connection : Database_Connection := null ) return Boolean  is
       params : gse.SQL_Parameters := Get_Configured_Retrieve_Params;
-      aliased_type : aliased String := To_String( type );
+      aliased_rec_type : aliased String := To_String( rec_type );
       aliased_variant : aliased String := To_String( variant );
       aliased_country : aliased String := To_String( country );
       cursor : gse.Forward_Cursor;
@@ -278,7 +278,7 @@ package body Ukds.Target_Data.Forecast_Variant_IO is
          local_connection := connection;          
          is_local_connection := False;
       end if;
-      params( 1 ) := "+"( aliased_type'Access );
+      params( 1 ) := "+"( aliased_rec_type'Access );
       params( 2 ) := "+"( aliased_variant'Access );
       params( 3 ) := "+"( aliased_country'Access );
       params( 4 ) := "+"( Year_Number'Pos( edition ));
@@ -308,7 +308,7 @@ package body Ukds.Target_Data.Forecast_Variant_IO is
       a_forecast_variant : Ukds.Target_Data.Forecast_Variant;
    begin
       if not gse.Is_Null( cursor, 0 )then
-         a_forecast_variant.type:= To_Unbounded_String( gse.Value( cursor, 0 ));
+         a_forecast_variant.rec_type:= To_Unbounded_String( gse.Value( cursor, 0 ));
       end if;
       if not gse.Is_Null( cursor, 1 )then
          a_forecast_variant.variant:= To_Unbounded_String( gse.Value( cursor, 1 ));
@@ -378,7 +378,7 @@ package body Ukds.Target_Data.Forecast_Variant_IO is
       params              : gse.SQL_Parameters := Get_Configured_Insert_Params( Update_Order => True );
       local_connection    : Database_Connection;
       is_local_connection : Boolean;
-      aliased_type : aliased String := To_String( a_forecast_variant.type );
+      aliased_rec_type : aliased String := To_String( a_forecast_variant.rec_type );
       aliased_variant : aliased String := To_String( a_forecast_variant.variant );
       aliased_country : aliased String := To_String( a_forecast_variant.country );
       aliased_source : aliased String := To_String( a_forecast_variant.source );
@@ -398,7 +398,7 @@ package body Ukds.Target_Data.Forecast_Variant_IO is
       params( 2 ) := "+"( aliased_description'Access );
       params( 3 ) := "+"( aliased_url'Access );
       params( 4 ) := "+"( aliased_filename'Access );
-      params( 5 ) := "+"( aliased_type'Access );
+      params( 5 ) := "+"( aliased_rec_type'Access );
       params( 6 ) := "+"( aliased_variant'Access );
       params( 7 ) := "+"( aliased_country'Access );
       params( 8 ) := "+"( Year_Number'Pos( a_forecast_variant.edition ));
@@ -421,7 +421,7 @@ package body Ukds.Target_Data.Forecast_Variant_IO is
       params              : gse.SQL_Parameters := Get_Configured_Insert_Params;
       local_connection    : Database_Connection;
       is_local_connection : Boolean;
-      aliased_type : aliased String := To_String( a_forecast_variant.type );
+      aliased_rec_type : aliased String := To_String( a_forecast_variant.rec_type );
       aliased_variant : aliased String := To_String( a_forecast_variant.variant );
       aliased_country : aliased String := To_String( a_forecast_variant.country );
       aliased_source : aliased String := To_String( a_forecast_variant.source );
@@ -436,14 +436,14 @@ package body Ukds.Target_Data.Forecast_Variant_IO is
           local_connection := connection;          
           is_local_connection := False;
       end if;
-      if overwrite and Exists( a_forecast_variant.type, a_forecast_variant.variant, a_forecast_variant.country, a_forecast_variant.edition ) then
+      if overwrite and Exists( a_forecast_variant.rec_type, a_forecast_variant.variant, a_forecast_variant.country, a_forecast_variant.edition ) then
          Update( a_forecast_variant, local_connection );
          if( is_local_connection )then
             Connection_Pool.Return_Connection( local_connection );
          end if;
          return;
       end if;
-      params( 1 ) := "+"( aliased_type'Access );
+      params( 1 ) := "+"( aliased_rec_type'Access );
       params( 2 ) := "+"( aliased_variant'Access );
       params( 3 ) := "+"( aliased_country'Access );
       params( 4 ) := "+"( Year_Number'Pos( a_forecast_variant.edition ));
@@ -466,7 +466,7 @@ package body Ukds.Target_Data.Forecast_Variant_IO is
    procedure Delete( a_forecast_variant : in out Ukds.Target_Data.Forecast_Variant; connection : Database_Connection := null ) is
          c : d.Criteria;
    begin  
-      Add_type( c, a_forecast_variant.type );
+      Add_rec_type( c, a_forecast_variant.rec_type );
       Add_variant( c, a_forecast_variant.variant );
       Add_country( c, a_forecast_variant.country );
       Add_edition( c, a_forecast_variant.edition );
@@ -514,7 +514,7 @@ package body Ukds.Target_Data.Forecast_Variant_IO is
    function Retrieve_Associated_Ukds_Target_Data_Population_Forecasts( a_forecast_variant : Ukds.Target_Data.Forecast_Variant; connection : Database_Connection := null ) return Ukds.Target_Data.Population_Forecasts_List is
       c : d.Criteria;
    begin
-      Ukds.Target_Data.Population_Forecasts_IO.Add_Type( c, a_forecast_variant.Type );
+      Ukds.Target_Data.Population_Forecasts_IO.Add_Rec_Type( c, a_forecast_variant.Rec_Type );
       Ukds.Target_Data.Population_Forecasts_IO.Add_Variant( c, a_forecast_variant.Variant );
       Ukds.Target_Data.Population_Forecasts_IO.Add_Country( c, a_forecast_variant.Country );
       Ukds.Target_Data.Population_Forecasts_IO.Add_Edition( c, a_forecast_variant.Edition );
@@ -525,7 +525,7 @@ package body Ukds.Target_Data.Forecast_Variant_IO is
    function Retrieve_Associated_Ukds_Target_Data_Households_Forecasts( a_forecast_variant : Ukds.Target_Data.Forecast_Variant; connection : Database_Connection := null ) return Ukds.Target_Data.Households_Forecasts_List is
       c : d.Criteria;
    begin
-      Ukds.Target_Data.Households_Forecasts_IO.Add_Type( c, a_forecast_variant.Type );
+      Ukds.Target_Data.Households_Forecasts_IO.Add_Rec_Type( c, a_forecast_variant.Rec_Type );
       Ukds.Target_Data.Households_Forecasts_IO.Add_Variant( c, a_forecast_variant.Variant );
       Ukds.Target_Data.Households_Forecasts_IO.Add_Country( c, a_forecast_variant.Country );
       Ukds.Target_Data.Households_Forecasts_IO.Add_Edition( c, a_forecast_variant.Edition );
@@ -537,18 +537,18 @@ package body Ukds.Target_Data.Forecast_Variant_IO is
    --
    -- functions to add something to a criteria
    --
-   procedure Add_type( c : in out d.Criteria; type : Unbounded_String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
-   elem : d.Criterion := d.Make_Criterion_Element( "type", op, join, To_String( type ), 20 );
+   procedure Add_rec_type( c : in out d.Criteria; rec_type : Unbounded_String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "rec_type", op, join, To_String( rec_type ), 20 );
    begin
       d.add_to_criteria( c, elem );
-   end Add_type;
+   end Add_rec_type;
 
 
-   procedure Add_type( c : in out d.Criteria; type : String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
-   elem : d.Criterion := d.Make_Criterion_Element( "type", op, join, type, 20 );
+   procedure Add_rec_type( c : in out d.Criteria; rec_type : String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "rec_type", op, join, rec_type, 20 );
    begin
       d.add_to_criteria( c, elem );
-   end Add_type;
+   end Add_rec_type;
 
 
    procedure Add_variant( c : in out d.Criteria; variant : Unbounded_String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
@@ -646,11 +646,11 @@ package body Ukds.Target_Data.Forecast_Variant_IO is
    --
    -- functions to add an ordering to a criteria
    --
-   procedure Add_type_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
-   elem : d.Order_By_Element := d.Make_Order_By_Element( "type", direction  );
+   procedure Add_rec_type_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "rec_type", direction  );
    begin
       d.add_to_criteria( c, elem );
-   end Add_type_To_Orderings;
+   end Add_rec_type_To_Orderings;
 
 
    procedure Add_variant_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   

@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-14 11:23:39.352184
+-- Created by ada_generator.py on 2017-09-14 14:06:17.111436
 -- 
 with Ukds;
 
@@ -61,7 +61,7 @@ package body Ukds.Target_Data.Population_Forecasts_IO is
    -- Select all variables; substring to be competed with output from some criteria
    --
    SELECT_PART : constant String := "select " &
-         "year, type, variant, country, edition, target_group, all_ages, age_0, age_1, age_2," &
+         "year, rec_type, variant, country, edition, target_group, all_ages, age_0, age_1, age_2," &
          "age_3, age_4, age_5, age_6, age_7, age_8, age_9, age_10, age_11, age_12," &
          "age_13, age_14, age_15, age_16, age_17, age_18, age_19, age_20, age_21, age_22," &
          "age_23, age_24, age_25, age_26, age_27, age_28, age_29, age_30, age_31, age_32," &
@@ -77,7 +77,7 @@ package body Ukds.Target_Data.Population_Forecasts_IO is
    -- Insert all variables; substring to be competed with output from some criteria
    --
    INSERT_PART : constant String := "insert into target_data.population_forecasts (" &
-         "year, type, variant, country, edition, target_group, all_ages, age_0, age_1, age_2," &
+         "year, rec_type, variant, country, edition, target_group, all_ages, age_0, age_1, age_2," &
          "age_3, age_4, age_5, age_6, age_7, age_8, age_9, age_10, age_11, age_12," &
          "age_13, age_14, age_15, age_16, age_17, age_18, age_19, age_20, age_21, age_22," &
          "age_23, age_24, age_25, age_26, age_27, age_28, age_29, age_30, age_31, age_32," &
@@ -195,14 +195,14 @@ package body Ukds.Target_Data.Population_Forecasts_IO is
            91 => ( Parameter_Float, 0.0 ),   --  : age_89 (Amount)
            92 => ( Parameter_Float, 0.0 ),   --  : age_90_plus (Amount)
            93 => ( Parameter_Integer, 0 ),   --  : year (Integer)
-           94 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : type (Unbounded_String)
+           94 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : rec_type (Unbounded_String)
            95 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : variant (Unbounded_String)
            96 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : country (Unbounded_String)
            97 => ( Parameter_Integer, 0 ),   --  : edition (Year_Number)
            98 => ( Parameter_Text, null, Null_Unbounded_String )   --  : target_group (Unbounded_String)
       ) else (
             1 => ( Parameter_Integer, 0 ),   --  : year (Integer)
-            2 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : type (Unbounded_String)
+            2 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : rec_type (Unbounded_String)
             3 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : variant (Unbounded_String)
             4 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : country (Unbounded_String)
             5 => ( Parameter_Integer, 0 ),   --  : edition (Year_Number)
@@ -321,7 +321,7 @@ package body Ukds.Target_Data.Population_Forecasts_IO is
    use GNATCOLL.SQL_Impl;
       params : constant SQL_Parameters( 1 .. 6 ) := (
             1 => ( Parameter_Integer, 0 ),   --  : year (Integer)
-            2 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : type (Unbounded_String)
+            2 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : rec_type (Unbounded_String)
             3 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : variant (Unbounded_String)
             4 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : country (Unbounded_String)
             5 => ( Parameter_Integer, 0 ),   --  : edition (Year_Number)
@@ -334,7 +334,7 @@ package body Ukds.Target_Data.Population_Forecasts_IO is
 
 
    function Get_Prepared_Retrieve_Statement return gse.Prepared_Statement is 
-      s : constant String := " where year = $1 and type = $2 and variant = $3 and country = $4 and edition = $5 and target_group = $6"; 
+      s : constant String := " where year = $1 and rec_type = $2 and variant = $3 and country = $4 and edition = $5 and target_group = $6"; 
    begin 
       return Get_Prepared_Retrieve_Statement( s ); 
    end Get_Prepared_Retrieve_Statement; 
@@ -358,7 +358,7 @@ package body Ukds.Target_Data.Population_Forecasts_IO is
    function Get_Prepared_Update_Statement return gse.Prepared_Statement is 
       ps : gse.Prepared_Statement; 
       
-      query : constant String := DB_Commons.Add_Schema_To_Query( UPDATE_PART, SCHEMA_NAME ) & " all_ages = $1, age_0 = $2, age_1 = $3, age_2 = $4, age_3 = $5, age_4 = $6, age_5 = $7, age_6 = $8, age_7 = $9, age_8 = $10, age_9 = $11, age_10 = $12, age_11 = $13, age_12 = $14, age_13 = $15, age_14 = $16, age_15 = $17, age_16 = $18, age_17 = $19, age_18 = $20, age_19 = $21, age_20 = $22, age_21 = $23, age_22 = $24, age_23 = $25, age_24 = $26, age_25 = $27, age_26 = $28, age_27 = $29, age_28 = $30, age_29 = $31, age_30 = $32, age_31 = $33, age_32 = $34, age_33 = $35, age_34 = $36, age_35 = $37, age_36 = $38, age_37 = $39, age_38 = $40, age_39 = $41, age_40 = $42, age_41 = $43, age_42 = $44, age_43 = $45, age_44 = $46, age_45 = $47, age_46 = $48, age_47 = $49, age_48 = $50, age_49 = $51, age_50 = $52, age_51 = $53, age_52 = $54, age_53 = $55, age_54 = $56, age_55 = $57, age_56 = $58, age_57 = $59, age_58 = $60, age_59 = $61, age_60 = $62, age_61 = $63, age_62 = $64, age_63 = $65, age_64 = $66, age_65 = $67, age_66 = $68, age_67 = $69, age_68 = $70, age_69 = $71, age_70 = $72, age_71 = $73, age_72 = $74, age_73 = $75, age_74 = $76, age_75 = $77, age_76 = $78, age_77 = $79, age_78 = $80, age_79 = $81, age_80 = $82, age_81 = $83, age_82 = $84, age_83 = $85, age_84 = $86, age_85 = $87, age_86 = $88, age_87 = $89, age_88 = $90, age_89 = $91, age_90_plus = $92 where year = $93 and type = $94 and variant = $95 and country = $96 and edition = $97 and target_group = $98"; 
+      query : constant String := DB_Commons.Add_Schema_To_Query( UPDATE_PART, SCHEMA_NAME ) & " all_ages = $1, age_0 = $2, age_1 = $3, age_2 = $4, age_3 = $5, age_4 = $6, age_5 = $7, age_6 = $8, age_7 = $9, age_8 = $10, age_9 = $11, age_10 = $12, age_11 = $13, age_12 = $14, age_13 = $15, age_14 = $16, age_15 = $17, age_16 = $18, age_17 = $19, age_18 = $20, age_19 = $21, age_20 = $22, age_21 = $23, age_22 = $24, age_23 = $25, age_24 = $26, age_25 = $27, age_26 = $28, age_27 = $29, age_28 = $30, age_29 = $31, age_30 = $32, age_31 = $33, age_32 = $34, age_33 = $35, age_34 = $36, age_35 = $37, age_36 = $38, age_37 = $39, age_38 = $40, age_39 = $41, age_40 = $42, age_41 = $43, age_42 = $44, age_43 = $45, age_44 = $46, age_45 = $47, age_46 = $48, age_47 = $49, age_48 = $50, age_49 = $51, age_50 = $52, age_51 = $53, age_52 = $54, age_53 = $55, age_54 = $56, age_55 = $57, age_56 = $58, age_57 = $59, age_58 = $60, age_59 = $61, age_60 = $62, age_61 = $63, age_62 = $64, age_63 = $65, age_64 = $66, age_65 = $67, age_66 = $68, age_67 = $69, age_68 = $70, age_69 = $71, age_70 = $72, age_71 = $73, age_72 = $74, age_73 = $75, age_74 = $76, age_75 = $77, age_76 = $78, age_77 = $79, age_78 = $80, age_79 = $81, age_80 = $82, age_81 = $83, age_82 = $84, age_83 = $85, age_84 = $86, age_85 = $87, age_86 = $88, age_87 = $89, age_88 = $90, age_89 = $91, age_90_plus = $92 where year = $93 and rec_type = $94 and variant = $95 and country = $96 and edition = $97 and target_group = $98"; 
    begin 
       ps := gse.Prepare( 
         query, 
@@ -467,13 +467,13 @@ package body Ukds.Target_Data.Population_Forecasts_IO is
    -- returns the single Ukds.Target_Data.Population_Forecasts matching the primary key fields, or the Ukds.Target_Data.Null_Population_Forecasts record
    -- if no such record exists
    --
-   function Retrieve_By_PK( year : Integer; type : Unbounded_String; variant : Unbounded_String; country : Unbounded_String; edition : Year_Number; target_group : Unbounded_String; connection : Database_Connection := null ) return Ukds.Target_Data.Population_Forecasts is
+   function Retrieve_By_PK( year : Integer; rec_type : Unbounded_String; variant : Unbounded_String; country : Unbounded_String; edition : Year_Number; target_group : Unbounded_String; connection : Database_Connection := null ) return Ukds.Target_Data.Population_Forecasts is
       l : Ukds.Target_Data.Population_Forecasts_List;
       a_population_forecasts : Ukds.Target_Data.Population_Forecasts;
       c : d.Criteria;
    begin      
       Add_year( c, year );
-      Add_type( c, type );
+      Add_rec_type( c, rec_type );
       Add_variant( c, variant );
       Add_country( c, country );
       Add_edition( c, edition );
@@ -492,12 +492,12 @@ package body Ukds.Target_Data.Population_Forecasts_IO is
    -- Returns true if record with the given primary key exists
    --
    EXISTS_PS : constant gse.Prepared_Statement := gse.Prepare( 
-        "select 1 from target_data.population_forecasts where year = $1 and type = $2 and variant = $3 and country = $4 and edition = $5 and target_group = $6", 
+        "select 1 from target_data.population_forecasts where year = $1 and rec_type = $2 and variant = $3 and country = $4 and edition = $5 and target_group = $6", 
         On_Server => True );
         
-   function Exists( year : Integer; type : Unbounded_String; variant : Unbounded_String; country : Unbounded_String; edition : Year_Number; target_group : Unbounded_String; connection : Database_Connection := null ) return Boolean  is
+   function Exists( year : Integer; rec_type : Unbounded_String; variant : Unbounded_String; country : Unbounded_String; edition : Year_Number; target_group : Unbounded_String; connection : Database_Connection := null ) return Boolean  is
       params : gse.SQL_Parameters := Get_Configured_Retrieve_Params;
-      aliased_type : aliased String := To_String( type );
+      aliased_rec_type : aliased String := To_String( rec_type );
       aliased_variant : aliased String := To_String( variant );
       aliased_country : aliased String := To_String( country );
       aliased_target_group : aliased String := To_String( target_group );
@@ -514,7 +514,7 @@ package body Ukds.Target_Data.Population_Forecasts_IO is
          is_local_connection := False;
       end if;
       params( 1 ) := "+"( Integer'Pos( year ));
-      params( 2 ) := "+"( aliased_type'Access );
+      params( 2 ) := "+"( aliased_rec_type'Access );
       params( 3 ) := "+"( aliased_variant'Access );
       params( 4 ) := "+"( aliased_country'Access );
       params( 5 ) := "+"( Year_Number'Pos( edition ));
@@ -548,7 +548,7 @@ package body Ukds.Target_Data.Population_Forecasts_IO is
          a_population_forecasts.year := gse.Integer_Value( cursor, 0 );
       end if;
       if not gse.Is_Null( cursor, 1 )then
-         a_population_forecasts.type:= To_Unbounded_String( gse.Value( cursor, 1 ));
+         a_population_forecasts.rec_type:= To_Unbounded_String( gse.Value( cursor, 1 ));
       end if;
       if not gse.Is_Null( cursor, 2 )then
          a_population_forecasts.variant:= To_Unbounded_String( gse.Value( cursor, 2 ));
@@ -885,7 +885,7 @@ package body Ukds.Target_Data.Population_Forecasts_IO is
       params              : gse.SQL_Parameters := Get_Configured_Insert_Params( Update_Order => True );
       local_connection    : Database_Connection;
       is_local_connection : Boolean;
-      aliased_type : aliased String := To_String( a_population_forecasts.type );
+      aliased_rec_type : aliased String := To_String( a_population_forecasts.rec_type );
       aliased_variant : aliased String := To_String( a_population_forecasts.variant );
       aliased_country : aliased String := To_String( a_population_forecasts.country );
       aliased_target_group : aliased String := To_String( a_population_forecasts.target_group );
@@ -991,7 +991,7 @@ package body Ukds.Target_Data.Population_Forecasts_IO is
       params( 91 ) := "+"( Float( a_population_forecasts.age_89 ));
       params( 92 ) := "+"( Float( a_population_forecasts.age_90_plus ));
       params( 93 ) := "+"( Integer'Pos( a_population_forecasts.year ));
-      params( 94 ) := "+"( aliased_type'Access );
+      params( 94 ) := "+"( aliased_rec_type'Access );
       params( 95 ) := "+"( aliased_variant'Access );
       params( 96 ) := "+"( aliased_country'Access );
       params( 97 ) := "+"( Year_Number'Pos( a_population_forecasts.edition ));
@@ -1015,7 +1015,7 @@ package body Ukds.Target_Data.Population_Forecasts_IO is
       params              : gse.SQL_Parameters := Get_Configured_Insert_Params;
       local_connection    : Database_Connection;
       is_local_connection : Boolean;
-      aliased_type : aliased String := To_String( a_population_forecasts.type );
+      aliased_rec_type : aliased String := To_String( a_population_forecasts.rec_type );
       aliased_variant : aliased String := To_String( a_population_forecasts.variant );
       aliased_country : aliased String := To_String( a_population_forecasts.country );
       aliased_target_group : aliased String := To_String( a_population_forecasts.target_group );
@@ -1027,7 +1027,7 @@ package body Ukds.Target_Data.Population_Forecasts_IO is
           local_connection := connection;          
           is_local_connection := False;
       end if;
-      if overwrite and Exists( a_population_forecasts.year, a_population_forecasts.type, a_population_forecasts.variant, a_population_forecasts.country, a_population_forecasts.edition, a_population_forecasts.target_group ) then
+      if overwrite and Exists( a_population_forecasts.year, a_population_forecasts.rec_type, a_population_forecasts.variant, a_population_forecasts.country, a_population_forecasts.edition, a_population_forecasts.target_group ) then
          Update( a_population_forecasts, local_connection );
          if( is_local_connection )then
             Connection_Pool.Return_Connection( local_connection );
@@ -1035,7 +1035,7 @@ package body Ukds.Target_Data.Population_Forecasts_IO is
          return;
       end if;
       params( 1 ) := "+"( Integer'Pos( a_population_forecasts.year ));
-      params( 2 ) := "+"( aliased_type'Access );
+      params( 2 ) := "+"( aliased_rec_type'Access );
       params( 3 ) := "+"( aliased_variant'Access );
       params( 4 ) := "+"( aliased_country'Access );
       params( 5 ) := "+"( Year_Number'Pos( a_population_forecasts.edition ));
@@ -1148,7 +1148,7 @@ package body Ukds.Target_Data.Population_Forecasts_IO is
          c : d.Criteria;
    begin  
       Add_year( c, a_population_forecasts.year );
-      Add_type( c, a_population_forecasts.type );
+      Add_rec_type( c, a_population_forecasts.rec_type );
       Add_variant( c, a_population_forecasts.variant );
       Add_country( c, a_population_forecasts.country );
       Add_edition( c, a_population_forecasts.edition );
@@ -1205,18 +1205,18 @@ package body Ukds.Target_Data.Population_Forecasts_IO is
    end Add_year;
 
 
-   procedure Add_type( c : in out d.Criteria; type : Unbounded_String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
-   elem : d.Criterion := d.Make_Criterion_Element( "type", op, join, To_String( type ) );
+   procedure Add_rec_type( c : in out d.Criteria; rec_type : Unbounded_String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "rec_type", op, join, To_String( rec_type ) );
    begin
       d.add_to_criteria( c, elem );
-   end Add_type;
+   end Add_rec_type;
 
 
-   procedure Add_type( c : in out d.Criteria; type : String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
-   elem : d.Criterion := d.Make_Criterion_Element( "type", op, join, type );
+   procedure Add_rec_type( c : in out d.Criteria; rec_type : String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "rec_type", op, join, rec_type );
    begin
       d.add_to_criteria( c, elem );
-   end Add_type;
+   end Add_rec_type;
 
 
    procedure Add_variant( c : in out d.Criteria; variant : Unbounded_String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
@@ -1923,11 +1923,11 @@ package body Ukds.Target_Data.Population_Forecasts_IO is
    end Add_year_To_Orderings;
 
 
-   procedure Add_type_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
-   elem : d.Order_By_Element := d.Make_Order_By_Element( "type", direction  );
+   procedure Add_rec_type_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "rec_type", direction  );
    begin
       d.add_to_criteria( c, elem );
-   end Add_type_To_Orderings;
+   end Add_rec_type_To_Orderings;
 
 
    procedure Add_variant_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   

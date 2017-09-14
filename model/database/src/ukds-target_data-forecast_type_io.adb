@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-14 11:23:39.288417
+-- Created by ada_generator.py on 2017-09-14 14:06:17.045462
 -- 
 with Ukds;
 
@@ -413,7 +413,7 @@ package body Ukds.Target_Data.Forecast_Type_IO is
    function Retrieve_Associated_Ukds_Target_Data_Forecast_Variants( a_forecast_type : Ukds.Target_Data.Forecast_Type; connection : Database_Connection := null ) return Ukds.Target_Data.Forecast_Variant_List is
       c : d.Criteria;
    begin
-      Ukds.Target_Data.Forecast_Variant_IO.Add_Type( c, a_forecast_type.Name );
+      Ukds.Target_Data.Forecast_Variant_IO.Add_Rec_Type( c, a_forecast_type.Name );
       return Ukds.Target_Data.Forecast_Variant_IO.retrieve( c, connection );
    end Retrieve_Associated_Ukds_Target_Data_Forecast_Variants;
 

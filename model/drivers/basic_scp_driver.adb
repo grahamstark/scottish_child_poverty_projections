@@ -59,6 +59,11 @@ with Ukds.Frs.Renter_IO;
 with Ukds.Frs.Transact_IO;
 with Ukds.Frs.Vehicle_IO;
 with Ukds.frs;
+with Ukds.Target_Data.Forecast_Type_IO;
+with Ukds.Target_Data.Country_IO;
+with Ukds.Target_Data.Forecast_Variant_IO;
+with Ukds.Target_Data.Households_Forecasts_IO;
+with Ukds.Target_Data.Population_Forecasts_IO;
 
 with Data_Constants;
 with Base_Model_Types;
