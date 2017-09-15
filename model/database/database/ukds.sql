@@ -1,5 +1,5 @@
 --
--- created on 14-09-2017 by Mill
+-- created on 15-09-2017 by Mill
 --
 drop database if exists ukds;
 create database ukds with encoding 'UTF-8';
@@ -161,7 +161,27 @@ CREATE TABLE target_data.population_forecasts(
        age_87 DOUBLE PRECISION,
        age_88 DOUBLE PRECISION,
        age_89 DOUBLE PRECISION,
-       age_90_plus DOUBLE PRECISION,
+       age_90 DOUBLE PRECISION,
+       age_91 DOUBLE PRECISION,
+       age_92 DOUBLE PRECISION,
+       age_93 DOUBLE PRECISION,
+       age_94 DOUBLE PRECISION,
+       age_95 DOUBLE PRECISION,
+       age_96 DOUBLE PRECISION,
+       age_97 DOUBLE PRECISION,
+       age_98 DOUBLE PRECISION,
+       age_99 DOUBLE PRECISION,
+       age_100 DOUBLE PRECISION,
+       age_101 DOUBLE PRECISION,
+       age_102 DOUBLE PRECISION,
+       age_103 DOUBLE PRECISION,
+       age_104 DOUBLE PRECISION,
+       age_105 DOUBLE PRECISION,
+       age_106 DOUBLE PRECISION,
+       age_107 DOUBLE PRECISION,
+       age_108 DOUBLE PRECISION,
+       age_109 DOUBLE PRECISION,
+       age_110 DOUBLE PRECISION,
        CONSTRAINT population_forecasts_pk PRIMARY KEY( year, rec_type, variant, country, edition, target_group ),
        CONSTRAINT population_forecasts_FK_0 FOREIGN KEY( rec_type, variant, country, edition) references forecast_variant( rec_type, variant, country, edition ) on delete CASCADE on update CASCADE
 );

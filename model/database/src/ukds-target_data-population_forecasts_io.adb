@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-14 14:06:17.111436
+-- Created by ada_generator.py on 2017-09-15 17:46:21.327953
 -- 
 with Ukds;
 
@@ -70,7 +70,9 @@ package body Ukds.Target_Data.Population_Forecasts_IO is
          "age_53, age_54, age_55, age_56, age_57, age_58, age_59, age_60, age_61, age_62," &
          "age_63, age_64, age_65, age_66, age_67, age_68, age_69, age_70, age_71, age_72," &
          "age_73, age_74, age_75, age_76, age_77, age_78, age_79, age_80, age_81, age_82," &
-         "age_83, age_84, age_85, age_86, age_87, age_88, age_89, age_90_plus " &
+         "age_83, age_84, age_85, age_86, age_87, age_88, age_89, age_90, age_91, age_92," &
+         "age_93, age_94, age_95, age_96, age_97, age_98, age_99, age_100, age_101, age_102," &
+         "age_103, age_104, age_105, age_106, age_107, age_108, age_109, age_110 " &
          " from target_data.population_forecasts " ;
    
    --
@@ -86,7 +88,9 @@ package body Ukds.Target_Data.Population_Forecasts_IO is
          "age_53, age_54, age_55, age_56, age_57, age_58, age_59, age_60, age_61, age_62," &
          "age_63, age_64, age_65, age_66, age_67, age_68, age_69, age_70, age_71, age_72," &
          "age_73, age_74, age_75, age_76, age_77, age_78, age_79, age_80, age_81, age_82," &
-         "age_83, age_84, age_85, age_86, age_87, age_88, age_89, age_90_plus " &
+         "age_83, age_84, age_85, age_86, age_87, age_88, age_89, age_90, age_91, age_92," &
+         "age_93, age_94, age_95, age_96, age_97, age_98, age_99, age_100, age_101, age_102," &
+         "age_103, age_104, age_105, age_106, age_107, age_108, age_109, age_110 " &
          " ) values " ;
 
    
@@ -101,7 +105,7 @@ package body Ukds.Target_Data.Population_Forecasts_IO is
    UPDATE_PART : constant String := "update target_data.population_forecasts set  ";
    function Get_Configured_Insert_Params( update_order : Boolean := False )  return GNATCOLL.SQL.Exec.SQL_Parameters is
    use GNATCOLL.SQL_Impl;
-      params : constant SQL_Parameters( 1 .. 98 ) := ( if update_order then (
+      params : constant SQL_Parameters( 1 .. 118 ) := ( if update_order then (
             1 => ( Parameter_Float, 0.0 ),   --  : all_ages (Amount)
             2 => ( Parameter_Float, 0.0 ),   --  : age_0 (Amount)
             3 => ( Parameter_Float, 0.0 ),   --  : age_1 (Amount)
@@ -193,13 +197,33 @@ package body Ukds.Target_Data.Population_Forecasts_IO is
            89 => ( Parameter_Float, 0.0 ),   --  : age_87 (Amount)
            90 => ( Parameter_Float, 0.0 ),   --  : age_88 (Amount)
            91 => ( Parameter_Float, 0.0 ),   --  : age_89 (Amount)
-           92 => ( Parameter_Float, 0.0 ),   --  : age_90_plus (Amount)
-           93 => ( Parameter_Integer, 0 ),   --  : year (Integer)
-           94 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : rec_type (Unbounded_String)
-           95 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : variant (Unbounded_String)
-           96 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : country (Unbounded_String)
-           97 => ( Parameter_Integer, 0 ),   --  : edition (Year_Number)
-           98 => ( Parameter_Text, null, Null_Unbounded_String )   --  : target_group (Unbounded_String)
+           92 => ( Parameter_Float, 0.0 ),   --  : age_90 (Amount)
+           93 => ( Parameter_Float, 0.0 ),   --  : age_91 (Amount)
+           94 => ( Parameter_Float, 0.0 ),   --  : age_92 (Amount)
+           95 => ( Parameter_Float, 0.0 ),   --  : age_93 (Amount)
+           96 => ( Parameter_Float, 0.0 ),   --  : age_94 (Amount)
+           97 => ( Parameter_Float, 0.0 ),   --  : age_95 (Amount)
+           98 => ( Parameter_Float, 0.0 ),   --  : age_96 (Amount)
+           99 => ( Parameter_Float, 0.0 ),   --  : age_97 (Amount)
+           100 => ( Parameter_Float, 0.0 ),   --  : age_98 (Amount)
+           101 => ( Parameter_Float, 0.0 ),   --  : age_99 (Amount)
+           102 => ( Parameter_Float, 0.0 ),   --  : age_100 (Amount)
+           103 => ( Parameter_Float, 0.0 ),   --  : age_101 (Amount)
+           104 => ( Parameter_Float, 0.0 ),   --  : age_102 (Amount)
+           105 => ( Parameter_Float, 0.0 ),   --  : age_103 (Amount)
+           106 => ( Parameter_Float, 0.0 ),   --  : age_104 (Amount)
+           107 => ( Parameter_Float, 0.0 ),   --  : age_105 (Amount)
+           108 => ( Parameter_Float, 0.0 ),   --  : age_106 (Amount)
+           109 => ( Parameter_Float, 0.0 ),   --  : age_107 (Amount)
+           110 => ( Parameter_Float, 0.0 ),   --  : age_108 (Amount)
+           111 => ( Parameter_Float, 0.0 ),   --  : age_109 (Amount)
+           112 => ( Parameter_Float, 0.0 ),   --  : age_110 (Amount)
+           113 => ( Parameter_Integer, 0 ),   --  : year (Integer)
+           114 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : rec_type (Unbounded_String)
+           115 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : variant (Unbounded_String)
+           116 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : country (Unbounded_String)
+           117 => ( Parameter_Integer, 0 ),   --  : edition (Year_Number)
+           118 => ( Parameter_Text, null, Null_Unbounded_String )   --  : target_group (Unbounded_String)
       ) else (
             1 => ( Parameter_Integer, 0 ),   --  : year (Integer)
             2 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : rec_type (Unbounded_String)
@@ -298,7 +322,27 @@ package body Ukds.Target_Data.Population_Forecasts_IO is
            95 => ( Parameter_Float, 0.0 ),   --  : age_87 (Amount)
            96 => ( Parameter_Float, 0.0 ),   --  : age_88 (Amount)
            97 => ( Parameter_Float, 0.0 ),   --  : age_89 (Amount)
-           98 => ( Parameter_Float, 0.0 )   --  : age_90_plus (Amount)
+           98 => ( Parameter_Float, 0.0 ),   --  : age_90 (Amount)
+           99 => ( Parameter_Float, 0.0 ),   --  : age_91 (Amount)
+           100 => ( Parameter_Float, 0.0 ),   --  : age_92 (Amount)
+           101 => ( Parameter_Float, 0.0 ),   --  : age_93 (Amount)
+           102 => ( Parameter_Float, 0.0 ),   --  : age_94 (Amount)
+           103 => ( Parameter_Float, 0.0 ),   --  : age_95 (Amount)
+           104 => ( Parameter_Float, 0.0 ),   --  : age_96 (Amount)
+           105 => ( Parameter_Float, 0.0 ),   --  : age_97 (Amount)
+           106 => ( Parameter_Float, 0.0 ),   --  : age_98 (Amount)
+           107 => ( Parameter_Float, 0.0 ),   --  : age_99 (Amount)
+           108 => ( Parameter_Float, 0.0 ),   --  : age_100 (Amount)
+           109 => ( Parameter_Float, 0.0 ),   --  : age_101 (Amount)
+           110 => ( Parameter_Float, 0.0 ),   --  : age_102 (Amount)
+           111 => ( Parameter_Float, 0.0 ),   --  : age_103 (Amount)
+           112 => ( Parameter_Float, 0.0 ),   --  : age_104 (Amount)
+           113 => ( Parameter_Float, 0.0 ),   --  : age_105 (Amount)
+           114 => ( Parameter_Float, 0.0 ),   --  : age_106 (Amount)
+           115 => ( Parameter_Float, 0.0 ),   --  : age_107 (Amount)
+           116 => ( Parameter_Float, 0.0 ),   --  : age_108 (Amount)
+           117 => ( Parameter_Float, 0.0 ),   --  : age_109 (Amount)
+           118 => ( Parameter_Float, 0.0 )   --  : age_110 (Amount)
       
       ));
    begin
@@ -309,7 +353,7 @@ package body Ukds.Target_Data.Population_Forecasts_IO is
 
    function Get_Prepared_Insert_Statement return gse.Prepared_Statement is 
       ps : gse.Prepared_Statement; 
-      query : constant String := DB_Commons.Add_Schema_To_Query( INSERT_PART, SCHEMA_NAME ) & " ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $40, $41, $42, $43, $44, $45, $46, $47, $48, $49, $50, $51, $52, $53, $54, $55, $56, $57, $58, $59, $60, $61, $62, $63, $64, $65, $66, $67, $68, $69, $70, $71, $72, $73, $74, $75, $76, $77, $78, $79, $80, $81, $82, $83, $84, $85, $86, $87, $88, $89, $90, $91, $92, $93, $94, $95, $96, $97, $98 )"; 
+      query : constant String := DB_Commons.Add_Schema_To_Query( INSERT_PART, SCHEMA_NAME ) & " ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $40, $41, $42, $43, $44, $45, $46, $47, $48, $49, $50, $51, $52, $53, $54, $55, $56, $57, $58, $59, $60, $61, $62, $63, $64, $65, $66, $67, $68, $69, $70, $71, $72, $73, $74, $75, $76, $77, $78, $79, $80, $81, $82, $83, $84, $85, $86, $87, $88, $89, $90, $91, $92, $93, $94, $95, $96, $97, $98, $99, $100, $101, $102, $103, $104, $105, $106, $107, $108, $109, $110, $111, $112, $113, $114, $115, $116, $117, $118 )"; 
    begin 
       ps := gse.Prepare( query, On_Server => True ); 
       return ps; 
@@ -358,7 +402,7 @@ package body Ukds.Target_Data.Population_Forecasts_IO is
    function Get_Prepared_Update_Statement return gse.Prepared_Statement is 
       ps : gse.Prepared_Statement; 
       
-      query : constant String := DB_Commons.Add_Schema_To_Query( UPDATE_PART, SCHEMA_NAME ) & " all_ages = $1, age_0 = $2, age_1 = $3, age_2 = $4, age_3 = $5, age_4 = $6, age_5 = $7, age_6 = $8, age_7 = $9, age_8 = $10, age_9 = $11, age_10 = $12, age_11 = $13, age_12 = $14, age_13 = $15, age_14 = $16, age_15 = $17, age_16 = $18, age_17 = $19, age_18 = $20, age_19 = $21, age_20 = $22, age_21 = $23, age_22 = $24, age_23 = $25, age_24 = $26, age_25 = $27, age_26 = $28, age_27 = $29, age_28 = $30, age_29 = $31, age_30 = $32, age_31 = $33, age_32 = $34, age_33 = $35, age_34 = $36, age_35 = $37, age_36 = $38, age_37 = $39, age_38 = $40, age_39 = $41, age_40 = $42, age_41 = $43, age_42 = $44, age_43 = $45, age_44 = $46, age_45 = $47, age_46 = $48, age_47 = $49, age_48 = $50, age_49 = $51, age_50 = $52, age_51 = $53, age_52 = $54, age_53 = $55, age_54 = $56, age_55 = $57, age_56 = $58, age_57 = $59, age_58 = $60, age_59 = $61, age_60 = $62, age_61 = $63, age_62 = $64, age_63 = $65, age_64 = $66, age_65 = $67, age_66 = $68, age_67 = $69, age_68 = $70, age_69 = $71, age_70 = $72, age_71 = $73, age_72 = $74, age_73 = $75, age_74 = $76, age_75 = $77, age_76 = $78, age_77 = $79, age_78 = $80, age_79 = $81, age_80 = $82, age_81 = $83, age_82 = $84, age_83 = $85, age_84 = $86, age_85 = $87, age_86 = $88, age_87 = $89, age_88 = $90, age_89 = $91, age_90_plus = $92 where year = $93 and rec_type = $94 and variant = $95 and country = $96 and edition = $97 and target_group = $98"; 
+      query : constant String := DB_Commons.Add_Schema_To_Query( UPDATE_PART, SCHEMA_NAME ) & " all_ages = $1, age_0 = $2, age_1 = $3, age_2 = $4, age_3 = $5, age_4 = $6, age_5 = $7, age_6 = $8, age_7 = $9, age_8 = $10, age_9 = $11, age_10 = $12, age_11 = $13, age_12 = $14, age_13 = $15, age_14 = $16, age_15 = $17, age_16 = $18, age_17 = $19, age_18 = $20, age_19 = $21, age_20 = $22, age_21 = $23, age_22 = $24, age_23 = $25, age_24 = $26, age_25 = $27, age_26 = $28, age_27 = $29, age_28 = $30, age_29 = $31, age_30 = $32, age_31 = $33, age_32 = $34, age_33 = $35, age_34 = $36, age_35 = $37, age_36 = $38, age_37 = $39, age_38 = $40, age_39 = $41, age_40 = $42, age_41 = $43, age_42 = $44, age_43 = $45, age_44 = $46, age_45 = $47, age_46 = $48, age_47 = $49, age_48 = $50, age_49 = $51, age_50 = $52, age_51 = $53, age_52 = $54, age_53 = $55, age_54 = $56, age_55 = $57, age_56 = $58, age_57 = $59, age_58 = $60, age_59 = $61, age_60 = $62, age_61 = $63, age_62 = $64, age_63 = $65, age_64 = $66, age_65 = $67, age_66 = $68, age_67 = $69, age_68 = $70, age_69 = $71, age_70 = $72, age_71 = $73, age_72 = $74, age_73 = $75, age_74 = $76, age_75 = $77, age_76 = $78, age_77 = $79, age_78 = $80, age_79 = $81, age_80 = $82, age_81 = $83, age_82 = $84, age_83 = $85, age_84 = $86, age_85 = $87, age_86 = $88, age_87 = $89, age_88 = $90, age_89 = $91, age_90 = $92, age_91 = $93, age_92 = $94, age_93 = $95, age_94 = $96, age_95 = $97, age_96 = $98, age_97 = $99, age_98 = $100, age_99 = $101, age_100 = $102, age_101 = $103, age_102 = $104, age_103 = $105, age_104 = $106, age_105 = $107, age_106 = $108, age_107 = $109, age_108 = $110, age_109 = $111, age_110 = $112 where year = $113 and rec_type = $114 and variant = $115 and country = $116 and edition = $117 and target_group = $118"; 
    begin 
       ps := gse.Prepare( 
         query, 
@@ -836,7 +880,67 @@ package body Ukds.Target_Data.Population_Forecasts_IO is
          a_population_forecasts.age_89:= Amount'Value( gse.Value( cursor, 96 ));
       end if;
       if not gse.Is_Null( cursor, 97 )then
-         a_population_forecasts.age_90_plus:= Amount'Value( gse.Value( cursor, 97 ));
+         a_population_forecasts.age_90:= Amount'Value( gse.Value( cursor, 97 ));
+      end if;
+      if not gse.Is_Null( cursor, 98 )then
+         a_population_forecasts.age_91:= Amount'Value( gse.Value( cursor, 98 ));
+      end if;
+      if not gse.Is_Null( cursor, 99 )then
+         a_population_forecasts.age_92:= Amount'Value( gse.Value( cursor, 99 ));
+      end if;
+      if not gse.Is_Null( cursor, 100 )then
+         a_population_forecasts.age_93:= Amount'Value( gse.Value( cursor, 100 ));
+      end if;
+      if not gse.Is_Null( cursor, 101 )then
+         a_population_forecasts.age_94:= Amount'Value( gse.Value( cursor, 101 ));
+      end if;
+      if not gse.Is_Null( cursor, 102 )then
+         a_population_forecasts.age_95:= Amount'Value( gse.Value( cursor, 102 ));
+      end if;
+      if not gse.Is_Null( cursor, 103 )then
+         a_population_forecasts.age_96:= Amount'Value( gse.Value( cursor, 103 ));
+      end if;
+      if not gse.Is_Null( cursor, 104 )then
+         a_population_forecasts.age_97:= Amount'Value( gse.Value( cursor, 104 ));
+      end if;
+      if not gse.Is_Null( cursor, 105 )then
+         a_population_forecasts.age_98:= Amount'Value( gse.Value( cursor, 105 ));
+      end if;
+      if not gse.Is_Null( cursor, 106 )then
+         a_population_forecasts.age_99:= Amount'Value( gse.Value( cursor, 106 ));
+      end if;
+      if not gse.Is_Null( cursor, 107 )then
+         a_population_forecasts.age_100:= Amount'Value( gse.Value( cursor, 107 ));
+      end if;
+      if not gse.Is_Null( cursor, 108 )then
+         a_population_forecasts.age_101:= Amount'Value( gse.Value( cursor, 108 ));
+      end if;
+      if not gse.Is_Null( cursor, 109 )then
+         a_population_forecasts.age_102:= Amount'Value( gse.Value( cursor, 109 ));
+      end if;
+      if not gse.Is_Null( cursor, 110 )then
+         a_population_forecasts.age_103:= Amount'Value( gse.Value( cursor, 110 ));
+      end if;
+      if not gse.Is_Null( cursor, 111 )then
+         a_population_forecasts.age_104:= Amount'Value( gse.Value( cursor, 111 ));
+      end if;
+      if not gse.Is_Null( cursor, 112 )then
+         a_population_forecasts.age_105:= Amount'Value( gse.Value( cursor, 112 ));
+      end if;
+      if not gse.Is_Null( cursor, 113 )then
+         a_population_forecasts.age_106:= Amount'Value( gse.Value( cursor, 113 ));
+      end if;
+      if not gse.Is_Null( cursor, 114 )then
+         a_population_forecasts.age_107:= Amount'Value( gse.Value( cursor, 114 ));
+      end if;
+      if not gse.Is_Null( cursor, 115 )then
+         a_population_forecasts.age_108:= Amount'Value( gse.Value( cursor, 115 ));
+      end if;
+      if not gse.Is_Null( cursor, 116 )then
+         a_population_forecasts.age_109:= Amount'Value( gse.Value( cursor, 116 ));
+      end if;
+      if not gse.Is_Null( cursor, 117 )then
+         a_population_forecasts.age_110:= Amount'Value( gse.Value( cursor, 117 ));
       end if;
       return a_population_forecasts;
    end Map_From_Cursor;
@@ -989,13 +1093,33 @@ package body Ukds.Target_Data.Population_Forecasts_IO is
       params( 89 ) := "+"( Float( a_population_forecasts.age_87 ));
       params( 90 ) := "+"( Float( a_population_forecasts.age_88 ));
       params( 91 ) := "+"( Float( a_population_forecasts.age_89 ));
-      params( 92 ) := "+"( Float( a_population_forecasts.age_90_plus ));
-      params( 93 ) := "+"( Integer'Pos( a_population_forecasts.year ));
-      params( 94 ) := "+"( aliased_rec_type'Access );
-      params( 95 ) := "+"( aliased_variant'Access );
-      params( 96 ) := "+"( aliased_country'Access );
-      params( 97 ) := "+"( Year_Number'Pos( a_population_forecasts.edition ));
-      params( 98 ) := "+"( aliased_target_group'Access );
+      params( 92 ) := "+"( Float( a_population_forecasts.age_90 ));
+      params( 93 ) := "+"( Float( a_population_forecasts.age_91 ));
+      params( 94 ) := "+"( Float( a_population_forecasts.age_92 ));
+      params( 95 ) := "+"( Float( a_population_forecasts.age_93 ));
+      params( 96 ) := "+"( Float( a_population_forecasts.age_94 ));
+      params( 97 ) := "+"( Float( a_population_forecasts.age_95 ));
+      params( 98 ) := "+"( Float( a_population_forecasts.age_96 ));
+      params( 99 ) := "+"( Float( a_population_forecasts.age_97 ));
+      params( 100 ) := "+"( Float( a_population_forecasts.age_98 ));
+      params( 101 ) := "+"( Float( a_population_forecasts.age_99 ));
+      params( 102 ) := "+"( Float( a_population_forecasts.age_100 ));
+      params( 103 ) := "+"( Float( a_population_forecasts.age_101 ));
+      params( 104 ) := "+"( Float( a_population_forecasts.age_102 ));
+      params( 105 ) := "+"( Float( a_population_forecasts.age_103 ));
+      params( 106 ) := "+"( Float( a_population_forecasts.age_104 ));
+      params( 107 ) := "+"( Float( a_population_forecasts.age_105 ));
+      params( 108 ) := "+"( Float( a_population_forecasts.age_106 ));
+      params( 109 ) := "+"( Float( a_population_forecasts.age_107 ));
+      params( 110 ) := "+"( Float( a_population_forecasts.age_108 ));
+      params( 111 ) := "+"( Float( a_population_forecasts.age_109 ));
+      params( 112 ) := "+"( Float( a_population_forecasts.age_110 ));
+      params( 113 ) := "+"( Integer'Pos( a_population_forecasts.year ));
+      params( 114 ) := "+"( aliased_rec_type'Access );
+      params( 115 ) := "+"( aliased_variant'Access );
+      params( 116 ) := "+"( aliased_country'Access );
+      params( 117 ) := "+"( Year_Number'Pos( a_population_forecasts.edition ));
+      params( 118 ) := "+"( aliased_target_group'Access );
       
       gse.Execute( local_connection, UPDATE_PS, params );
       Check_Result( local_connection );
@@ -1131,7 +1255,27 @@ package body Ukds.Target_Data.Population_Forecasts_IO is
       params( 95 ) := "+"( Float( a_population_forecasts.age_87 ));
       params( 96 ) := "+"( Float( a_population_forecasts.age_88 ));
       params( 97 ) := "+"( Float( a_population_forecasts.age_89 ));
-      params( 98 ) := "+"( Float( a_population_forecasts.age_90_plus ));
+      params( 98 ) := "+"( Float( a_population_forecasts.age_90 ));
+      params( 99 ) := "+"( Float( a_population_forecasts.age_91 ));
+      params( 100 ) := "+"( Float( a_population_forecasts.age_92 ));
+      params( 101 ) := "+"( Float( a_population_forecasts.age_93 ));
+      params( 102 ) := "+"( Float( a_population_forecasts.age_94 ));
+      params( 103 ) := "+"( Float( a_population_forecasts.age_95 ));
+      params( 104 ) := "+"( Float( a_population_forecasts.age_96 ));
+      params( 105 ) := "+"( Float( a_population_forecasts.age_97 ));
+      params( 106 ) := "+"( Float( a_population_forecasts.age_98 ));
+      params( 107 ) := "+"( Float( a_population_forecasts.age_99 ));
+      params( 108 ) := "+"( Float( a_population_forecasts.age_100 ));
+      params( 109 ) := "+"( Float( a_population_forecasts.age_101 ));
+      params( 110 ) := "+"( Float( a_population_forecasts.age_102 ));
+      params( 111 ) := "+"( Float( a_population_forecasts.age_103 ));
+      params( 112 ) := "+"( Float( a_population_forecasts.age_104 ));
+      params( 113 ) := "+"( Float( a_population_forecasts.age_105 ));
+      params( 114 ) := "+"( Float( a_population_forecasts.age_106 ));
+      params( 115 ) := "+"( Float( a_population_forecasts.age_107 ));
+      params( 116 ) := "+"( Float( a_population_forecasts.age_108 ));
+      params( 117 ) := "+"( Float( a_population_forecasts.age_109 ));
+      params( 118 ) := "+"( Float( a_population_forecasts.age_110 ));
       gse.Execute( local_connection, SAVE_PS, params );  
       Check_Result( local_connection );
       if( is_local_connection )then
@@ -1905,11 +2049,151 @@ package body Ukds.Target_Data.Population_Forecasts_IO is
    end Add_age_89;
 
 
-   procedure Add_age_90_plus( c : in out d.Criteria; age_90_plus : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
-   elem : d.Criterion := d.Make_Criterion_Element( "age_90_plus", op, join, Long_Float( age_90_plus ) );
+   procedure Add_age_90( c : in out d.Criteria; age_90 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "age_90", op, join, Long_Float( age_90 ) );
    begin
       d.add_to_criteria( c, elem );
-   end Add_age_90_plus;
+   end Add_age_90;
+
+
+   procedure Add_age_91( c : in out d.Criteria; age_91 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "age_91", op, join, Long_Float( age_91 ) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_age_91;
+
+
+   procedure Add_age_92( c : in out d.Criteria; age_92 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "age_92", op, join, Long_Float( age_92 ) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_age_92;
+
+
+   procedure Add_age_93( c : in out d.Criteria; age_93 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "age_93", op, join, Long_Float( age_93 ) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_age_93;
+
+
+   procedure Add_age_94( c : in out d.Criteria; age_94 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "age_94", op, join, Long_Float( age_94 ) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_age_94;
+
+
+   procedure Add_age_95( c : in out d.Criteria; age_95 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "age_95", op, join, Long_Float( age_95 ) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_age_95;
+
+
+   procedure Add_age_96( c : in out d.Criteria; age_96 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "age_96", op, join, Long_Float( age_96 ) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_age_96;
+
+
+   procedure Add_age_97( c : in out d.Criteria; age_97 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "age_97", op, join, Long_Float( age_97 ) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_age_97;
+
+
+   procedure Add_age_98( c : in out d.Criteria; age_98 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "age_98", op, join, Long_Float( age_98 ) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_age_98;
+
+
+   procedure Add_age_99( c : in out d.Criteria; age_99 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "age_99", op, join, Long_Float( age_99 ) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_age_99;
+
+
+   procedure Add_age_100( c : in out d.Criteria; age_100 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "age_100", op, join, Long_Float( age_100 ) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_age_100;
+
+
+   procedure Add_age_101( c : in out d.Criteria; age_101 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "age_101", op, join, Long_Float( age_101 ) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_age_101;
+
+
+   procedure Add_age_102( c : in out d.Criteria; age_102 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "age_102", op, join, Long_Float( age_102 ) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_age_102;
+
+
+   procedure Add_age_103( c : in out d.Criteria; age_103 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "age_103", op, join, Long_Float( age_103 ) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_age_103;
+
+
+   procedure Add_age_104( c : in out d.Criteria; age_104 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "age_104", op, join, Long_Float( age_104 ) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_age_104;
+
+
+   procedure Add_age_105( c : in out d.Criteria; age_105 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "age_105", op, join, Long_Float( age_105 ) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_age_105;
+
+
+   procedure Add_age_106( c : in out d.Criteria; age_106 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "age_106", op, join, Long_Float( age_106 ) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_age_106;
+
+
+   procedure Add_age_107( c : in out d.Criteria; age_107 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "age_107", op, join, Long_Float( age_107 ) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_age_107;
+
+
+   procedure Add_age_108( c : in out d.Criteria; age_108 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "age_108", op, join, Long_Float( age_108 ) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_age_108;
+
+
+   procedure Add_age_109( c : in out d.Criteria; age_109 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "age_109", op, join, Long_Float( age_109 ) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_age_109;
+
+
+   procedure Add_age_110( c : in out d.Criteria; age_110 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "age_110", op, join, Long_Float( age_110 ) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_age_110;
 
 
    
@@ -2595,11 +2879,151 @@ package body Ukds.Target_Data.Population_Forecasts_IO is
    end Add_age_89_To_Orderings;
 
 
-   procedure Add_age_90_plus_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
-   elem : d.Order_By_Element := d.Make_Order_By_Element( "age_90_plus", direction  );
+   procedure Add_age_90_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "age_90", direction  );
    begin
       d.add_to_criteria( c, elem );
-   end Add_age_90_plus_To_Orderings;
+   end Add_age_90_To_Orderings;
+
+
+   procedure Add_age_91_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "age_91", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_age_91_To_Orderings;
+
+
+   procedure Add_age_92_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "age_92", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_age_92_To_Orderings;
+
+
+   procedure Add_age_93_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "age_93", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_age_93_To_Orderings;
+
+
+   procedure Add_age_94_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "age_94", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_age_94_To_Orderings;
+
+
+   procedure Add_age_95_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "age_95", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_age_95_To_Orderings;
+
+
+   procedure Add_age_96_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "age_96", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_age_96_To_Orderings;
+
+
+   procedure Add_age_97_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "age_97", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_age_97_To_Orderings;
+
+
+   procedure Add_age_98_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "age_98", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_age_98_To_Orderings;
+
+
+   procedure Add_age_99_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "age_99", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_age_99_To_Orderings;
+
+
+   procedure Add_age_100_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "age_100", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_age_100_To_Orderings;
+
+
+   procedure Add_age_101_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "age_101", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_age_101_To_Orderings;
+
+
+   procedure Add_age_102_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "age_102", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_age_102_To_Orderings;
+
+
+   procedure Add_age_103_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "age_103", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_age_103_To_Orderings;
+
+
+   procedure Add_age_104_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "age_104", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_age_104_To_Orderings;
+
+
+   procedure Add_age_105_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "age_105", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_age_105_To_Orderings;
+
+
+   procedure Add_age_106_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "age_106", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_age_106_To_Orderings;
+
+
+   procedure Add_age_107_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "age_107", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_age_107_To_Orderings;
+
+
+   procedure Add_age_108_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "age_108", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_age_108_To_Orderings;
+
+
+   procedure Add_age_109_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "age_109", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_age_109_To_Orderings;
+
+
+   procedure Add_age_110_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "age_110", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_age_110_To_Orderings;
 
 
 

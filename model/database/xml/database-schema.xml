@@ -160,7 +160,27 @@
                    <column name='age_87' type='REAL' adaTypeName='Amount'  />
                    <column name='age_88' type='REAL' adaTypeName='Amount'  />
                    <column name='age_89' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_90_plus' type='REAL' adaTypeName='Amount'  />
+                   <column name='age_90' type='REAL' adaTypeName='Amount'  />
+                   <column name='age_91' type='REAL' adaTypeName='Amount'  />
+                   <column name='age_92' type='REAL' adaTypeName='Amount'  />
+                   <column name='age_93' type='REAL' adaTypeName='Amount'  />
+                   <column name='age_94' type='REAL' adaTypeName='Amount'  />
+                   <column name='age_95' type='REAL' adaTypeName='Amount'  />
+                   <column name='age_96' type='REAL' adaTypeName='Amount'  />
+                   <column name='age_97' type='REAL' adaTypeName='Amount'  />
+                   <column name='age_98' type='REAL' adaTypeName='Amount'  />
+                   <column name='age_99' type='REAL' adaTypeName='Amount'  />
+                   <column name='age_100' type='REAL' adaTypeName='Amount'  />
+                   <column name='age_101' type='REAL' adaTypeName='Amount'  />
+                   <column name='age_102' type='REAL' adaTypeName='Amount'  />
+                   <column name='age_103' type='REAL' adaTypeName='Amount'  />
+                   <column name='age_104' type='REAL' adaTypeName='Amount'  />
+                   <column name='age_105' type='REAL' adaTypeName='Amount'  />
+                   <column name='age_106' type='REAL' adaTypeName='Amount'  />
+                   <column name='age_107' type='REAL' adaTypeName='Amount'  />
+                   <column name='age_108' type='REAL' adaTypeName='Amount'  />
+                   <column name='age_109' type='REAL' adaTypeName='Amount'  />
+                   <column name='age_110' type='REAL' adaTypeName='Amount'  />
                    <foreign-key foreignTable="forecast_variant"  onDelete='CASCADE'  onUpdate='CASCADE'>
                            <reference foreign="rec_type" local="rec_type" />
                            <reference foreign="variant" local="variant" />

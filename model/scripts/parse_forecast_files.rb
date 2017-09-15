@@ -19,8 +19,56 @@ def toCSV( filename )
         return lines
 end
 
+def readONSPersonsBlock( lines, pos, fname )
+       yearsStr = lines[pos][2..-1]
+       yearsStr.each{
+               |ystr|
+                years << ystr.to_i       
+       }
+       data = {}
+       if fname =~ /(.*?)_(.*?)_.*/ then
+               label = case $2 
+                when 'ppp' then "principal projection"
+                when 'hpp' then "high fertility variant"
+                when 'lpp' then "low fertility variant"
+                when 'php' then "high life expectancy variant"
+                when 'plp' then "low life expectancy variant"
+                when 'pph' then "high migration variant"
+                when 'ppl' then "low migration variant"
+                when 'hhh' then "high population variant"
+                when 'lll' then "low population variant"
+                when 'ppz' then "zero net migration (natural change only) variant"
+                when 'hlh' then "young age structure variant"
+                when 'lhl' then "old age structure variant"
+                when 'rpp' then "replacement fertility variant"
+                when 'cpp' then "constant fertility variant"
+                when 'pnp' then "no mortality improvement variant"
+                when 'cnp' then "no change variant"
+                when 'ppb' then "long term balanced net migration variant"
+               end
+       pos += 1
+       keys = []
+       begin
+              target = lines[pos][0]
+              key = lines[pos][1]
+              
+              if key =~ /(\d+).*/ then
+                     key = "age_#{$1}" 
+              end
+              keys << key
+              data[key]=[] if data[key].nil?
+              lines[pos][2..-1].each{
+                       |cell|
+                       # puts "on year #{year} cell |#{cell}|"
+                       data[key] << cell.to_i
+              }
+              pos += 1 
+              break if target <> lines[pos][0]
+       while pos < lines.length 
+       return {:pos=>pos,:data=>data, :label=>label, :targetGroup=>targetGroup, :years=>years, :keys=>keys }               
+end
 
-def readPersonsBlock( lines, pos )
+def readNRSPersonsBlock( lines, pos )
        label = lines[pos][0]
        puts "label #{label}\n"
        pos += 1
@@ -44,7 +92,9 @@ def readPersonsBlock( lines, pos )
        begin
                
                key = lines[pos][0]
-               key = "age_#{key}" if key =~ /\d+/
+               if key =~ /(\d+).*/ then
+                       key = "age_#{$1}" 
+               end
                key = censor("#{key}")
                puts "on line #{pos} |#{lines[pos][0]}| key #{key}\n"
                data[key]=[] if data[key].nil?
@@ -96,8 +146,8 @@ fname = ARGV[0]
 variant = ARGV[1]
 country = ARGV[2]
 edition = ARGV[3]
-source = ARGV[4]
-fullFname = "#{DATA_PATH}/#{source.downcase}/#{fname}"
+source = ARGV[4].downcase
+fullFname = "#{DATA_PATH}/#{source}/#{fname}"
 ## nrs/pp-2014-based-add-var-euro-zeroeumig-scotland-syoa-1.tab
 puts "opening #{fname}\n"
 lines = toCSV( fullFname );
@@ -109,7 +159,11 @@ variant_desc = lines[0][0]
 l = lines.length - 1
 p = 0
 loop do
-        out = readPersonsBlock( lines, pos )
+        if( source == 'nrs')
+                out = readNRSPersonsBlock( lines, pos )
+        elsif( source == 'ons' )
+                out = readONSPersonsBlock( lines, pos, fname )
+        end
         pos = out[:pos]
         puts "pos end #{out[:pos]}\n"
         if( p == 0 )
@@ -117,7 +171,11 @@ loop do
                 puts "#{varStmt}\n"
                 CONNECTION.run( varStmt )
         end
-        loadBlockToDB( out, variant, country, edition )
+        if( source == 'nrs' )
+                loadBlockToDB( out, variant, country, edition )
+        else
+                p out
+        end
         p += 1
         break if pos >= l
 end

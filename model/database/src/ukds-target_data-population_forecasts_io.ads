@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-14 14:06:17.086326
+-- Created by ada_generator.py on 2017-09-15 17:46:21.282731
 -- 
 with Ukds;
 with DB_Commons;
@@ -191,7 +191,27 @@ package Ukds.Target_Data.Population_Forecasts_IO is
    procedure Add_age_87( c : in out d.Criteria; age_87 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_age_88( c : in out d.Criteria; age_88 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_age_89( c : in out d.Criteria; age_89 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
-   procedure Add_age_90_plus( c : in out d.Criteria; age_90_plus : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_age_90( c : in out d.Criteria; age_90 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_age_91( c : in out d.Criteria; age_91 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_age_92( c : in out d.Criteria; age_92 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_age_93( c : in out d.Criteria; age_93 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_age_94( c : in out d.Criteria; age_94 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_age_95( c : in out d.Criteria; age_95 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_age_96( c : in out d.Criteria; age_96 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_age_97( c : in out d.Criteria; age_97 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_age_98( c : in out d.Criteria; age_98 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_age_99( c : in out d.Criteria; age_99 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_age_100( c : in out d.Criteria; age_100 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_age_101( c : in out d.Criteria; age_101 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_age_102( c : in out d.Criteria; age_102 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_age_103( c : in out d.Criteria; age_103 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_age_104( c : in out d.Criteria; age_104 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_age_105( c : in out d.Criteria; age_105 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_age_106( c : in out d.Criteria; age_106 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_age_107( c : in out d.Criteria; age_107 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_age_108( c : in out d.Criteria; age_108 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_age_109( c : in out d.Criteria; age_109 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_age_110( c : in out d.Criteria; age_110 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    --
    -- functions to add an ordering to a criteria
    --
@@ -292,12 +312,32 @@ package Ukds.Target_Data.Population_Forecasts_IO is
    procedure Add_age_87_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_age_88_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_age_89_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
-   procedure Add_age_90_plus_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_age_90_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_age_91_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_age_92_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_age_93_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_age_94_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_age_95_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_age_96_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_age_97_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_age_98_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_age_99_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_age_100_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_age_101_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_age_102_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_age_103_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_age_104_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_age_105_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_age_106_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_age_107_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_age_108_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_age_109_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_age_110_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
 
    function Map_From_Cursor( cursor : GNATCOLL.SQL.Exec.Forward_Cursor ) return Ukds.Target_Data.Population_Forecasts;
 
    -- 
-   -- returns an array of GNATColl SQL Parameters indexed 1 .. 98, as follows
+   -- returns an array of GNATColl SQL Parameters indexed 1 .. 118, as follows
    -- Pos  |       Name               | SQL Type           | Ada Type             | Default
    --    1 : year                     : Parameter_Integer  : Integer              :        0 
    --    2 : rec_type                 : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
@@ -396,7 +436,27 @@ package Ukds.Target_Data.Population_Forecasts_IO is
    --   95 : age_87                   : Parameter_Float    : Amount               :      0.0 
    --   96 : age_88                   : Parameter_Float    : Amount               :      0.0 
    --   97 : age_89                   : Parameter_Float    : Amount               :      0.0 
-   --   98 : age_90_plus              : Parameter_Float    : Amount               :      0.0 
+   --   98 : age_90                   : Parameter_Float    : Amount               :      0.0 
+   --   99 : age_91                   : Parameter_Float    : Amount               :      0.0 
+   --  100 : age_92                   : Parameter_Float    : Amount               :      0.0 
+   --  101 : age_93                   : Parameter_Float    : Amount               :      0.0 
+   --  102 : age_94                   : Parameter_Float    : Amount               :      0.0 
+   --  103 : age_95                   : Parameter_Float    : Amount               :      0.0 
+   --  104 : age_96                   : Parameter_Float    : Amount               :      0.0 
+   --  105 : age_97                   : Parameter_Float    : Amount               :      0.0 
+   --  106 : age_98                   : Parameter_Float    : Amount               :      0.0 
+   --  107 : age_99                   : Parameter_Float    : Amount               :      0.0 
+   --  108 : age_100                  : Parameter_Float    : Amount               :      0.0 
+   --  109 : age_101                  : Parameter_Float    : Amount               :      0.0 
+   --  110 : age_102                  : Parameter_Float    : Amount               :      0.0 
+   --  111 : age_103                  : Parameter_Float    : Amount               :      0.0 
+   --  112 : age_104                  : Parameter_Float    : Amount               :      0.0 
+   --  113 : age_105                  : Parameter_Float    : Amount               :      0.0 
+   --  114 : age_106                  : Parameter_Float    : Amount               :      0.0 
+   --  115 : age_107                  : Parameter_Float    : Amount               :      0.0 
+   --  116 : age_108                  : Parameter_Float    : Amount               :      0.0 
+   --  117 : age_109                  : Parameter_Float    : Amount               :      0.0 
+   --  118 : age_110                  : Parameter_Float    : Amount               :      0.0 
    function Get_Configured_Insert_Params( update_order : Boolean := False ) return GNATCOLL.SQL.Exec.SQL_Parameters;
 
 
