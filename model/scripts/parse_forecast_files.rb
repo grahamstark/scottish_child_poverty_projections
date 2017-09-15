@@ -10,7 +10,7 @@ CONNECTION = Sequel.connect(
         :adapter=>'postgres', 
         :host=>'localhost', 
         :database=>'ukds', 
-        :user=>'graham_s' )
+        :user=>'postgres' )
 
 def toCSV( filename )
         f = File.new( filename, 'rb' );
@@ -67,10 +67,11 @@ def loadBlockToDB( out, variant, country, edition )
                 |year|
                 v = []
                 v << year
-                v << "'people'"
+                v << "'persons'"
                 v << "'#{variant}'"
                 v << "'#{country}'"
                 v << edition
+                v << "'#{out[:targetGroup]}'"
                 out[:keys].each{
                         |key|
                         v << out[:data][key][i]
@@ -78,7 +79,7 @@ def loadBlockToDB( out, variant, country, edition )
                 i += 1
                 puts "#{year}\n"
                 vs = v.join(', ')
-                dataStmt = "insert into target_data.population_forecasts( year, rec_type, variant, country, edition, #{out[:keys].join(', ')} ) values( #{vs} )";
+                dataStmt = "insert into target_data.population_forecasts( year, rec_type, variant, country, edition, target_group, #{out[:keys].join(', ')} ) values( #{vs} )";
                 puts "stmt #{dataStmt}\n"                
                 CONNECTION.run( dataStmt )
         }
@@ -112,10 +113,11 @@ loop do
         pos = out[:pos]
         puts "pos end #{out[:pos]}\n"
         if( p == 0 )
-                varStmt = "insert into target_data.forecast_variant( rec_type, variant, country, edition, source, description, url, filename ) values( 'persons', '#{variant}', '#{country}', '#{edition}', '#{source}', '#{out[:label]}', '#{fname}' )"
+                varStmt = "insert into target_data.forecast_variant( rec_type, variant, country, edition, source, description, url, filename ) values( 'persons', '#{variant}', '#{country}', '#{edition}', '#{source}', '#{out[:label]}', null, '#{fname}' )"
                 puts "#{varStmt}\n"
                 CONNECTION.run( varStmt )
         end
         loadBlockToDB( out, variant, country, edition )
+        p += 1
         break if pos >= l
 end
