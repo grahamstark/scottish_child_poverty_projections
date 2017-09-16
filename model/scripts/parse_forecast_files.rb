@@ -19,12 +19,16 @@ def toCSV( filename )
         return lines
 end
 
-def readONSPersonsBlock( lines, pos, fname )
-       yearsStr = lines[pos][2..-1]
-       yearsStr.each{
-               |ystr|
-                years << ystr.to_i       
-       }
+def readONSPersonsBlock( lines, pos, fname, years )
+       if( years.nil? )then
+               yearsStr = lines[pos][2..-1]
+               years = []
+               yearsStr.each{
+                       |ystr|
+                        years << ystr.to_i       
+               }
+               pos += 1       
+       end
        data = {}
        if fname =~ /(.*?)_(.*?)_.*/ then
                label = case $2 
@@ -46,10 +50,10 @@ def readONSPersonsBlock( lines, pos, fname )
                 when 'cnp' then "no change variant"
                 when 'ppb' then "long term balanced net migration variant"
                end
-       pos += 1
+       end
        keys = []
        begin
-              target = lines[pos][0]
+              target = lines[pos][0].to_i
               key = lines[pos][1]
               
               if key =~ /(\d+).*/ then
@@ -63,9 +67,11 @@ def readONSPersonsBlock( lines, pos, fname )
                        data[key] << cell.to_i
               }
               pos += 1 
-              break if target <> lines[pos][0]
-       while pos < lines.length 
-       return {:pos=>pos,:data=>data, :label=>label, :targetGroup=>targetGroup, :years=>years, :keys=>keys }               
+              break if pos >= lines.length
+              break if target != lines[pos][0].to_i
+       end while pos < lines.length 
+       targetGroup = if target == 1 then 'Males' else 'Females' end
+       return {:pos=>pos+1,:data=>data, :label=>label, :targetGroup=>targetGroup, :years=>years, :keys=>keys }               
 end
 
 def readNRSPersonsBlock( lines, pos )
@@ -158,11 +164,17 @@ pos = 0
 variant_desc = lines[0][0]
 l = lines.length - 1
 p = 0
+out = {}
 loop do
         if( source == 'nrs')
                 out = readNRSPersonsBlock( lines, pos )
         elsif( source == 'ons' )
-                out = readONSPersonsBlock( lines, pos, fname )
+                if p > 0 then
+                        years = out[:years]
+                else
+                        years = nil;
+                end
+                out = readONSPersonsBlock( lines, pos, fname, years )
         end
         pos = out[:pos]
         puts "pos end #{out[:pos]}\n"
@@ -171,11 +183,8 @@ loop do
                 puts "#{varStmt}\n"
                 CONNECTION.run( varStmt )
         end
-        if( source == 'nrs' )
-                loadBlockToDB( out, variant, country, edition )
-        else
-                p out
-        end
+
+        loadBlockToDB( out, variant, country, edition )
         p += 1
         break if pos >= l
 end
