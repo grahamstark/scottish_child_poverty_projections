@@ -8,10 +8,10 @@
 #
 # ons
 #
-./parse_forecast_files.rb sc_plp_opendata2014.txt plp SCO 2014 ONS
+# ./parse_forecast_files.rb sc_plp_opendata2014.txt plp SCO 2014 ONS
 
 
-# ./parse_forecast_files.rb sc_cnp_opendata2014.txt   cnp SCO 2014 ONS
+./parse_forecast_files.rb sc_cnp_opendata2014.txt   cnp SCO 2014 ONS
 ./parse_forecast_files.rb sc_hhh_opendata2014.txt   hhh SCO 2014 ONS
 ./parse_forecast_files.rb sc_hpp_opendata2014.txt   hpp SCO 2014 ONS
 ./parse_forecast_files.rb sc_lll_opendata2014.txt   lll SCO 2014 ONS
@@ -23,7 +23,7 @@
 ./parse_forecast_files.rb sc_hlh_opendata2014.txt   hlh SCO 2014 ONS
 ./parse_forecast_files.rb sc_lhl_opendata2014.txt   lhl SCO 2014 ONS
 ./parse_forecast_files.rb sc_lpp_opendata2014.txt   lpp SCO 2014 ONS
-# ./parse_forecast_files.rb sc_plp_opendata2014.txt   plp SCO 2014 ONS
+./parse_forecast_files.rb sc_plp_opendata2014.txt   plp SCO 2014 ONS
 ./parse_forecast_files.rb sc_pph_opendata2014.txt   pph SCO 2014 ONS
 ./parse_forecast_files.rb sc_ppp_opendata2014.txt   ppp SCO 2014 ONS
 ./parse_forecast_files.rb sc_rpp_opendata2014.txt   rpp SCO 2014 ONS

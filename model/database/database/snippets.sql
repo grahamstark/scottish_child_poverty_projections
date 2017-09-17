@@ -4,11 +4,13 @@ set search_path=public,target_data,frs;
 select * from target_data.forecast_variant;
 
 select 
-        year,variant,target_group,all_ages,age_0,age_90 
+        year,variant,target_group,all_ages,age_0,age_1,age_90 
 from 
         target_data.population_forecasts 
 where year=2014 or year=2039 
 order by year,target_group,variant;
+
+select * from target_data.forecast_variants;
 
 
 DROP TABLE target_data.population_forecasts;

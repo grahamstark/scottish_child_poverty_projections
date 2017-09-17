@@ -19,6 +19,54 @@ def toCSV( filename )
         return lines
 end
 
+FORECAST_LABELS = {
+        'ppp' => principal projection,
+        'hpp' => high fertility variant,
+        'lpp' => low fertility variant,
+        'php' => high life expectancy variant,
+        'plp' => low life expectancy variant,
+        'pph' => high migration variant,
+        'ppl' => low migration variant,
+        'hhh' => high population variant,
+        'lll' => low population variant,
+        'ppz' => zero net migration (natural change only) variant,
+        'hlh' => young age structure variant,
+        'lhl' => old age structure variant,
+        'rpp' => replacement fertility variant,
+        'cpp' => constant fertility variant,
+        'pnp' => no mortality improvement variant,
+        'cnp' => no change variant,
+        'ppb' => long term balanced net migration variant,
+}
+
+def parseHouseholds( lines, variant )
+       pos = 3
+       yearsStr = lines[pos][2..-1]
+       years = []
+       yearsStr.each{
+               |ystr|
+                years << ystr.to_i       
+       }
+       label = FORECAST_LABELS[ variant ]
+       targetGroup = 'HOUSEHOLDS'
+       pos += 1
+       keys = []
+       data = []
+       begin
+              key = censor( lines[pos][0] ) 
+              pos += 1
+              keys << key
+              data[key]=[] if data[key].nil?
+              lines[pos][1..-1].each{
+                       |cell|
+                       # puts "on year #{year} cell |#{cell}|"
+                       data[key] << cell.to_i
+              }
+              
+       end while ! lines[pos][1].nil?       
+       return {:pos=>lines.length+1,:data=>data, :label=>label, :targetGroup=>targetGroup, :years=>years, :keys=>keys }        
+end
+
 def readONSPersonsBlock( lines, pos, fname, years )
        if( years.nil? )then
                yearsStr = lines[pos][2..-1]
@@ -31,25 +79,7 @@ def readONSPersonsBlock( lines, pos, fname, years )
        end
        data = {}
        if fname =~ /(.*?)_(.*?)_.*/ then
-               label = case $2 
-                when 'ppp' then "principal projection"
-                when 'hpp' then "high fertility variant"
-                when 'lpp' then "low fertility variant"
-                when 'php' then "high life expectancy variant"
-                when 'plp' then "low life expectancy variant"
-                when 'pph' then "high migration variant"
-                when 'ppl' then "low migration variant"
-                when 'hhh' then "high population variant"
-                when 'lll' then "low population variant"
-                when 'ppz' then "zero net migration (natural change only) variant"
-                when 'hlh' then "young age structure variant"
-                when 'lhl' then "old age structure variant"
-                when 'rpp' then "replacement fertility variant"
-                when 'cpp' then "constant fertility variant"
-                when 'pnp' then "no mortality improvement variant"
-                when 'cnp' then "no change variant"
-                when 'ppb' then "long term balanced net migration variant"
-               end
+               label = FORECAST_LABELS[$2] 
        end
        keys = []
        begin
@@ -70,8 +100,8 @@ def readONSPersonsBlock( lines, pos, fname, years )
               break if pos >= lines.length
               break if target != lines[pos][0].to_i
        end while pos < lines.length 
-       targetGroup = if target == 1 then 'Males' else 'Females' end
-       return {:pos=>pos+1,:data=>data, :label=>label, :targetGroup=>targetGroup, :years=>years, :keys=>keys }               
+       targetGroup = if target == 1 then 'MALES' else 'FEMALES' end
+       return {:pos=>pos,:data=>data, :label=>label, :targetGroup=>targetGroup, :years=>years, :keys=>keys }               
 end
 
 def readNRSPersonsBlock( lines, pos )
