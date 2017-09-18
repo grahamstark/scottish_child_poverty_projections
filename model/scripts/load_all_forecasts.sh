@@ -29,5 +29,7 @@
 ./parse_forecast_files.rb sc_rpp_opendata2014.txt   rpp SCO 2014 ONS persons
 
 ./parse_forecast_files.rb 2014-ppp-house-proj.tab   ppp SCO 2014 NRS households
+./parse_forecast_files.rb 2014-ppl-house-proj.tab   ppl SCO 2014 NRS households
+./parse_forecast_files.rb 2014-pph-house-proj.tab   pph SCO 2014 NRS households
 
 

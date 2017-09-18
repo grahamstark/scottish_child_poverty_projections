@@ -12,3 +12,13 @@ Page C3.14 - fan chart for GDP Growth
      T3.6  - growth summary vs BOE
      T3.8  - summary of OBR forecast
      
+     
+files we use:
+
+exported from [March 2017 Economic and fiscal outlook – supplementary economy tables](http://budgetresponsibility.org.uk/efo/economic-fiscal-outlook-march-2017/)
+
+* `obr_forecast_prices.tab` - table 1.7
+* `obr_forecast_employment.tab` table 1.6
+
+
+     

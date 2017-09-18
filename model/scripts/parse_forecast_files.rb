@@ -17,6 +17,12 @@ def toCSV( filename )
         return lines
 end
 
+TABLE_NAME ={
+     'persons' => 'population_forecasts',   
+     'households' => 'households_forecasts'
+        
+}
+
 FORECAST_LABELS = {
         'ppp' => 'principal projection',
         'hpp' => 'high fertility variant',
@@ -56,8 +62,8 @@ def readHouseholds( lines, variant )
        data = {}
        begin
               pos += 1
-              break if lines[pos][1].nil?
-              key = reCensorKey(censor( lines[pos][1] )) 
+              key = if ! lines[pos][1].nil? then lines[pos][1] else lines[pos][0] end
+              key = reCensorKey(censor( key )) 
               puts "got key as #{key}"
               keys << key
               data[key]=[] if data[key].nil?
@@ -161,7 +167,10 @@ def loadBlockToDB( out, variant, country, edition, recType )
                 v << "'#{variant}'"
                 v << "'#{country}'"
                 v << edition
-                v << "'#{out[:targetGroup]}'"
+                if recType == 'people'
+                        v << "'#{out[:targetGroup]}'"
+                        out[:keys].insert(0, 'target_group' )
+                end
                 out[:keys].each{
                         |key|
                         v << out[:data][key][i]
@@ -169,7 +178,8 @@ def loadBlockToDB( out, variant, country, edition, recType )
                 i += 1
                 puts "#{year}\n"
                 vs = v.join(', ')
-                dataStmt = "insert into target_data.population_forecasts( year, rec_type, variant, country, edition, target_group, #{out[:keys].join(', ')} ) values( #{vs} )";
+                table = TABLE_NAME[ recType ]
+                dataStmt = "insert into target_data.#{table}( year, rec_type, variant, country, edition, #{out[:keys].join(', ')} ) values( #{vs} )";
                 puts "stmt #{dataStmt}\n"                
                 CONNECTION.run( dataStmt )
         }
@@ -219,15 +229,15 @@ loop do
         pos = out[:pos]
         puts "pos end #{out[:pos]}\n"
         varStmt = "insert into target_data.forecast_variant( rec_type, variant, country, edition, source, description, url, filename ) values( '#{recType}', '#{variant}', '#{country}', '#{edition}', '#{source}', '#{out[:label]}', null, '#{fname}' )"                
-        if( recType != 'households')
+        # if( recType != 'households')
                 if( p == 0 )
                         CONNECTION.run( varStmt )
                 end
                 loadBlockToDB( out, variant, country, edition, recType )
-        else
+        # else
                 puts "#{varStmt}\n"
                 puts "#{out}"
-        end
+        # end
         p += 1
         break if pos >= l
 end
