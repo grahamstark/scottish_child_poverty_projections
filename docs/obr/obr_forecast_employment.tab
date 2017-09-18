@@ -1,6 +1,6 @@
 Back to contents																						
 	1.6 Labour market																					
-		Employment (16+, millions)	Employment rate (16+, per cent)	Employees (16+, millions)	ILO unemployment (16+, millions)	ILO unemployment rate (16+, per cent)	Participation rate (16+, per cent)	Claimant count (millions)	Average hours worked	Total hours worked (millions)	Labour share (per cent)	Compensation of employees                    (£ billion) (a)	Wages and salaries (£ billion) (a-b)	Employers social contributions (£ billion) (b)	Mixed income (£ billion)	Average earnings growth (per cent)	Average earnings index (2008Q1=100)	Average hourly earnings index (2008Q1=100)	Productivity per hour index (2008Q1 =100)	Productivity per worker index (2008Q1 =100)	Real product wage (2008Q1 =100)	Real consumption wage (2008Q1 =100)
+		Employment (16+, millions)	Employment rate (16+, per cent)	Employees (16+, millions)	ILO unemployment (16+, millions)	ILO unemployment rate (16+, per cent)	Participation rate (16+, per cent)	Claimant count (millions)	Average hours worked	Total hours worked (millions)	Labour share (per cent)	Compensation of employees                    (billion) (a)	Wages and salaries (billion) (a-b)	Employers social contributions (billion) (b)	Mixed income (billion)	Average earnings growth (per cent)	Average earnings index (2008Q1=100)	Average hourly earnings index (2008Q1=100)	Productivity per hour index (2008Q1 =100)	Productivity per worker index (2008Q1 =100)	Real product wage (2008Q1 =100)	Real consumption wage (2008Q1 =100)
 	2008Q1	29.7	60.3	25.8	1.6	5.2	63.6	0.78	32.2	955.1	62.8	200.5	166.5	33.9	23.3	3.0	100.0	100.0	100.0	100.0	100.0	100.0
 	2008Q2	29.7	60.3	25.9	1.7	5.3	63.7	0.82	31.8	944.6	62.6	198.2	166.0	32.2	23.4	1.8	99.5	100.7	100.5	99.3	98.8	97.9
 	2008Q3	29.6	59.9	25.8	1.8	5.9	63.6	0.93	32.0	945.2	62.6	197.5	165.6	32.0	23.9	0.7	99.6	100.3	98.9	98.2	97.3	96.6
@@ -97,9 +97,9 @@ Back to contents
 	LFS average (mean) actual weekly hours worked, all workers (ONS identifier: YBUV)																					
 	LFS total weekly hours worked, millions (ONS identifier: YBUS)																					
 	Labour share: total compensation of employees (ONS identifier: DTWM) and mixed income (ONS identifier: ROYH) as a share of nominal Gross Value Added (ONS identifier: ABML).																					
-	Compensation of employees, £ billion (ONS identifier: DTWM)																					
-	Wages and salaries, £ billion, equal to total compensation of employees (ONS identifier: DTWM) minus employers social contributions (ONS identifier: ROYK)																					
-	Employers social contributions, £ billion (ONS identifier: ROYK)																					
+	Compensation of employees, billion (ONS identifier: DTWM)																					
+	Wages and salaries, billion, equal to total compensation of employees (ONS identifier: DTWM) minus employers social contributions (ONS identifier: ROYK)																					
+	Employers social contributions, billion (ONS identifier: ROYK)																					
 	Average earnings growth: wages and salaries divided by employees, year on year growth rates and index. Wages and salaries equal to total compensation of employees (ONS identifier: DTWM) minus employers social contributions (ONS identifier: ROYK).  Employees equal to total employment (MGRZ) less self-employed (MGRQ)																					
 	Productivity per hour: non-oil Gross Value Added (ONS identifier: KLS2) divided by total weekly hours worked (ONS identifier: YBUS)																					
 	Productivity per worker index: non-oil Gross Value Added (ONS identifier: KLS2) divided by total 16+ employment (ONS identifier: MGRZ)																					
