@@ -60,6 +60,65 @@
                    </foreign-key>
                </table>
                
+               <table name='macro_forecasts'>
+                   <column name='year' type='INTEGER' default='0' primaryKey='true'/>
+                   <column name='rec_type' type='CHAR' default='persons' primaryKey='true'/>
+                   <column name='variant' type='CHAR' size='20'  primaryKey='true' />
+                   <column name='country' type='CHAR' size='20'  primaryKey='true' />
+                   <column name='edition' type="INTEGER" adaTypeName="Year_Number" description="a number indicating a release or base year" primaryKey='true'/>
+
+                   
+                   <column name='employment' description='Employment' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='employment_rate' description='Employment rate' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='employees' description='Employees' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='ilo_unemployment' description='ILO unemployment' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='ilo_unemployment_rate' description='ILO unemployment rate' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='participation_rate' description='Participation rate' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='claimant_count' description='Claimant count' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='average_hours_worked' description='Average hours worked' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='total_hours_worked' description='Total hours worked' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='labour_share' description='Labour share' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='compensation_of_employees' description='Compensation of employees ' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='wages_and_salaries' description='Wages and salaries' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='employers_social_contributions' description='Employers social contributions' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='mixed_income' description='Mixed income' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='average_earnings_growth' description='Average earnings growth' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='average_earnings_index' description='Average earnings index' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='average_hourly_earnings_index' description='Average hourly earnings index' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='productivity_per_hour_index' description='Productivity per hour index' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='productivity_per_worker_index' description='Productivity per worker index' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='real_product_wage' description='Real product wage' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='real_consumption_wage' description='Real consumption wage' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='rpi' description='RPI' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='rpix' description='RPIX' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='cpi' description='CPI' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='producer_output_prices' description='Producer output prices' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='mortgage_interest_payments' description='Mortgage interest payments' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='actual_rents_for_housing' description='Actual rents for housing' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='consumer_expenditure_deflator' description='Consumer expenditure deflator' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='house_price_index' description='House price index' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='gdp_deflator' description='GDP deflator' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='rpi' description='RPI' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='rpix' description='RPIX' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='cpi' description='CPI' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='producer_output_prices' description='Producer output prices' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='mortgage_interest_payments' description='Mortgage interest payments' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='actual_rents_for_housing' description='Actual rents for housing' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='consumer_expenditure_deflator' description='Consumer expenditure deflator' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='house_price_index' description='House price index' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='gdp_deflator' description='GDP deflator' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='lfs_employment' description='LFS employment' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='real_household_disposable_income' description='Real household disposable income' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='real_consumption' description='Real consumption' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='real_gdp' description='Real GDP' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='lfs_employment' description='LFS employment' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='real_household_disposable_income' description='Real household disposable income' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='real_consumption' description='Real consumption' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='real_gdp' description='Real GDP' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   
+               
+               </table>
+               
                <table name='population_forecasts' description='Population Data One row for each Country/Year/Variant/type [M/F/Both]' >
                
                    <column name='year' type='INTEGER' default='0' primaryKey='true'/>
