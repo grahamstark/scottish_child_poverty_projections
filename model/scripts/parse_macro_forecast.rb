@@ -20,7 +20,6 @@ def readMacro( lines, startCol, keyLineStart, out )
                                 end
                                 l.gsub!( 'billion', '' )
                                 key = censor( l )
-                                # horrible hack ..
                                 keys << key
                         }
                         puts "made keys as #{out[:keys]}; breaking"
@@ -87,3 +86,10 @@ source = 'obr'
 }
 
 p out
+country = 'uk'
+edition = 2017
+recType = ''
+variant = 'baseline'
+fname='obr_forecast_gdp_per_capita.tab'
+varStmt = "insert into target_data.forecast_variant( rec_type, variant, country, edition, source, description, url, filename ) values( '#{recType}', '#{variant}', '#{country}', '#{edition}', '#{source}', '#{out[:label]}', null, '#{fname}' )"
+loadBlockToDB( out, variant, country, edition, recType )
