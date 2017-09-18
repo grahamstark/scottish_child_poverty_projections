@@ -88,7 +88,7 @@ source = 'obr'
 p out
 country = 'uk'
 edition = 2017
-recType = ''
+recType = 'macro'
 variant = 'baseline'
 fname='obr_forecast_gdp_per_capita.tab'
 varStmt = "insert into target_data.forecast_variant( rec_type, variant, country, edition, source, description, url, filename ) values( '#{recType}', '#{variant}', '#{country}', '#{edition}', '#{source}', '#{out[:label]}', null, '#{fname}' )"

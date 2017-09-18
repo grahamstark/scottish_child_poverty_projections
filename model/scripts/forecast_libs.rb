@@ -20,7 +20,8 @@ end
 
 TABLE_NAME ={
      'persons' => 'population_forecasts',   
-     'households' => 'households_forecasts'
+     'households' => 'households_forecasts',
+     'macro' => "macro_forecasts"
         
 }
 
