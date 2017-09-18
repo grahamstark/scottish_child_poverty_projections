@@ -113,7 +113,7 @@ CREATE TABLE target_data.population_forecasts(
        age_87 DOUBLE PRECISION,
        age_88 DOUBLE PRECISION,
        age_89 DOUBLE PRECISION,
-       age_90 DOUBLE PR\ECISION,
+       age_90 DOUBLE PRECISION,
        age_91 DOUBLE PRECISION,
        age_92 DOUBLE PRECISION,
        age_93 DOUBLE PRECISION,
@@ -138,4 +138,124 @@ CREATE TABLE target_data.population_forecasts(
        CONSTRAINT population_forecasts_FK_0 FOREIGN KEY( rec_type, variant, country, edition) references forecast_variant( rec_type, variant, country, edition ) on delete CASCADE on update CASCADE
 );
 
- 
+select 
+        year,sum(all_ages),
+        sum(
+                coalesce( age_0, 0.0 ) +
+                coalesce( age_1, 0.0 ) + 
+                coalesce( age_2, 0.0 ) +
+                coalesce( age_3, 0.0 ) +
+                coalesce( age_4, 0.0 ) +
+                coalesce( age_5, 0.0 ) +
+                coalesce( age_6, 0.0 ) +
+                coalesce( age_7, 0.0 ) +
+                coalesce( age_8, 0.0 ) +
+                coalesce( age_9, 0.0 ) +
+                coalesce( age_10, 0.0 ) +
+                coalesce( age_11, 0.0 ) +
+                coalesce( age_12, 0.0 ) +
+                coalesce( age_13, 0.0 ) +
+                coalesce( age_14, 0.0 ) +
+                coalesce( age_15, 0.0 ) +
+                coalesce( age_16, 0.0 ) +
+                coalesce( age_17, 0.0 ) +
+                coalesce( age_18, 0.0 ) +
+                coalesce( age_19, 0.0 ) +
+                coalesce( age_20, 0.0 ) +
+                coalesce( age_21, 0.0 ) +
+                coalesce( age_22, 0.0 ) +
+                coalesce( age_23, 0.0 ) +
+                coalesce( age_24, 0.0 ) +
+                coalesce( age_25, 0.0 ) +
+                coalesce( age_26, 0.0 ) +
+                coalesce( age_27, 0.0 ) +
+                coalesce( age_28, 0.0 ) +
+                coalesce( age_29, 0.0 ) +
+                coalesce( age_30, 0.0 ) +
+                coalesce( age_31, 0.0 ) +
+                coalesce( age_32, 0.0 ) +
+                coalesce( age_33, 0.0 ) +
+                coalesce( age_34, 0.0 ) +
+                coalesce( age_35, 0.0 ) +
+                coalesce( age_36, 0.0 ) +
+                coalesce( age_37, 0.0 ) +
+                coalesce( age_38, 0.0 ) +
+                coalesce( age_39, 0.0 ) +
+                coalesce( age_40, 0.0 ) +
+                coalesce( age_41, 0.0 ) +
+                coalesce( age_42, 0.0 ) +
+                coalesce( age_43, 0.0 ) +
+                coalesce( age_44, 0.0 ) +
+                coalesce( age_45, 0.0 ) +
+                coalesce( age_46, 0.0 ) +
+                coalesce( age_47, 0.0 ) +
+                coalesce( age_48, 0.0 ) +
+                coalesce( age_49, 0.0 ) +
+                coalesce( age_50, 0.0 ) +
+                coalesce( age_51, 0.0 ) +
+                coalesce( age_52, 0.0 ) +
+                coalesce( age_53, 0.0 ) +
+                coalesce( age_54, 0.0 ) +
+                coalesce( age_55, 0.0 ) +
+                coalesce( age_56, 0.0 ) +
+                coalesce( age_57, 0.0 ) +
+                coalesce( age_58, 0.0 ) +
+                coalesce( age_59, 0.0 ) +
+                coalesce( age_60, 0.0 ) +
+                coalesce( age_61, 0.0 ) +
+                coalesce( age_62, 0.0 ) +
+                coalesce( age_63, 0.0 ) +
+                coalesce( age_64, 0.0 ) +
+                coalesce( age_65, 0.0 ) +
+                coalesce( age_66, 0.0 ) +
+                coalesce( age_67, 0.0 ) +
+                coalesce( age_68, 0.0 ) +
+                coalesce( age_69, 0.0 ) +
+                coalesce( age_70, 0.0 ) +
+                coalesce( age_71, 0.0 ) +
+                coalesce( age_72, 0.0 ) +
+                coalesce( age_73, 0.0 ) +
+                coalesce( age_74, 0.0 ) +
+                coalesce( age_75, 0.0 ) +
+                coalesce( age_76, 0.0 ) +
+                coalesce( age_77, 0.0 ) +
+                coalesce( age_78, 0.0 ) +
+                coalesce( age_79, 0.0 ) +
+                coalesce( age_80, 0.0 ) +
+                coalesce( age_81, 0.0 ) +
+                coalesce( age_82, 0.0 ) +
+                coalesce( age_83, 0.0 ) +
+                coalesce( age_84, 0.0 ) +
+                coalesce( age_85, 0.0 ) +
+                coalesce( age_86, 0.0 ) +
+                coalesce( age_87, 0.0 ) +
+                coalesce( age_88, 0.0 ) +
+                coalesce( age_89, 0.0 ) +
+                coalesce( age_90, 0.0 ) +
+                coalesce( age_91, 0.0 ) +
+                coalesce( age_92, 0.0 ) +
+                coalesce( age_93, 0.0 ) +
+                coalesce( age_94, 0.0 ) +
+                coalesce( age_95, 0.0 ) +
+                coalesce( age_96, 0.0 ) +
+                coalesce( age_97, 0.0 ) +
+                coalesce( age_98, 0.0 ) +
+                coalesce( age_99,  0.0 ) + 
+                coalesce( age_100, 0.0 ) +
+                coalesce( age_101, 0.0 ) +
+                coalesce( age_102, 0.0 ) +
+                coalesce( age_103, 0.0 ) +
+                coalesce( age_104, 0.0 ) +
+                coalesce( age_105, 0.0 ) +
+                coalesce( age_106, 0.0 ) +
+                coalesce( age_107, 0.0 ) +
+                coalesce( age_108, 0.0 ) +
+                coalesce( age_109, 0.0 ) +
+                coalesce( age_110, 0.0 ))
+from 
+        target_data.population_forecasts 
+where 
+        variant='ppl' and target_group in ( 'MALES', 'FEMALES' )
+group by year order by year;
+
+select year,target_group,age_105 from target_data.population_forecasts order by year,target_group;

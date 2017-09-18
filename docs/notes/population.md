@@ -36,3 +36,13 @@ ppb - long term balanced net migration variant
 Household Projections:
 
 https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/households/household-projections/2014-based-household-projections
+
+These are the household load files:
+
+* `2014-pph-house-proj.tab` from: `2014-house-proj-fullhigh-alltabs.ods` (table 2 edited and appended to end).
+* `2014-ppl-house-proj.tab` from: `2014-house-proj-fulllow-alltabs.ods` t2
+* `2014-ppp-house-proj.tab` from: `2014-house-proj-fullprinc-alltabs.ods` t2
+
+these correspond to high/low/baseline migration forecasts above (checked with table 1 popns).
+
+

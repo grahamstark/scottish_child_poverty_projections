@@ -43,14 +43,14 @@
                    <column name='country' type='CHAR' size='20'  primaryKey='true' />
                    <column name='edition' type="INTEGER" adaTypeName="Year_Number" description="a number indicating a release or base year" primaryKey='true'/>
                
-                  <column name='one_adult_male' type='REAL' adaTypeName='Amount' />
-                  <column name='one_adult_female' type='REAL' adaTypeName='Amount' />
-                  <column name='two_adults' type='REAL' adaTypeName='Amount' />
-                  <column name='one_adult_one_child' type='REAL' adaTypeName='Amount' />
-                  <column name='one_adult_two_plus_children' type='REAL' adaTypeName='Amount' />
-                  <column name='two_plus_adult_one_plus_children' type='REAL' adaTypeName='Amount' />
-                  <column name='three_plus_person_all_adult' type='REAL' adaTypeName='Amount' />
-                  <column name='all_households' type='REAL' adaTypeName='Amount' />
+                  <column name='one_adult_male' type='REAL' adaTypeName='Amount' default='0.0' />
+                  <column name='one_adult_female' type='REAL' adaTypeName='Amount' default='0.0' />
+                  <column name='two_adults' type='REAL' adaTypeName='Amount' default='0.0' />
+                  <column name='one_adult_one_child' type='REAL' adaTypeName='Amount' default='0.0' />
+                  <column name='one_adult_two_plus_children' type='REAL' adaTypeName='Amount' default='0.0' />
+                  <column name='two_plus_adult_one_plus_children' type='REAL' adaTypeName='Amount' default='0.0' />
+                  <column name='three_plus_person_all_adult' type='REAL' adaTypeName='Amount' default='0.0' />
+                  <column name='all_households' type='REAL' adaTypeName='Amount' default='0.0' />
 
                    <foreign-key foreignTable="forecast_variant"  onDelete='CASCADE'  onUpdate='CASCADE'>
                            <reference foreign="rec_type" local="rec_type" />
@@ -69,118 +69,118 @@
                    <column name='edition' type="INTEGER" adaTypeName="Year_Number" description="a number indicating a release or base year" primaryKey='true'/>
                    <column name='target_group' type='CHAR' size='20'  primaryKey='true' description='males,females,all, etc..'/>
                    
-                   <column name='all_ages' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_0' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_1' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_2' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_3' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_4' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_5' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_6' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_7' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_8' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_9' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_10' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_11' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_12' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_13' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_14' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_15' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_16' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_17' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_18' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_19' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_20' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_21' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_22' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_23' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_24' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_25' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_26' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_27' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_28' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_29' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_30' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_31' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_32' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_33' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_34' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_35' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_36' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_37' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_38' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_39' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_40' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_41' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_42' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_43' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_44' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_45' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_46' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_47' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_48' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_49' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_50' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_51' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_52' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_53' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_54' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_55' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_56' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_57' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_58' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_59' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_60' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_61' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_62' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_63' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_64' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_65' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_66' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_67' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_68' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_69' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_70' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_71' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_72' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_73' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_74' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_75' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_76' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_77' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_78' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_79' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_80' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_81' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_82' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_83' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_84' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_85' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_86' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_87' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_88' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_89' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_90' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_91' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_92' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_93' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_94' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_95' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_96' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_97' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_98' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_99' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_100' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_101' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_102' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_103' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_104' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_105' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_106' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_107' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_108' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_109' type='REAL' adaTypeName='Amount'  />
-                   <column name='age_110' type='REAL' adaTypeName='Amount'  />
+                   <column name='all_ages' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_0' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_1' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_2' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_3' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_4' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_5' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_6' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_7' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_8' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_9' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_10' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_11' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_12' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_13' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_14' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_15' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_16' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_17' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_18' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_19' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_20' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_21' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_22' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_23' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_24' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_25' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_26' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_27' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_28' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_29' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_30' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_31' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_32' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_33' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_34' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_35' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_36' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_37' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_38' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_39' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_40' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_41' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_42' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_43' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_44' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_45' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_46' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_47' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_48' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_49' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_50' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_51' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_52' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_53' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_54' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_55' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_56' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_57' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_58' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_59' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_60' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_61' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_62' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_63' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_64' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_65' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_66' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_67' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_68' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_69' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_70' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_71' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_72' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_73' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_74' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_75' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_76' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_77' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_78' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_79' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_80' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_81' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_82' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_83' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_84' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_85' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_86' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_87' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_88' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_89' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_90' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_91' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_92' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_93' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_94' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_95' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_96' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_97' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_98' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_99' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_100' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_101' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_102' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_103' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_104' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_105' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_106' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_107' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_108' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_109' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_110' type='REAL' adaTypeName='Amount' default='0.0'  />
                    <foreign-key foreignTable="forecast_variant"  onDelete='CASCADE'  onUpdate='CASCADE'>
                            <reference foreign="rec_type" local="rec_type" />
                            <reference foreign="variant" local="variant" />
