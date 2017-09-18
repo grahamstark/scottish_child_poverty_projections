@@ -98,23 +98,14 @@
                    <column name='consumer_expenditure_deflator' description='Consumer expenditure deflator' default='0.0' type='REAL' adaTypeName='Amount'/>
                    <column name='house_price_index' description='House price index' default='0.0' type='REAL' adaTypeName='Amount'/>
                    <column name='gdp_deflator' description='GDP deflator' default='0.0' type='REAL' adaTypeName='Amount'/>
-                   <column name='rpi' description='RPI' default='0.0' type='REAL' adaTypeName='Amount'/>
-                   <column name='rpix' description='RPIX' default='0.0' type='REAL' adaTypeName='Amount'/>
-                   <column name='cpi' description='CPI' default='0.0' type='REAL' adaTypeName='Amount'/>
-                   <column name='producer_output_prices' description='Producer output prices' default='0.0' type='REAL' adaTypeName='Amount'/>
-                   <column name='mortgage_interest_payments' description='Mortgage interest payments' default='0.0' type='REAL' adaTypeName='Amount'/>
-                   <column name='actual_rents_for_housing' description='Actual rents for housing' default='0.0' type='REAL' adaTypeName='Amount'/>
-                   <column name='consumer_expenditure_deflator' description='Consumer expenditure deflator' default='0.0' type='REAL' adaTypeName='Amount'/>
-                   <column name='house_price_index' description='House price index' default='0.0' type='REAL' adaTypeName='Amount'/>
-                   <column name='gdp_deflator' description='GDP deflator' default='0.0' type='REAL' adaTypeName='Amount'/>
                    <column name='lfs_employment' description='LFS employment' default='0.0' type='REAL' adaTypeName='Amount'/>
                    <column name='real_household_disposable_income' description='Real household disposable income' default='0.0' type='REAL' adaTypeName='Amount'/>
                    <column name='real_consumption' description='Real consumption' default='0.0' type='REAL' adaTypeName='Amount'/>
                    <column name='real_gdp' description='Real GDP' default='0.0' type='REAL' adaTypeName='Amount'/>
-                   <column name='lfs_employment' description='LFS employment' default='0.0' type='REAL' adaTypeName='Amount'/>
-                   <column name='real_household_disposable_income' description='Real household disposable income' default='0.0' type='REAL' adaTypeName='Amount'/>
-                   <column name='real_consumption' description='Real consumption' default='0.0' type='REAL' adaTypeName='Amount'/>
-                   <column name='real_gdp' description='Real GDP' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='lfs_employment_age_16_plus' description='LFS employment' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='real_household_disposable_income_age_16_plus' description='Real household disposable income' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='real_consumption_age_16_plus' description='Real consumption' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='real_gdp_age_16_plus' description='Real GDP' default='0.0' type='REAL' adaTypeName='Amount'/>
                    
                
                </table>

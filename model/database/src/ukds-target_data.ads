@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-15 17:46:20.594724
+-- Created by ada_generator.py on 2017-09-18 17:36:24.099530
 -- 
 with Ada.Containers.Vectors;
 --
@@ -289,6 +289,114 @@ package Ukds.target_data is
    function To_String( rec : Population_Forecasts ) return String;
 
    --
+   -- record modelling Macro_Forecasts : 
+   --
+   type Macro_Forecasts is record
+      year : Integer := 0;
+      rec_type : Unbounded_String := To_Unbounded_String( "persons" );
+      variant : Unbounded_String := MISSING_W_KEY;
+      country : Unbounded_String := MISSING_W_KEY;
+      edition : Year_Number := Year_Number'First;
+      employment : Amount := 0.0;
+      employment_rate : Amount := 0.0;
+      employees : Amount := 0.0;
+      ilo_unemployment : Amount := 0.0;
+      ilo_unemployment_rate : Amount := 0.0;
+      participation_rate : Amount := 0.0;
+      claimant_count : Amount := 0.0;
+      average_hours_worked : Amount := 0.0;
+      total_hours_worked : Amount := 0.0;
+      labour_share : Amount := 0.0;
+      compensation_of_employees : Amount := 0.0;
+      wages_and_salaries : Amount := 0.0;
+      employers_social_contributions : Amount := 0.0;
+      mixed_income : Amount := 0.0;
+      average_earnings_growth : Amount := 0.0;
+      average_earnings_index : Amount := 0.0;
+      average_hourly_earnings_index : Amount := 0.0;
+      productivity_per_hour_index : Amount := 0.0;
+      productivity_per_worker_index : Amount := 0.0;
+      real_product_wage : Amount := 0.0;
+      real_consumption_wage : Amount := 0.0;
+      rpi : Amount := 0.0;
+      rpix : Amount := 0.0;
+      cpi : Amount := 0.0;
+      producer_output_prices : Amount := 0.0;
+      mortgage_interest_payments : Amount := 0.0;
+      actual_rents_for_housing : Amount := 0.0;
+      consumer_expenditure_deflator : Amount := 0.0;
+      house_price_index : Amount := 0.0;
+      gdp_deflator : Amount := 0.0;
+      lfs_employment : Amount := 0.0;
+      real_household_disposable_income : Amount := 0.0;
+      real_consumption : Amount := 0.0;
+      real_gdp : Amount := 0.0;
+      lfs_employment_age_16_plus : Amount := 0.0;
+      real_household_disposable_income_age_16_plus : Amount := 0.0;
+      real_consumption_age_16_plus : Amount := 0.0;
+      real_gdp_age_16_plus : Amount := 0.0;
+   end record;
+   --
+   -- container for Macro_Forecasts : 
+   --
+   package Macro_Forecasts_List_Package is new Ada.Containers.Vectors
+      (Element_Type => Macro_Forecasts,
+      Index_Type => Positive );
+   subtype Macro_Forecasts_List is Macro_Forecasts_List_Package.Vector;
+   --
+   -- default value for Macro_Forecasts : 
+   --
+   Null_Macro_Forecasts : constant Macro_Forecasts := (
+         year => 0,
+         rec_type => To_Unbounded_String( "persons" ),
+         variant => MISSING_W_KEY,
+         country => MISSING_W_KEY,
+         edition => Year_Number'First,
+         employment => 0.0,
+         employment_rate => 0.0,
+         employees => 0.0,
+         ilo_unemployment => 0.0,
+         ilo_unemployment_rate => 0.0,
+         participation_rate => 0.0,
+         claimant_count => 0.0,
+         average_hours_worked => 0.0,
+         total_hours_worked => 0.0,
+         labour_share => 0.0,
+         compensation_of_employees => 0.0,
+         wages_and_salaries => 0.0,
+         employers_social_contributions => 0.0,
+         mixed_income => 0.0,
+         average_earnings_growth => 0.0,
+         average_earnings_index => 0.0,
+         average_hourly_earnings_index => 0.0,
+         productivity_per_hour_index => 0.0,
+         productivity_per_worker_index => 0.0,
+         real_product_wage => 0.0,
+         real_consumption_wage => 0.0,
+         rpi => 0.0,
+         rpix => 0.0,
+         cpi => 0.0,
+         producer_output_prices => 0.0,
+         mortgage_interest_payments => 0.0,
+         actual_rents_for_housing => 0.0,
+         consumer_expenditure_deflator => 0.0,
+         house_price_index => 0.0,
+         gdp_deflator => 0.0,
+         lfs_employment => 0.0,
+         real_household_disposable_income => 0.0,
+         real_consumption => 0.0,
+         real_gdp => 0.0,
+         lfs_employment_age_16_plus => 0.0,
+         real_household_disposable_income_age_16_plus => 0.0,
+         real_consumption_age_16_plus => 0.0,
+         real_gdp_age_16_plus => 0.0
+   );
+   --
+   -- simple print routine for Macro_Forecasts : 
+   --
+   function To_String( rec : Macro_Forecasts ) return String;
+
+   --
    -- record modelling Households_Forecasts : Household Data One row for each Country/Year/Variant
    --
    type Households_Forecasts is record
@@ -428,12 +536,12 @@ package Ukds.target_data is
 
         
    -- === CUSTOM PROCS START ===
-    
-   subtype Forecast_Age_Ranges is Natural range 0 .. 90; 
-   type Age_Range_Array is array( Forecast_Age_Ranges ) of Amount;  
-   
-   function To_Array( popn : Population_Forecasts ) return Age_Range_Array; 
-    
+      
+   subtype Forecast_Age_Ranges is Natural range 0 .. 90;   
+   type Age_Range_Array is array( Forecast_Age_Ranges ) of Amount;    
+     
+   function To_Array( popn : Population_Forecasts ) return Age_Range_Array;   
+      
    -- === CUSTOM PROCS END ===
 
 end Ukds.target_data;
