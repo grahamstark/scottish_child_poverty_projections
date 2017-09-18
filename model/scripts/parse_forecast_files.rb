@@ -1,8 +1,6 @@
 #!/usr/bin/ruby
 require 'csv'
 require 'utils'
-# require 'narray'
-# require 'set'
 require 'sequel'
 
 DATA_PATH="/home/graham_s/VirtualWorlds/projects/scottish_child_poverty_projections/docs/"
@@ -20,26 +18,30 @@ def toCSV( filename )
 end
 
 FORECAST_LABELS = {
-        'ppp' => principal projection,
-        'hpp' => high fertility variant,
-        'lpp' => low fertility variant,
-        'php' => high life expectancy variant,
-        'plp' => low life expectancy variant,
-        'pph' => high migration variant,
-        'ppl' => low migration variant,
-        'hhh' => high population variant,
-        'lll' => low population variant,
-        'ppz' => zero net migration (natural change only) variant,
-        'hlh' => young age structure variant,
-        'lhl' => old age structure variant,
-        'rpp' => replacement fertility variant,
-        'cpp' => constant fertility variant,
-        'pnp' => no mortality improvement variant,
-        'cnp' => no change variant,
-        'ppb' => long term balanced net migration variant,
+        'ppp' => 'principal projection',
+        'hpp' => 'high fertility variant',
+        'lpp' => 'low fertility variant',
+        'php' => 'high life expectancy variant',
+        'plp' => 'low life expectancy variant',
+        'pph' => 'high migration variant',
+        'ppl' => 'low migration variant',
+        'hhh' => 'high population variant',
+        'lll' => 'low population variant',
+        'ppz' => 'zero net migration (natural change only) variant',
+        'hlh' => 'young age structure variant',
+        'lhl' => 'old age structure variant',
+        'rpp' => 'replacement fertility variant',
+        'cpp' => 'constant fertility variant',
+        'pnp' => 'no mortality improvement variant',
+        'cnp' => 'no change variant',
+        'ppb' => 'long term balanced net migration variant'
 }
 
-def parseHouseholds( lines, variant )
+def reCensorKey( key )
+        key.gsub( "1", 'one' ).gsub( "2", 'two').gsub( '3', 'three' ).gsub( 'v_', '' )
+end
+
+def readHouseholds( lines, variant )
        pos = 3
        yearsStr = lines[pos][2..-1]
        years = []
@@ -47,24 +49,26 @@ def parseHouseholds( lines, variant )
                |ystr|
                 years << ystr.to_i       
        }
+       puts "years #{years}"
        label = FORECAST_LABELS[ variant ]
        targetGroup = 'HOUSEHOLDS'
-       pos += 1
        keys = []
-       data = []
+       data = {}
        begin
-              key = censor( lines[pos][0] ) 
               pos += 1
+              break if lines[pos][1].nil?
+              key = reCensorKey(censor( lines[pos][1] )) 
+              puts "got key as #{key}"
               keys << key
               data[key]=[] if data[key].nil?
-              lines[pos][1..-1].each{
+              lines[pos][2..-1].each{
                        |cell|
                        # puts "on year #{year} cell |#{cell}|"
                        data[key] << cell.to_i
               }
               
        end while ! lines[pos][1].nil?       
-       return {:pos=>lines.length+1,:data=>data, :label=>label, :targetGroup=>targetGroup, :years=>years, :keys=>keys }        
+       return {:pos=>pos+1,:data=>data, :label=>label, :targetGroup=>targetGroup, :years=>years, :keys=>keys }        
 end
 
 def readONSPersonsBlock( lines, pos, fname, years )
@@ -146,14 +150,14 @@ def readNRSPersonsBlock( lines, pos )
        return {:pos=>pos+1,:data=>data, :label=>label, :targetGroup=>targetGroup, :years=>years, :keys=>keys }
 end
 
-def loadBlockToDB( out, variant, country, edition )
+def loadBlockToDB( out, variant, country, edition, recType )
         p out # [:data]
         i = 0
         out[:years].each{
                 |year|
                 v = []
                 v << year
-                v << "'persons'"
+                v << "'#{recType}'"
                 v << "'#{variant}'"
                 v << "'#{country}'"
                 v << edition
@@ -171,8 +175,8 @@ def loadBlockToDB( out, variant, country, edition )
         }
 end
 
-if ARGV.length < 5 then
-        puts "filename, variant (string), country (SCO|ENG|UK), edition (a year) source (ONS, etc.)"
+if ARGV.length < 6 then
+        puts "filename, variant (string), country (SCO|ENG|UK), edition (a year) source (ONS, etc.) type (persons|households|macro)"
         exit
 end
         
@@ -183,7 +187,9 @@ variant = ARGV[1]
 country = ARGV[2]
 edition = ARGV[3]
 source = ARGV[4].downcase
+recType = ARGV[5].downcase
 fullFname = "#{DATA_PATH}/#{source}/#{fname}"
+
 ## nrs/pp-2014-based-add-var-euro-zeroeumig-scotland-syoa-1.tab
 puts "opening #{fname}\n"
 lines = toCSV( fullFname );
@@ -197,7 +203,11 @@ p = 0
 out = {}
 loop do
         if( source == 'nrs')
-                out = readNRSPersonsBlock( lines, pos )
+                if recType == 'persons' 
+                        out = readNRSPersonsBlock( lines, pos )
+                else
+                        out = readHouseholds( lines, variant )
+                end
         elsif( source == 'ons' )
                 if p > 0 then
                         years = out[:years]
@@ -208,13 +218,16 @@ loop do
         end
         pos = out[:pos]
         puts "pos end #{out[:pos]}\n"
-        if( p == 0 )
-                varStmt = "insert into target_data.forecast_variant( rec_type, variant, country, edition, source, description, url, filename ) values( 'persons', '#{variant}', '#{country}', '#{edition}', '#{source}', '#{out[:label]}', null, '#{fname}' )"
+        varStmt = "insert into target_data.forecast_variant( rec_type, variant, country, edition, source, description, url, filename ) values( '#{recType}', '#{variant}', '#{country}', '#{edition}', '#{source}', '#{out[:label]}', null, '#{fname}' )"                
+        if( recType != 'households')
+                if( p == 0 )
+                        CONNECTION.run( varStmt )
+                end
+                loadBlockToDB( out, variant, country, edition, recType )
+        else
                 puts "#{varStmt}\n"
-                CONNECTION.run( varStmt )
+                puts "#{out}"
         end
-
-        loadBlockToDB( out, variant, country, edition )
         p += 1
         break if pos >= l
 end
