@@ -60,19 +60,21 @@ def loadBlockToDB( out, variant, country, edition, recType )
                 v << "'#{variant}'"
                 v << "'#{country}'"
                 v << edition
-                if recType == 'people'
-                        v << "'#{out[:targetGroup]}'"
-                        out[:keys].insert(0, 'target_group' )
-                end
-                out[:keys].each{
+                keys = out[:keys].clone()
+                p keys
+                keys.each{
                         |key|
                         v << out[:data][key][i]
                 }
+                if recType == 'persons' 
+                        v << "'#{out[:targetGroup]}'"
+                        keys << 'target_group'
+                end
                 i += 1
                 puts "#{year}\n"
                 vs = v.join(', ')
                 table = TABLE_NAME[ recType ]
-                dataStmt = "insert into target_data.#{table}( year, rec_type, variant, country, edition, #{out[:keys].join(', ')} ) values( #{vs} )";
+                dataStmt = "insert into target_data.#{table}( year, rec_type, variant, country, edition, #{keys.join(', ')} ) values( #{vs} )";
                 puts "stmt #{dataStmt}\n"                
                 CONNECTION.run( dataStmt )
         }
