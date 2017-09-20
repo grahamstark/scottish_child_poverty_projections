@@ -281,6 +281,23 @@ package body Model.SCP.FRS_Creator is
                
                Adult_Loop:
                for adult of adult_l loop
+                  if( adult.year <= 2012 and adult.ben3q1 = 1 ) or ( adult.year > 2012 and adult.wageben6 = 1 )then
+                     Inc( targets.jsa_claimant );
+                  end if;
+                  
+                  case adult.dvil04a is -- DV for ILO in employment - 4 categories
+                     when 1 => --    | InEmpXuf - employed exc. unpaid family worker
+                        Inc( targets.employed );
+                        if( adult.empstatb /= 1 ) then -- self employed
+                           Inc( targets.employee ); -- in employment other than SE, ILO definition, sort of..
+                        end if;
+                     when 2 => null; -- 2     | UFW - unpaid family worker
+                     when 3 => --    | Unemp - ILO unemployed
+                        Inc( targets.ilo_unemployed );
+                     when 4 => --    | EcInAct - ILO economically inactive
+                        null;
+                     when others => Assert( False, "out of rangee dvil04a " & adult.dvil04a'Img );
+                  end case;
                   Assert( adult.age80 >= 16 and adult.age80 <= 80, "age80 out of range " & adult.age80'Img );
                   Assert( adult.sex = 1 or adult.sex = 2, " sex not 1 or 2 " & adult.sex'Img );
                   if adult.sex = 1 then

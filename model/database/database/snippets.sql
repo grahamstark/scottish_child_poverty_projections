@@ -263,3 +263,8 @@ select year,target_group,age_105 from target_data.population_forecasts order by 
 select distinct year  from frs.adult where age80 is null or age80 < 16;
 
 select * from dictionaries.variables where dataset='frs' and tables='househol' and label ilike '%household%' and year>2008;
+
+select * from dictionaries.variables where dataset='frs' and tables='adult' and label ilike '%jsa%' and year>=2008 order by year;
+
+<= 2012 ben3q1 
+> 2012 wageben6
