@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-20 12:26:49.301448
+-- Created by ada_generator.py on 2017-09-20 14:37:18.472985
 -- 
 with Ada.Containers.Vectors;
 --
@@ -35,6 +35,7 @@ package Ukds.target_data is
    --
    type Target_Data is record
       run_id : Integer := MISSING_I_KEY;
+      user_id : Integer := 0;
       year : Integer := 0;
       household_one_adult_male : Amount := 0.0;
       household_one_adult_female : Amount := 0.0;
@@ -396,6 +397,7 @@ package Ukds.target_data is
    --
    Null_Target_Data : constant Target_Data := (
          run_id => MISSING_I_KEY,
+         user_id => 0,
          year => 0,
          household_one_adult_male => 0.0,
          household_one_adult_female => 0.0,
@@ -1121,10 +1123,13 @@ package Ukds.target_data is
    --
    type Run is record
       run_id : Integer := MISSING_I_KEY;
+      user_id : Integer := 0;
       description : Unbounded_String := Ada.Strings.Unbounded.Null_Unbounded_String;
       macro_source : Unbounded_String := Ada.Strings.Unbounded.Null_Unbounded_String;
       household_source : Unbounded_String := Ada.Strings.Unbounded.Null_Unbounded_String;
       people_source : Unbounded_String := Ada.Strings.Unbounded.Null_Unbounded_String;
+      start_year : Year_Number := 1970;
+      end_year : Year_Number := 1970;
    end record;
    --
    -- container for Run : 
@@ -1138,10 +1143,13 @@ package Ukds.target_data is
    --
    Null_Run : constant Run := (
          run_id => MISSING_I_KEY,
+         user_id => 0,
          description => Ada.Strings.Unbounded.Null_Unbounded_String,
          macro_source => Ada.Strings.Unbounded.Null_Unbounded_String,
          household_source => Ada.Strings.Unbounded.Null_Unbounded_String,
-         people_source => Ada.Strings.Unbounded.Null_Unbounded_String
+         people_source => Ada.Strings.Unbounded.Null_Unbounded_String,
+         start_year => 1970,
+         end_year => 1970
    );
    --
    -- simple print routine for Run : 
@@ -1288,12 +1296,12 @@ package Ukds.target_data is
 
         
    -- === CUSTOM PROCS START ===
+          
+   subtype Forecast_Age_Ranges is Natural range 0 .. 90;       
+   type Age_Range_Array is array( Forecast_Age_Ranges ) of Amount;        
          
-   subtype Forecast_Age_Ranges is Natural range 0 .. 90;      
-   type Age_Range_Array is array( Forecast_Age_Ranges ) of Amount;       
-        
-   function To_Array( popn : Population_Forecasts ) return Age_Range_Array;      
-         
+   function To_Array( popn : Population_Forecasts ) return Age_Range_Array;       
+          
    -- === CUSTOM PROCS END ===
 
 end Ukds.target_data;

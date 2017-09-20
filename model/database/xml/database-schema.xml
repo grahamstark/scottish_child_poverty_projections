@@ -62,6 +62,8 @@
                
                <table name='run'>
                   <column name='run_id' type='INTEGER' primaryKey='true' />
+                  <column name='user_id' type='INTEGER' default='0' primaryKey='true'/>
+
                   <column name='description'  type='VARCHAR'  />
                   <column name='macro_source'  type='CHAR' size='20' />
                   <column name='household_source'  type='CHAR' size='20' />
@@ -254,6 +256,7 @@
            
            <table name='target_data'>
                   <column name='run_id' description='' primaryKey='true' type='INTEGER'/>
+                  <column name='user_id' type='INTEGER' default='0' primaryKey='true'/>
                   <column name='year' type='INTEGER' default='0' primaryKey='true'/>
                            
                   <column name='household_one_adult_male' description='household_one_adult_male' default='0.0' type='REAL' adaTypeName='Amount'/>
