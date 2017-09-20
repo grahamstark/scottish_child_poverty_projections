@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-20 15:38:47.644744
+-- Created by ada_generator.py on 2017-09-20 20:28:53.609952
 -- 
 
 -- === CUSTOM IMPORTS START ===
@@ -14,7 +14,7 @@ package body Environment is
 
    SERVER_NAME       : Unbounded_String := To_Unbounded_String( "" );
    DATABASE_NAME     : Unbounded_String := To_Unbounded_String( "ukds" );
-   USER_NAME         : Unbounded_String := To_Unbounded_String( "postgres" );
+   USER_NAME         : Unbounded_String := To_Unbounded_String( "postres" );
    PASSWORD          : Unbounded_String := To_Unbounded_String( "" );
    PORT              : Integer := -1;
 

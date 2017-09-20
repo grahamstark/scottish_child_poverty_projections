@@ -81,7 +81,20 @@ package body Model.SCP.FRS_Creator is
             Househol_IO.Add_Sernum( hh_crit, household_r.sernum );
             
             Inc( targets.household_all_households );
-
+            Inc( targets.country_uk );
+            case household_r.gvtregn is
+               when 1 .. 10 | 112000001 .. 112000009 =>
+                  Inc( targets.country_england );
+               when 11 | 399999999 =>
+                  Inc( targets.country_wales );
+               when 12 | 299999999 =>
+                  Inc( targets.country_scotland );
+               when 13 | 499999999 =>
+                  Inc( targets.country_n_ireland );
+               when others =>
+                  Assert( false, "out of range region " & household_r.gvtregn'Img );
+            end case;
+            
             Assert( household_r.hhcomps >= 1 and household_r.hhcomps <= 17, "household_r.hhcomps out of range " &household_r.hhcomps'Img );  
             case household_r.hhcomps is
                when 1 | -- One male adult, no children over pension age
