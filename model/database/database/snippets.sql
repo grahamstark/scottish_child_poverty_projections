@@ -626,3 +626,10 @@ select
         min( age_109 ) as min_age_109, max( age_109 ) as max_age_109, count( nullif( age_109, 0 )) as non_zero_age_109,
         min( age_110 ) as min_age_110, max( age_110 ) as max_age_110, count( nullif( age_110, 0 )) as non_zero_age_110
 from target_data.target_dataset group by run_id,user_id,year order by run_id,user_id,year;
+
+
+alter table target_data.run add column macro_edition INTEGER default 1970;
+alter table target_data.run add column households_edition INTEGER default 1970;
+alter table target_data.run add column population_edition INTEGER default 1970;
+alter table target_data.run drop column household_source;
+alter table target_data.run add column households_source TEXT;
