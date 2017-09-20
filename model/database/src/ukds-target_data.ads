@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-20 20:40:53.659856
+-- Created by ada_generator.py on 2017-09-20 22:07:20.966199
 -- 
 with Ada.Containers.Vectors;
 --
@@ -1027,7 +1027,7 @@ package Ukds.target_data is
    --
    type Macro_Forecasts is record
       year : Integer := 0;
-      rec_type : Unbounded_String := To_Unbounded_String( "persons" );
+      rec_type : Unbounded_String := To_Unbounded_String( "macro" );
       variant : Unbounded_String := MISSING_W_KEY;
       country : Unbounded_String := MISSING_W_KEY;
       edition : Year_Number := Year_Number'First;
@@ -1082,7 +1082,7 @@ package Ukds.target_data is
    --
    Null_Macro_Forecasts : constant Macro_Forecasts := (
          year => 0,
-         rec_type => To_Unbounded_String( "persons" ),
+         rec_type => To_Unbounded_String( "macro" ),
          variant => MISSING_W_KEY,
          country => MISSING_W_KEY,
          edition => Year_Number'First,
@@ -1137,9 +1137,13 @@ package Ukds.target_data is
       run_id : Integer := MISSING_I_KEY;
       user_id : Integer := 0;
       description : Unbounded_String := Ada.Strings.Unbounded.Null_Unbounded_String;
+      country : Unbounded_String := Ada.Strings.Unbounded.Null_Unbounded_String;
       macro_source : Unbounded_String := Ada.Strings.Unbounded.Null_Unbounded_String;
-      household_source : Unbounded_String := Ada.Strings.Unbounded.Null_Unbounded_String;
-      people_source : Unbounded_String := Ada.Strings.Unbounded.Null_Unbounded_String;
+      macro_edition : Year_Number := 1970;
+      households_source : Unbounded_String := Ada.Strings.Unbounded.Null_Unbounded_String;
+      households_edition : Year_Number := 1970;
+      population_source : Unbounded_String := Ada.Strings.Unbounded.Null_Unbounded_String;
+      population_edition : Year_Number := 1970;
       start_year : Year_Number := 1970;
       end_year : Year_Number := 1970;
    end record;
@@ -1157,9 +1161,13 @@ package Ukds.target_data is
          run_id => MISSING_I_KEY,
          user_id => 0,
          description => Ada.Strings.Unbounded.Null_Unbounded_String,
+         country => Ada.Strings.Unbounded.Null_Unbounded_String,
          macro_source => Ada.Strings.Unbounded.Null_Unbounded_String,
-         household_source => Ada.Strings.Unbounded.Null_Unbounded_String,
-         people_source => Ada.Strings.Unbounded.Null_Unbounded_String,
+         macro_edition => 1970,
+         households_source => Ada.Strings.Unbounded.Null_Unbounded_String,
+         households_edition => 1970,
+         population_source => Ada.Strings.Unbounded.Null_Unbounded_String,
+         population_edition => 1970,
          start_year => 1970,
          end_year => 1970
    );
@@ -1308,12 +1316,12 @@ package Ukds.target_data is
 
         
    -- === CUSTOM PROCS START ===
-                
-   subtype Forecast_Age_Ranges is Natural range 0 .. 90;             
-   type Age_Range_Array is array( Forecast_Age_Ranges ) of Amount;              
-               
-   function To_Array( popn : Population_Forecasts ) return Age_Range_Array;             
-                
+                   
+   subtype Forecast_Age_Ranges is Natural range 0 .. 90;                
+   type Age_Range_Array is array( Forecast_Age_Ranges ) of Amount;                 
+                  
+   function To_Array( popn : Population_Forecasts ) return Age_Range_Array;                
+                   
    -- === CUSTOM PROCS END ===
 
 end Ukds.target_data;

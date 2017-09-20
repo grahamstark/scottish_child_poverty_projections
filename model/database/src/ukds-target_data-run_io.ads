@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-20 20:40:54.171022
+-- Created by ada_generator.py on 2017-09-20 22:07:21.505979
 -- 
 with Ukds;
 with DB_Commons;
@@ -95,12 +95,17 @@ package Ukds.Target_Data.Run_IO is
    procedure Add_user_id( c : in out d.Criteria; user_id : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_description( c : in out d.Criteria; description : Unbounded_String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_description( c : in out d.Criteria; description : String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_country( c : in out d.Criteria; country : Unbounded_String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_country( c : in out d.Criteria; country : String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_macro_source( c : in out d.Criteria; macro_source : Unbounded_String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_macro_source( c : in out d.Criteria; macro_source : String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
-   procedure Add_household_source( c : in out d.Criteria; household_source : Unbounded_String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
-   procedure Add_household_source( c : in out d.Criteria; household_source : String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
-   procedure Add_people_source( c : in out d.Criteria; people_source : Unbounded_String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
-   procedure Add_people_source( c : in out d.Criteria; people_source : String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_macro_edition( c : in out d.Criteria; macro_edition : Year_Number; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_households_source( c : in out d.Criteria; households_source : Unbounded_String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_households_source( c : in out d.Criteria; households_source : String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_households_edition( c : in out d.Criteria; households_edition : Year_Number; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_population_source( c : in out d.Criteria; population_source : Unbounded_String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_population_source( c : in out d.Criteria; population_source : String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_population_edition( c : in out d.Criteria; population_edition : Year_Number; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_start_year( c : in out d.Criteria; start_year : Year_Number; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_end_year( c : in out d.Criteria; end_year : Year_Number; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    --
@@ -109,25 +114,33 @@ package Ukds.Target_Data.Run_IO is
    procedure Add_run_id_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_user_id_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_description_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_country_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_macro_source_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
-   procedure Add_household_source_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
-   procedure Add_people_source_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_macro_edition_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_households_source_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_households_edition_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_population_source_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_population_edition_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_start_year_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_end_year_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
 
    function Map_From_Cursor( cursor : GNATCOLL.SQL.Exec.Forward_Cursor ) return Ukds.Target_Data.Run;
 
    -- 
-   -- returns an array of GNATColl SQL Parameters indexed 1 .. 8, as follows
+   -- returns an array of GNATColl SQL Parameters indexed 1 .. 12, as follows
    -- Pos  |       Name               | SQL Type           | Ada Type             | Default
    --    1 : run_id                   : Parameter_Integer  : Integer              :        0 
    --    2 : user_id                  : Parameter_Integer  : Integer              :        0 
    --    3 : description              : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
-   --    4 : macro_source             : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
-   --    5 : household_source         : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
-   --    6 : people_source            : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
-   --    7 : start_year               : Parameter_Integer  : Year_Number          :        0 
-   --    8 : end_year                 : Parameter_Integer  : Year_Number          :        0 
+   --    4 : country                  : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
+   --    5 : macro_source             : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
+   --    6 : macro_edition            : Parameter_Integer  : Year_Number          :        0 
+   --    7 : households_source        : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
+   --    8 : households_edition       : Parameter_Integer  : Year_Number          :        0 
+   --    9 : population_source        : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
+   --   10 : population_edition       : Parameter_Integer  : Year_Number          :        0 
+   --   11 : start_year               : Parameter_Integer  : Year_Number          :        0 
+   --   12 : end_year                 : Parameter_Integer  : Year_Number          :        0 
    function Get_Configured_Insert_Params( update_order : Boolean := False ) return GNATCOLL.SQL.Exec.SQL_Parameters;
 
 

@@ -63,11 +63,19 @@
                <table name='run'>
                   <column name='run_id' type='INTEGER' primaryKey='true' />
                   <column name='user_id' type='INTEGER' default='0' primaryKey='true'/>
-
                   <column name='description'  type='VARCHAR'  />
+                  
+                  <column name='country' type='CHAR' size='20'  />
+                  
                   <column name='macro_source'  type='CHAR' size='20' />
-                  <column name='household_source'  type='CHAR' size='20' />
-                  <column name='people_source'  type='CHAR' size='20' />
+                  <column name='macro_edition' type="INTEGER" adaTypeName="Year_Number" description="a number indicating a release or base year" default='1970'/>
+
+                  <column name='households_source'  type='CHAR' size='20' />
+                  <column name='households_edition' type="INTEGER" adaTypeName="Year_Number" description="a number indicating a release or base year" default='1970'/>
+                  
+                  <column name='population_source'  type='CHAR' size='20' />
+                  <column name='population_edition' type="INTEGER" adaTypeName="Year_Number" description="a number indicating a release or base year" default='1970' />
+                  
                   <column name='start_year'  type='INTEGER' adaTypeName='Year_Number' default='1970' />
                   <column name='end_year'  type='INTEGER' adaTypeName='Year_Number' default='1970' />
                   <!-- maybe fks? -->
@@ -76,7 +84,7 @@
                
                <table name='macro_forecasts'>
                    <column name='year' type='INTEGER' default='0' primaryKey='true'/>
-                   <column name='rec_type' type='CHAR' default='persons' primaryKey='true'/>
+                   <column name='rec_type' type='CHAR' default='macro' primaryKey='true'/>
                    <column name='variant' type='CHAR' size='20'  primaryKey='true' />
                    <column name='country' type='CHAR' size='20'  primaryKey='true' />
                    <column name='edition' type="INTEGER" adaTypeName="Year_Number" description="a number indicating a release or base year" primaryKey='true'/>

@@ -67,9 +67,13 @@ CREATE TABLE target_data.run(
        run_id INTEGER not null,
        user_id INTEGER not null default 0,
        description TEXT,
+       country TEXT,
        macro_source TEXT,
-       household_source TEXT,
-       people_source TEXT,
+       macro_edition INTEGER default 1970,
+       households_source TEXT,
+       households_edition INTEGER default 1970,
+       population_source TEXT,
+       population_edition INTEGER default 1970,
        start_year INTEGER default 1970,
        end_year INTEGER default 1970,
        CONSTRAINT run_pk PRIMARY KEY( run_id, user_id )
@@ -77,7 +81,7 @@ CREATE TABLE target_data.run(
 
 CREATE TABLE target_data.macro_forecasts( 
        year INTEGER not null default 0,
-       rec_type TEXT not null default 'persons',
+       rec_type TEXT not null default 'macro',
        variant TEXT not null,
        country TEXT not null,
        edition INTEGER not null,
