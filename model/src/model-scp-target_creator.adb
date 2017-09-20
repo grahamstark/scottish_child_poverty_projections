@@ -758,7 +758,7 @@ package body Model.SCP.Target_Creator is
                implied_employees_rate : constant Amount := macro.employees/implied_16_plus;
                implied_claimant_rate  : constant Amount := macro.claimant_count/implied_16_plus;
             begin
-               targets.employees := implied_employees_rate*age_16_plus;
+               targets.employee := implied_employees_rate*age_16_plus;
                targets.jsa_claimant := implied_claimant_rate*age_16_plus;
             end;               
          end;
