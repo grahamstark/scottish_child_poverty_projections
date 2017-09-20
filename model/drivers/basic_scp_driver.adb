@@ -30,7 +30,7 @@ begin
    the_run.end_year := 2015;
    the_run.run_id := 999_999;
    the_run.user_id := 1;
-   
+   Run_IO.Save( the_run );
    Model.SCP.FRS_Creator.Create_Dataset( the_run );
    
    endTime := Clock;
