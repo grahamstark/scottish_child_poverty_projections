@@ -81,8 +81,6 @@ package body Model.SCP.Target_Creator is
             age_16_plus : Amount := 0.0;
             targets     : Target_Dataset; 
          begin
-            
-
             targets.household_one_adult_male := households.one_adult_male;
             targets.household_one_adult_female := households.one_adult_female;
             targets.household_two_adults := households.two_adults;
@@ -752,18 +750,18 @@ package body Model.SCP.Target_Creator is
             targets.age_109 := male_popn.age_109 + female_popn.age_109;
             targets.age_110 := male_popn.age_110 + female_popn.age_110;     
             
-            
-            
+            targets.employed := age_16_plus * macro.employment_rate/100.0;
+            targets.ilo_unemployed := age_16_plus * macro.ilo_unemployment_rate/100.0;
+            -- horrible reverse engineering
+            declare               
+               implied_16_plus        : constant Amount := 100.0*macro.employment/macro.employment_rate;
+               implied_employees_rate : constant Amount := macro.employees/implied_16_plus;
+               implied_claimant_rate  : constant Amount := macro.claimant_count/implied_16_plus;
+            begin
+               targets.employees := implied_employees_rate*age_16_plus;
+               targets.jsa_claimant := implied_claimant_rate*age_16_plus;
+            end;               
          end;
-         -- Population_Forecasts_IO.Add_Year( pop_crit, year ); 
-         -- Households_Forecasts_IO.Add_Year( hh_crit, year );
-         -- Macro_Forecasts_IO.Add_Year( mac_crit, year );
-         -- 
-         -- 
-         -- 
-         -- d.Remove_From_Criteria( mac_crit, "year" );
-         -- d.Remove_From_Criteria( pop_crit, "year" );
-         -- d.Remove_From_Criteria( hh_crit, "year" );
       end loop;
    end Create_Dataset;
 
