@@ -1,6 +1,9 @@
 --
 -- this stuff is just to force compilation - borrowed from auto test case.
 --
+
+with Model.SCP.FRS_Creator;
+
 with Ada.Calendar;
 with Ada.Exceptions;
 with Ada.Strings.Unbounded; 
