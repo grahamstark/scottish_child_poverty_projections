@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-20 14:37:18.472985
+-- Created by ada_generator.py on 2017-09-20 15:06:41.897814
 -- 
 with Ada.Containers.Vectors;
 --
@@ -31,9 +31,9 @@ package Ukds.target_data is
 
 
    --
-   -- record modelling Target_Data : 
+   -- record modelling Target_Dataset : 
    --
-   type Target_Data is record
+   type Target_Dataset is record
       run_id : Integer := MISSING_I_KEY;
       user_id : Integer := 0;
       year : Integer := 0;
@@ -386,16 +386,16 @@ package Ukds.target_data is
       age_110 : Amount := 0.0;
    end record;
    --
-   -- container for Target_Data : 
+   -- container for Target_Dataset : 
    --
-   package Target_Data_List_Package is new Ada.Containers.Vectors
-      (Element_Type => Target_Data,
+   package Target_Dataset_List_Package is new Ada.Containers.Vectors
+      (Element_Type => Target_Dataset,
       Index_Type => Positive );
-   subtype Target_Data_List is Target_Data_List_Package.Vector;
+   subtype Target_Dataset_List is Target_Dataset_List_Package.Vector;
    --
-   -- default value for Target_Data : 
+   -- default value for Target_Dataset : 
    --
-   Null_Target_Data : constant Target_Data := (
+   Null_Target_Dataset : constant Target_Dataset := (
          run_id => MISSING_I_KEY,
          user_id => 0,
          year => 0,
@@ -748,9 +748,9 @@ package Ukds.target_data is
          age_110 => 0.0
    );
    --
-   -- simple print routine for Target_Data : 
+   -- simple print routine for Target_Dataset : 
    --
-   function To_String( rec : Target_Data ) return String;
+   function To_String( rec : Target_Dataset ) return String;
 
    --
    -- record modelling Population_Forecasts : Population Data One row for each Country/Year/Variant/type [M/F/Both]
@@ -1296,12 +1296,12 @@ package Ukds.target_data is
 
         
    -- === CUSTOM PROCS START ===
+           
+   subtype Forecast_Age_Ranges is Natural range 0 .. 90;        
+   type Age_Range_Array is array( Forecast_Age_Ranges ) of Amount;         
           
-   subtype Forecast_Age_Ranges is Natural range 0 .. 90;       
-   type Age_Range_Array is array( Forecast_Age_Ranges ) of Amount;        
-         
-   function To_Array( popn : Population_Forecasts ) return Age_Range_Array;       
-          
+   function To_Array( popn : Population_Forecasts ) return Age_Range_Array;        
+           
    -- === CUSTOM PROCS END ===
 
 end Ukds.target_data;
