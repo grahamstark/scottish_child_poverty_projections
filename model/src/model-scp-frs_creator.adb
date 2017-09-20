@@ -45,9 +45,6 @@ package body Model.SCP.FRS_Creator is
    
    
    procedure Create_Dataset( the_run : Run ) is
-      startTime    : Time;
-      endTime      : Time;
-      elapsed      : Duration;
       cursor       : GNATCOLL.SQL.Exec.Forward_Cursor;
       household_r  : Househol;
       ps           : GNATCOLL.SQL.Exec.Prepared_Statement;   
@@ -55,8 +52,6 @@ package body Model.SCP.FRS_Creator is
       count        : Natural := 0;
       frs_criteria : d.Criteria;
    begin
-      startTime := Clock;
-      Put_Line( "We're making a start on this.." );
       Connection_Pool.Initialise;
       conn := Connection_Pool.Lease;
       Househol_IO.Add_User_Id( frs_criteria, the_run.user_id );
@@ -979,9 +974,6 @@ package body Model.SCP.FRS_Creator is
          count := count + 1;
          Next( cursor );
       end loop;
-      endTime := Clock;
-      elapsed := endTime - startTime;
-      Put_Line( "Time Taken " & elapsed'Img & " secs " & count'Img & " hhlds " );
    end Create_Dataset;
 
 end  Model.SCP.FRS_Creator;
