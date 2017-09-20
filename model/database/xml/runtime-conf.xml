@@ -12,7 +12,7 @@
                                 <connection>
                                         <hostspec></hostspec> <!-- blank to use unix sockets, otherwise 'localhost|bigmac2' -->
                                         <database>ukds</database>
-                                        <username>postres</username>
+                                        <username>postgres</username>
                                         <password></password>
                                         <port>-1</port> <!-- unix socket; use 6432 for pgbouncer pool; 5432 for direct connection -->
                                 </connection>

@@ -14,7 +14,7 @@ package body Environment is
 
    SERVER_NAME       : Unbounded_String := To_Unbounded_String( "" );
    DATABASE_NAME     : Unbounded_String := To_Unbounded_String( "ukds" );
-   USER_NAME         : Unbounded_String := To_Unbounded_String( "postres" );
+   USER_NAME         : Unbounded_String := To_Unbounded_String( "postgres" );
    PASSWORD          : Unbounded_String := To_Unbounded_String( "" );
    PORT              : Integer := -1;
 
