@@ -13,12 +13,9 @@ with GNATCOLL.SQL.Exec;
 
 with Ukds.Target_Data.Households_Forecasts_IO;
 with Ukds.Target_Data.Run_IO;
-with Ukds.Target_Data.Macro_Forecasts_IO;
-with Ukds.Target_Data.Population_Forecasts_IO;
 with Ukds.Target_Data.Target_Dataset_IO;
 
 with Ukds.Frs.Househol_IO;
-with Ukds.Frs.Benunit_IO;
 with Ukds.Frs.Adult_IO;
 with Ukds.Frs.Child_IO;
 with DB_Commons;

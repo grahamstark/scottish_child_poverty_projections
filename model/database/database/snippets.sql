@@ -270,10 +270,13 @@ select * from dictionaries.variables where dataset='frs' and tables='adult' and 
 > 2012 wageben6
 
 select 
+        user_id,
+        run_id,
         year,
         min( country_uk ) as min_country_uk, max( country_uk ) as max_country_uk, count( nullif( country_uk, 0 )) as non_zero_country_uk,
         min( country_scotland ) as min_country_scotland, max( country_scotland ) as max_country_scotland, count( nullif( country_scotland, 0 )) as non_zero_country_scotland,
         min( country_england ) as min_country_england, max( country_england ) as max_country_england, count( nullif( country_england, 0 )) as non_zero_country_england,
+        min( country_n_ireland ) as min_country_n_ireland, max( country_n_ireland ) as max_country_n_ireland, count( nullif( country_n_ireland, 0 )) as non_zero_country_n_ireland,
         min( country_wales ) as min_country_wales, max( country_wales ) as max_country_wales, count( nullif( country_wales, 0 )) as non_zero_country_wales,
         min( household_one_adult_male ) as min_household_one_adult_male, max( household_one_adult_male ) as max_household_one_adult_male, count( nullif( household_one_adult_male, 0 )) as non_zero_household_one_adult_male,
         min( household_one_adult_female ) as min_household_one_adult_female, max( household_one_adult_female ) as max_household_one_adult_female, count( nullif( household_one_adult_female, 0 )) as non_zero_household_one_adult_female,
@@ -622,4 +625,4 @@ select
         min( age_108 ) as min_age_108, max( age_108 ) as max_age_108, count( nullif( age_108, 0 )) as non_zero_age_108,
         min( age_109 ) as min_age_109, max( age_109 ) as max_age_109, count( nullif( age_109, 0 )) as non_zero_age_109,
         min( age_110 ) as min_age_110, max( age_110 ) as max_age_110, count( nullif( age_110, 0 )) as non_zero_age_110
-from target_data.target_dataset group by year order by year;
+from target_data.target_dataset group by run_id,user_id,year order by run_id,user_id,year;
