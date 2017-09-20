@@ -60,6 +60,7 @@ package body Model.SCP.FRS_Creator is
       Househol_IO.Add_Year( frs_criteria, the_run.end_year, d.LE );
       Househol_IO.Add_Year_To_Orderings( frs_criteria, d.Asc );
       Househol_IO.Add_Sernum_To_Orderings( frs_criteria, d.Asc );
+      Put_Line( "retrieving HHLS " & d.To_String( frs_criteria ));
       ps := Househol_IO.Get_Prepared_Retrieve_Statement( frs_criteria );  
       cursor.Fetch( conn, ps ); -- "select * from frs.househol where year >= 2011 order by year,sernum" );
       while Has_Row( cursor ) loop 
@@ -970,10 +971,12 @@ package body Model.SCP.FRS_Creator is
                   end case;
                end loop Adult_Loop;
             end;
+            UKDS.Target_Data.Target_Dataset_IO.Save( targets );
          end;
          count := count + 1;
          Next( cursor );
       end loop;
+      Connection_Pool.Return_Connection( conn );
    end Create_Dataset;
 
 end  Model.SCP.FRS_Creator;
