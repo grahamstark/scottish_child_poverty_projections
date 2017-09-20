@@ -83,6 +83,37 @@ package body Model.SCP.FRS_Creator is
             Househol_IO.Add_Edition( hh_crit, household_r.edition );
             Househol_IO.Add_Year( hh_crit, household_r.year );
             Househol_IO.Add_Sernum( hh_crit, household_r.sernum );
+            
+            Inc( targets.household_all_households );
+
+            Assert( household_r.hhcomps >= 1 and household_r.hhcomps <= 17, "household_r.hhcomps out of range " &household_r.hhcomps'Img );  
+            case household_r.hhcomps is
+               when 1 | -- One male adult, no children over pension age
+                    3 =>  -- One male adult, no children, under pension age  
+                  Inc( targets.household_one_adult_male );
+               when 2 | -- One female adult, no children over pension age
+                    4 =>  -- One female adult, no children, under pension age
+                  Inc( targets.household_one_adult_female );
+               when 5 | -- Two adults, no children, both over pension age
+                    6 | -- Two adults, no children, one over pension age
+                    7 => -- Two adults, no children, both under pension age
+                  Inc( targets.household_two_adults );
+               when 8 => -- Three or more adults, no children
+                  Inc( targets.household_three_plus_person_all_adult );
+               when 9  -- One adult, one child
+                  Inc( targets.household_one_adult_one_child );
+               when 10 | -- One adult, two children
+                    11 => -- One adult, three or more children
+                  Inc( targets.household_one_adult_two_plus_children );
+               when 12 | -- Two adults, one child
+                    13 | -- Two adults, two children            
+                    14 | -- Two adults, three or more children
+                    15 | -- Three or more adults, one child
+                    16 | -- Three or more adults, two children
+                    17 => -- Three or more adults, three or more chidren
+                   Inc( targets.household_two_plus_adult_one_plus_children );
+               when others => null; -- covered by assert
+            end case;
             Adult_IO.Add_Person_To_Orderings( hh_crit, d.Asc );
             Put_Line( d.To_String( hh_crit ));
             Put_Line( "on year " & household_r.year'Img & " sernum " & household_r.sernum'Img );
@@ -92,10 +123,16 @@ package body Model.SCP.FRS_Creator is
             begin
                Put_Line( "num adults " & adult_l.Length'Img );
                Put_Line( "num children " & child_l.Length'Img );
+               
                Child_Loop:
                for child of child_l loop
                   Assert( child.age >= 0 and child.age <= 19, "age out of range " & child.age'Img );
                   Assert( child.sex = 1 or child.sex = 2, " sex not 1 or 2 " & child.sex'Img );
+                  if child.sex = 1 then
+                     Inc( targets.male );
+                  else
+                     Inc( targets.female );
+                  end;
                   case child.age is
                      when 0 =>
                         Inc( targets.age_0 );
@@ -246,6 +283,11 @@ package body Model.SCP.FRS_Creator is
                for adult of adult_l loop
                   Assert( adult.age80 >= 16 and adult.age80 <= 80, "age80 out of range " & adult.age80'Img );
                   Assert( adult.sex = 1 or adult.sex = 2, " sex not 1 or 2 " & adult.sex'Img );
+                  if child.sex = 1 then
+                     Inc( targets.male );
+                  else
+                     Inc( targets.female );
+                  end;
                   case adult.age80 is
                      when 16 =>
                         Inc( targets.age_16 );
