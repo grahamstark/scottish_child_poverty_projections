@@ -256,6 +256,7 @@
            
            <table name='target_dataset'>
                   <column name='run_id' description='' primaryKey='true' type='INTEGER'/>
+                  
                   <column name='user_id' type='INTEGER' default='0' primaryKey='true'/>
                   <column name='year' type='INTEGER' default='0' primaryKey='true'/>
                   <column name='sernum' description='Sernum; only for FRS ones really' type='BIGINT' adaTypeName='Sernum_Value' primaryKey='true' default='0' />
@@ -615,6 +616,11 @@
                   <column name='age_108' description='age_108' default='0.0' type='REAL' adaTypeName='Amount'/>
                   <column name='age_109' description='age_109' default='0.0' type='REAL' adaTypeName='Amount'/>
                   <column name='age_110' description='age_110' default='0.0' type='REAL' adaTypeName='Amount'/>
+                  <foreign-key  foreignTable="run"  onDelete='CASCADE'  onUpdate='CASCADE'>
+                     <reference foreign="run_id" local="run_id" />
+                     <reference foreign="user_id" local="user_id" />
+                  </foreign-key>
+                  
                   <!-- todo add some fks to this?? .. -->
                 </table>
 

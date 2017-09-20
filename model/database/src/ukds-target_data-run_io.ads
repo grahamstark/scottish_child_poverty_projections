@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-20 20:28:53.796233
+-- Created by ada_generator.py on 2017-09-20 20:40:54.171022
 -- 
 with Ukds;
 with DB_Commons;
@@ -86,6 +86,7 @@ package Ukds.Target_Data.Run_IO is
    -- functions to retrieve records from tables with foreign keys
    -- referencing the table modelled by this package
    --
+   function Retrieve_Associated_Ukds_Target_Data_Target_Datasets( a_run : Ukds.Target_Data.Run; connection : Database_Connection := null ) return Ukds.Target_Data.Target_Dataset_List;
 
    --
    -- functions to add something to a criteria

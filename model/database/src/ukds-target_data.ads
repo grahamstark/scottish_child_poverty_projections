@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-20 20:28:53.260648
+-- Created by ada_generator.py on 2017-09-20 20:40:53.659856
 -- 
 with Ada.Containers.Vectors;
 --
@@ -1308,12 +1308,12 @@ package Ukds.target_data is
 
         
    -- === CUSTOM PROCS START ===
-              
-   subtype Forecast_Age_Ranges is Natural range 0 .. 90;           
-   type Age_Range_Array is array( Forecast_Age_Ranges ) of Amount;            
-             
-   function To_Array( popn : Population_Forecasts ) return Age_Range_Array;           
-              
+                
+   subtype Forecast_Age_Ranges is Natural range 0 .. 90;             
+   type Age_Range_Array is array( Forecast_Age_Ranges ) of Amount;              
+               
+   function To_Array( popn : Population_Forecasts ) return Age_Range_Array;             
+                
    -- === CUSTOM PROCS END ===
 
 end Ukds.target_data;

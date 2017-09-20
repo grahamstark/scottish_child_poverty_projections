@@ -602,7 +602,8 @@ CREATE TABLE target_data.target_dataset(
        age_108 DOUBLE PRECISION default 0.0,
        age_109 DOUBLE PRECISION default 0.0,
        age_110 DOUBLE PRECISION default 0.0,
-       CONSTRAINT target_dataset_pk PRIMARY KEY( run_id, user_id, year, sernum )
+       CONSTRAINT target_dataset_pk PRIMARY KEY( run_id, user_id, year, sernum ),
+       CONSTRAINT target_dataset_FK_0 FOREIGN KEY( run_id, user_id) references run( run_id, user_id ) on delete CASCADE on update CASCADE
 );
 
 --

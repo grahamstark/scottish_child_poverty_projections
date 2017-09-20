@@ -269,7 +269,12 @@ select * from dictionaries.variables where dataset='frs' and tables='adult' and 
 <= 2012 ben3q1 
 > 2012 wageben6
 
-select year,
+select 
+        year,
+        min( country_uk ) as min_country_uk, max( country_uk ) as max_country_uk, count( nullif( country_uk, 0 )) as non_zero_country_uk,
+        min( country_scotland ) as min_country_scotland, max( country_scotland ) as max_country_scotland, count( nullif( country_scotland, 0 )) as non_zero_country_scotland,
+        min( country_england ) as min_country_england, max( country_england ) as max_country_england, count( nullif( country_england, 0 )) as non_zero_country_england,
+        min( country_wales ) as min_country_wales, max( country_wales ) as max_country_wales, count( nullif( country_wales, 0 )) as non_zero_country_wales,
         min( household_one_adult_male ) as min_household_one_adult_male, max( household_one_adult_male ) as max_household_one_adult_male, count( nullif( household_one_adult_male, 0 )) as non_zero_household_one_adult_male,
         min( household_one_adult_female ) as min_household_one_adult_female, max( household_one_adult_female ) as max_household_one_adult_female, count( nullif( household_one_adult_female, 0 )) as non_zero_household_one_adult_female,
         min( household_two_adults ) as min_household_two_adults, max( household_two_adults ) as max_household_two_adults, count( nullif( household_two_adults, 0 )) as non_zero_household_two_adults,
