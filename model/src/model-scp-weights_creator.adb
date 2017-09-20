@@ -4,7 +4,7 @@ with Ada.Assertions;
 with Ada.Calendar;
 with Ada.Strings.Unbounded; 
 with Ada.Text_IO;
-
+with Weighting_Commons;
 with Data_Constants;
 with Base_Model_Types;
 with Text_Utils;
@@ -37,7 +37,10 @@ package body Model.SCP.Weights_Creator is
    
    package d renames DB_Commons;
    
-   procedure Create_Weights( the_run : Run ) is
+   procedure Create_Weights( 
+      the_run : Run;
+      clauses : Selected_Clauses_Array;
+      error   : out Eval_Error_Type ) is
    begin
       null;
    end  Create_Weights; 
