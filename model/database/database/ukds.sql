@@ -249,6 +249,7 @@ CREATE TABLE target_data.target_dataset(
        run_id INTEGER not null,
        user_id INTEGER not null default 0,
        year INTEGER not null default 0,
+       sernum BIGINT not null default 0,
        household_one_adult_male DOUBLE PRECISION default 0.0,
        household_one_adult_female DOUBLE PRECISION default 0.0,
        household_two_adults DOUBLE PRECISION default 0.0,
@@ -596,7 +597,7 @@ CREATE TABLE target_data.target_dataset(
        age_108 DOUBLE PRECISION default 0.0,
        age_109 DOUBLE PRECISION default 0.0,
        age_110 DOUBLE PRECISION default 0.0,
-       CONSTRAINT target_dataset_pk PRIMARY KEY( run_id, user_id, year )
+       CONSTRAINT target_dataset_pk PRIMARY KEY( run_id, user_id, year, sernum )
 );
 
 --

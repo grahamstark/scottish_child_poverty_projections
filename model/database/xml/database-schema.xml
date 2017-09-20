@@ -258,6 +258,7 @@
                   <column name='run_id' description='' primaryKey='true' type='INTEGER'/>
                   <column name='user_id' type='INTEGER' default='0' primaryKey='true'/>
                   <column name='year' type='INTEGER' default='0' primaryKey='true'/>
+                  <column name='sernum' description='Sernum; only for FRS ones really' type='BIGINT' adaTypeName='Sernum_Value' primaryKey='true' default='0' />
                            
                   <column name='household_one_adult_male' description='household_one_adult_male' default='0.0' type='REAL' adaTypeName='Amount'/>
                   <column name='household_one_adult_female' description='household_one_adult_female' default='0.0' type='REAL' adaTypeName='Amount'/>

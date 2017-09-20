@@ -259,3 +259,5 @@ where
 group by year order by year;
 
 select year,target_group,age_105 from target_data.population_forecasts order by year,target_group;
+
+select distinct year  from frs.adult where age80 is null or age80 < 16;
