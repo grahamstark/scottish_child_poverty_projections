@@ -49,7 +49,7 @@ package body Model.SCP.Target_Creator is
          
          declare
             female_popn : constant Population_Forecasts := Population_Forecasts_IO.Retrieve_By_PK(
-               year => year,
+               year     => year,
                rec_type => TuS( "persons" ),
                variant  => the_run.population_source,
                country  => the_run.country,
@@ -57,7 +57,7 @@ package body Model.SCP.Target_Creator is
                target_group => TuS( "FEMALES" )                           
             );
             male_popn : constant Population_Forecasts := Population_Forecasts_IO.Retrieve_By_PK(
-               year => year,
+               year     => year,
                rec_type => TuS( "persons" ),
                variant  => the_run.population_source,
                country  => the_run.country,
@@ -65,14 +65,14 @@ package body Model.SCP.Target_Creator is
                target_group => TuS( "MALES" )                           
             );
             households : constant Households_Forecasts := Households_Forecasts_IO.Retrieve_By_PK(
-               year => year,
+               year     => year,
                rec_type => TuS( "households" ),
                variant  => the_run.households_source,
                country  => the_run.country,
                edition  => the_run.households_edition                   
             );
             macro : constant Macro_Forecasts := Macro_Forecasts_IO.Retrieve_By_PK(
-               year => year,
+               year     => year,
                rec_type => TuS( "macro" ),
                variant  => the_run.macro_source,
                country  => the_run.country,
@@ -81,6 +81,12 @@ package body Model.SCP.Target_Creator is
             age_16_plus : Amount := 0.0;
             targets     : Target_Dataset; 
          begin
+
+            targets.run_id := the_run.run_id;
+            targets.user_id := the_run.user_id;
+            targets.year := year;
+            targets.sernum := Sernum_Value'First;
+
             targets.household_one_adult_male := households.one_adult_male;
             targets.household_one_adult_female := households.one_adult_female;
             targets.household_two_adults := households.two_adults;
@@ -760,7 +766,8 @@ package body Model.SCP.Target_Creator is
             begin
                targets.employee := implied_employees_rate*age_16_plus;
                targets.jsa_claimant := implied_claimant_rate*age_16_plus;
-            end;               
+            end; 
+            UKDS.Target_Data.Target_Dataset_IO.Save( targets );
          end;
       end loop;
    end Create_Dataset;

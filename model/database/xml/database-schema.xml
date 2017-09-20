@@ -67,13 +67,13 @@
                   
                   <column name='country' type='CHAR' size='20'  />
                   
-                  <column name='macro_source'  type='CHAR' size='20' />
+                  <column name='macro_variant'  type='CHAR' size='20' />
                   <column name='macro_edition' type="INTEGER" adaTypeName="Year_Number" description="a number indicating a release or base year" default='1970'/>
 
-                  <column name='households_source'  type='CHAR' size='20' />
+                  <column name='households_variant'  type='CHAR' size='20' />
                   <column name='households_edition' type="INTEGER" adaTypeName="Year_Number" description="a number indicating a release or base year" default='1970'/>
                   
-                  <column name='population_source'  type='CHAR' size='20' />
+                  <column name='population_variant'  type='CHAR' size='20' />
                   <column name='population_edition' type="INTEGER" adaTypeName="Year_Number" description="a number indicating a release or base year" default='1970' />
                   
                   <column name='start_year'  type='INTEGER' adaTypeName='Year_Number' default='1970' />
