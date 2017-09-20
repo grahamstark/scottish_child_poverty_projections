@@ -51,7 +51,7 @@ package body Model.SCP.Target_Creator is
             female_popn : constant Population_Forecasts := Population_Forecasts_IO.Retrieve_By_PK(
                year     => year,
                rec_type => TuS( "persons" ),
-               variant  => the_run.population_source,
+               variant  => the_run.population_variant,
                country  => the_run.country,
                edition  => the_run.population_edition,
                target_group => TuS( "FEMALES" )                           
@@ -59,7 +59,7 @@ package body Model.SCP.Target_Creator is
             male_popn : constant Population_Forecasts := Population_Forecasts_IO.Retrieve_By_PK(
                year     => year,
                rec_type => TuS( "persons" ),
-               variant  => the_run.population_source,
+               variant  => the_run.population_variant,
                country  => the_run.country,
                edition  => the_run.population_edition,
                target_group => TuS( "MALES" )                           
@@ -67,14 +67,14 @@ package body Model.SCP.Target_Creator is
             households : constant Households_Forecasts := Households_Forecasts_IO.Retrieve_By_PK(
                year     => year,
                rec_type => TuS( "households" ),
-               variant  => the_run.households_source,
+               variant  => the_run.households_variant,
                country  => the_run.country,
                edition  => the_run.households_edition                   
             );
             macro : constant Macro_Forecasts := Macro_Forecasts_IO.Retrieve_By_PK(
                year     => year,
                rec_type => TuS( "macro" ),
-               variant  => the_run.macro_source,
+               variant  => the_run.macro_variant,
                country  => the_run.country,
                edition  => the_run.macro_edition                   
             ); 

@@ -631,5 +631,14 @@ from target_data.target_dataset group by run_id,user_id,year order by run_id,use
 alter table target_data.run add column macro_edition INTEGER default 1970;
 alter table target_data.run add column households_edition INTEGER default 1970;
 alter table target_data.run add column population_edition INTEGER default 1970;
+alter table target_data.run add column country TEXT default 'SCO';
 alter table target_data.run drop column household_source;
 alter table target_data.run add column households_source TEXT;
+
+alter table target_data.run drop column households_source;
+alter table target_data.run drop column population_source;
+alter table target_data.run drop column macro_source;
+
+alter table target_data.run add column households_variant TEXT;
+alter table target_data.run add column population_variant TEXT;
+alter table target_data.run add column macro_variant TEXT;

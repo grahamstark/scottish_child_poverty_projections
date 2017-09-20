@@ -43,11 +43,11 @@ begin
       the_run.end_year := 2039;
       the_run.run_id := 100_000;
       the_run.user_id := 1;
-      the_run.households_source := TuS( "ppp" );
+      the_run.households_variant := TuS( "ppp" );
       the_run.households_edition := 2014;
-      the_run.population_source := TuS( "ppp" );
+      the_run.population_variant := TuS( "ppp" );
       the_run.population_edition := 2014;
-      the_run.macro_source := TuS( "baseline" );
+      the_run.macro_variant := TuS( "baseline" );
       the_run.macro_edition := 2017;
       the_run.country := TuS( "UK" );      
       UKDS.Target_Data.Run_IO.Save( the_run );

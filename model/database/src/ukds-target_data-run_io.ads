@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-20 22:07:21.505979
+-- Created by ada_generator.py on 2017-09-20 23:36:52.629345
 -- 
 with Ukds;
 with DB_Commons;
@@ -97,14 +97,14 @@ package Ukds.Target_Data.Run_IO is
    procedure Add_description( c : in out d.Criteria; description : String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_country( c : in out d.Criteria; country : Unbounded_String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_country( c : in out d.Criteria; country : String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
-   procedure Add_macro_source( c : in out d.Criteria; macro_source : Unbounded_String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
-   procedure Add_macro_source( c : in out d.Criteria; macro_source : String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_macro_variant( c : in out d.Criteria; macro_variant : Unbounded_String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_macro_variant( c : in out d.Criteria; macro_variant : String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_macro_edition( c : in out d.Criteria; macro_edition : Year_Number; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
-   procedure Add_households_source( c : in out d.Criteria; households_source : Unbounded_String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
-   procedure Add_households_source( c : in out d.Criteria; households_source : String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_households_variant( c : in out d.Criteria; households_variant : Unbounded_String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_households_variant( c : in out d.Criteria; households_variant : String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_households_edition( c : in out d.Criteria; households_edition : Year_Number; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
-   procedure Add_population_source( c : in out d.Criteria; population_source : Unbounded_String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
-   procedure Add_population_source( c : in out d.Criteria; population_source : String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_population_variant( c : in out d.Criteria; population_variant : Unbounded_String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_population_variant( c : in out d.Criteria; population_variant : String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_population_edition( c : in out d.Criteria; population_edition : Year_Number; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_start_year( c : in out d.Criteria; start_year : Year_Number; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_end_year( c : in out d.Criteria; end_year : Year_Number; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
@@ -115,11 +115,11 @@ package Ukds.Target_Data.Run_IO is
    procedure Add_user_id_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_description_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_country_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
-   procedure Add_macro_source_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_macro_variant_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_macro_edition_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
-   procedure Add_households_source_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_households_variant_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_households_edition_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
-   procedure Add_population_source_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_population_variant_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_population_edition_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_start_year_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_end_year_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
@@ -133,11 +133,11 @@ package Ukds.Target_Data.Run_IO is
    --    2 : user_id                  : Parameter_Integer  : Integer              :        0 
    --    3 : description              : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
    --    4 : country                  : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
-   --    5 : macro_source             : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
+   --    5 : macro_variant            : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
    --    6 : macro_edition            : Parameter_Integer  : Year_Number          :        0 
-   --    7 : households_source        : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
+   --    7 : households_variant       : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
    --    8 : households_edition       : Parameter_Integer  : Year_Number          :        0 
-   --    9 : population_source        : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
+   --    9 : population_variant       : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
    --   10 : population_edition       : Parameter_Integer  : Year_Number          :        0 
    --   11 : start_year               : Parameter_Integer  : Year_Number          :        0 
    --   12 : end_year                 : Parameter_Integer  : Year_Number          :        0 

@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-20 22:07:21.514150
+-- Created by ada_generator.py on 2017-09-20 23:36:52.636952
 -- 
 with Ukds;
 
@@ -62,7 +62,7 @@ package body Ukds.Target_Data.Run_IO is
    -- Select all variables; substring to be competed with output from some criteria
    --
    SELECT_PART : constant String := "select " &
-         "run_id, user_id, description, country, macro_source, macro_edition, households_source, households_edition, population_source, population_edition," &
+         "run_id, user_id, description, country, macro_variant, macro_edition, households_variant, households_edition, population_variant, population_edition," &
          "start_year, end_year " &
          " from target_data.run " ;
    
@@ -70,7 +70,7 @@ package body Ukds.Target_Data.Run_IO is
    -- Insert all variables; substring to be competed with output from some criteria
    --
    INSERT_PART : constant String := "insert into target_data.run (" &
-         "run_id, user_id, description, country, macro_source, macro_edition, households_source, households_edition, population_source, population_edition," &
+         "run_id, user_id, description, country, macro_variant, macro_edition, households_variant, households_edition, population_variant, population_edition," &
          "start_year, end_year " &
          " ) values " ;
 
@@ -89,11 +89,11 @@ package body Ukds.Target_Data.Run_IO is
       params : constant SQL_Parameters( 1 .. 12 ) := ( if update_order then (
             1 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : description (Unbounded_String)
             2 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : country (Unbounded_String)
-            3 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : macro_source (Unbounded_String)
+            3 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : macro_variant (Unbounded_String)
             4 => ( Parameter_Integer, 0 ),   --  : macro_edition (Year_Number)
-            5 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : households_source (Unbounded_String)
+            5 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : households_variant (Unbounded_String)
             6 => ( Parameter_Integer, 0 ),   --  : households_edition (Year_Number)
-            7 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : population_source (Unbounded_String)
+            7 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : population_variant (Unbounded_String)
             8 => ( Parameter_Integer, 0 ),   --  : population_edition (Year_Number)
             9 => ( Parameter_Integer, 0 ),   --  : start_year (Year_Number)
            10 => ( Parameter_Integer, 0 ),   --  : end_year (Year_Number)
@@ -104,11 +104,11 @@ package body Ukds.Target_Data.Run_IO is
             2 => ( Parameter_Integer, 0 ),   --  : user_id (Integer)
             3 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : description (Unbounded_String)
             4 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : country (Unbounded_String)
-            5 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : macro_source (Unbounded_String)
+            5 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : macro_variant (Unbounded_String)
             6 => ( Parameter_Integer, 0 ),   --  : macro_edition (Year_Number)
-            7 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : households_source (Unbounded_String)
+            7 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : households_variant (Unbounded_String)
             8 => ( Parameter_Integer, 0 ),   --  : households_edition (Year_Number)
-            9 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : population_source (Unbounded_String)
+            9 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : population_variant (Unbounded_String)
            10 => ( Parameter_Integer, 0 ),   --  : population_edition (Year_Number)
            11 => ( Parameter_Integer, 0 ),   --  : start_year (Year_Number)
            12 => ( Parameter_Integer, 0 )   --  : end_year (Year_Number)
@@ -167,7 +167,7 @@ package body Ukds.Target_Data.Run_IO is
    function Get_Prepared_Update_Statement return gse.Prepared_Statement is 
       ps : gse.Prepared_Statement; 
       
-      query : constant String := DB_Commons.Add_Schema_To_Query( UPDATE_PART, SCHEMA_NAME ) & " description = $1, country = $2, macro_source = $3, macro_edition = $4, households_source = $5, households_edition = $6, population_source = $7, population_edition = $8, start_year = $9, end_year = $10 where run_id = $11 and user_id = $12"; 
+      query : constant String := DB_Commons.Add_Schema_To_Query( UPDATE_PART, SCHEMA_NAME ) & " description = $1, country = $2, macro_variant = $3, macro_edition = $4, households_variant = $5, households_edition = $6, population_variant = $7, population_edition = $8, start_year = $9, end_year = $10 where run_id = $11 and user_id = $12"; 
    begin 
       ps := gse.Prepare( 
         query, 
@@ -354,19 +354,19 @@ package body Ukds.Target_Data.Run_IO is
          a_run.country:= To_Unbounded_String( gse.Value( cursor, 3 ));
       end if;
       if not gse.Is_Null( cursor, 4 )then
-         a_run.macro_source:= To_Unbounded_String( gse.Value( cursor, 4 ));
+         a_run.macro_variant:= To_Unbounded_String( gse.Value( cursor, 4 ));
       end if;
       if not gse.Is_Null( cursor, 5 )then
          a_run.macro_edition := Year_Number'Value( gse.Value( cursor, 5 ));
       end if;
       if not gse.Is_Null( cursor, 6 )then
-         a_run.households_source:= To_Unbounded_String( gse.Value( cursor, 6 ));
+         a_run.households_variant:= To_Unbounded_String( gse.Value( cursor, 6 ));
       end if;
       if not gse.Is_Null( cursor, 7 )then
          a_run.households_edition := Year_Number'Value( gse.Value( cursor, 7 ));
       end if;
       if not gse.Is_Null( cursor, 8 )then
-         a_run.population_source:= To_Unbounded_String( gse.Value( cursor, 8 ));
+         a_run.population_variant:= To_Unbounded_String( gse.Value( cursor, 8 ));
       end if;
       if not gse.Is_Null( cursor, 9 )then
          a_run.population_edition := Year_Number'Value( gse.Value( cursor, 9 ));
@@ -426,9 +426,9 @@ package body Ukds.Target_Data.Run_IO is
       is_local_connection : Boolean;
       aliased_description : aliased String := To_String( a_run.description );
       aliased_country : aliased String := To_String( a_run.country );
-      aliased_macro_source : aliased String := To_String( a_run.macro_source );
-      aliased_households_source : aliased String := To_String( a_run.households_source );
-      aliased_population_source : aliased String := To_String( a_run.population_source );
+      aliased_macro_variant : aliased String := To_String( a_run.macro_variant );
+      aliased_households_variant : aliased String := To_String( a_run.households_variant );
+      aliased_population_variant : aliased String := To_String( a_run.population_variant );
    begin
       if( connection = null )then
           local_connection := Connection_Pool.Lease;
@@ -440,11 +440,11 @@ package body Ukds.Target_Data.Run_IO is
 
       params( 1 ) := "+"( aliased_description'Access );
       params( 2 ) := "+"( aliased_country'Access );
-      params( 3 ) := "+"( aliased_macro_source'Access );
+      params( 3 ) := "+"( aliased_macro_variant'Access );
       params( 4 ) := "+"( Year_Number'Pos( a_run.macro_edition ));
-      params( 5 ) := "+"( aliased_households_source'Access );
+      params( 5 ) := "+"( aliased_households_variant'Access );
       params( 6 ) := "+"( Year_Number'Pos( a_run.households_edition ));
-      params( 7 ) := "+"( aliased_population_source'Access );
+      params( 7 ) := "+"( aliased_population_variant'Access );
       params( 8 ) := "+"( Year_Number'Pos( a_run.population_edition ));
       params( 9 ) := "+"( Year_Number'Pos( a_run.start_year ));
       params( 10 ) := "+"( Year_Number'Pos( a_run.end_year ));
@@ -471,9 +471,9 @@ package body Ukds.Target_Data.Run_IO is
       is_local_connection : Boolean;
       aliased_description : aliased String := To_String( a_run.description );
       aliased_country : aliased String := To_String( a_run.country );
-      aliased_macro_source : aliased String := To_String( a_run.macro_source );
-      aliased_households_source : aliased String := To_String( a_run.households_source );
-      aliased_population_source : aliased String := To_String( a_run.population_source );
+      aliased_macro_variant : aliased String := To_String( a_run.macro_variant );
+      aliased_households_variant : aliased String := To_String( a_run.households_variant );
+      aliased_population_variant : aliased String := To_String( a_run.population_variant );
    begin
       if( connection = null )then
           local_connection := Connection_Pool.Lease;
@@ -493,11 +493,11 @@ package body Ukds.Target_Data.Run_IO is
       params( 2 ) := "+"( Integer'Pos( a_run.user_id ));
       params( 3 ) := "+"( aliased_description'Access );
       params( 4 ) := "+"( aliased_country'Access );
-      params( 5 ) := "+"( aliased_macro_source'Access );
+      params( 5 ) := "+"( aliased_macro_variant'Access );
       params( 6 ) := "+"( Year_Number'Pos( a_run.macro_edition ));
-      params( 7 ) := "+"( aliased_households_source'Access );
+      params( 7 ) := "+"( aliased_households_variant'Access );
       params( 8 ) := "+"( Year_Number'Pos( a_run.households_edition ));
-      params( 9 ) := "+"( aliased_population_source'Access );
+      params( 9 ) := "+"( aliased_population_variant'Access );
       params( 10 ) := "+"( Year_Number'Pos( a_run.population_edition ));
       params( 11 ) := "+"( Year_Number'Pos( a_run.start_year ));
       params( 12 ) := "+"( Year_Number'Pos( a_run.end_year ));
@@ -614,18 +614,18 @@ package body Ukds.Target_Data.Run_IO is
    end Add_country;
 
 
-   procedure Add_macro_source( c : in out d.Criteria; macro_source : Unbounded_String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
-   elem : d.Criterion := d.Make_Criterion_Element( "macro_source", op, join, To_String( macro_source ), 20 );
+   procedure Add_macro_variant( c : in out d.Criteria; macro_variant : Unbounded_String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "macro_variant", op, join, To_String( macro_variant ), 20 );
    begin
       d.add_to_criteria( c, elem );
-   end Add_macro_source;
+   end Add_macro_variant;
 
 
-   procedure Add_macro_source( c : in out d.Criteria; macro_source : String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
-   elem : d.Criterion := d.Make_Criterion_Element( "macro_source", op, join, macro_source, 20 );
+   procedure Add_macro_variant( c : in out d.Criteria; macro_variant : String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "macro_variant", op, join, macro_variant, 20 );
    begin
       d.add_to_criteria( c, elem );
-   end Add_macro_source;
+   end Add_macro_variant;
 
 
    procedure Add_macro_edition( c : in out d.Criteria; macro_edition : Year_Number; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
@@ -635,18 +635,18 @@ package body Ukds.Target_Data.Run_IO is
    end Add_macro_edition;
 
 
-   procedure Add_households_source( c : in out d.Criteria; households_source : Unbounded_String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
-   elem : d.Criterion := d.Make_Criterion_Element( "households_source", op, join, To_String( households_source ), 20 );
+   procedure Add_households_variant( c : in out d.Criteria; households_variant : Unbounded_String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "households_variant", op, join, To_String( households_variant ), 20 );
    begin
       d.add_to_criteria( c, elem );
-   end Add_households_source;
+   end Add_households_variant;
 
 
-   procedure Add_households_source( c : in out d.Criteria; households_source : String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
-   elem : d.Criterion := d.Make_Criterion_Element( "households_source", op, join, households_source, 20 );
+   procedure Add_households_variant( c : in out d.Criteria; households_variant : String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "households_variant", op, join, households_variant, 20 );
    begin
       d.add_to_criteria( c, elem );
-   end Add_households_source;
+   end Add_households_variant;
 
 
    procedure Add_households_edition( c : in out d.Criteria; households_edition : Year_Number; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
@@ -656,18 +656,18 @@ package body Ukds.Target_Data.Run_IO is
    end Add_households_edition;
 
 
-   procedure Add_population_source( c : in out d.Criteria; population_source : Unbounded_String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
-   elem : d.Criterion := d.Make_Criterion_Element( "population_source", op, join, To_String( population_source ), 20 );
+   procedure Add_population_variant( c : in out d.Criteria; population_variant : Unbounded_String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "population_variant", op, join, To_String( population_variant ), 20 );
    begin
       d.add_to_criteria( c, elem );
-   end Add_population_source;
+   end Add_population_variant;
 
 
-   procedure Add_population_source( c : in out d.Criteria; population_source : String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
-   elem : d.Criterion := d.Make_Criterion_Element( "population_source", op, join, population_source, 20 );
+   procedure Add_population_variant( c : in out d.Criteria; population_variant : String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "population_variant", op, join, population_variant, 20 );
    begin
       d.add_to_criteria( c, elem );
-   end Add_population_source;
+   end Add_population_variant;
 
 
    procedure Add_population_edition( c : in out d.Criteria; population_edition : Year_Number; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
@@ -723,11 +723,11 @@ package body Ukds.Target_Data.Run_IO is
    end Add_country_To_Orderings;
 
 
-   procedure Add_macro_source_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
-   elem : d.Order_By_Element := d.Make_Order_By_Element( "macro_source", direction  );
+   procedure Add_macro_variant_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "macro_variant", direction  );
    begin
       d.add_to_criteria( c, elem );
-   end Add_macro_source_To_Orderings;
+   end Add_macro_variant_To_Orderings;
 
 
    procedure Add_macro_edition_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
@@ -737,11 +737,11 @@ package body Ukds.Target_Data.Run_IO is
    end Add_macro_edition_To_Orderings;
 
 
-   procedure Add_households_source_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
-   elem : d.Order_By_Element := d.Make_Order_By_Element( "households_source", direction  );
+   procedure Add_households_variant_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "households_variant", direction  );
    begin
       d.add_to_criteria( c, elem );
-   end Add_households_source_To_Orderings;
+   end Add_households_variant_To_Orderings;
 
 
    procedure Add_households_edition_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
@@ -751,11 +751,11 @@ package body Ukds.Target_Data.Run_IO is
    end Add_households_edition_To_Orderings;
 
 
-   procedure Add_population_source_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
-   elem : d.Order_By_Element := d.Make_Order_By_Element( "population_source", direction  );
+   procedure Add_population_variant_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "population_variant", direction  );
    begin
       d.add_to_criteria( c, elem );
-   end Add_population_source_To_Orderings;
+   end Add_population_variant_To_Orderings;
 
 
    procedure Add_population_edition_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
