@@ -254,7 +254,7 @@
            </table>
            
            
-           <table name='target_data'>
+           <table name='target_dataset'>
                   <column name='run_id' description='' primaryKey='true' type='INTEGER'/>
                   <column name='user_id' type='INTEGER' default='0' primaryKey='true'/>
                   <column name='year' type='INTEGER' default='0' primaryKey='true'/>

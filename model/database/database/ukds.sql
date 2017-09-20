@@ -245,7 +245,7 @@ CREATE TABLE target_data.population_forecasts(
        CONSTRAINT population_forecasts_FK_0 FOREIGN KEY( rec_type, variant, country, edition) references forecast_variant( rec_type, variant, country, edition ) on delete CASCADE on update CASCADE
 );
 
-CREATE TABLE target_data.target_data( 
+CREATE TABLE target_data.target_dataset( 
        run_id INTEGER not null,
        user_id INTEGER not null default 0,
        year INTEGER not null default 0,
@@ -596,7 +596,7 @@ CREATE TABLE target_data.target_data(
        age_108 DOUBLE PRECISION default 0.0,
        age_109 DOUBLE PRECISION default 0.0,
        age_110 DOUBLE PRECISION default 0.0,
-       CONSTRAINT target_data_pk PRIMARY KEY( run_id, user_id, year )
+       CONSTRAINT target_dataset_pk PRIMARY KEY( run_id, user_id, year )
 );
 
 --
