@@ -4,6 +4,7 @@
 
 with Model.SCP.FRS_Creator;
 with Model.SCP.Target_Creator;
+with Model.SCP.Weights_Creator;
 
 with Ada.Calendar;
 with Ada.Text_IO;
@@ -39,8 +40,8 @@ begin
       UKDS.Target_Data.Run_IO.Save( the_run );
       Model.SCP.FRS_Creator.Create_Dataset( the_run );
    elsif CREATE_TARGETS then
-      the_run.start_year := 2015;
-      the_run.end_year := 2039;
+      the_run.start_year := 2014;
+      the_run.end_year := 2021;
       the_run.run_id := 100_000;
       the_run.user_id := 1;
       the_run.households_variant := TuS( "ppp" );
@@ -49,9 +50,9 @@ begin
       the_run.population_edition := 2014;
       the_run.macro_variant := TuS( "baseline" );
       the_run.macro_edition := 2017;
-      the_run.country := TuS( "UK" );      
+      the_run.country := TuS( "SCO" );      
       UKDS.Target_Data.Run_IO.Save( the_run );
-      Model.SCP.FRS_Creator.Create_Dataset( the_run );      
+      Model.SCP.Target_Creator.Create_Dataset( the_run );      
    end if;
    endTime := Clock;
    elapsed := endTime - startTime;

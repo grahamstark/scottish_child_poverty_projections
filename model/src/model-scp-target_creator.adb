@@ -75,7 +75,7 @@ package body Model.SCP.Target_Creator is
                year     => year,
                rec_type => TuS( "macro" ),
                variant  => the_run.macro_variant,
-               country  => the_run.country,
+               country  => TuS( "uk" ), -- for now ..
                edition  => the_run.macro_edition                   
             ); 
             age_16_plus : Amount := 0.0;
@@ -764,9 +764,16 @@ package body Model.SCP.Target_Creator is
                implied_employees_rate : constant Amount := macro.employees/implied_16_plus;
                implied_claimant_rate  : constant Amount := macro.claimant_count/implied_16_plus;
             begin
+               Put_Line( "over 16s " & Format( age_16_plus ));
+               Put_Line( "implied 16 plus (UK) " & Format( implied_16_plus ));
+               Put_Line( "implied employees_rate " & Format( implied_employees_rate*100.0 ));               
+               Put_Line( "implied_claimant_rate " & Format( implied_claimant_rate*100.0 ));               
                targets.employee := implied_employees_rate*age_16_plus;
                targets.jsa_claimant := implied_claimant_rate*age_16_plus;
             end; 
+            
+            Put_Line( To_String( targets )); 
+            
             UKDS.Target_Data.Target_Dataset_IO.Save( targets );
          end;
       end loop;
