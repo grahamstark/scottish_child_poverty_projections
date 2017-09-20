@@ -93,8 +93,8 @@ package body Model.SCP.FRS_Creator is
                Put_Line( "num adults " & adult_l.Length'Img );
                Put_Line( "num children " & child_l.Length'Img );
                Child_Loop:
-               for child in child_l loop
-                  Assert( child.age80 >= 0 and adult.age80 <= 19, "age out of range " & child.age'Img );
+               for child of child_l loop
+                  Assert( child.age >= 0 and child.age <= 19, "age out of range " & child.age'Img );
                   Assert( child.sex = 1 or child.sex = 2, " sex not 1 or 2 " & child.sex'Img );
                   case child.age is
                      when 0 =>
@@ -237,10 +237,12 @@ package body Model.SCP.FRS_Creator is
                         elsif( child.sex = 2 ) then
                            Inc( targets.age_19_female );
                         end if;
+                     when others =>
+                        null; -- covered by assert above
                   end case;
                end loop Child_Loop;
                
-               Adult_Loop;
+               Adult_Loop:
                for adult of adult_l loop
                   Assert( adult.age80 >= 16 and adult.age80 <= 80, "age80 out of range " & adult.age80'Img );
                   Assert( adult.sex = 1 or adult.sex = 2, " sex not 1 or 2 " & adult.sex'Img );
