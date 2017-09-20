@@ -3,6 +3,7 @@
 --
 
 with Model.SCP.FRS_Creator;
+with Model.SCP.Target_Creator;
 
 with Ada.Calendar;
 with Ada.Text_IO;

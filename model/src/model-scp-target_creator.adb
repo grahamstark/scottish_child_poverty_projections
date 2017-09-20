@@ -26,8 +26,6 @@ package body Model.SCP.Target_Creator is
 
    use UKDS.Target_Data;
    use UKDS;
-   use UKDS.FRS;
-   use UKDS.Target_Data;
    
    use Ada.Assertions;
    use Ada.Text_IO;
@@ -36,7 +34,6 @@ package body Model.SCP.Target_Creator is
    use GNATCOLL.SQL.Exec;
    
    package d renames DB_Commons;
-   package frsh_io renames Househol_IO;
    
    procedure Create_Dataset( the_run : Run ) is
    begin

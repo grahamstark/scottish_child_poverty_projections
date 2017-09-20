@@ -28,7 +28,6 @@ package body Model.SCP.FRS_Creator is
    use UKDS.Target_Data;
    use UKDS;
    use UKDS.FRS;
-   use UKDS.Target_Data;
    
    use Ada.Assertions;
    use Ada.Text_IO;
