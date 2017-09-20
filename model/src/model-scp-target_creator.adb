@@ -81,6 +81,19 @@ package body Model.SCP.Target_Creator is
             age_16_plus : Amount := 0.0;
             targets     : Target_Dataset; 
          begin
+            
+
+            targets.one_adult_male = households.one_adult_male;
+            targets.one_adult_female = households.one_adult_female;
+            targets.two_adults = households.two_adults;
+            targets.one_adult_one_child = households.one_adult_one_child;
+            targets.one_adult_two_plus_children = households.one_adult_two_plus_children;
+            targets.two_plus_adult_one_plus_children = households.two_plus_adult_one_plus_children;
+            targets.three_plus_person_all_adult = households.three_plus_person_all_adult;
+            targets.all_households = households.all_households;
+
+            
+            
             targets.age_0_male := male_popn.age_0;
             targets.age_0_female := female_popn.age_0;
             targets.age_1_male := male_popn.age_1;
@@ -731,7 +744,10 @@ package body Model.SCP.Target_Creator is
             targets.age_107 := male_popn.age_107 + female_popn.age_107;
             targets.age_108 := male_popn.age_108 + female_popn.age_108;
             targets.age_109 := male_popn.age_109 + female_popn.age_109;
-            targets.age_110 := male_popn.age_110 + female_popn.age_110;           
+            targets.age_110 := male_popn.age_110 + female_popn.age_110;     
+            
+            
+            
          end;
          -- Population_Forecasts_IO.Add_Year( pop_crit, year ); 
          -- Households_Forecasts_IO.Add_Year( hh_crit, year );
