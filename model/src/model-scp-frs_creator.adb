@@ -100,7 +100,7 @@ package body Model.SCP.FRS_Creator is
                   Inc( targets.household_two_adults );
                when 8 => -- Three or more adults, no children
                   Inc( targets.household_three_plus_person_all_adult );
-               when 9  -- One adult, one child
+               when 9 => -- One adult, one child
                   Inc( targets.household_one_adult_one_child );
                when 10 | -- One adult, two children
                     11 => -- One adult, three or more children
@@ -125,153 +125,153 @@ package body Model.SCP.FRS_Creator is
                Put_Line( "num children " & child_l.Length'Img );
                
                Child_Loop:
-               for child of child_l loop
-                  Assert( child.age >= 0 and child.age <= 19, "age out of range " & child.age'Img );
-                  Assert( child.sex = 1 or child.sex = 2, " sex not 1 or 2 " & child.sex'Img );
-                  if child.sex = 1 then
+               for chld of child_l loop
+                  Assert( chld.age >= 0 and chld.age <= 19, "age out of range " & chld.age'Img );
+                  Assert( chld.sex = 1 or chld.sex = 2, " sex not 1 or 2 " & chld.sex'Img );
+                  if chld.sex = 1 then
                      Inc( targets.male );
                   else
                      Inc( targets.female );
-                  end;
-                  case child.age is
+                  end if;
+                  case chld.age is
                      when 0 =>
                         Inc( targets.age_0 );
-                        if( child.sex = 1 ) then
+                        if( chld.sex = 1 ) then
                            Inc( targets.age_0_male );
-                        elsif( child.sex = 2 ) then
+                        elsif( chld.sex = 2 ) then
                            Inc( targets.age_0_female );
                         end if;
                      when 1 =>
                         Inc( targets.age_1 );
-                        if( child.sex = 1 ) then
+                        if( chld.sex = 1 ) then
                            Inc( targets.age_1_male );
-                        elsif( child.sex = 2 ) then
+                        elsif( chld.sex = 2 ) then
                            Inc( targets.age_1_female );
                         end if;
                      when 2 =>
                         Inc( targets.age_2 );
-                        if( child.sex = 1 ) then
+                        if( chld.sex = 1 ) then
                            Inc( targets.age_2_male );
-                        elsif( child.sex = 2 ) then
+                        elsif( chld.sex = 2 ) then
                            Inc( targets.age_2_female );
                         end if;
                      when 3 =>
                         Inc( targets.age_3 );
-                        if( child.sex = 1 ) then
+                        if( chld.sex = 1 ) then
                            Inc( targets.age_3_male );
-                        elsif( child.sex = 2 ) then
+                        elsif( chld.sex = 2 ) then
                            Inc( targets.age_3_female );
                         end if;
                      when 4 =>
                         Inc( targets.age_4 );
-                        if( child.sex = 1 ) then
+                        if( chld.sex = 1 ) then
                            Inc( targets.age_4_male );
-                        elsif( child.sex = 2 ) then
+                        elsif( chld.sex = 2 ) then
                            Inc( targets.age_4_female );
                         end if;
                      when 5 =>
                         Inc( targets.age_5 );
-                        if( child.sex = 1 ) then
+                        if( chld.sex = 1 ) then
                            Inc( targets.age_5_male );
-                        elsif( child.sex = 2 ) then
+                        elsif( chld.sex = 2 ) then
                            Inc( targets.age_5_female );
                         end if;
                      when 6 =>
                         Inc( targets.age_6 );
-                        if( child.sex = 1 ) then
+                        if( chld.sex = 1 ) then
                            Inc( targets.age_6_male );
-                        elsif( child.sex = 2 ) then
+                        elsif( chld.sex = 2 ) then
                            Inc( targets.age_6_female );
                         end if;
                      when 7 =>
                         Inc( targets.age_7 );
-                        if( child.sex = 1 ) then
+                        if( chld.sex = 1 ) then
                            Inc( targets.age_7_male );
-                        elsif( child.sex = 2 ) then
+                        elsif( chld.sex = 2 ) then
                            Inc( targets.age_7_female );
                         end if;
                      when 8 =>
                         Inc( targets.age_8 );
-                        if( child.sex = 1 ) then
+                        if( chld.sex = 1 ) then
                            Inc( targets.age_8_male );
-                        elsif( child.sex = 2 ) then
+                        elsif( chld.sex = 2 ) then
                            Inc( targets.age_8_female );
                         end if;
                      when 9 =>
                         Inc( targets.age_9 );
-                        if( child.sex = 1 ) then
+                        if( chld.sex = 1 ) then
                            Inc( targets.age_9_male );
-                        elsif( child.sex = 2 ) then
+                        elsif( chld.sex = 2 ) then
                            Inc( targets.age_9_female );
                         end if;
                      when 10 =>
                         Inc( targets.age_10 );
-                        if( child.sex = 1 ) then
+                        if( chld.sex = 1 ) then
                            Inc( targets.age_10_male );
-                        elsif( child.sex = 2 ) then
+                        elsif( chld.sex = 2 ) then
                            Inc( targets.age_10_female );
                         end if;
                      when 11 =>
                         Inc( targets.age_11 );
-                        if( child.sex = 1 ) then
+                        if( chld.sex = 1 ) then
                            Inc( targets.age_11_male );
-                        elsif( child.sex = 2 ) then
+                        elsif( chld.sex = 2 ) then
                            Inc( targets.age_11_female );
                         end if;
                      when 12 =>
                         Inc( targets.age_12 );
-                        if( child.sex = 1 ) then
+                        if( chld.sex = 1 ) then
                            Inc( targets.age_12_male );
-                        elsif( child.sex = 2 ) then
+                        elsif( chld.sex = 2 ) then
                            Inc( targets.age_12_female );
                         end if;
                      when 13 =>
                         Inc( targets.age_13 );
-                        if( child.sex = 1 ) then
+                        if( chld.sex = 1 ) then
                            Inc( targets.age_13_male );
-                        elsif( child.sex = 2 ) then
+                        elsif( chld.sex = 2 ) then
                            Inc( targets.age_13_female );
                         end if;
                      when 14 =>
                         Inc( targets.age_14 );
-                        if( child.sex = 1 ) then
+                        if( chld.sex = 1 ) then
                            Inc( targets.age_14_male );
-                        elsif( child.sex = 2 ) then
+                        elsif( chld.sex = 2 ) then
                            Inc( targets.age_14_female );
                         end if;
                      when 15 =>
                         Inc( targets.age_15 );
-                        if( child.sex = 1 ) then
+                        if( chld.sex = 1 ) then
                            Inc( targets.age_15_male );
-                        elsif( child.sex = 2 ) then
+                        elsif( chld.sex = 2 ) then
                            Inc( targets.age_15_female );
                         end if;
                      when 16 =>
                         Inc( targets.age_16 );
-                        if( child.sex = 1 ) then
+                        if( chld.sex = 1 ) then
                            Inc( targets.age_16_male );
-                        elsif( child.sex = 2 ) then
+                        elsif( chld.sex = 2 ) then
                            Inc( targets.age_16_female );
                         end if;
                      when 17 =>
                         Inc( targets.age_17 );
-                        if( child.sex = 1 ) then
+                        if( chld.sex = 1 ) then
                            Inc( targets.age_17_male );
-                        elsif( child.sex = 2 ) then
+                        elsif( chld.sex = 2 ) then
                            Inc( targets.age_17_female );
                         end if;
                      when 18 =>
                         Inc( targets.age_18 );
-                        if( child.sex = 1 ) then
+                        if( chld.sex = 1 ) then
                            Inc( targets.age_18_male );
-                        elsif( child.sex = 2 ) then
+                        elsif( chld.sex = 2 ) then
                            Inc( targets.age_18_female );
                         end if;
                      when 19 =>
                         Inc( targets.age_19 );
-                        if( child.sex = 1 ) then
+                        if( chld.sex = 1 ) then
                            Inc( targets.age_19_male );
-                        elsif( child.sex = 2 ) then
+                        elsif( chld.sex = 2 ) then
                            Inc( targets.age_19_female );
                         end if;
                      when others =>
@@ -283,11 +283,11 @@ package body Model.SCP.FRS_Creator is
                for adult of adult_l loop
                   Assert( adult.age80 >= 16 and adult.age80 <= 80, "age80 out of range " & adult.age80'Img );
                   Assert( adult.sex = 1 or adult.sex = 2, " sex not 1 or 2 " & adult.sex'Img );
-                  if child.sex = 1 then
+                  if adult.sex = 1 then
                      Inc( targets.male );
                   else
                      Inc( targets.female );
-                  end;
+                  end if;
                   case adult.age80 is
                      when 16 =>
                         Inc( targets.age_16 );
