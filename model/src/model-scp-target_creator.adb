@@ -32,7 +32,7 @@ package body Model.SCP.Target_Creator is
    use Ada.Assertions;
    use Ada.Text_IO;
    use Ada.Calendar;
-   
+   use Ada.Strings.Unbounded;
    use GNATCOLL.SQL.Exec;
    
    package d renames DB_Commons;
@@ -83,16 +83,22 @@ package body Model.SCP.Target_Creator is
          begin
             
 
-            targets.one_adult_male = households.one_adult_male;
-            targets.one_adult_female = households.one_adult_female;
-            targets.two_adults = households.two_adults;
-            targets.one_adult_one_child = households.one_adult_one_child;
-            targets.one_adult_two_plus_children = households.one_adult_two_plus_children;
-            targets.two_plus_adult_one_plus_children = households.two_plus_adult_one_plus_children;
-            targets.three_plus_person_all_adult = households.three_plus_person_all_adult;
-            targets.all_households = households.all_households;
-
-            
+            targets.household_one_adult_male := households.one_adult_male;
+            targets.household_one_adult_female := households.one_adult_female;
+            targets.household_two_adults := households.two_adults;
+            targets.household_one_adult_one_child := households.one_adult_one_child;
+            targets.household_one_adult_two_plus_children := households.one_adult_two_plus_children;
+            targets.household_two_plus_adult_one_plus_children := households.two_plus_adult_one_plus_children;
+            targets.household_three_plus_person_all_adult := households.three_plus_person_all_adult;
+            targets.household_all_households := households.all_households;
+            if the_run.country = TuS( "SCO" )then
+               targets.country_scotland := households.all_households;
+            elsif the_run.country = TuS( "UK" )then
+               targets.country_uk := households.all_households;
+            elsif the_run.country = TuS( "ENG" )then
+               targets.country_england := households.all_households;
+               -- FIXME wales/ire
+            end if;
             
             targets.age_0_male := male_popn.age_0;
             targets.age_0_female := female_popn.age_0;
