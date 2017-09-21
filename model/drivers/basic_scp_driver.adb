@@ -15,10 +15,12 @@ with UKDS.Target_Data;
 with UKDS.Target_Data.Run_IO;
 
 with SCP_Types;
+with Model;
 
 with Model.SCP.FRS_Creator;
 with Model.SCP.Target_Creator;
 with Model.SCP.Weights_Creator;
+
 
 procedure Basic_SCP_Driver is
    
@@ -28,8 +30,6 @@ procedure Basic_SCP_Driver is
    use Text_Utils;
    use SCP_Types;
    use Weighting_Commons;
-   
-   
 
    log_trace : GNATColl.Traces.Trace_Handle := GNATColl.Traces.Create( "BASIC_SCP_DRIVER" );
    procedure Log( s : String ) is
@@ -43,7 +43,7 @@ procedure Basic_SCP_Driver is
    elapsed      : Duration;
    the_run      : UKDS.Target_Data.Run;
    run_type     : constant Type_Of_Run := weights_generation;
-   error        : Eval_Error_Type
+   error        : Model.Maths_Funcs.Eval_Error_Type;
 begin
    startTime := Clock;
    GNATColl.Traces.Parse_Config_File( "./etc/logging_config_file.txt" );
