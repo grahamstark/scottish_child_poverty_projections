@@ -614,6 +614,7 @@ package body Model.SCP.Weights_Creator is
          for row in 1 .. num_data_rows loop
             frs_target_row := Target_Dataset_IO.Map_From_Cursor( f_cursor );
             Fill_One_Row( the_run.selected_clauses, frs_target_row, mapped_frs_data );
+            Log( "made row " &row'Img & "=" & To_String( mapped_frs_data ));
             for col in mapped_target_data'Range loop
                observations.all( row, col ) :=  mapped_frs_data( col );                 
             end loop;
@@ -683,7 +684,7 @@ package body Model.SCP.Weights_Creator is
                         sernum  => weights_indexes.all( row ).sernum,
                         weight  =>  weights( row ));
                   begin
-                     Log( "adding " & To_String( out_weight ));
+                     -- Log( "adding " & To_String( out_weight ));
                      Output_Weights_IO.Save( out_weight );
                      -- weighter.Add( year, id, this_weight, weight );
                   end;
