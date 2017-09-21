@@ -39,10 +39,42 @@ package body Model.SCP.Weights_Creator is
    package d renames DB_Commons;
    
    function Col_Count( 
-      clauses : Selected_Clauses_Array ) return Natural is
+      clauses : Selected_Clauses_Array ) return Positive is
+         count : Natural := 0;
    begin
+      if clauses( household_type ) then
+         Inc( count, 7 );
+      end if;
+      -- household_all_households : Amount := 0.0;
+      if clauses( genders ) then
+         Inc( count, 2 );
+      end if;
+      if clauses( employment ) then      
+         Inc( count, 1 );
+      end if;
+      if clauses( employees ) then      
+         Inc( count, 1 );
+      end if;
+      if clauses( ilo_unemployment ) then
+         Inc( count, 1 );
+      end if;
+      if clauses( jsa_claimants ) then
+         Inc( count, 1 );
+      end if;
+      if clauses( by_year_ages_by_gender ) then
+         Inc( count( 162 );
+      end if;
+      if clauses( by_year_ages ) then
+         Inc( count, 81 );
+      end if;
+      if clauses( aggregate_ages ) then
+         Inc( count, 17 );
+      end if;
+      if clauses( aggregate_ages_by_gender ) then
+         Inc( count, 34 );
+      end if;
       
-      return 0;
+      return count;
    end Col_Count;
    
    procedure Fill_One_Row( 
