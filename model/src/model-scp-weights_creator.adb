@@ -556,6 +556,7 @@ package body Model.SCP.Weights_Creator is
       Log( "Begining run for : " & To_String( the_run ));
       Connection_Pool.Initialise;
       conn := Connection_Pool.Lease;
+      Each_Year;
       for year in the_run.start_year .. the_run.end_year loop
          Log( "on year " & year'Img );
          declare
@@ -670,14 +671,13 @@ package body Model.SCP.Weights_Creator is
                      -- weighter.Add( year, id, this_weight, weight );
                   end;
                end loop;
-   
-                  
-                  
-            end;
-            
-         end;
-         
-      end loop;
+               new_totals := Reweighter.Sum_Dataset( observations.all, weights );
+               Print_Diffs( "FINAL WEIGHTED", target_populations, new_totals );
+               Free_Dataset( observations );   
+               Free_Indexes( weights_indexes );   
+            end; -- decls once rows and cols are known
+         end; -- decls for year
+      end loop Each_Year;
       Connection_Pool.Return_Connection( conn );
    end  Create_Weights; 
 
