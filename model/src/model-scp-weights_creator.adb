@@ -19,7 +19,7 @@ with GNATCOLL.SQL.Exec;
 
 with Ukds.Target_Data.Run_IO;
 with Ukds.Target_Data.Target_Dataset_IO;
-
+with Ukds.Target_Data.Output_Weights_IO;
 with DB_Commons;
 
 with Connection_Pool;
@@ -556,7 +556,7 @@ package body Model.SCP.Weights_Creator is
       Log( "Begining run for : " & To_String( the_run ));
       Connection_Pool.Initialise;
       conn := Connection_Pool.Lease;
-      Each_Year;
+      Each_Year:
       for year in the_run.start_year .. the_run.end_year loop
          Log( "on year " & year'Img );
          declare
@@ -663,11 +663,15 @@ package body Model.SCP.Weights_Creator is
                for row in 1 .. num_data_rows loop
                   declare
                      use Ada.Calendar;
-                     year        : Year_Number := weights_indexes.all( row ).year;
-                     id          : Sernum_Value := weights_indexes.all( row ).id;
-                     this_weight : Amount := weights( row );
+                     out_weight  : constant Output_Weights := ( 
+                        run_id => the_run.run_id,
+                        user_id => the_run.user_id,
+                        year    => weights_indexes.all( row ).year,
+                        sernum  => weights_indexes.all( row ).id,
+                        weight  =>  weights( row ));
                   begin
-                     Log( "adding year = " & year'Img & " id " & id'Img & " weight " & this_weight'Img ); 
+                     Log( "adding " & To_String( out_weight ));
+                     Output_Weights_IO.Save( out_weight );
                      -- weighter.Add( year, id, this_weight, weight );
                   end;
                end loop;
