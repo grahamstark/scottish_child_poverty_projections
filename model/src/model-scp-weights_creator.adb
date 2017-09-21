@@ -599,7 +599,7 @@ package body Model.SCP.Weights_Creator is
       conn := Connection_Pool.Lease;
       Target_Dataset_IO.Add_User_Id( frs_criteria, the_run.data_run_user_id );
       Target_Dataset_IO.Add_Run_Id( frs_criteria, the_run.data_run_id );
-      Target_Dataset_IO.Add_Year( frs_criteria, 2012, d.GE );
+      -- Target_Dataset_IO.Add_Year( frs_criteria, 2012, d.GE );
       -- NO!! we want all years in the FRS dataset Target_Dataset_IO.Add_Year( frs_criteria, year );
       if the_run.country = TuS( "SCO" ) then
          Target_Dataset_IO.Add_Country_Scotland( frs_criteria, 1.0 );
@@ -723,7 +723,7 @@ package body Model.SCP.Weights_Creator is
                   begin
                      null;
                      -- Log( "adding " & To_String( out_weight ));
-                     -- Output_Weights_IO.Save( out_weight );
+                     Output_Weights_IO.Save( out_weight );
                      -- weighter.Add( year, id, this_weight, weight );
                   end;
                end loop;
