@@ -509,10 +509,8 @@ package body Model.SCP.Weights_Creator is
             targets.age_105_female + targets.age_106_female + targets.age_107_female + targets.age_108_female + 
             targets.age_109_female + targets.age_110_female;
          Add_Col( tmp );
-      end if;
-      
+      end if;      
       Assert( p = row'Length, " not all rows filled " & p'Img & " vs " & row'Length'Img );
-      Assert(( for all r of row => r > 0.0 ), " there is a zero in output row " & To_String( row ));
     end Fill_One_Row;
       
    
@@ -545,6 +543,9 @@ package body Model.SCP.Weights_Creator is
             mapped_target_data  : Amount_Array( 1 .. num_data_cols );
          begin
             Fill_One_Row( the_run.selected_clauses, targets, mapped_target_data ); 
+            Assert(( for all r of mapped_target_data => r > 0.0 ), 
+               " there is a zero in target output row " & To_String( mapped_target_data ));
+
             Target_Dataset_IO.Add_User_Id( frs_criteria, the_run.data_run_user_id );
             Target_Dataset_IO.Add_Run_Id( frs_criteria, the_run.data_run_id );
             Target_Dataset_IO.Add_Year( frs_criteria, year );
@@ -588,6 +589,11 @@ package body Model.SCP.Weights_Creator is
                for row in 1 .. num_data_rows loop
                   f_cursor.Next;
                   frs_target_row := Target_Dataset_IO.Map_From_Cursor( f_cursor );
+                  Fill_One_Row( the_run.selected_clauses, targets, mapped_frs_data );
+                  for col in mapped_target_data'Range loop
+                     observations.all( row, col ) :=  mapped_target_data( col );                 
+                  end loop;
+                  
                   weights_indexes.all( row ).id := frs_target_row.sernum;
                   weights_indexes.all( row ).year := frs_target_row.year;
                end loop;
