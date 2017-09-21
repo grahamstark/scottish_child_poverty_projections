@@ -576,7 +576,10 @@ package body Model.SCP.Weights_Creator is
                observations       : Dataset_Access;
                target_populations : Row_Vector;
                weights_indexes    : Indexes_Array_Access;
-               mapped_frs_data     : Amount_Array( 1 .. num_data_cols );               
+               mapped_frs_data    : Amount_Array( 1 .. num_data_cols );
+               uniform_weight     : constant Amount := 
+                  mapped_target_data.household_all_households / Amount( num_data_rows );
+               initial_weights    : Col_Vector := ( others => uniform_weight );
             begin
                -- typecasting thing .. 
                for c in target_populations'Range loop
