@@ -521,6 +521,7 @@ package body Model.SCP.Weights_Creator is
    use GNATCOLL.SQL.Exec;   
    package d renames DB_Commons;
       num_cols : constant Positive := Col_Count( the_run.selected_clauses );
+      num_data_rows : Positive;
       conn         : Database_Connection;
    begin
       Connection_Pool.Initialise;
@@ -533,7 +534,7 @@ package body Model.SCP.Weights_Creator is
                year    => year,
                sernum  => -9         
             );
-            cursor          : GNATCOLL.SQL.Exec.Forward_Cursor;
+            cursor          : GNATCOLL.SQL.Exec.Direct_Cursor;
             frs_target_row  : Target_Dataset;
             ps              : GNATCOLL.SQL.Exec.Prepared_Statement;   
             count           : Natural := 0;
@@ -544,8 +545,12 @@ package body Model.SCP.Weights_Creator is
             Target_Dataset_IO.Add_User_Id( frs_criteria, the_run.data_run_user_id );
             Target_Dataset_IO.Add_Run_Id( frs_criteria, the_run.data_run_id );
             Target_Dataset_IO.Add_Year( frs_criteria, year );
+            if the_run.country = TuS( "SCO" ) then
+               Target_Dataset_IO.Add_Country_Scotland( frs_criteria, 1.0 );
+            end if; -- and so on for Wales, Ireland; UK doesn't need this
             ps := Target_Dataset_IO.Get_Prepared_Retrieve_Statement( frs_criteria );            
-            
+            cursor.Fetch( conn, ps );
+            num_data_rows := Rows_Count( cursor );
          end;
          
       end loop;
