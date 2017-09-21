@@ -42,11 +42,12 @@ begin
    elsif CREATE_TARGETS then
       the_run.start_year := 2014;
       the_run.end_year := 2021;
-      the_run.run_id := 100_000;
+      the_run.run_id := 100_001;
       the_run.user_id := 1;
-      the_run.households_variant := TuS( "ppp" );
+      
+      the_run.households_variant := TuS( "ppl" );
       the_run.households_edition := 2014;
-      the_run.population_variant := TuS( "ppp" );
+      the_run.population_variant := TuS( "ppl" );
       the_run.population_edition := 2014;
       the_run.macro_variant := TuS( "baseline" );
       the_run.macro_edition := 2017;
