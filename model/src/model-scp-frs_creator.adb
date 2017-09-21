@@ -38,6 +38,11 @@ package body Model.SCP.FRS_Creator is
    package d renames DB_Commons;
    package frsh_io renames Househol_IO;
 
+   log_trace : GNATColl.Traces.Trace_Handle := GNATColl.Traces.Create( "MODEL.SCP.FRS_CREATOR" );
+   procedure Log( s : String ) is
+   begin
+      GNATColl.Traces.Trace( log_trace, s );
+   end Log;
    
    
    procedure Create_Dataset( the_run : Run ) is
@@ -56,7 +61,7 @@ package body Model.SCP.FRS_Creator is
       Househol_IO.Add_Year( frs_criteria, the_run.end_year, d.LE );
       Househol_IO.Add_Year_To_Orderings( frs_criteria, d.Asc );
       Househol_IO.Add_Sernum_To_Orderings( frs_criteria, d.Asc );
-      Put_Line( "retrieving HHLS " & d.To_String( frs_criteria ));
+      Log( "retrieving HHLS " & d.To_String( frs_criteria ));
       ps := Househol_IO.Get_Prepared_Retrieve_Statement( frs_criteria );  
       cursor.Fetch( conn, ps ); -- "select * from frs.househol where year >= 2011 order by year,sernum" );
       while Has_Row( cursor ) loop 
@@ -120,14 +125,14 @@ package body Model.SCP.FRS_Creator is
                when others => null; -- covered by assert
             end case;
             Adult_IO.Add_Person_To_Orderings( hh_crit, d.Asc );
-            Put_Line( d.To_String( hh_crit ));
-            Put_Line( "on year " & household_r.year'Img & " sernum " & household_r.sernum'Img );
+            Log( d.To_String( hh_crit ));
+            Log( "on year " & household_r.year'Img & " sernum " & household_r.sernum'Img );
             declare
                adult_l : FRS.Adult_List := Adult_IO.Retrieve( hh_crit );
                child_l : FRS.Child_List := Child_IO.Retrieve( hh_crit );
             begin
-               Put_Line( "num adults " & adult_l.Length'Img );
-               Put_Line( "num children " & child_l.Length'Img );
+               Log( "num adults " & adult_l.Length'Img );
+               Log( "num children " & child_l.Length'Img );
                
                Child_Loop:
                for chld of child_l loop
