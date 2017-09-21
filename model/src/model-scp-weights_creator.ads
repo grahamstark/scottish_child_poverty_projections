@@ -10,7 +10,6 @@ package Model.SCP.Weights_Creator is
    
    procedure Create_Weights( 
       the_run : Run;
-      clauses : Selected_Clauses_Array;
       error   : out Eval_Error_Type );
 
 end  Model.SCP.Weights_Creator;

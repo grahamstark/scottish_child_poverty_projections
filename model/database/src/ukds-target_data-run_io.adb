@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-20 23:36:52.636952
+-- Created by ada_generator.py on 2017-09-21 13:28:52.971109
 -- 
 with Ukds;
 
@@ -62,16 +62,18 @@ package body Ukds.Target_Data.Run_IO is
    -- Select all variables; substring to be competed with output from some criteria
    --
    SELECT_PART : constant String := "select " &
-         "run_id, user_id, description, country, macro_variant, macro_edition, households_variant, households_edition, population_variant, population_edition," &
-         "start_year, end_year " &
+         "run_id, user_id, run_type, description, country, macro_variant, macro_edition, households_variant, households_edition, population_variant," &
+         "population_edition, start_year, end_year, weighting_function, weighting_lower_bound, weighting_upper_bound, targets_run_id, targets_run_user_id, data_run_id, data_run_user_id," &
+         "selected_clauses " &
          " from target_data.run " ;
    
    --
    -- Insert all variables; substring to be competed with output from some criteria
    --
    INSERT_PART : constant String := "insert into target_data.run (" &
-         "run_id, user_id, description, country, macro_variant, macro_edition, households_variant, households_edition, population_variant, population_edition," &
-         "start_year, end_year " &
+         "run_id, user_id, run_type, description, country, macro_variant, macro_edition, households_variant, households_edition, population_variant," &
+         "population_edition, start_year, end_year, weighting_function, weighting_lower_bound, weighting_upper_bound, targets_run_id, targets_run_user_id, data_run_id, data_run_user_id," &
+         "selected_clauses " &
          " ) values " ;
 
    
@@ -86,32 +88,50 @@ package body Ukds.Target_Data.Run_IO is
    UPDATE_PART : constant String := "update target_data.run set  ";
    function Get_Configured_Insert_Params( update_order : Boolean := False )  return GNATCOLL.SQL.Exec.SQL_Parameters is
    use GNATCOLL.SQL_Impl;
-      params : constant SQL_Parameters( 1 .. 12 ) := ( if update_order then (
-            1 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : description (Unbounded_String)
-            2 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : country (Unbounded_String)
-            3 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : macro_variant (Unbounded_String)
-            4 => ( Parameter_Integer, 0 ),   --  : macro_edition (Year_Number)
-            5 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : households_variant (Unbounded_String)
-            6 => ( Parameter_Integer, 0 ),   --  : households_edition (Year_Number)
-            7 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : population_variant (Unbounded_String)
-            8 => ( Parameter_Integer, 0 ),   --  : population_edition (Year_Number)
-            9 => ( Parameter_Integer, 0 ),   --  : start_year (Year_Number)
-           10 => ( Parameter_Integer, 0 ),   --  : end_year (Year_Number)
-           11 => ( Parameter_Integer, 0 ),   --  : run_id (Integer)
-           12 => ( Parameter_Integer, 0 )   --  : user_id (Integer)
+      params : constant SQL_Parameters( 1 .. 21 ) := ( if update_order then (
+            1 => ( Parameter_Integer, 0 ),   --  : run_type (Type_Of_Run)
+            2 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : description (Unbounded_String)
+            3 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : country (Unbounded_String)
+            4 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : macro_variant (Unbounded_String)
+            5 => ( Parameter_Integer, 0 ),   --  : macro_edition (Year_Number)
+            6 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : households_variant (Unbounded_String)
+            7 => ( Parameter_Integer, 0 ),   --  : households_edition (Year_Number)
+            8 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : population_variant (Unbounded_String)
+            9 => ( Parameter_Integer, 0 ),   --  : population_edition (Year_Number)
+           10 => ( Parameter_Integer, 0 ),   --  : start_year (Year_Number)
+           11 => ( Parameter_Integer, 0 ),   --  : end_year (Year_Number)
+           12 => ( Parameter_Integer, 0 ),   --  : weighting_function (Distance_Function_Type)
+           13 => ( Parameter_Float, 0.0 ),   --  : weighting_lower_bound (Rate)
+           14 => ( Parameter_Float, 0.0 ),   --  : weighting_upper_bound (Rate)
+           15 => ( Parameter_Integer, 0 ),   --  : targets_run_id (Integer)
+           16 => ( Parameter_Integer, 0 ),   --  : targets_run_user_id (Integer)
+           17 => ( Parameter_Integer, 0 ),   --  : data_run_id (Integer)
+           18 => ( Parameter_Integer, 0 ),   --  : data_run_user_id (Integer)
+           19 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : selected_clauses (Boolean)
+           20 => ( Parameter_Integer, 0 ),   --  : run_id (Integer)
+           21 => ( Parameter_Integer, 0 )   --  : user_id (Integer)
       ) else (
             1 => ( Parameter_Integer, 0 ),   --  : run_id (Integer)
             2 => ( Parameter_Integer, 0 ),   --  : user_id (Integer)
-            3 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : description (Unbounded_String)
-            4 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : country (Unbounded_String)
-            5 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : macro_variant (Unbounded_String)
-            6 => ( Parameter_Integer, 0 ),   --  : macro_edition (Year_Number)
-            7 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : households_variant (Unbounded_String)
-            8 => ( Parameter_Integer, 0 ),   --  : households_edition (Year_Number)
-            9 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : population_variant (Unbounded_String)
-           10 => ( Parameter_Integer, 0 ),   --  : population_edition (Year_Number)
-           11 => ( Parameter_Integer, 0 ),   --  : start_year (Year_Number)
-           12 => ( Parameter_Integer, 0 )   --  : end_year (Year_Number)
+            3 => ( Parameter_Integer, 0 ),   --  : run_type (Type_Of_Run)
+            4 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : description (Unbounded_String)
+            5 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : country (Unbounded_String)
+            6 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : macro_variant (Unbounded_String)
+            7 => ( Parameter_Integer, 0 ),   --  : macro_edition (Year_Number)
+            8 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : households_variant (Unbounded_String)
+            9 => ( Parameter_Integer, 0 ),   --  : households_edition (Year_Number)
+           10 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : population_variant (Unbounded_String)
+           11 => ( Parameter_Integer, 0 ),   --  : population_edition (Year_Number)
+           12 => ( Parameter_Integer, 0 ),   --  : start_year (Year_Number)
+           13 => ( Parameter_Integer, 0 ),   --  : end_year (Year_Number)
+           14 => ( Parameter_Integer, 0 ),   --  : weighting_function (Distance_Function_Type)
+           15 => ( Parameter_Float, 0.0 ),   --  : weighting_lower_bound (Rate)
+           16 => ( Parameter_Float, 0.0 ),   --  : weighting_upper_bound (Rate)
+           17 => ( Parameter_Integer, 0 ),   --  : targets_run_id (Integer)
+           18 => ( Parameter_Integer, 0 ),   --  : targets_run_user_id (Integer)
+           19 => ( Parameter_Integer, 0 ),   --  : data_run_id (Integer)
+           20 => ( Parameter_Integer, 0 ),   --  : data_run_user_id (Integer)
+           21 => ( Parameter_Text, null, Null_Unbounded_String )   --  : selected_clauses (Boolean)
       
       ));
    begin
@@ -122,7 +142,7 @@ package body Ukds.Target_Data.Run_IO is
 
    function Get_Prepared_Insert_Statement return gse.Prepared_Statement is 
       ps : gse.Prepared_Statement; 
-      query : constant String := DB_Commons.Add_Schema_To_Query( INSERT_PART, SCHEMA_NAME ) & " ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12 )"; 
+      query : constant String := DB_Commons.Add_Schema_To_Query( INSERT_PART, SCHEMA_NAME ) & " ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21 )"; 
    begin 
       ps := gse.Prepare( query, On_Server => True ); 
       return ps; 
@@ -167,7 +187,7 @@ package body Ukds.Target_Data.Run_IO is
    function Get_Prepared_Update_Statement return gse.Prepared_Statement is 
       ps : gse.Prepared_Statement; 
       
-      query : constant String := DB_Commons.Add_Schema_To_Query( UPDATE_PART, SCHEMA_NAME ) & " description = $1, country = $2, macro_variant = $3, macro_edition = $4, households_variant = $5, households_edition = $6, population_variant = $7, population_edition = $8, start_year = $9, end_year = $10 where run_id = $11 and user_id = $12"; 
+      query : constant String := DB_Commons.Add_Schema_To_Query( UPDATE_PART, SCHEMA_NAME ) & " run_type = $1, description = $2, country = $3, macro_variant = $4, macro_edition = $5, households_variant = $6, households_edition = $7, population_variant = $8, population_edition = $9, start_year = $10, end_year = $11, weighting_function = $12, weighting_lower_bound = $13, weighting_upper_bound = $14, targets_run_id = $15, targets_run_user_id = $16, data_run_id = $17, data_run_user_id = $18, selected_clauses = $19 where run_id = $20 and user_id = $21"; 
    begin 
       ps := gse.Prepare( 
         query, 
@@ -348,34 +368,73 @@ package body Ukds.Target_Data.Run_IO is
          a_run.user_id := gse.Integer_Value( cursor, 1 );
       end if;
       if not gse.Is_Null( cursor, 2 )then
-         a_run.description:= To_Unbounded_String( gse.Value( cursor, 2 ));
+         declare
+            i : constant Integer := gse.Integer_Value( cursor, 2 );
+      begin
+            a_run.run_type := Type_Of_Run'Val( i );
+            end;
       end if;
       if not gse.Is_Null( cursor, 3 )then
-         a_run.country:= To_Unbounded_String( gse.Value( cursor, 3 ));
+         a_run.description:= To_Unbounded_String( gse.Value( cursor, 3 ));
       end if;
       if not gse.Is_Null( cursor, 4 )then
-         a_run.macro_variant:= To_Unbounded_String( gse.Value( cursor, 4 ));
+         a_run.country:= To_Unbounded_String( gse.Value( cursor, 4 ));
       end if;
       if not gse.Is_Null( cursor, 5 )then
-         a_run.macro_edition := Year_Number'Value( gse.Value( cursor, 5 ));
+         a_run.macro_variant:= To_Unbounded_String( gse.Value( cursor, 5 ));
       end if;
       if not gse.Is_Null( cursor, 6 )then
-         a_run.households_variant:= To_Unbounded_String( gse.Value( cursor, 6 ));
+         a_run.macro_edition := Year_Number'Value( gse.Value( cursor, 6 ));
       end if;
       if not gse.Is_Null( cursor, 7 )then
-         a_run.households_edition := Year_Number'Value( gse.Value( cursor, 7 ));
+         a_run.households_variant:= To_Unbounded_String( gse.Value( cursor, 7 ));
       end if;
       if not gse.Is_Null( cursor, 8 )then
-         a_run.population_variant:= To_Unbounded_String( gse.Value( cursor, 8 ));
+         a_run.households_edition := Year_Number'Value( gse.Value( cursor, 8 ));
       end if;
       if not gse.Is_Null( cursor, 9 )then
-         a_run.population_edition := Year_Number'Value( gse.Value( cursor, 9 ));
+         a_run.population_variant:= To_Unbounded_String( gse.Value( cursor, 9 ));
       end if;
       if not gse.Is_Null( cursor, 10 )then
-         a_run.start_year := Year_Number'Value( gse.Value( cursor, 10 ));
+         a_run.population_edition := Year_Number'Value( gse.Value( cursor, 10 ));
       end if;
       if not gse.Is_Null( cursor, 11 )then
-         a_run.end_year := Year_Number'Value( gse.Value( cursor, 11 ));
+         a_run.start_year := Year_Number'Value( gse.Value( cursor, 11 ));
+      end if;
+      if not gse.Is_Null( cursor, 12 )then
+         a_run.end_year := Year_Number'Value( gse.Value( cursor, 12 ));
+      end if;
+      if not gse.Is_Null( cursor, 13 )then
+         declare
+            i : constant Integer := gse.Integer_Value( cursor, 13 );
+      begin
+            a_run.weighting_function := Distance_Function_Type'Val( i );
+            end;
+      end if;
+      if not gse.Is_Null( cursor, 14 )then
+         a_run.weighting_lower_bound:= Rate'Value( gse.Value( cursor, 14 ));
+      end if;
+      if not gse.Is_Null( cursor, 15 )then
+         a_run.weighting_upper_bound:= Rate'Value( gse.Value( cursor, 15 ));
+      end if;
+      if not gse.Is_Null( cursor, 16 )then
+         a_run.targets_run_id := gse.Integer_Value( cursor, 16 );
+      end if;
+      if not gse.Is_Null( cursor, 17 )then
+         a_run.targets_run_user_id := gse.Integer_Value( cursor, 17 );
+      end if;
+      if not gse.Is_Null( cursor, 18 )then
+         a_run.data_run_id := gse.Integer_Value( cursor, 18 );
+      end if;
+      if not gse.Is_Null( cursor, 19 )then
+         a_run.data_run_user_id := gse.Integer_Value( cursor, 19 );
+      end if;
+      if not gse.Is_Null( cursor, 20 )then
+         declare
+            s : constant String := gse.Value( cursor, 20 );
+         begin
+            Selected_Clauses_Array_Package.SQL_Map_To_Array( s, a_run.selected_clauses );
+         end;
       end if;
       return a_run;
    end Map_From_Cursor;
@@ -429,6 +488,7 @@ package body Ukds.Target_Data.Run_IO is
       aliased_macro_variant : aliased String := To_String( a_run.macro_variant );
       aliased_households_variant : aliased String := To_String( a_run.households_variant );
       aliased_population_variant : aliased String := To_String( a_run.population_variant );
+      aliased_selected_clauses : aliased String := Selected_Clauses_Array_Package.Array_To_SQL_String( a_run.selected_clauses );
    begin
       if( connection = null )then
           local_connection := Connection_Pool.Lease;
@@ -438,18 +498,27 @@ package body Ukds.Target_Data.Run_IO is
           is_local_connection := False;
       end if;
 
-      params( 1 ) := "+"( aliased_description'Access );
-      params( 2 ) := "+"( aliased_country'Access );
-      params( 3 ) := "+"( aliased_macro_variant'Access );
-      params( 4 ) := "+"( Year_Number'Pos( a_run.macro_edition ));
-      params( 5 ) := "+"( aliased_households_variant'Access );
-      params( 6 ) := "+"( Year_Number'Pos( a_run.households_edition ));
-      params( 7 ) := "+"( aliased_population_variant'Access );
-      params( 8 ) := "+"( Year_Number'Pos( a_run.population_edition ));
-      params( 9 ) := "+"( Year_Number'Pos( a_run.start_year ));
-      params( 10 ) := "+"( Year_Number'Pos( a_run.end_year ));
-      params( 11 ) := "+"( Integer'Pos( a_run.run_id ));
-      params( 12 ) := "+"( Integer'Pos( a_run.user_id ));
+      params( 1 ) := "+"( Type_Of_Run'Pos( a_run.run_type ));
+      params( 2 ) := "+"( aliased_description'Access );
+      params( 3 ) := "+"( aliased_country'Access );
+      params( 4 ) := "+"( aliased_macro_variant'Access );
+      params( 5 ) := "+"( Year_Number'Pos( a_run.macro_edition ));
+      params( 6 ) := "+"( aliased_households_variant'Access );
+      params( 7 ) := "+"( Year_Number'Pos( a_run.households_edition ));
+      params( 8 ) := "+"( aliased_population_variant'Access );
+      params( 9 ) := "+"( Year_Number'Pos( a_run.population_edition ));
+      params( 10 ) := "+"( Year_Number'Pos( a_run.start_year ));
+      params( 11 ) := "+"( Year_Number'Pos( a_run.end_year ));
+      params( 12 ) := "+"( Distance_Function_Type'Pos( a_run.weighting_function ));
+      params( 13 ) := "+"( Float( a_run.weighting_lower_bound ));
+      params( 14 ) := "+"( Float( a_run.weighting_upper_bound ));
+      params( 15 ) := "+"( Integer'Pos( a_run.targets_run_id ));
+      params( 16 ) := "+"( Integer'Pos( a_run.targets_run_user_id ));
+      params( 17 ) := "+"( Integer'Pos( a_run.data_run_id ));
+      params( 18 ) := "+"( Integer'Pos( a_run.data_run_user_id ));
+      params( 19 ) := "+"( aliased_selected_clauses'Access );
+      params( 20 ) := "+"( Integer'Pos( a_run.run_id ));
+      params( 21 ) := "+"( Integer'Pos( a_run.user_id ));
       
       gse.Execute( local_connection, UPDATE_PS, params );
       Check_Result( local_connection );
@@ -474,6 +543,7 @@ package body Ukds.Target_Data.Run_IO is
       aliased_macro_variant : aliased String := To_String( a_run.macro_variant );
       aliased_households_variant : aliased String := To_String( a_run.households_variant );
       aliased_population_variant : aliased String := To_String( a_run.population_variant );
+      aliased_selected_clauses : aliased String := Selected_Clauses_Array_Package.Array_To_SQL_String( a_run.selected_clauses );
    begin
       if( connection = null )then
           local_connection := Connection_Pool.Lease;
@@ -491,16 +561,25 @@ package body Ukds.Target_Data.Run_IO is
       end if;
       params( 1 ) := "+"( Integer'Pos( a_run.run_id ));
       params( 2 ) := "+"( Integer'Pos( a_run.user_id ));
-      params( 3 ) := "+"( aliased_description'Access );
-      params( 4 ) := "+"( aliased_country'Access );
-      params( 5 ) := "+"( aliased_macro_variant'Access );
-      params( 6 ) := "+"( Year_Number'Pos( a_run.macro_edition ));
-      params( 7 ) := "+"( aliased_households_variant'Access );
-      params( 8 ) := "+"( Year_Number'Pos( a_run.households_edition ));
-      params( 9 ) := "+"( aliased_population_variant'Access );
-      params( 10 ) := "+"( Year_Number'Pos( a_run.population_edition ));
-      params( 11 ) := "+"( Year_Number'Pos( a_run.start_year ));
-      params( 12 ) := "+"( Year_Number'Pos( a_run.end_year ));
+      params( 3 ) := "+"( Type_Of_Run'Pos( a_run.run_type ));
+      params( 4 ) := "+"( aliased_description'Access );
+      params( 5 ) := "+"( aliased_country'Access );
+      params( 6 ) := "+"( aliased_macro_variant'Access );
+      params( 7 ) := "+"( Year_Number'Pos( a_run.macro_edition ));
+      params( 8 ) := "+"( aliased_households_variant'Access );
+      params( 9 ) := "+"( Year_Number'Pos( a_run.households_edition ));
+      params( 10 ) := "+"( aliased_population_variant'Access );
+      params( 11 ) := "+"( Year_Number'Pos( a_run.population_edition ));
+      params( 12 ) := "+"( Year_Number'Pos( a_run.start_year ));
+      params( 13 ) := "+"( Year_Number'Pos( a_run.end_year ));
+      params( 14 ) := "+"( Distance_Function_Type'Pos( a_run.weighting_function ));
+      params( 15 ) := "+"( Float( a_run.weighting_lower_bound ));
+      params( 16 ) := "+"( Float( a_run.weighting_upper_bound ));
+      params( 17 ) := "+"( Integer'Pos( a_run.targets_run_id ));
+      params( 18 ) := "+"( Integer'Pos( a_run.targets_run_user_id ));
+      params( 19 ) := "+"( Integer'Pos( a_run.data_run_id ));
+      params( 20 ) := "+"( Integer'Pos( a_run.data_run_user_id ));
+      params( 21 ) := "+"( aliased_selected_clauses'Access );
       gse.Execute( local_connection, SAVE_PS, params );  
       Check_Result( local_connection );
       if( is_local_connection )then
@@ -584,6 +663,13 @@ package body Ukds.Target_Data.Run_IO is
    begin
       d.add_to_criteria( c, elem );
    end Add_user_id;
+
+
+   procedure Add_run_type( c : in out d.Criteria; run_type : Type_Of_Run; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "run_type", op, join, Integer( Type_Of_Run'Pos( run_type )) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_run_type;
 
 
    procedure Add_description( c : in out d.Criteria; description : Unbounded_String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
@@ -691,6 +777,62 @@ package body Ukds.Target_Data.Run_IO is
    end Add_end_year;
 
 
+   procedure Add_weighting_function( c : in out d.Criteria; weighting_function : Distance_Function_Type; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "weighting_function", op, join, Integer( Distance_Function_Type'Pos( weighting_function )) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_weighting_function;
+
+
+   procedure Add_weighting_lower_bound( c : in out d.Criteria; weighting_lower_bound : Rate; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "weighting_lower_bound", op, join, Long_Float( weighting_lower_bound ) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_weighting_lower_bound;
+
+
+   procedure Add_weighting_upper_bound( c : in out d.Criteria; weighting_upper_bound : Rate; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "weighting_upper_bound", op, join, Long_Float( weighting_upper_bound ) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_weighting_upper_bound;
+
+
+   procedure Add_targets_run_id( c : in out d.Criteria; targets_run_id : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "targets_run_id", op, join, targets_run_id );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_targets_run_id;
+
+
+   procedure Add_targets_run_user_id( c : in out d.Criteria; targets_run_user_id : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "targets_run_user_id", op, join, targets_run_user_id );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_targets_run_user_id;
+
+
+   procedure Add_data_run_id( c : in out d.Criteria; data_run_id : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "data_run_id", op, join, data_run_id );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_data_run_id;
+
+
+   procedure Add_data_run_user_id( c : in out d.Criteria; data_run_user_id : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "data_run_user_id", op, join, data_run_user_id );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_data_run_user_id;
+
+
+   procedure Add_selected_clauses( c : in out d.Criteria; selected_clauses : Selected_Clauses_Array; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "selected_clauses", op, join, Selected_Clauses_Array_Package.Array_To_SQL_String( selected_clauses ) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_selected_clauses;
+
+
    
    --
    -- functions to add an ordering to a criteria
@@ -707,6 +849,13 @@ package body Ukds.Target_Data.Run_IO is
    begin
       d.add_to_criteria( c, elem );
    end Add_user_id_To_Orderings;
+
+
+   procedure Add_run_type_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "run_type", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_run_type_To_Orderings;
 
 
    procedure Add_description_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
@@ -777,6 +926,62 @@ package body Ukds.Target_Data.Run_IO is
    begin
       d.add_to_criteria( c, elem );
    end Add_end_year_To_Orderings;
+
+
+   procedure Add_weighting_function_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "weighting_function", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_weighting_function_To_Orderings;
+
+
+   procedure Add_weighting_lower_bound_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "weighting_lower_bound", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_weighting_lower_bound_To_Orderings;
+
+
+   procedure Add_weighting_upper_bound_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "weighting_upper_bound", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_weighting_upper_bound_To_Orderings;
+
+
+   procedure Add_targets_run_id_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "targets_run_id", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_targets_run_id_To_Orderings;
+
+
+   procedure Add_targets_run_user_id_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "targets_run_user_id", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_targets_run_user_id_To_Orderings;
+
+
+   procedure Add_data_run_id_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "data_run_id", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_data_run_id_To_Orderings;
+
+
+   procedure Add_data_run_user_id_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "data_run_user_id", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_data_run_user_id_To_Orderings;
+
+
+   procedure Add_selected_clauses_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "selected_clauses", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_selected_clauses_To_Orderings;
 
 
 

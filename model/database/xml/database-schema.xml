@@ -3,6 +3,8 @@
         <adaTypePackage name='Data_Constants'/>
         <adaTypePackage name='Base_Model_Types'/>
         <adaTypePackage name='Ada.Calendar'/>
+        <adaTypePackage name='SCP_Types'/>
+        <adaTypePackage name='Weighting_Commons'/>
         <schema name='target_data'>
         
                
@@ -61,8 +63,12 @@
                </table>
                
                <table name='run'>
+                  <localAdaTypePackage name="SCP_Types"/>
+                  <localAdaTypePackage name="Weighting_Commons"/>
+                  
                   <column name='run_id' type='INTEGER' primaryKey='true' />
                   <column name='user_id' type='INTEGER' default='0' primaryKey='true'/>
+                  <column name='run_type' adaTypeName='Type_Of_Run' type='ENUM'/> 
                   <column name='description'  type='VARCHAR'  />
                   
                   <column name='country' type='CHAR' size='20'  />
@@ -80,6 +86,29 @@
                   <column name='end_year'  type='INTEGER' adaTypeName='Year_Number' default='1970' />
                   <!-- maybe fks? -->
                   <!-- maybe stuff about fixes to macro as in Soton model -->
+
+                  <column name="weighting_function" type="ENUM" adaTypeName="Distance_Function_Type" description="weighting_function" />
+                  <column name="weighting_lower_bound" type="REAL" adaTypeName="Rate" description="weighting_lower_bound" default="0.2"/>
+                  <column name="weighting_upper_bound" type="REAL" adaTypeName="Rate" description="weighting_upper_bound" default="2.0" />
+
+                  <column name='targets_run_id' type='INTEGER' />
+                  <column name='targets_run_user_id' type='INTEGER' default='1' />
+                  
+                  <column name='data_run_id' type='INTEGER' />
+                  <column name='data_run_user_id' type='INTEGER' default='1' />
+                                          
+                  <column name="selected_clauses"  
+                                required="false"
+                                type="BOOLEAN"
+                                adaTypeName='Boolean' 
+                                isArray='true'
+                                arrayIsExternallyDefined='true'
+                                arrayIndexType='ENUM'                        
+                                arrayAdaIndexTypeName='Candidate_Clauses'                        
+                                arrayName='Selected_Clauses_Array'
+                                description="Which parts of DS we choose to weight on"/>
+
+                  
                </table>
                
                <table name='macro_forecasts'>

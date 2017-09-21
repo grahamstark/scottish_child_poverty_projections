@@ -15,11 +15,7 @@ with Maths_Functions;
 with GNATColl.Traces;
 with GNATCOLL.SQL.Exec;
 
-with Ukds.Target_Data.Households_Forecasts_IO;
 with Ukds.Target_Data.Run_IO;
-with Ukds.Target_Data.Macro_Forecasts_IO;
-with Ukds.Target_Data.Households_Forecasts_IO;
-with Ukds.Target_Data.Population_Forecasts_IO;
 with Ukds.Target_Data.Target_Dataset_IO;
 
 with DB_Commons;
@@ -36,10 +32,7 @@ package body Model.SCP.Weights_Creator is
    use Ada.Text_IO;
    use Ada.Calendar;
    use Ada.Strings.Unbounded;
-   use GNATCOLL.SQL.Exec;
-   
-   package d renames DB_Commons;
-   
+
    function Col_Count( 
       clauses : Selected_Clauses_Array ) return Positive is
          count : Natural := 0;
@@ -523,10 +516,40 @@ package body Model.SCP.Weights_Creator is
    
    procedure Create_Weights( 
       the_run : Run;
-      clauses : Selected_Clauses_Array;
       error   : out Eval_Error_Type ) is
+
+   use GNATCOLL.SQL.Exec;   
+   package d renames DB_Commons;
+      num_cols : constant Positive := Col_Count( the_run.selected_clauses );
+      conn         : Database_Connection;
    begin
-      null;
+      Connection_Pool.Initialise;
+      conn := Connection_Pool.Lease;
+      for year in the_run.start_year .. the_run.end_year loop
+         declare
+            targets     : Target_Dataset := Target_Dataset_IO.Retrieve_By_PK(
+               run_id => the_run.targets_run_id,
+               user_id => the_run.targets_run_user_id,
+               year    => year,
+               sernum  => -9         
+            );
+            cursor          : GNATCOLL.SQL.Exec.Forward_Cursor;
+            frs_target_row  : Target_Dataset;
+            ps              : GNATCOLL.SQL.Exec.Prepared_Statement;   
+            count           : Natural := 0;
+            frs_criteria    : d.Criteria;
+            
+         begin
+
+            Target_Dataset_IO.Add_User_Id( frs_criteria, the_run.data_run_user_id );
+            Target_Dataset_IO.Add_Run_Id( frs_criteria, the_run.data_run_id );
+            Target_Dataset_IO.Add_Year( frs_criteria, year );
+            ps := Target_Dataset_IO.Get_Prepared_Retrieve_Statement( frs_criteria );            
+            
+         end;
+         
+      end loop;
+      Connection_Pool.Return_Connection( conn );
    end  Create_Weights; 
 
    

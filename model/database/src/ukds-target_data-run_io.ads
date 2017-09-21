@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-20 23:36:52.629345
+-- Created by ada_generator.py on 2017-09-21 13:28:52.961715
 -- 
 with Ukds;
 with DB_Commons;
@@ -12,6 +12,8 @@ with GNATCOLL.SQL.Exec;
 with Data_Constants;
 with Base_Model_Types;
 with Ada.Calendar;
+with SCP_Types;
+with Weighting_Commons;
 
 -- === CUSTOM IMPORTS START ===
 -- === CUSTOM IMPORTS END ===
@@ -31,6 +33,8 @@ package Ukds.Target_Data.Run_IO is
    use Data_Constants;
    use Base_Model_Types;
    use Ada.Calendar;
+   use SCP_Types;
+   use Weighting_Commons;
 
    -- === CUSTOM TYPES START ===
    -- === CUSTOM TYPES END ===
@@ -93,6 +97,7 @@ package Ukds.Target_Data.Run_IO is
    --
    procedure Add_run_id( c : in out d.Criteria; run_id : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_user_id( c : in out d.Criteria; user_id : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_run_type( c : in out d.Criteria; run_type : Type_Of_Run; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_description( c : in out d.Criteria; description : Unbounded_String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_description( c : in out d.Criteria; description : String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_country( c : in out d.Criteria; country : Unbounded_String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
@@ -108,11 +113,20 @@ package Ukds.Target_Data.Run_IO is
    procedure Add_population_edition( c : in out d.Criteria; population_edition : Year_Number; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_start_year( c : in out d.Criteria; start_year : Year_Number; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_end_year( c : in out d.Criteria; end_year : Year_Number; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_weighting_function( c : in out d.Criteria; weighting_function : Distance_Function_Type; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_weighting_lower_bound( c : in out d.Criteria; weighting_lower_bound : Rate; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_weighting_upper_bound( c : in out d.Criteria; weighting_upper_bound : Rate; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_targets_run_id( c : in out d.Criteria; targets_run_id : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_targets_run_user_id( c : in out d.Criteria; targets_run_user_id : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_data_run_id( c : in out d.Criteria; data_run_id : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_data_run_user_id( c : in out d.Criteria; data_run_user_id : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_selected_clauses( c : in out d.Criteria; selected_clauses : Selected_Clauses_Array; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    --
    -- functions to add an ordering to a criteria
    --
    procedure Add_run_id_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_user_id_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_run_type_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_description_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_country_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_macro_variant_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
@@ -123,24 +137,41 @@ package Ukds.Target_Data.Run_IO is
    procedure Add_population_edition_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_start_year_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_end_year_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_weighting_function_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_weighting_lower_bound_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_weighting_upper_bound_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_targets_run_id_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_targets_run_user_id_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_data_run_id_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_data_run_user_id_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_selected_clauses_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
 
    function Map_From_Cursor( cursor : GNATCOLL.SQL.Exec.Forward_Cursor ) return Ukds.Target_Data.Run;
 
    -- 
-   -- returns an array of GNATColl SQL Parameters indexed 1 .. 12, as follows
+   -- returns an array of GNATColl SQL Parameters indexed 1 .. 21, as follows
    -- Pos  |       Name               | SQL Type           | Ada Type             | Default
    --    1 : run_id                   : Parameter_Integer  : Integer              :        0 
    --    2 : user_id                  : Parameter_Integer  : Integer              :        0 
-   --    3 : description              : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
-   --    4 : country                  : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
-   --    5 : macro_variant            : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
-   --    6 : macro_edition            : Parameter_Integer  : Year_Number          :        0 
-   --    7 : households_variant       : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
-   --    8 : households_edition       : Parameter_Integer  : Year_Number          :        0 
-   --    9 : population_variant       : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
-   --   10 : population_edition       : Parameter_Integer  : Year_Number          :        0 
-   --   11 : start_year               : Parameter_Integer  : Year_Number          :        0 
-   --   12 : end_year                 : Parameter_Integer  : Year_Number          :        0 
+   --    3 : run_type                 : Parameter_Integer  : Type_Of_Run          :        0 
+   --    4 : description              : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
+   --    5 : country                  : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
+   --    6 : macro_variant            : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
+   --    7 : macro_edition            : Parameter_Integer  : Year_Number          :        0 
+   --    8 : households_variant       : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
+   --    9 : households_edition       : Parameter_Integer  : Year_Number          :        0 
+   --   10 : population_variant       : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
+   --   11 : population_edition       : Parameter_Integer  : Year_Number          :        0 
+   --   12 : start_year               : Parameter_Integer  : Year_Number          :        0 
+   --   13 : end_year                 : Parameter_Integer  : Year_Number          :        0 
+   --   14 : weighting_function       : Parameter_Integer  : Distance_Function_Type :        0 
+   --   15 : weighting_lower_bound    : Parameter_Float    : Rate                 :      0.0 
+   --   16 : weighting_upper_bound    : Parameter_Float    : Rate                 :      0.0 
+   --   17 : targets_run_id           : Parameter_Integer  : Integer              :        0 
+   --   18 : targets_run_user_id      : Parameter_Integer  : Integer              :        0 
+   --   19 : data_run_id              : Parameter_Integer  : Integer              :        0 
+   --   20 : data_run_user_id         : Parameter_Integer  : Integer              :        0 
+   --   21 : selected_clauses         : Parameter_Text     : Boolean              : null, Null_Unbounded_String 
    function Get_Configured_Insert_Params( update_order : Boolean := False ) return GNATCOLL.SQL.Exec.SQL_Parameters;
 
 

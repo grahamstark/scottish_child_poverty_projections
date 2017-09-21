@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-20 23:36:52.112928
+-- Created by ada_generator.py on 2017-09-21 13:28:52.442090
 -- 
 with Ada.Containers.Vectors;
 --
@@ -13,6 +13,8 @@ with Ada.Strings.Unbounded;
 with Data_Constants;
 with Base_Model_Types;
 with Ada.Calendar;
+with SCP_Types;
+with Weighting_Commons;
 
 -- === CUSTOM IMPORTS START ===
 -- === CUSTOM IMPORTS END ===
@@ -24,6 +26,8 @@ package Ukds.target_data is
    use Data_Constants;
    use Base_Model_Types;
    use Ada.Calendar;
+   use SCP_Types;
+   use Weighting_Commons;
 
    -- === CUSTOM TYPES START ===
    -- === CUSTOM TYPES END ===
@@ -1136,6 +1140,7 @@ package Ukds.target_data is
    type Run is record
       run_id : Integer := MISSING_I_KEY;
       user_id : Integer := 0;
+      run_type : Type_Of_Run := Type_Of_Run'First;
       description : Unbounded_String := Ada.Strings.Unbounded.Null_Unbounded_String;
       country : Unbounded_String := Ada.Strings.Unbounded.Null_Unbounded_String;
       macro_variant : Unbounded_String := Ada.Strings.Unbounded.Null_Unbounded_String;
@@ -1146,6 +1151,14 @@ package Ukds.target_data is
       population_edition : Year_Number := 1970;
       start_year : Year_Number := 1970;
       end_year : Year_Number := 1970;
+      weighting_function : Distance_Function_Type := Distance_Function_Type'First;
+      weighting_lower_bound : Rate := 0.2;
+      weighting_upper_bound : Rate := 2.0;
+      targets_run_id : Integer := 0;
+      targets_run_user_id : Integer := 1;
+      data_run_id : Integer := 0;
+      data_run_user_id : Integer := 1;
+      selected_clauses : Selected_Clauses_Array := ( others => false );
    end record;
    --
    -- container for Run : 
@@ -1160,6 +1173,7 @@ package Ukds.target_data is
    Null_Run : constant Run := (
          run_id => MISSING_I_KEY,
          user_id => 0,
+         run_type => Type_Of_Run'First,
          description => Ada.Strings.Unbounded.Null_Unbounded_String,
          country => Ada.Strings.Unbounded.Null_Unbounded_String,
          macro_variant => Ada.Strings.Unbounded.Null_Unbounded_String,
@@ -1169,7 +1183,15 @@ package Ukds.target_data is
          population_variant => Ada.Strings.Unbounded.Null_Unbounded_String,
          population_edition => 1970,
          start_year => 1970,
-         end_year => 1970
+         end_year => 1970,
+         weighting_function => Distance_Function_Type'First,
+         weighting_lower_bound => 0.2,
+         weighting_upper_bound => 2.0,
+         targets_run_id => 0,
+         targets_run_user_id => 1,
+         data_run_id => 0,
+         data_run_user_id => 1,
+         selected_clauses => ( others => false )
    );
    --
    -- simple print routine for Run : 
@@ -1316,12 +1338,12 @@ package Ukds.target_data is
 
         
    -- === CUSTOM PROCS START ===
-                    
-   subtype Forecast_Age_Ranges is Natural range 0 .. 90;                 
-   type Age_Range_Array is array( Forecast_Age_Ranges ) of Amount;                  
-                   
-   function To_Array( popn : Population_Forecasts ) return Age_Range_Array;                 
-                    
+                         
+   subtype Forecast_Age_Ranges is Natural range 0 .. 90;                      
+   type Age_Range_Array is array( Forecast_Age_Ranges ) of Amount;                       
+                        
+   function To_Array( popn : Population_Forecasts ) return Age_Range_Array;                      
+                         
    -- === CUSTOM PROCS END ===
 
 end Ukds.target_data;

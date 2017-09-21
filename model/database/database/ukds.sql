@@ -1,5 +1,5 @@
 --
--- created on 20-09-2017 by Mill
+-- created on 21-09-2017 by Mill
 --
 drop database if exists ukds;
 create database ukds with encoding 'UTF-8';
@@ -66,6 +66,7 @@ CREATE TABLE target_data.households_forecasts(
 CREATE TABLE target_data.run( 
        run_id INTEGER not null,
        user_id INTEGER not null default 0,
+       run_type INTEGER,
        description TEXT,
        country TEXT,
        macro_variant TEXT,
@@ -76,6 +77,14 @@ CREATE TABLE target_data.run(
        population_edition INTEGER default 1970,
        start_year INTEGER default 1970,
        end_year INTEGER default 1970,
+       weighting_function INTEGER,
+       weighting_lower_bound DOUBLE PRECISION default 0.2,
+       weighting_upper_bound DOUBLE PRECISION default 2.0,
+       targets_run_id INTEGER,
+       targets_run_user_id INTEGER default 1,
+       data_run_id INTEGER,
+       data_run_user_id INTEGER default 1,
+       selected_clauses BOOLEAN[] ,
        CONSTRAINT run_pk PRIMARY KEY( run_id, user_id )
 );
 
