@@ -41,6 +41,28 @@ package body Model.SCP.Weights_Creator is
    begin
       GNATColl.Traces.Trace( log_trace, s );
    end Log;
+   
+
+   procedure Print_Diffs( label : String; target_populations: Vector; new_populations : Vector ) is
+   use Ada.Text_IO;
+      diff : Amount;
+   begin
+      Put_Line( label );
+      for c in target_populations'Range loop
+         Int_IO.Put( c, 0 );
+         Put( Tab );
+         Amount_IO.Put( target_populations( c ), 0, 3, 0 );
+         Put( Tab );
+         Amount_IO.Put( new_populations( c ), 0, 3, 0 );
+         if( target_populations( c ) /= 0.0 )then
+            diff := 100.0*( new_populations( c )-target_populations( c ))/target_populations( c );
+         end if;
+         Put( TAB );
+         Amount_IO.Put( diff, 0, 4 , 0 );               
+         New_Line;
+      end loop;
+   end Print_Diffs;
+
     
    function Col_Count( 
       clauses : Selected_Clauses_Array ) return Positive is
@@ -558,7 +580,7 @@ package body Model.SCP.Weights_Creator is
 
             Target_Dataset_IO.Add_User_Id( frs_criteria, the_run.data_run_user_id );
             Target_Dataset_IO.Add_Run_Id( frs_criteria, the_run.data_run_id );
-            Target_Dataset_IO.Add_Year( frs_criteria, year );
+            -- NO!! we want all years in the FRS dataset Target_Dataset_IO.Add_Year( frs_criteria, year );
             if the_run.country = TuS( "SCO" ) then
                Target_Dataset_IO.Add_Country_Scotland( frs_criteria, 1.0 );
                base_target := targets.country_scotland;
@@ -618,6 +640,8 @@ package body Model.SCP.Weights_Creator is
                   weights_indexes.all( row ).id := frs_target_row.sernum;
                   weights_indexes.all( row ).year := frs_target_row.year;
                end loop;
+               new_totals := Reweighter.Sum_Dataset( observations.all, initial_weights );
+               Print_Diffs( "CRUDE WEIGHTED", target_populations, new_totals );
                
             end;
             
