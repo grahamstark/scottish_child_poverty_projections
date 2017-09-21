@@ -94,7 +94,7 @@ package body Model.SCP.Weights_Creator is
          Inc( count, 81 );
       end if;
       if clauses( aggregate_ages ) then
-         Inc( count, 8 );
+         Inc( count, 17 ); -- 8 );
       end if;
       if clauses( aggregate_ages_by_gender ) then
          Inc( count, 34 );
@@ -421,7 +421,7 @@ package body Model.SCP.Weights_Creator is
          Add_Col( tmp );
       end if;
       
-      if clauses( aggregate_ages ) and False then
+      if clauses( aggregate_ages ) then
          tmp := targets.age_0 + targets.age_1 + targets.age_2 + targets.age_3 + targets.age_4;
          Add_Col( tmp );         
          tmp := targets.age_5 + targets.age_6 + targets.age_7 + targets.age_8 + targets.age_9 + targets.age_10;
@@ -458,7 +458,7 @@ package body Model.SCP.Weights_Creator is
          Add_Col( tmp );
       end if;
       
-      if clauses( aggregate_ages ) then
+      if clauses( aggregate_ages ) and False then
          tmp := targets.age_0 + targets.age_1 + targets.age_2 + targets.age_3 + targets.age_4
             + targets.age_5 + targets.age_6 + targets.age_7 + targets.age_8 + targets.age_9 + targets.age_10;
          Add_Col( tmp );

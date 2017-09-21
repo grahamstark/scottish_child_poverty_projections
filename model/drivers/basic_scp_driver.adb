@@ -85,7 +85,7 @@ begin
       the_run.data_run_id := 999_998;
       the_run.data_run_user_id := 1;
       the_run.selected_clauses := ( 
-            genders                  => True,
+            genders                  => False,
             household_type           => True,
             by_year_ages             => False,
             by_year_ages_by_gender   => False,
