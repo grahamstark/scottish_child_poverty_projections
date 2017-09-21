@@ -91,10 +91,10 @@ begin
             by_year_ages_by_gender   => False,
             aggregate_ages           => True,
             aggregate_ages_by_gender => False,
-            employment               => False,
-            employees                => False,
-            ilo_unemployment         => False,
-            jsa_claimants            => False );
+            employment               => True,
+            employees                => True,
+            ilo_unemployment         => True,
+            jsa_claimants            => True );
       the_run.country := TuS( "SCO" );
       
       UKDS.Target_Data.Run_IO.Save( the_run );
