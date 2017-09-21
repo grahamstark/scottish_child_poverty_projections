@@ -37,6 +37,24 @@ package body Model.SCP.Weights_Creator is
    
    package d renames DB_Commons;
    
+   function Col_Count( 
+      clauses : Selected_Clauses_Array ) return Natural is
+   begin
+      
+      return 0;
+   end Col_Count;
+   
+   procedure Fill_One_Row( 
+      clauses  : Selected_Clauses_Array;
+      targets  : Target_Dataset;
+      row      : out Abs_Amount_Array ) is
+    begin
+      row := ( others => 0.0 );
+       
+      Assert( for all row as r => r > 0.0, " there is a zero in output row " & To_String( row ));
+    end Create_One_Row;
+      
+   
    procedure Create_Weights( 
       the_run : Run;
       clauses : Selected_Clauses_Array;
