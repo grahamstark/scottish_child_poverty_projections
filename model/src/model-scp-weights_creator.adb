@@ -536,15 +536,15 @@ package body Model.SCP.Weights_Creator is
                year    => year,
                sernum  => -9         
             );
-            d_cursor          : GNATCOLL.SQL.Exec.Direct_Cursor;
-            f_cursor          : GNATCOLL.SQL.Exec.Forward_Cursor;
-            frs_target_row  : Target_Dataset;
-            ps              : GNATCOLL.SQL.Exec.Prepared_Statement;   
-            count           : Natural := 0;
-            frs_criteria    : d.Criteria;
-            
+            d_cursor            : GNATCOLL.SQL.Exec.Direct_Cursor;
+            f_cursor            : GNATCOLL.SQL.Exec.Forward_Cursor;
+            frs_target_row      : Target_Dataset;
+            ps                  : GNATCOLL.SQL.Exec.Prepared_Statement;   
+            count               : Natural := 0;
+            frs_criteria        : d.Criteria;
+            mapped_target_data  : Amount_Array( 1 .. num_data_cols );
          begin
-
+            Fill_One_Row( the_run.selected_clauses, targets, mapped_target_data ); 
             Target_Dataset_IO.Add_User_Id( frs_criteria, the_run.data_run_user_id );
             Target_Dataset_IO.Add_Run_Id( frs_criteria, the_run.data_run_id );
             Target_Dataset_IO.Add_Year( frs_criteria, year );
@@ -575,11 +575,16 @@ package body Model.SCP.Weights_Creator is
                observations       : Dataset_Access;
                target_populations : Row_Vector;
                weights_indexes    : Indexes_Array_Access;
+               mapped_frs_data     : Amount_Array( 1 .. num_data_cols );               
             begin
+               -- typecasting thing .. 
+               for c in target_populations'Range loop
+                  target_populations( c ) :=  mapped_target_data( c );                 
+               end loop;
+               
                weights_indexes := new Indexes_Array;
                observations := new Dataset;
                observations.all := ( others => ( others => 0.0 ));
-               
                for row in 1 .. num_data_rows loop
                   f_cursor.Next;
                   frs_target_row := Target_Dataset_IO.Map_From_Cursor( f_cursor );
