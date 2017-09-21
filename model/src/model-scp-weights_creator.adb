@@ -617,6 +617,8 @@ package body Model.SCP.Weights_Creator is
                   base_target / Amount( num_data_rows );
                initial_weights    : Col_Vector := ( others => uniform_weight );
                new_totals         : Row_Vector;
+               weights            : Col_Vector;
+               curr_iterations    : Natural := 0;
             begin
                Log( "Initial Weight : " & Format( uniform_weight ));
                Log( "Base Target : " & Format( base_target ));
@@ -643,7 +645,34 @@ package body Model.SCP.Weights_Creator is
                end loop;
                new_totals := Reweighter.Sum_Dataset( observations.all, initial_weights );
                Print_Diffs( "CRUDE WEIGHTED", target_populations, new_totals );
-               
+
+               Reweighter.Do_Reweighting(
+                  Data               => observations.all, 
+                  Which_Function     => the_run.weighting_function,
+                  Initial_Weights    => initial_weights,            
+                  Target_Populations => target_populations,
+                  TolX               => 0.01,
+                  TolF               => 0.01,
+                  Max_Iterations     => 40,
+                  RU                 => the_run.Weighting_Upper_Bound,
+                  RL                 => the_run.Weighting_Lower_Bound,
+                  New_Weights        => weights,
+                  Iterations         => curr_iterations,
+                  Error              => error );
+               for row in 1 .. num_data_rows loop
+                  declare
+                     use Ada.Calendar;
+                     year        : Year_Number := weights_indexes.all( row ).year;
+                     id          : Sernum_Value := weights_indexes.all( row ).id;
+                     this_weight : Amount := weights( row );
+                  begin
+                     Log( "adding year = " & year'Img & " id " & id'Img & " weight " & this_weight'Img ); 
+                     -- weighter.Add( year, id, this_weight, weight );
+                  end;
+               end loop;
+   
+                  
+                  
             end;
             
          end;
