@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-21 13:28:52.442090
+-- Created by ada_generator.py on 2017-09-21 15:55:22.498036
 -- 
 with Ada.Containers.Vectors;
 --
@@ -1135,6 +1135,38 @@ package Ukds.target_data is
    function To_String( rec : Macro_Forecasts ) return String;
 
    --
+   -- record modelling Output_Weights : 
+   --
+   type Output_Weights is record
+      run_id : Integer := MISSING_I_KEY;
+      user_id : Integer := 0;
+      year : Integer := 0;
+      sernum : Sernum_Value := 0;
+      weight : Amount := 0.0;
+   end record;
+   --
+   -- container for Output_Weights : 
+   --
+   package Output_Weights_List_Package is new Ada.Containers.Vectors
+      (Element_Type => Output_Weights,
+      Index_Type => Positive );
+   subtype Output_Weights_List is Output_Weights_List_Package.Vector;
+   --
+   -- default value for Output_Weights : 
+   --
+   Null_Output_Weights : constant Output_Weights := (
+         run_id => MISSING_I_KEY,
+         user_id => 0,
+         year => 0,
+         sernum => 0,
+         weight => 0.0
+   );
+   --
+   -- simple print routine for Output_Weights : 
+   --
+   function To_String( rec : Output_Weights ) return String;
+
+   --
    -- record modelling Run : 
    --
    type Run is record
@@ -1338,12 +1370,12 @@ package Ukds.target_data is
 
         
    -- === CUSTOM PROCS START ===
-                         
-   subtype Forecast_Age_Ranges is Natural range 0 .. 90;                      
-   type Age_Range_Array is array( Forecast_Age_Ranges ) of Amount;                       
-                        
-   function To_Array( popn : Population_Forecasts ) return Age_Range_Array;                      
-                         
+                           
+   subtype Forecast_Age_Ranges is Natural range 0 .. 90;                        
+   type Age_Range_Array is array( Forecast_Age_Ranges ) of Amount;                         
+                          
+   function To_Array( popn : Population_Forecasts ) return Age_Range_Array;                        
+                           
    -- === CUSTOM PROCS END ===
 
 end Ukds.target_data;

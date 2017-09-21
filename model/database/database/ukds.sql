@@ -88,6 +88,16 @@ CREATE TABLE target_data.run(
        CONSTRAINT run_pk PRIMARY KEY( run_id, user_id )
 );
 
+CREATE TABLE target_data.output_weights( 
+       run_id INTEGER not null,
+       user_id INTEGER not null default 0,
+       year INTEGER not null default 0,
+       sernum BIGINT not null default 0,
+       weight DOUBLE PRECISION default 0.0,
+       CONSTRAINT output_weights_pk PRIMARY KEY( run_id, user_id, year, sernum ),
+       CONSTRAINT output_weights_FK_0 FOREIGN KEY( run_id, user_id) references run( run_id, user_id ) on delete CASCADE on update CASCADE
+);
+
 CREATE TABLE target_data.macro_forecasts( 
        year INTEGER not null default 0,
        rec_type TEXT not null default 'macro',

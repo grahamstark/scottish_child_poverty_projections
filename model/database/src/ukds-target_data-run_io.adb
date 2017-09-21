@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-21 13:28:52.971109
+-- Created by ada_generator.py on 2017-09-21 15:55:23.052327
 -- 
 with Ukds;
 
@@ -26,6 +26,7 @@ with Connection_Pool;
 with GNATColl.Traces;
 
 with Ukds.Target_Data.Target_Dataset_IO;
+with Ukds.Target_Data.Output_Weights_IO;
 
 -- === CUSTOM IMPORTS START ===
 -- === CUSTOM IMPORTS END ===
@@ -645,6 +646,15 @@ package body Ukds.Target_Data.Run_IO is
       Ukds.Target_Data.Target_Dataset_IO.Add_User_Id( c, a_run.User_Id );
       return Ukds.Target_Data.Target_Dataset_IO.retrieve( c, connection );
    end Retrieve_Associated_Ukds_Target_Data_Target_Datasets;
+
+
+   function Retrieve_Associated_Ukds_Target_Data_Output_Weights( a_run : Ukds.Target_Data.Run; connection : Database_Connection := null ) return Ukds.Target_Data.Output_Weights_List is
+      c : d.Criteria;
+   begin
+      Ukds.Target_Data.Output_Weights_IO.Add_Run_Id( c, a_run.Run_Id );
+      Ukds.Target_Data.Output_Weights_IO.Add_User_Id( c, a_run.User_Id );
+      return Ukds.Target_Data.Output_Weights_IO.retrieve( c, connection );
+   end Retrieve_Associated_Ukds_Target_Data_Output_Weights;
 
 
 

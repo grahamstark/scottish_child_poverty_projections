@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-21 13:28:52.961715
+-- Created by ada_generator.py on 2017-09-21 15:55:23.039060
 -- 
 with Ukds;
 with DB_Commons;
@@ -91,6 +91,7 @@ package Ukds.Target_Data.Run_IO is
    -- referencing the table modelled by this package
    --
    function Retrieve_Associated_Ukds_Target_Data_Target_Datasets( a_run : Ukds.Target_Data.Run; connection : Database_Connection := null ) return Ukds.Target_Data.Target_Dataset_List;
+   function Retrieve_Associated_Ukds_Target_Data_Output_Weights( a_run : Ukds.Target_Data.Run; connection : Database_Connection := null ) return Ukds.Target_Data.Output_Weights_List;
 
    --
    -- functions to add something to a criteria
