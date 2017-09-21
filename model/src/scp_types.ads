@@ -1,5 +1,11 @@
+with Ada.Calendar;
+with Base_Model_Types;
+
 package SCP_Types is
 
+   use Ada.Calendar;
+   use  Base_Model_Types;
+   
    type Weighting_Sample_Type is ( uk, scotland );
    
    type Type_Of_Run is ( data_generation, target_generation, weights_generation, validation );
@@ -22,7 +28,7 @@ package SCP_Types is
    
 
    type Weights_Index is record
-      year : Data_Years;
+      year : Year_Number;
       id   : Sernum_Value;
    end record;
    

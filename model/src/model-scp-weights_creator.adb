@@ -4,6 +4,8 @@ with Ada.Assertions;
 with Ada.Calendar;
 with Ada.Strings.Unbounded; 
 with Ada.Text_IO;
+with Ada.Unchecked_Deallocation;
+
 with Weighting_Commons;
 with Data_Constants;
 with Base_Model_Types;
@@ -534,7 +536,8 @@ package body Model.SCP.Weights_Creator is
                year    => year,
                sernum  => -9         
             );
-            cursor          : GNATCOLL.SQL.Exec.Direct_Cursor;
+            d_cursor          : GNATCOLL.SQL.Exec.Direct_Cursor;
+            f_cursor          : GNATCOLL.SQL.Exec.Forward_Cursor;
             frs_target_row  : Target_Dataset;
             ps              : GNATCOLL.SQL.Exec.Prepared_Statement;   
             count           : Natural := 0;
@@ -549,8 +552,9 @@ package body Model.SCP.Weights_Creator is
                Target_Dataset_IO.Add_Country_Scotland( frs_criteria, 1.0 );
             end if; -- and so on for Wales, Ireland; UK doesn't need this
             ps := Target_Dataset_IO.Get_Prepared_Retrieve_Statement( frs_criteria );            
-            cursor.Fetch( conn, ps );
-            num_data_rows := Rows_Count( cursor );
+            f_cursor.Fetch( conn, ps );
+            d_cursor.Fetch( conn, ps ); -- hack to get row count, otherwise unused
+            num_data_rows := Rows_Count( d_cursor );
             declare
                package Reweighter is new Maths_Funcs.Weights_Generator(    
                   Num_Constraints   => num_data_cols,
@@ -570,9 +574,18 @@ package body Model.SCP.Weights_Creator is
                   Object => Indexes_Array, Name => Indexes_Array_Access );
                observations       : Dataset_Access;
                target_populations : Row_Vector;
-
+               weights_indexes    : Indexes_Array_Access;
             begin
-               null;
+               weights_indexes := new Indexes_Array;
+               observations := new Dataset;
+               observations.all := ( others => ( others => 0.0 ));
+               
+               for row in 1 .. num_data_rows loop
+                  f_cursor.Next;
+                  frs_target_row := Target_Dataset_IO.Map_From_Cursor( f_cursor );
+                  weights_indexes.all( row ).id := frs_target_row.sernum;
+                  weights_indexes.all( row ).year := frs_target_row.year;
+               end loop;
                
             end;
             
