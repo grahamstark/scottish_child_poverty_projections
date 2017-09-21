@@ -29,17 +29,28 @@ procedure Basic_SCP_Driver is
    use SCP_Types;
    use Weighting_Commons;
    
+   
+
+   log_trace : GNATColl.Traces.Trace_Handle := GNATColl.Traces.Create( "BASIC_SCP_DRIVER" );
+   procedure Log( s : String ) is
+   begin
+      GNATColl.Traces.Trace( log_trace, s );
+   end Log;
+
+   
    startTime    : Time;
    endTime      : Time;
    elapsed      : Duration;
    the_run      : UKDS.Target_Data.Run;
    run_type     : constant Type_Of_Run := weights_generation;
+   error        : Eval_Error_Type
 begin
    startTime := Clock;
    GNATColl.Traces.Parse_Config_File( "./etc/logging_config_file.txt" );
    the_run.run_type := run_type;
    the_run.user_id := 1;
    Put_Line( "We're making a start on this.." );
+   Log( "type of run is " & run_type'Img );
    case run_type is
    when data_generation =>      
       the_run.start_year := 2008;
@@ -87,7 +98,8 @@ begin
       the_run.country := TuS( "SCO" );
       
       UKDS.Target_Data.Run_IO.Save( the_run );
-      
+      Model.SCP.Weights_Creator.Create_Weights( the_run, error );
+      Log( "returned with err " & error'Img );
    when validation =>
       
       UKDS.Target_Data.Run_IO.Save( the_run );
