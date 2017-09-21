@@ -105,7 +105,7 @@ package body Model.SCP.Weights_Creator is
    procedure Fill_One_Row( 
       clauses  : Selected_Clauses_Array;
       targets  : Target_Dataset;
-      row      : out Amount_Array ) is
+      row      : out Vector ) is
          
          p : Natural := 0;
          tmp : Amount;
@@ -571,7 +571,7 @@ package body Model.SCP.Weights_Creator is
             ps                  : GNATCOLL.SQL.Exec.Prepared_Statement;   
             count               : Natural := 0;
             frs_criteria        : d.Criteria;
-            mapped_target_data  : Amount_Array( 1 .. num_data_cols );
+            mapped_target_data  : Vector( 1 .. num_data_cols );
             base_target         : Amount;
          begin
             Fill_One_Row( the_run.selected_clauses, targets, mapped_target_data ); 
@@ -612,10 +612,11 @@ package body Model.SCP.Weights_Creator is
                observations       : Dataset_Access;
                target_populations : Row_Vector;
                weights_indexes    : Indexes_Array_Access;
-               mapped_frs_data    : Amount_Array( 1 .. num_data_cols );
+               mapped_frs_data    : Vector( 1 .. num_data_cols );
                uniform_weight     : constant Amount := 
                   base_target / Amount( num_data_rows );
                initial_weights    : Col_Vector := ( others => uniform_weight );
+               new_totals         : Row_Vector;
             begin
                Log( "Initial Weight : " & Format( uniform_weight ));
                Log( "Base Target : " & Format( base_target ));
