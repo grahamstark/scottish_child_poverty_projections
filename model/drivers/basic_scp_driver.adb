@@ -69,12 +69,21 @@ begin
       the_run.targets_run_user_id := 1;
       the_run.data_run_id := 999_998;
       the_run.data_run_user_id := 1;
-      the_run.selected_clauses := ( others => false );
+      the_run.selected_clauses := ( 
+            genders                  => True,
+            household_type           => True,
+            by_year_ages             => False,
+            by_year_ages_by_gender   => False,
+            aggregate_ages           => True,
+            aggregate_ages_by_gender => False,
+            employment               => True,
+            employees                => True,
+            ilo_unemployment         => True,
+            jsa_claimants            => True );
       the_run.country := TuS( "SCO" );
       
       UKDS.Target_Data.Run_IO.Save( the_run );
       
-      null;
    when validation =>
       
       UKDS.Target_Data.Run_IO.Save( the_run );
