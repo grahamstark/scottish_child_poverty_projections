@@ -710,30 +710,33 @@ package body Model.SCP.Weights_Creator is
                   Error              => error );
                Log( "error " & error'Img );
                Log( "iterations " & curr_iterations'Img );
-               
-               for row in 1 .. num_data_rows loop
-                  declare
-                     use Ada.Calendar;
-                     out_weight  : constant Output_Weights := ( 
-                        run_id => the_run.run_id,
-                        user_id => the_run.user_id,
-                        year    => weights_indexes.all( row ).year,
-                        sernum  => weights_indexes.all( row ).sernum,
-                        weight  =>  weights( row ));
-                  begin
-                     null;
-                     -- Log( "adding " & To_String( out_weight ));
-                     Output_Weights_IO.Save( out_weight );
-                     -- weighter.Add( year, id, this_weight, weight );
-                  end;
-               end loop;
+               if error = normal then
+                  for row in 1 .. num_data_rows loop
+                     declare
+                        use Ada.Calendar;
+                        out_weight  : constant Output_Weights := ( 
+                           run_id => the_run.run_id,
+                           user_id => the_run.user_id,
+                           year    => weights_indexes.all( row ).year,
+                           sernum  => weights_indexes.all( row ).sernum,
+                           weight  =>  weights( row ));
+                     begin
+                        null;
+                        -- Log( "adding " & To_String( out_weight ));
+                        Output_Weights_IO.Save( out_weight );
+                        -- weighter.Add( year, id, this_weight, weight );
+                     end;
+                  end loop;
+               end if;
                new_totals := Reweighter.Sum_Dataset( observations.all, weights );
                Print_Diffs( "FINAL WEIGHTED", target_populations, new_totals );
             end;
          end loop Each_Year;
+         Log( "Done; freeing datasets" );
          Free_Dataset( observations );   
          Free_Indexes( weights_indexes );   
       end; -- decls for main dataset
+      Log( "returning connection" );
       Connection_Pool.Return_Connection( conn );
    end  Create_Weights; 
    
