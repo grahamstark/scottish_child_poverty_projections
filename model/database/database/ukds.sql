@@ -93,9 +93,9 @@ CREATE TABLE target_data.output_weights(
        user_id INTEGER not null default 0,
        year INTEGER not null,
        sernum BIGINT not null default 0,
-       target_year INTEGER default 1970,
+       target_year INTEGER not null default 1970,
        weight DOUBLE PRECISION default 0.0,
-       CONSTRAINT output_weights_pk PRIMARY KEY( run_id, user_id, year, sernum ),
+       CONSTRAINT output_weights_pk PRIMARY KEY( run_id, user_id, year, sernum, target_year ),
        CONSTRAINT output_weights_FK_0 FOREIGN KEY( run_id, user_id) references run( run_id, user_id ) on delete CASCADE on update CASCADE
 );
 

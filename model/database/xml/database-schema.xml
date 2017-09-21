@@ -118,7 +118,7 @@
                   <column name='user_id' type='INTEGER' default='0' primaryKey='true'/>
                   <column name='year' type='INTEGER' adaTypeName="Year_Number"  primaryKey='true'/>
                   <column name='sernum' description='Sernum; only for FRS ones really' type='BIGINT' adaTypeName='Sernum_Value' primaryKey='true' default='0' />
-                  <column name='target_year'   type="INTEGER" adaTypeName="Year_Number" default='1970' />
+                  <column name='target_year' type="INTEGER" adaTypeName="Year_Number" default='1970' primaryKey='true' />
                   <column name='weight' description='Weight' default='0.0' type='REAL' adaTypeName='Amount'/>
                   <foreign-key  foreignTable="run"  onDelete='CASCADE'  onUpdate='CASCADE'>
                      <reference foreign="run_id" local="run_id" />
