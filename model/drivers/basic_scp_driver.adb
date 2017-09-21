@@ -75,14 +75,14 @@ begin
    when weights_generation =>
       the_run.start_year := 2014;
       the_run.end_year := 2021;
-      the_run.run_id := 200_000;
+      the_run.run_id := 200_001;
 
       the_run.weighting_function := constrained_chi_square;
       the_run.weighting_lower_bound := 0.2;
       the_run.weighting_upper_bound := 2.0;
       the_run.targets_run_id := 100_000;      
       the_run.targets_run_user_id := 1;
-      the_run.data_run_id := 9_000_000;
+      the_run.data_run_id := 999_998;
       the_run.data_run_user_id := 1;
       
       the_run.selected_clauses := ( 
@@ -98,7 +98,7 @@ begin
             jsa_claimants            => True );
       the_run.country := TuS( "SCO" );
       for i in 1 .. 3 loop
-         Log( "Starting Run with ID " & the_run.run_id'Img );
+         Log( "Starting Run with ID " & the_run.run_id'Img & " targets " & the_run.targets_run_id'Img );
          UKDS.Target_Data.Run_IO.Save( the_run );
          Model.SCP.Weights_Creator.Create_Weights( the_run, error );
          the_run.data_run_id := the_run.data_run_id + 1;
