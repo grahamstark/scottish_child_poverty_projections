@@ -633,6 +633,9 @@ package body Model.SCP.Weights_Creator is
                weights_indexes := new Indexes_Array;
                observations := new Dataset;
                observations.all := ( others => ( others => 0.0 ));
+               --
+               -- load the main dataset
+               -- 
                for row in 1 .. num_data_rows loop
                   f_cursor.Next;
                   frs_target_row := Target_Dataset_IO.Map_From_Cursor( f_cursor );
@@ -640,8 +643,8 @@ package body Model.SCP.Weights_Creator is
                   for col in mapped_target_data'Range loop
                      observations.all( row, col ) :=  mapped_target_data( col );                 
                   end loop;
-                  
-                  weights_indexes.all( row ).id := frs_target_row.sernum;
+                  -- .. and store a list of hrefs and years to go alongside it
+                  weights_indexes.all( row ).sernum := frs_target_row.sernum;
                   weights_indexes.all( row ).year := frs_target_row.year;
                end loop;
                new_totals := Reweighter.Sum_Dataset( observations.all, initial_weights );
@@ -667,7 +670,7 @@ package body Model.SCP.Weights_Creator is
                         run_id => the_run.run_id,
                         user_id => the_run.user_id,
                         year    => weights_indexes.all( row ).year,
-                        sernum  => weights_indexes.all( row ).id,
+                        sernum  => weights_indexes.all( row ).sernum,
                         weight  =>  weights( row ));
                   begin
                      Log( "adding " & To_String( out_weight ));

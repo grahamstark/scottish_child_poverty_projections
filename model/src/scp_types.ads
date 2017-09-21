@@ -28,8 +28,8 @@ package SCP_Types is
    
 
    type Weights_Index is record
-      year : Year_Number;
-      id   : Sernum_Value;
+      year   : Year_Number;
+      sernum : Sernum_Value;
    end record;
    
 
