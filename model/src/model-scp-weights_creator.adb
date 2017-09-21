@@ -102,6 +102,7 @@ package body Model.SCP.Weights_Creator is
       return count;
    end Col_Count;
    
+
    procedure Fill_One_Row( 
       clauses  : Selected_Clauses_Array;
       targets  : Target_Dataset;
@@ -572,9 +573,10 @@ package body Model.SCP.Weights_Creator is
          Target_Dataset_IO.Add_Country_UK( frs_criteria, 1.0 );
       end if; -- and so on for Wales, Ireland; UK doesn't need this
       ps := Target_Dataset_IO.Get_Prepared_Retrieve_Statement( frs_criteria );            
-      f_cursor.Fetch( conn, ps );
       d_cursor.Fetch( conn, ps ); -- hack to get row count, otherwise unused
+      f_cursor.Fetch( conn, ps );
       num_data_rows := Rows_Count( d_cursor );
+      Log( "num_data_rows " & num_data_rows'Img );
       declare
          package Reweighter is new Maths_Funcs.Weights_Generator(    
             Num_Constraints   => num_data_cols,
@@ -610,7 +612,6 @@ package body Model.SCP.Weights_Creator is
          -- 
          Load_Main_Dataset:
          for row in 1 .. num_data_rows loop
-            f_cursor.Next;
             frs_target_row := Target_Dataset_IO.Map_From_Cursor( f_cursor );
             Fill_One_Row( the_run.selected_clauses, frs_target_row, mapped_frs_data );
             for col in mapped_target_data'Range loop
@@ -619,6 +620,9 @@ package body Model.SCP.Weights_Creator is
             -- .. and store a list of hrefs and years to go alongside it
             weights_indexes.all( row ).sernum := frs_target_row.sernum;
             weights_indexes.all( row ).year := frs_target_row.year;
+            if row < num_data_rows then
+               Next( f_cursor );
+            end if;
          end loop Load_Main_Dataset;
             
          Each_Year:
