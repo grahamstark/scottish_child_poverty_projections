@@ -552,104 +552,110 @@ package body Model.SCP.Weights_Creator is
       num_data_cols : constant Positive := Col_Count( the_run.selected_clauses );
       num_data_rows : Positive;
       conn          : Database_Connection;
-   begin
+      d_cursor            : GNATCOLL.SQL.Exec.Direct_Cursor;
+      f_cursor            : GNATCOLL.SQL.Exec.Forward_Cursor;
+      frs_target_row      : Target_Dataset;
+      ps                  : GNATCOLL.SQL.Exec.Prepared_Statement;   
+      count               : Natural := 0;
+      frs_criteria        : d.Criteria;
+      mapped_target_data  : Vector( 1 .. num_data_cols );
+    begin
       Log( "Begining run for : " & To_String( the_run ));
       Connection_Pool.Initialise;
       conn := Connection_Pool.Lease;
-      Each_Year:
-      for year in the_run.start_year .. the_run.end_year loop
-         Log( "on year " & year'Img );
-         declare
-            targets     : Target_Dataset := Target_Dataset_IO.Retrieve_By_PK(
-               run_id => the_run.targets_run_id,
-               user_id => the_run.targets_run_user_id,
-               year    => year,
-               sernum  => -9         
-            );
-            d_cursor            : GNATCOLL.SQL.Exec.Direct_Cursor;
-            f_cursor            : GNATCOLL.SQL.Exec.Forward_Cursor;
-            frs_target_row      : Target_Dataset;
-            ps                  : GNATCOLL.SQL.Exec.Prepared_Statement;   
-            count               : Natural := 0;
-            frs_criteria        : d.Criteria;
-            mapped_target_data  : Vector( 1 .. num_data_cols );
-            base_target         : Amount;
-         begin
-            Fill_One_Row( the_run.selected_clauses, targets, mapped_target_data ); 
-            Assert(( for all r of mapped_target_data => r > 0.0 ), 
-               " there is a zero in target output row " & To_String( mapped_target_data ));
-
-            Target_Dataset_IO.Add_User_Id( frs_criteria, the_run.data_run_user_id );
-            Target_Dataset_IO.Add_Run_Id( frs_criteria, the_run.data_run_id );
-            -- NO!! we want all years in the FRS dataset Target_Dataset_IO.Add_Year( frs_criteria, year );
-            if the_run.country = TuS( "SCO" ) then
-               Target_Dataset_IO.Add_Country_Scotland( frs_criteria, 1.0 );
-               base_target := targets.country_scotland;
-            elsif the_run.country = TuS( "UK" ) then
-               Target_Dataset_IO.Add_Country_UK( frs_criteria, 1.0 );
-               base_target := targets.country_uk;
-            end if; -- and so on for Wales, Ireland; UK doesn't need this
-            ps := Target_Dataset_IO.Get_Prepared_Retrieve_Statement( frs_criteria );            
-            f_cursor.Fetch( conn, ps );
-            d_cursor.Fetch( conn, ps ); -- hack to get row count, otherwise unused
-            num_data_rows := Rows_Count( d_cursor );
+      Target_Dataset_IO.Add_User_Id( frs_criteria, the_run.data_run_user_id );
+      Target_Dataset_IO.Add_Run_Id( frs_criteria, the_run.data_run_id );
+      -- NO!! we want all years in the FRS dataset Target_Dataset_IO.Add_Year( frs_criteria, year );
+      if the_run.country = TuS( "SCO" ) then
+         Target_Dataset_IO.Add_Country_Scotland( frs_criteria, 1.0 );
+      elsif the_run.country = TuS( "UK" ) then
+         Target_Dataset_IO.Add_Country_UK( frs_criteria, 1.0 );
+      end if; -- and so on for Wales, Ireland; UK doesn't need this
+      ps := Target_Dataset_IO.Get_Prepared_Retrieve_Statement( frs_criteria );            
+      f_cursor.Fetch( conn, ps );
+      d_cursor.Fetch( conn, ps ); -- hack to get row count, otherwise unused
+      num_data_rows := Rows_Count( d_cursor );
+      declare
+         package Reweighter is new Maths_Funcs.Weights_Generator(    
+            Num_Constraints   => num_data_cols,
+            Num_Observations  => num_data_rows );
+         subtype Col_Vector is Reweighter.Col_Vector;
+         subtype Row_Vector is Reweighter.Row_Vector;
+         subtype Dataset    is Reweighter.Dataset;
+         type Indexes_Array is array( 1 .. num_data_rows ) of Weights_Index;
+         type Indexes_Array_Access is access Indexes_Array; 
+         --
+         -- Stack overflow workaround
+         --
+         type Dataset_Access is access Reweighter.Dataset;
+         procedure Free_Dataset is new Ada.Unchecked_Deallocation(
+            Object => Dataset, Name => Dataset_Access );
+         procedure Free_Indexes is new Ada.Unchecked_Deallocation(
+            Object => Indexes_Array, Name => Indexes_Array_Access );
+         observations       : Dataset_Access;
+         target_populations : Row_Vector;
+         weights_indexes    : Indexes_Array_Access;
+         mapped_frs_data    : Vector( 1 .. num_data_cols );
+         new_totals         : Row_Vector;
+         weights            : Col_Vector;
+         curr_iterations    : Natural := 0;
+      begin
+         Log( "Num Data Columns " & num_data_cols'Img & " Rows " & num_data_rows'Img );
+         
+         weights_indexes := new Indexes_Array;
+         observations := new Dataset;
+         observations.all := ( others => ( others => 0.0 ));
+         --
+         -- load the main dataset
+         -- 
+         Load_Main_Dataset:
+         for row in 1 .. num_data_rows loop
+            f_cursor.Next;
+            frs_target_row := Target_Dataset_IO.Map_From_Cursor( f_cursor );
+            Fill_One_Row( the_run.selected_clauses, frs_target_row, mapped_frs_data );
+            for col in mapped_target_data'Range loop
+               observations.all( row, col ) :=  mapped_frs_data( col );                 
+            end loop;
+            -- .. and store a list of hrefs and years to go alongside it
+            weights_indexes.all( row ).sernum := frs_target_row.sernum;
+            weights_indexes.all( row ).year := frs_target_row.year;
+         end loop Load_Main_Dataset;
+            
+         Each_Year:
+         for year in the_run.start_year .. the_run.end_year loop
             declare
-               package Reweighter is new Maths_Funcs.Weights_Generator(    
-                  Num_Constraints   => num_data_cols,
-                  Num_Observations  => num_data_rows );
-               subtype Col_Vector is Reweighter.Col_Vector;
-               subtype Row_Vector is Reweighter.Row_Vector;
-               subtype Dataset    is Reweighter.Dataset;
-               type Indexes_Array is array( 1 .. num_data_rows ) of Weights_Index;
-               type Indexes_Array_Access is access Indexes_Array; 
-               --
-               -- Stack overflow workaround
-               --
-               type Dataset_Access is access Reweighter.Dataset;
-               procedure Free_Dataset is new Ada.Unchecked_Deallocation(
-                  Object => Dataset, Name => Dataset_Access );
-               procedure Free_Indexes is new Ada.Unchecked_Deallocation(
-                  Object => Indexes_Array, Name => Indexes_Array_Access );
-               observations       : Dataset_Access;
-               target_populations : Row_Vector;
-               weights_indexes    : Indexes_Array_Access;
-               mapped_frs_data    : Vector( 1 .. num_data_cols );
-               uniform_weight     : constant Amount := 
-                  base_target / Amount( num_data_rows );
-               initial_weights    : Col_Vector := ( others => uniform_weight );
-               new_totals         : Row_Vector;
-               weights            : Col_Vector;
-               curr_iterations    : Natural := 0;
+               targets     : Target_Dataset := Target_Dataset_IO.Retrieve_By_PK(
+                  run_id => the_run.targets_run_id,
+                  user_id => the_run.targets_run_user_id,
+                  year    => year,
+                  sernum  => -9         
+               );
+               uniform_weight     : Amount;
+               base_target        : Amount;
+               initial_weights    : Col_Vector;
             begin
+               -- we need this pro tem as we have no hhld count for UK/ENG yet
+               if the_run.country = TuS( "SCO" ) then
+                  base_target := targets.country_scotland;
+               elsif the_run.country = TuS( "UK" ) then
+                  base_target := targets.country_uk;
+               end if; -- and so on for Wales, Ireland; UK doesn't need this
+               uniform_weight := 
+                  base_target / Amount( num_data_rows );
+               initial_weights := ( others => uniform_weight );   
+               Log( "on year " & year'Img );
                Log( "Initial Weight : " & Format( uniform_weight ));
                Log( "Base Target : " & Format( base_target ));
-               Log( "Num Data Columns " & num_data_cols'Img & " Rows " & num_data_rows'Img );
-               
                -- typecasting thing .. 
+               Fill_One_Row( the_run.selected_clauses, targets, mapped_target_data ); 
                for c in target_populations'Range loop
                   target_populations( c ) :=  mapped_target_data( c );                 
                end loop;
-               
-               weights_indexes := new Indexes_Array;
-               observations := new Dataset;
-               observations.all := ( others => ( others => 0.0 ));
-               --
-               -- load the main dataset
-               -- 
-               for row in 1 .. num_data_rows loop
-                  f_cursor.Next;
-                  frs_target_row := Target_Dataset_IO.Map_From_Cursor( f_cursor );
-                  Fill_One_Row( the_run.selected_clauses, targets, mapped_frs_data );
-                  for col in mapped_target_data'Range loop
-                     observations.all( row, col ) :=  mapped_target_data( col );                 
-                  end loop;
-                  -- .. and store a list of hrefs and years to go alongside it
-                  weights_indexes.all( row ).sernum := frs_target_row.sernum;
-                  weights_indexes.all( row ).year := frs_target_row.year;
-               end loop;
                new_totals := Reweighter.Sum_Dataset( observations.all, initial_weights );
                Print_Diffs( "CRUDE WEIGHTED", target_populations, new_totals );
-
+               
+               Assert(( for all r of mapped_target_data => r > 0.0 ), 
+                  " there is a zero in target output row " & To_String( mapped_target_data ));
                Reweighter.Do_Reweighting(
                   Data               => observations.all, 
                   Which_Function     => the_run.weighting_function,
@@ -680,13 +686,12 @@ package body Model.SCP.Weights_Creator is
                end loop;
                new_totals := Reweighter.Sum_Dataset( observations.all, weights );
                Print_Diffs( "FINAL WEIGHTED", target_populations, new_totals );
-               Free_Dataset( observations );   
-               Free_Indexes( weights_indexes );   
-            end; -- decls once rows and cols are known
-         end; -- decls for year
-      end loop Each_Year;
+            end;
+         end loop Each_Year;
+         Free_Dataset( observations );   
+         Free_Indexes( weights_indexes );   
+      end; -- decls for main dataset
       Connection_Pool.Return_Connection( conn );
    end  Create_Weights; 
-
    
 end Model.SCP.Weights_Creator;
