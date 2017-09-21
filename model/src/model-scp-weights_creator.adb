@@ -9,6 +9,7 @@ with Data_Constants;
 with Base_Model_Types;
 with Text_Utils;
 
+
 with GNATColl.Traces;
 with GNATCOLL.SQL.Exec;
 
@@ -47,12 +48,319 @@ package body Model.SCP.Weights_Creator is
    procedure Fill_One_Row( 
       clauses  : Selected_Clauses_Array;
       targets  : Target_Dataset;
-      row      : out Abs_Amount_Array ) is
+      row      : out Amount_Array ) is
+         
+         p : Positive := 1;
+         tmp : Amount;
+         
+         procedure Add_Col( v : Amount ) is
+         begin
+            row( p ) := v;
+            p := p + 1;
+         end Add_Col;
+         
     begin
       row := ( others => 0.0 );
+      if targets( household_type ) then
+         Add_Col( targets.household_one_adult_male );
+         Add_Col( targets.household_one_adult_female );
+         Add_Col( targets.household_two_adults );
+         Add_Col( targets.household_one_adult_one_child );
+         Add_Col( targets.household_one_adult_two_plus_children );
+         Add_Col( targets.household_two_plus_adult_one_plus_children );
+         Add_Col( targets.household_three_plus_person_all_adult );
+      end if;
+      -- household_all_households : Amount := 0.0;
+      if targets( genders ) then
+         Add_Col( targets.male );
+         Add_Col( targets.female );
+      end if;
+      if targets( employment ) then      
+            Add_Col( targets.employed );
+      end if;
+      if targets( employees ) then      
+         Add_Col( targets.employee );
+      end if;
+      if targets( ilo_unemployed ) then
+         Add_Col( targets.ilo_unemployed );
+      end if;
+      if targets( jsa_claimants ) then
+         Add_Col( targets.jsa_claimant );
+      end if;
+      if( targets( by_year_ages_by_gender ) then
+         Add_Col( targets.age_0_male );
+         Add_Col( targets.age_1_male );
+         Add_Col( targets.age_2_male );
+         Add_Col( targets.age_3_male );
+         Add_Col( targets.age_4_male );
+         Add_Col( targets.age_5_male );
+         Add_Col( targets.age_6_male );
+         Add_Col( targets.age_7_male );
+         Add_Col( targets.age_8_male );
+         Add_Col( targets.age_9_male );
+         Add_Col( targets.age_10_male );
+         Add_Col( targets.age_11_male );
+         Add_Col( targets.age_12_male );
+         Add_Col( targets.age_13_male );
+         Add_Col( targets.age_14_male );
+         Add_Col( targets.age_15_male );
+         Add_Col( targets.age_16_male );
+         Add_Col( targets.age_17_male );
+         Add_Col( targets.age_18_male );
+         Add_Col( targets.age_19_male );
+         Add_Col( targets.age_20_male );
+         Add_Col( targets.age_21_male );
+         Add_Col( targets.age_22_male );
+         Add_Col( targets.age_23_male );
+         Add_Col( targets.age_24_male );
+         Add_Col( targets.age_25_male );
+         Add_Col( targets.age_26_male );
+         Add_Col( targets.age_27_male );
+         Add_Col( targets.age_28_male );
+         Add_Col( targets.age_29_male );
+         Add_Col( targets.age_30_male );
+         Add_Col( targets.age_31_male );
+         Add_Col( targets.age_32_male );
+         Add_Col( targets.age_33_male );
+         Add_Col( targets.age_34_male );
+         Add_Col( targets.age_35_male );
+         Add_Col( targets.age_36_male );
+         Add_Col( targets.age_37_male );
+         Add_Col( targets.age_38_male );
+         Add_Col( targets.age_39_male );
+         Add_Col( targets.age_40_male );
+         Add_Col( targets.age_41_male );
+         Add_Col( targets.age_42_male );
+         Add_Col( targets.age_43_male );
+         Add_Col( targets.age_44_male );
+         Add_Col( targets.age_45_male );
+         Add_Col( targets.age_46_male );
+         Add_Col( targets.age_47_male );
+         Add_Col( targets.age_48_male );
+         Add_Col( targets.age_49_male );
+         Add_Col( targets.age_50_male );
+         Add_Col( targets.age_51_male );
+         Add_Col( targets.age_52_male );
+         Add_Col( targets.age_53_male );
+         Add_Col( targets.age_54_male );
+         Add_Col( targets.age_55_male );
+         Add_Col( targets.age_56_male );
+         Add_Col( targets.age_57_male );
+         Add_Col( targets.age_58_male );
+         Add_Col( targets.age_59_male );
+         Add_Col( targets.age_60_male );
+         Add_Col( targets.age_61_male );
+         Add_Col( targets.age_62_male );
+         Add_Col( targets.age_63_male );
+         Add_Col( targets.age_64_male );
+         Add_Col( targets.age_65_male );
+         Add_Col( targets.age_66_male );
+         Add_Col( targets.age_67_male );
+         Add_Col( targets.age_68_male );
+         Add_Col( targets.age_69_male );
+         Add_Col( targets.age_70_male );
+         Add_Col( targets.age_71_male );
+         Add_Col( targets.age_72_male );
+         Add_Col( targets.age_73_male );
+         Add_Col( targets.age_74_male );
+         Add_Col( targets.age_75_male );
+         Add_Col( targets.age_76_male );
+         Add_Col( targets.age_77_male );
+         Add_Col( targets.age_78_male );
+         Add_Col( targets.age_79_male );
+         tmp := targets.age_80_male + targets.age_81_male + targets.age_82_male + targets.age_83_male + 
+            targets.age_84_male + targets.age_85_male + targets.age_86_male + targets.age_87_male + 
+            targets.age_88_male + targets.age_89_male + targets.age_90_male + targets.age_91_male + 
+            targets.age_92_male + targets.age_93_male + targets.age_94_male + targets.age_95_male + 
+            targets.age_96_male + targets.age_97_male + targets.age_98_male + targets.age_99_male + 
+            targets.age_100_male + targets.age_101_male + targets.age_102_male + targets.age_103_male + 
+            targets.age_104_male + targets.age_105_male + targets.age_106_male + targets.age_107_male + 
+            targets.age_108_male + targets.age_109_male + targets.age_110_male;
+         Add_Col( tmp );
+         Add_Col( targets.age_0_female );
+         Add_Col( targets.age_1_female );
+         Add_Col( targets.age_2_female );
+         Add_Col( targets.age_3_female );
+         Add_Col( targets.age_4_female );
+         Add_Col( targets.age_5_female );
+         Add_Col( targets.age_6_female );
+         Add_Col( targets.age_7_female );
+         Add_Col( targets.age_8_female );
+         Add_Col( targets.age_9_female );
+         Add_Col( targets.age_10_female );
+         Add_Col( targets.age_11_female );
+         Add_Col( targets.age_12_female );
+         Add_Col( targets.age_13_female );
+         Add_Col( targets.age_14_female );
+         Add_Col( targets.age_15_female );
+         Add_Col( targets.age_16_female );
+         Add_Col( targets.age_17_female );
+         Add_Col( targets.age_18_female );
+         Add_Col( targets.age_19_female );
+         Add_Col( targets.age_20_female );
+         Add_Col( targets.age_21_female );
+         Add_Col( targets.age_22_female );
+         Add_Col( targets.age_23_female );
+         Add_Col( targets.age_24_female );
+         Add_Col( targets.age_25_female );
+         Add_Col( targets.age_26_female );
+         Add_Col( targets.age_27_female );
+         Add_Col( targets.age_28_female );
+         Add_Col( targets.age_29_female );
+         Add_Col( targets.age_30_female );
+         Add_Col( targets.age_31_female );
+         Add_Col( targets.age_32_female );
+         Add_Col( targets.age_33_female );
+         Add_Col( targets.age_34_female );
+         Add_Col( targets.age_35_female );
+         Add_Col( targets.age_36_female );
+         Add_Col( targets.age_37_female );
+         Add_Col( targets.age_38_female );
+         Add_Col( targets.age_39_female );
+         Add_Col( targets.age_40_female );
+         Add_Col( targets.age_41_female );
+         Add_Col( targets.age_42_female );
+         Add_Col( targets.age_43_female );
+         Add_Col( targets.age_44_female );
+         Add_Col( targets.age_45_female );
+         Add_Col( targets.age_46_female );
+         Add_Col( targets.age_47_female );
+         Add_Col( targets.age_48_female );
+         Add_Col( targets.age_49_female );
+         Add_Col( targets.age_50_female );
+         Add_Col( targets.age_51_female );
+         Add_Col( targets.age_52_female );
+         Add_Col( targets.age_53_female );
+         Add_Col( targets.age_54_female );
+         Add_Col( targets.age_55_female );
+         Add_Col( targets.age_56_female );
+         Add_Col( targets.age_57_female );
+         Add_Col( targets.age_58_female );
+         Add_Col( targets.age_59_female );
+         Add_Col( targets.age_60_female );
+         Add_Col( targets.age_61_female );
+         Add_Col( targets.age_62_female );
+         Add_Col( targets.age_63_female );
+         Add_Col( targets.age_64_female );
+         Add_Col( targets.age_65_female );
+         Add_Col( targets.age_66_female );
+         Add_Col( targets.age_67_female );
+         Add_Col( targets.age_68_female );
+         Add_Col( targets.age_69_female );
+         Add_Col( targets.age_70_female );
+         Add_Col( targets.age_71_female );
+         Add_Col( targets.age_72_female );
+         Add_Col( targets.age_73_female );
+         Add_Col( targets.age_74_female );
+         Add_Col( targets.age_75_female );
+         Add_Col( targets.age_76_female );
+         Add_Col( targets.age_77_female );
+         Add_Col( targets.age_78_female );
+         Add_Col( targets.age_79_female );
+         tmp := targets.age_80_female + targets.age_81_female + targets.age_82_female + targets.age_83_female + 
+            targets.age_84_female + targets.age_85_female + targets.age_86_female + targets.age_87_female + 
+            targets.age_88_female + targets.age_89_female + targets.age_90_female + targets.age_91_female + 
+            targets.age_92_female + targets.age_93_female + targets.age_94_female + targets.age_95_female + 
+            targets.age_96_female + targets.age_97_female + targets.age_98_female + targets.age_99_female + 
+            targets.age_100_female + targets.age_101_female + targets.age_102_female + targets.age_103_female + 
+            targets.age_104_female + targets.age_105_female + targets.age_106_female + targets.age_107_female + 
+            targets.age_108_female + targets.age_109_female + targets.age_110_female;
+         Add_Col( tmp );
+      end if;
+      if( targets( by_year_ages ) then
+         Add_Col( targets.age_0 );
+         Add_Col( targets.age_1 );
+         Add_Col( targets.age_2 );
+         Add_Col( targets.age_3 );
+         Add_Col( targets.age_4 );
+         Add_Col( targets.age_5 );
+         Add_Col( targets.age_6 );
+         Add_Col( targets.age_7 );
+         Add_Col( targets.age_8 );
+         Add_Col( targets.age_9 );
+         Add_Col( targets.age_10 );
+         Add_Col( targets.age_11 );
+         Add_Col( targets.age_12 );
+         Add_Col( targets.age_13 );
+         Add_Col( targets.age_14 );
+         Add_Col( targets.age_15 );
+         Add_Col( targets.age_16 );
+         Add_Col( targets.age_17 );
+         Add_Col( targets.age_18 );
+         Add_Col( targets.age_19 );
+         Add_Col( targets.age_20 );
+         Add_Col( targets.age_21 );
+         Add_Col( targets.age_22 );
+         Add_Col( targets.age_23 );
+         Add_Col( targets.age_24 );
+         Add_Col( targets.age_25 );
+         Add_Col( targets.age_26 );
+         Add_Col( targets.age_27 );
+         Add_Col( targets.age_28 );
+         Add_Col( targets.age_29 );
+         Add_Col( targets.age_30 );
+         Add_Col( targets.age_31 );
+         Add_Col( targets.age_32 );
+         Add_Col( targets.age_33 );
+         Add_Col( targets.age_34 );
+         Add_Col( targets.age_35 );
+         Add_Col( targets.age_36 );
+         Add_Col( targets.age_37 );
+         Add_Col( targets.age_38 );
+         Add_Col( targets.age_39 );
+         Add_Col( targets.age_40 );
+         Add_Col( targets.age_41 );
+         Add_Col( targets.age_42 );
+         Add_Col( targets.age_43 );
+         Add_Col( targets.age_44 );
+         Add_Col( targets.age_45 );
+         Add_Col( targets.age_46 );
+         Add_Col( targets.age_47 );
+         Add_Col( targets.age_48 );
+         Add_Col( targets.age_49 );
+         Add_Col( targets.age_50 );
+         Add_Col( targets.age_51 );
+         Add_Col( targets.age_52 );
+         Add_Col( targets.age_53 );
+         Add_Col( targets.age_54 );
+         Add_Col( targets.age_55 );
+         Add_Col( targets.age_56 );
+         Add_Col( targets.age_57 );
+         Add_Col( targets.age_58 );
+         Add_Col( targets.age_59 );
+         Add_Col( targets.age_60 );
+         Add_Col( targets.age_61 );
+         Add_Col( targets.age_62 );
+         Add_Col( targets.age_63 );
+         Add_Col( targets.age_64 );
+         Add_Col( targets.age_65 );
+         Add_Col( targets.age_66 );
+         Add_Col( targets.age_67 );
+         Add_Col( targets.age_68 );
+         Add_Col( targets.age_69 );
+         Add_Col( targets.age_70 );
+         Add_Col( targets.age_71 );
+         Add_Col( targets.age_72 );
+         Add_Col( targets.age_73 );
+         Add_Col( targets.age_74 );
+         Add_Col( targets.age_75 );
+         Add_Col( targets.age_76 );
+         Add_Col( targets.age_77 );
+         Add_Col( targets.age_78 );
+         Add_Col( targets.age_79 );
+         tmp := targets.age_80 + targets.age_81 + targets.age_82 + targets.age_83 + 
+            targets.age_84 + targets.age_85 + targets.age_86 + targets.age_87 + 
+            targets.age_88 + targets.age_89 + targets.age_90 + targets.age_91 + 
+            targets.age_92 + targets.age_93 + targets.age_94 + targets.age_95 + 
+            targets.age_96 + targets.age_97 + targets.age_98 + targets.age_99 + 
+            targets.age_100 + targets.age_101 + targets.age_102 + targets.age_103 + 
+            targets.age_104 + targets.age_105 + targets.age_106 + targets.age_107 + 
+            targets.age_108 + targets.age_109 + targets.age_110;
+         Add_Col( tmp );
+      end if;
        
-      Assert( for all row as r => r > 0.0, " there is a zero in output row " & To_String( row ));
-    end Create_One_Row;
+      Assert(( for all r of row => r > 0.0 ), " there is a zero in output row " & To_String( row ));
+    end Fill_One_Row;
       
    
    procedure Create_Weights( 
