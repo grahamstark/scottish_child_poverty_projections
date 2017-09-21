@@ -41,9 +41,7 @@ package body Model.SCP.Weights_Creator is
    begin
       GNATColl.Traces.Trace( log_trace, s );
    end Log;
-   
-
-   
+    
    function Col_Count( 
       clauses : Selected_Clauses_Array ) return Positive is
          count : Natural := 0;
@@ -533,9 +531,11 @@ package body Model.SCP.Weights_Creator is
       num_data_rows : Positive;
       conn          : Database_Connection;
    begin
+      Log( "Begining run for : " & To_String( the_run ));
       Connection_Pool.Initialise;
       conn := Connection_Pool.Lease;
       for year in the_run.start_year .. the_run.end_year loop
+         Log( "on year " & year'Img );
          declare
             targets     : Target_Dataset := Target_Dataset_IO.Retrieve_By_PK(
                run_id => the_run.targets_run_id,
@@ -595,6 +595,10 @@ package body Model.SCP.Weights_Creator is
                   base_target / Amount( num_data_rows );
                initial_weights    : Col_Vector := ( others => uniform_weight );
             begin
+               Log( "Initial Weight : " & Format( uniform_weight ));
+               Log( "Base Target : " & Format( base_target ));
+               Log( "Num Data Columns " & num_data_cols'Img & " Rows " & num_data_rows'Img );
+               
                -- typecasting thing .. 
                for c in target_populations'Range loop
                   target_populations( c ) :=  mapped_target_data( c );                 
