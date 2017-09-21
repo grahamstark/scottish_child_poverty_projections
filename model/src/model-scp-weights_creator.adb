@@ -520,9 +520,9 @@ package body Model.SCP.Weights_Creator is
 
    use GNATCOLL.SQL.Exec;   
    package d renames DB_Commons;
-      num_cols : constant Positive := Col_Count( the_run.selected_clauses );
+      num_data_cols : constant Positive := Col_Count( the_run.selected_clauses );
       num_data_rows : Positive;
-      conn         : Database_Connection;
+      conn          : Database_Connection;
    begin
       Connection_Pool.Initialise;
       conn := Connection_Pool.Lease;
@@ -551,6 +551,31 @@ package body Model.SCP.Weights_Creator is
             ps := Target_Dataset_IO.Get_Prepared_Retrieve_Statement( frs_criteria );            
             cursor.Fetch( conn, ps );
             num_data_rows := Rows_Count( cursor );
+            declare
+               package Reweighter is new Maths_Funcs.Weights_Generator(    
+                  Num_Constraints   => num_data_cols,
+                  Num_Observations  => num_data_rows );
+               subtype Col_Vector is Reweighter.Col_Vector;
+               subtype Row_Vector is Reweighter.Row_Vector;
+               subtype Dataset    is Reweighter.Dataset;
+               type Indexes_Array is array( 1 .. num_data_rows ) of Weights_Index;
+               type Indexes_Array_Access is access Indexes_Array; 
+               --
+               -- Stack overflow workaround
+               --
+               type Dataset_Access is access Reweighter.Dataset;
+               procedure Free_Dataset is new Ada.Unchecked_Deallocation(
+                  Object => Dataset, Name => Dataset_Access );
+               procedure Free_Indexes is new Ada.Unchecked_Deallocation(
+                  Object => Indexes_Array, Name => Indexes_Array_Access );
+               observations       : Dataset_Access;
+               target_populations : Row_Vector;
+
+            begin
+               null;
+               
+            end;
+            
          end;
          
       end loop;

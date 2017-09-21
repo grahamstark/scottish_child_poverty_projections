@@ -19,4 +19,13 @@ package SCP_Types is
    
    type Abs_Selected_Clauses_Array is array( Candidate_Clauses range <> ) of Boolean;
    subtype Selected_Clauses_Array is Abs_Selected_Clauses_Array( Candidate_Clauses'Range ); 
+   
+
+   type Weights_Index is record
+      year : Data_Years;
+      id   : Sernum_Value;
+   end record;
+   
+
+   
 end SCP_Types;
