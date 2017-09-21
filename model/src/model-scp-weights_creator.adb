@@ -62,7 +62,7 @@ package body Model.SCP.Weights_Creator is
          Inc( count, 1 );
       end if;
       if clauses( by_year_ages_by_gender ) then
-         Inc( count( 162 );
+         Inc( count, 162 );
       end if;
       if clauses( by_year_ages ) then
          Inc( count, 81 );
@@ -73,7 +73,6 @@ package body Model.SCP.Weights_Creator is
       if clauses( aggregate_ages_by_gender ) then
          Inc( count, 34 );
       end if;
-      
       return count;
    end Col_Count;
    
@@ -82,13 +81,13 @@ package body Model.SCP.Weights_Creator is
       targets  : Target_Dataset;
       row      : out Amount_Array ) is
          
-         p : Positive := 1;
+         p : Natural := 0;
          tmp : Amount;
          
          procedure Add_Col( v : Amount ) is
          begin
-            row( p ) := v;
             p := p + 1;
+            row( p ) := v;
          end Add_Col;
          
     begin
