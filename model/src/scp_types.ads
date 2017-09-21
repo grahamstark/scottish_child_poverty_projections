@@ -2,6 +2,8 @@ package SCP_Types is
 
    type Weighting_Sample_Type is ( uk, scotland );
    
+   type Type_Of_Run = ( data_generation, target_generation, weights_generation, validation );
+   
    type Candidate_Clauses is (
       genders,
       household_type,
