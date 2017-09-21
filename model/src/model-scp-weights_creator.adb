@@ -9,6 +9,8 @@ with Data_Constants;
 with Base_Model_Types;
 with Text_Utils;
 
+with Maths_Functions.Weights_Generator;
+with Maths_Functions;
 
 with GNATColl.Traces;
 with GNATCOLL.SQL.Exec;
