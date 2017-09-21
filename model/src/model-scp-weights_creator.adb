@@ -35,6 +35,15 @@ package body Model.SCP.Weights_Creator is
    use Ada.Calendar;
    use Ada.Strings.Unbounded;
 
+
+   log_trace : GNATColl.Traces.Trace_Handle := GNATColl.Traces.Create( "MODEL.SCP.WEIGHTS_CREATOR" );
+   procedure Log( s : String ) is
+   begin
+      GNATColl.Traces.Trace( log_trace, s );
+   end Log;
+   
+
+   
    function Col_Count( 
       clauses : Selected_Clauses_Array ) return Positive is
          count : Natural := 0;
@@ -541,6 +550,7 @@ package body Model.SCP.Weights_Creator is
             count               : Natural := 0;
             frs_criteria        : d.Criteria;
             mapped_target_data  : Amount_Array( 1 .. num_data_cols );
+            base_target         : Amount;
          begin
             Fill_One_Row( the_run.selected_clauses, targets, mapped_target_data ); 
             Assert(( for all r of mapped_target_data => r > 0.0 ), 
@@ -551,6 +561,10 @@ package body Model.SCP.Weights_Creator is
             Target_Dataset_IO.Add_Year( frs_criteria, year );
             if the_run.country = TuS( "SCO" ) then
                Target_Dataset_IO.Add_Country_Scotland( frs_criteria, 1.0 );
+               base_target := targets.country_scotland;
+            elsif the_run.country = TuS( "UK" ) then
+               Target_Dataset_IO.Add_Country_UK( frs_criteria, 1.0 );
+               base_target := targets.country_uk;
             end if; -- and so on for Wales, Ireland; UK doesn't need this
             ps := Target_Dataset_IO.Get_Prepared_Retrieve_Statement( frs_criteria );            
             f_cursor.Fetch( conn, ps );
@@ -578,7 +592,7 @@ package body Model.SCP.Weights_Creator is
                weights_indexes    : Indexes_Array_Access;
                mapped_frs_data    : Amount_Array( 1 .. num_data_cols );
                uniform_weight     : constant Amount := 
-                  mapped_target_data.household_all_households / Amount( num_data_rows );
+                  base_target / Amount( num_data_rows );
                initial_weights    : Col_Vector := ( others => uniform_weight );
             begin
                -- typecasting thing .. 
