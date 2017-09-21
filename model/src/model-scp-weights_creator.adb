@@ -737,7 +737,7 @@ package body Model.SCP.Weights_Creator is
          Free_Indexes( weights_indexes );   
       end; -- decls for main dataset
       Log( "returning connection" );
-      Connection_Pool.Return_Connection( conn );
+      -- Connection_Pool.Return_Connection( conn );
    end  Create_Weights; 
    
 end Model.SCP.Weights_Creator;
