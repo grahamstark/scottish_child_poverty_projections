@@ -11,7 +11,7 @@ package SCP_Types is
       aggregate_ages_by_gender,
       employment,
       employees,
-      ilo_umemployment,
+      ilo_unemployment,
       jsa_claimants
    );
    

@@ -60,8 +60,12 @@ package body Model.SCP.Weights_Creator is
          end Add_Col;
          
     begin
+      
+      Assert( not (clauses( by_year_ages ) and clauses( by_year_ages_by_gender )), " by_year_ages and by_year_ages_by_gender can't both be on " );
+      Assert( not (clauses( aggregate_ages ) and clauses( aggregate_ages_by_gender )), " aggregate_ages and aggregate_ages_by_gender can't both be on " );
+       
       row := ( others => 0.0 );
-      if targets( household_type ) then
+      if clauses( household_type ) then
          Add_Col( targets.household_one_adult_male );
          Add_Col( targets.household_one_adult_female );
          Add_Col( targets.household_two_adults );
@@ -71,23 +75,23 @@ package body Model.SCP.Weights_Creator is
          Add_Col( targets.household_three_plus_person_all_adult );
       end if;
       -- household_all_households : Amount := 0.0;
-      if targets( genders ) then
+      if clauses( genders ) then
          Add_Col( targets.male );
          Add_Col( targets.female );
       end if;
-      if targets( employment ) then      
+      if clauses( employment ) then      
             Add_Col( targets.employed );
       end if;
-      if targets( employees ) then      
+      if clauses( employees ) then      
          Add_Col( targets.employee );
       end if;
-      if targets( ilo_unemployed ) then
+      if clauses( ilo_unemployment ) then
          Add_Col( targets.ilo_unemployed );
       end if;
-      if targets( jsa_claimants ) then
+      if clauses( jsa_claimants ) then
          Add_Col( targets.jsa_claimant );
       end if;
-      if( targets( by_year_ages_by_gender ) then
+      if clauses( by_year_ages_by_gender ) then
          Add_Col( targets.age_0_male );
          Add_Col( targets.age_1_male );
          Add_Col( targets.age_2_male );
@@ -267,7 +271,7 @@ package body Model.SCP.Weights_Creator is
             targets.age_108_female + targets.age_109_female + targets.age_110_female;
          Add_Col( tmp );
       end if;
-      if( targets( by_year_ages ) then
+      if clauses( by_year_ages ) then
          Add_Col( targets.age_0 );
          Add_Col( targets.age_1 );
          Add_Col( targets.age_2 );
@@ -358,7 +362,114 @@ package body Model.SCP.Weights_Creator is
             targets.age_108 + targets.age_109 + targets.age_110;
          Add_Col( tmp );
       end if;
-       
+      if clauses( aggregate_ages ) then
+         tmp := targets.age_0 + targets.age_1 + targets.age_2 + targets.age_3 + targets.age_4;
+         Add_Col( tmp );         
+         tmp := targets.age_5 + targets.age_6 + targets.age_7 + targets.age_8 + targets.age_9 + targets.age_10;
+         Add_Col( tmp );
+         tmp := targets.age_11 + targets.age_12 + targets.age_13 + targets.age_14 + targets.age_15;
+         Add_Col( tmp );
+         tmp := targets.age_16 + targets.age_17 + targets.age_18 + targets.age_19;
+         Add_Col( tmp );
+         tmp := targets.age_20 + targets.age_21 + targets.age_22 + targets.age_23 + targets.age_24;
+         Add_Col( tmp );
+         tmp := targets.age_25 + targets.age_26 + targets.age_27 + targets.age_28 + targets.age_29;
+         Add_Col( tmp );
+         tmp := targets.age_30 + targets.age_31 + targets.age_32 + targets.age_33 + targets.age_34;
+         Add_Col( tmp );
+         tmp := targets.age_35 + targets.age_36 + targets.age_37 + targets.age_38 + targets.age_39;
+         Add_Col( tmp );
+         tmp := targets.age_40 + targets.age_41 + targets.age_42 + targets.age_43 + targets.age_44;
+         Add_Col( tmp );
+         tmp := targets.age_45 + targets.age_46 + targets.age_47 + targets.age_48 + targets.age_49;
+         Add_Col( tmp );
+         tmp := targets.age_50 + targets.age_51 + targets.age_52 + targets.age_53 + targets.age_54;
+         Add_Col( tmp );
+         tmp := targets.age_55 + targets.age_56 + targets.age_57 + targets.age_58 + targets.age_59;
+         Add_Col( tmp );
+         tmp := targets.age_60 + targets.age_61 + targets.age_62 + targets.age_63 + targets.age_64;
+         Add_Col( tmp );
+         tmp := targets.age_65 + targets.age_66 + targets.age_67 + targets.age_68 + targets.age_69;
+         Add_Col( tmp );
+         tmp := targets.age_70 + targets.age_71 + targets.age_72 + targets.age_73 + targets.age_74;
+         Add_Col( tmp );
+         tmp := targets.age_75 + targets.age_76 + targets.age_77 + targets.age_78 + targets.age_79;
+         Add_Col( tmp );
+         tmp := targets.age_80 + targets.age_81 + targets.age_82 + targets.age_83 + targets.age_84 + targets.age_85 + targets.age_86 + targets.age_87 + targets.age_88 + targets.age_89 + targets.age_90 + targets.age_91 + targets.age_92 + targets.age_93 + targets.age_94 + targets.age_95 + targets.age_96 + targets.age_97 + targets.age_98 + targets.age_99 + targets.age_100 + targets.age_101 + targets.age_102 + targets.age_103 + targets.age_104 + targets.age_105 + targets.age_106 + targets.age_107 + targets.age_108 + targets.age_109 + targets.age_110;
+         Add_Col( tmp );
+      end if;
+      if clauses( aggregate_ages_by_gender ) then
+         tmp := targets.age_0_male + targets.age_1_male + targets.age_2_male + targets.age_3_male + targets.age_4_male;
+         Add_Col( tmp );
+         tmp := targets.age_5_male + targets.age_6_male + targets.age_7_male + targets.age_8_male + targets.age_9_male + targets.age_10_male;
+         Add_Col( tmp );
+         tmp := targets.age_11_male + targets.age_12_male + targets.age_13_male + targets.age_14_male + targets.age_15_male;
+         Add_Col( tmp );
+         tmp := targets.age_16_male + targets.age_17_male + targets.age_18_male + targets.age_19_male;
+         Add_Col( tmp );
+         tmp := targets.age_20_male + targets.age_21_male + targets.age_22_male + targets.age_23_male + targets.age_24_male;
+         Add_Col( tmp );
+         tmp := targets.age_25_male + targets.age_26_male + targets.age_27_male + targets.age_28_male + targets.age_29_male;
+         Add_Col( tmp );
+         tmp := targets.age_30_male + targets.age_31_male + targets.age_32_male + targets.age_33_male + targets.age_34_male;
+         Add_Col( tmp );
+         tmp := targets.age_35_male + targets.age_36_male + targets.age_37_male + targets.age_38_male + targets.age_39_male;
+         Add_Col( tmp );
+         tmp := targets.age_40_male + targets.age_41_male + targets.age_42_male + targets.age_43_male + targets.age_44_male;
+         Add_Col( tmp );
+         tmp := targets.age_45_male + targets.age_46_male + targets.age_47_male + targets.age_48_male + targets.age_49_male;
+         Add_Col( tmp );
+         tmp := targets.age_50_male + targets.age_51_male + targets.age_52_male + targets.age_53_male + targets.age_54_male;
+         Add_Col( tmp );
+         tmp := targets.age_55_male + targets.age_56_male + targets.age_57_male + targets.age_58_male + targets.age_59_male;
+         Add_Col( tmp );
+         tmp := targets.age_60_male + targets.age_61_male + targets.age_62_male + targets.age_63_male + targets.age_64_male;
+         Add_Col( tmp );
+         tmp := targets.age_65_male + targets.age_66_male + targets.age_67_male + targets.age_68_male + targets.age_69_male;
+         Add_Col( tmp );
+         tmp := targets.age_70_male + targets.age_71_male + targets.age_72_male + targets.age_73_male + targets.age_74_male;
+         Add_Col( tmp );
+         tmp := targets.age_75_male + targets.age_76_male + targets.age_77_male + targets.age_78_male + targets.age_79_male;
+         Add_Col( tmp );
+         tmp := targets.age_80_male + targets.age_81_male + targets.age_82_male + targets.age_83_male + targets.age_84_male + targets.age_85_male + targets.age_86_male + targets.age_87_male + targets.age_88_male + targets.age_89_male + targets.age_90_male + targets.age_91_male + targets.age_92_male + targets.age_93_male + targets.age_94_male + targets.age_95_male + targets.age_96_male + targets.age_97_male + targets.age_98_male + targets.age_99_male + targets.age_100_male + targets.age_101_male + targets.age_102_male + targets.age_103_male + targets.age_104_male + targets.age_105_male + targets.age_106_male + targets.age_107_male + targets.age_108_male + targets.age_109_male + targets.age_110_male;
+         Add_Col( tmp );
+         tmp := targets.age_0_female + targets.age_1_female + targets.age_2_female + targets.age_3_female + targets.age_4_female;
+         Add_Col( tmp );
+         tmp := targets.age_5_female + targets.age_6_female + targets.age_7_female + targets.age_8_female + targets.age_9_female + targets.age_10_female;
+         Add_Col( tmp );
+         tmp := targets.age_11_female + targets.age_12_female + targets.age_13_female + targets.age_14_female + targets.age_15_female;
+         Add_Col( tmp );
+         tmp := targets.age_16_female + targets.age_17_female + targets.age_18_female + targets.age_19_female;
+         Add_Col( tmp );
+         tmp := targets.age_20_female + targets.age_21_female + targets.age_22_female + targets.age_23_female + targets.age_24_female;
+         Add_Col( tmp );
+         tmp := targets.age_25_female + targets.age_26_female + targets.age_27_female + targets.age_28_female + targets.age_29_female;
+         Add_Col( tmp );
+         tmp := targets.age_30_female + targets.age_31_female + targets.age_32_female + targets.age_33_female + targets.age_34_female;
+         Add_Col( tmp );
+         tmp := targets.age_35_female + targets.age_36_female + targets.age_37_female + targets.age_38_female + targets.age_39_female;
+         Add_Col( tmp );
+         tmp := targets.age_40_female + targets.age_41_female + targets.age_42_female + targets.age_43_female + targets.age_44_female;
+         Add_Col( tmp );
+         tmp := targets.age_45_female + targets.age_46_female + targets.age_47_female + targets.age_48_female + targets.age_49_female;
+         Add_Col( tmp );
+         tmp := targets.age_50_female + targets.age_51_female + targets.age_52_female + targets.age_53_female + targets.age_54_female;
+         Add_Col( tmp );
+         tmp := targets.age_55_female + targets.age_56_female + targets.age_57_female + targets.age_58_female + targets.age_59_female;
+         Add_Col( tmp );
+         tmp := targets.age_60_female + targets.age_61_female + targets.age_62_female + targets.age_63_female + targets.age_64_female;
+         Add_Col( tmp );
+         tmp := targets.age_65_female + targets.age_66_female + targets.age_67_female + targets.age_68_female + targets.age_69_female;
+         Add_Col( tmp );
+         tmp := targets.age_70_female + targets.age_71_female + targets.age_72_female + targets.age_73_female + targets.age_74_female;
+         Add_Col( tmp );
+         tmp := targets.age_75_female + targets.age_76_female + targets.age_77_female + targets.age_78_female + targets.age_79_female;
+         Add_Col( tmp );
+         tmp := targets.age_80_female + targets.age_81_female + targets.age_82_female + targets.age_83_female + targets.age_84_female + targets.age_85_female + targets.age_86_female + targets.age_87_female + targets.age_88_female + targets.age_89_female + targets.age_90_female + targets.age_91_female + targets.age_92_female + targets.age_93_female + targets.age_94_female + targets.age_95_female + targets.age_96_female + targets.age_97_female + targets.age_98_female + targets.age_99_female + targets.age_100_female + targets.age_101_female + targets.age_102_female + targets.age_103_female + targets.age_104_female + targets.age_105_female + targets.age_106_female + targets.age_107_female + targets.age_108_female + targets.age_109_female + targets.age_110_female;
+         Add_Col( tmp );
+      end if;
+      
+      Assert( p = row'Length, " not all rows filled " & p'Img & " vs " & row'Length'Img );
       Assert(( for all r of row => r > 0.0 ), " there is a zero in output row " & To_String( row ));
     end Fill_One_Row;
       
