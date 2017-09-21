@@ -1,21 +1,24 @@
 --
 -- this stuff is just to force compilation - borrowed from auto test case.
 --
-
-with Model.SCP.FRS_Creator;
-with Model.SCP.Target_Creator;
-with Model.SCP.Weights_Creator;
-with SCP_Types;
 with Ada.Calendar;
-with Ada.Text_IO;
 with Ada.Exceptions;
 with Ada.Strings.Unbounded; 
+with Ada.Text_IO;
+
+with GNATColl.Traces;
+
 with Text_Utils;
 with Weighting_Commons;
 
 with UKDS.Target_Data;
 with UKDS.Target_Data.Run_IO;
-with Ada.Text_IO;
+
+with SCP_Types;
+
+with Model.SCP.FRS_Creator;
+with Model.SCP.Target_Creator;
+with Model.SCP.Weights_Creator;
 
 procedure Basic_SCP_Driver is
    
@@ -33,6 +36,7 @@ procedure Basic_SCP_Driver is
    run_type     : constant Type_Of_Run := weights_generation;
 begin
    startTime := Clock;
+   GNATColl.Traces.Parse_Config_File( "./etc/logging_config_file.txt" );
    the_run.run_type := run_type;
    the_run.user_id := 1;
    Put_Line( "We're making a start on this.." );

@@ -1,8 +1,8 @@
 -- see: http://docs.adacore.com/gnatcoll-docs/traces.html
--- + on next line: enable everything by default
+-- if there's a "+" on next line: enable everything by default
 -
 -- log to this file
->/home/graham_s/VirtualWorlds/projects/scottish_child_poverty_projections/model/log/MSC1.log
+>/home/graham_s/VirtualWorlds/projects/scottish_child_poverty_projections/model/log/SCP1.log
 --
 -- decorators; see 4.3 in gnatcoll manual
 --
@@ -14,6 +14,12 @@ DEBUG.ENCLOSING_ENTITY=no
 --
 BASIC_SCP_DRIVER=yes
 --
+-- our code
+--
+MODEL.SCP.WEIGHTS_CREATOR=yes
+MODEL.SCP.TARGET_CREATOR=yes
+MODEL.SCP.FRS_CREATOR=yes
+-- 
 -- tbsys core modules
 --
 DATASET_IO=no
@@ -25,11 +31,8 @@ KEY_VALUE_DAO=no
 KEY_VALUE_PARAMETER_IO=no
 LIST_OF_RANDOMS=no
 MAKE.MSC.DATA_FROM_BHPS=no
-MATHS_FUNCTIONS.WEIGHTS_GENERATOR=yes
+MATHS_FUNCTIONS.WEIGHTS_GENERATOR=no
 MATHS_FUNCTIONS=no
 UTILS=no
 XML_UTILS.CONVERSIONS=no
 
-MODEL.SCP.WEIGHTS_CREATOR=yes
-MODEL.SCP.TARGET_CREATOR=yes
-MODEL.SCP.FRS_CREATOR=yes
