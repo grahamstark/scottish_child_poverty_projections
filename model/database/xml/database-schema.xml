@@ -23,6 +23,7 @@
                   <column name='variant' type='CHAR' size='20'  primaryKey='true' description='e.g. low fertility; pessimistic macro..' />
                   <column name='country' type='CHAR' size='20'  primaryKey='true' />
                   <column name='edition' type="INTEGER" adaTypeName="Year_Number" 
+                     default='1970'
                      description="A number indicating a release or base year; e.g. OBR 2017 release or NRS 2012 based projection" 
                      primaryKey='true'/>
                   
@@ -43,7 +44,7 @@
                    <column name='rec_type' type='CHAR' default='households' primaryKey='true'/>
                    <column name='variant' type='CHAR' size='20'  primaryKey='true' />
                    <column name='country' type='CHAR' size='20'  primaryKey='true' />
-                   <column name='edition' type="INTEGER" adaTypeName="Year_Number" description="a number indicating a release or base year" primaryKey='true'/>
+                   <column name='edition' type="INTEGER" adaTypeName="Year_Number" description="a number indicating a release or base year" primaryKey='true'  default='1970'/>
                
                   <column name='one_adult_male' type='REAL' adaTypeName='Amount' default='0.0' />
                   <column name='one_adult_female' type='REAL' adaTypeName='Amount' default='0.0' />
@@ -115,8 +116,9 @@
                   <column name='run_id' description='' primaryKey='true' type='INTEGER'/>
                   
                   <column name='user_id' type='INTEGER' default='0' primaryKey='true'/>
-                  <column name='year' type='INTEGER' default='0' primaryKey='true'/>
+                  <column name='year' type='INTEGER' adaTypeName="Year_Number"  primaryKey='true'/>
                   <column name='sernum' description='Sernum; only for FRS ones really' type='BIGINT' adaTypeName='Sernum_Value' primaryKey='true' default='0' />
+                  <column name='target_year'   type="INTEGER" adaTypeName="Year_Number" default='1970' />
                   <column name='weight' description='Weight' default='0.0' type='REAL' adaTypeName='Amount'/>
                   <foreign-key  foreignTable="run"  onDelete='CASCADE'  onUpdate='CASCADE'>
                      <reference foreign="run_id" local="run_id" />
@@ -126,11 +128,11 @@
                </table>
                
                <table name='macro_forecasts'>
-                   <column name='year' type='INTEGER' default='0' primaryKey='true'/>
+                   <column name='year' type='INTEGER' adaTypeName="Year_Number"  default='1970' primaryKey='true'/>
                    <column name='rec_type' type='CHAR' default='macro' primaryKey='true'/>
                    <column name='variant' type='CHAR' size='20'  primaryKey='true' />
                    <column name='country' type='CHAR' size='20'  primaryKey='true' />
-                   <column name='edition' type="INTEGER" adaTypeName="Year_Number" description="a number indicating a release or base year" primaryKey='true'/>
+                   <column name='edition' type="INTEGER" adaTypeName="Year_Number"  default='1970' description="a number indicating a release or base year" primaryKey='true'/>
 
                    
                    <column name='employment' description='Employment' default='0.0' type='REAL' adaTypeName='Amount'/>
@@ -177,11 +179,11 @@
                
                <table name='population_forecasts' description='Population Data One row for each Country/Year/Variant/type [M/F/Both]' >
                
-                   <column name='year' type='INTEGER' default='0' primaryKey='true'/>
+                   <column name='year' type='INTEGER' adaTypeName="Year_Number"  default='1970' primaryKey='true'/>
                    <column name='rec_type' type='CHAR' default='persons' primaryKey='true'/>
                    <column name='variant' type='CHAR' size='20'  primaryKey='true' />
                    <column name='country' type='CHAR' size='20'  primaryKey='true' />
-                   <column name='edition' type="INTEGER" adaTypeName="Year_Number" description="a number indicating a release or base year" primaryKey='true'/>
+                   <column name='edition' type="INTEGER" adaTypeName="Year_Number" description="a number indicating a release or base year"  default='1970' primaryKey='true'/>
                    <column name='target_group' type='CHAR' size='20'  primaryKey='true' description='males,females,all, etc..'/>
                    
                    <column name='all_ages' type='REAL' adaTypeName='Amount' default='0.0'  />
@@ -309,7 +311,7 @@
                   <column name='run_id' description='' primaryKey='true' type='INTEGER'/>
                   
                   <column name='user_id' type='INTEGER' default='0' primaryKey='true'/>
-                  <column name='year' type='INTEGER' default='0' primaryKey='true'/>
+                  <column name='year' type='INTEGER' adaTypeName="Year_Number"  default='1970' primaryKey='true'/>
                   <column name='sernum' description='Sernum; only for FRS ones really' type='BIGINT' adaTypeName='Sernum_Value' primaryKey='true' default='0' />
                            
                   <column name='country_uk' description='' default='0.0' type='REAL' adaTypeName='Amount'/>
@@ -674,8 +676,6 @@
                   
                   <!-- todo add some fks to this?? .. -->
                 </table>
-
-        
         </schema>
         
         <!-- this is autogenerated -->

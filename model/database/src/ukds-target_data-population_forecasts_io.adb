@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-21 15:55:23.113397
+-- Created by ada_generator.py on 2017-09-21 20:55:36.937449
 -- 
 with Ukds;
 
@@ -218,14 +218,14 @@ package body Ukds.Target_Data.Population_Forecasts_IO is
            110 => ( Parameter_Float, 0.0 ),   --  : age_108 (Amount)
            111 => ( Parameter_Float, 0.0 ),   --  : age_109 (Amount)
            112 => ( Parameter_Float, 0.0 ),   --  : age_110 (Amount)
-           113 => ( Parameter_Integer, 0 ),   --  : year (Integer)
+           113 => ( Parameter_Integer, 0 ),   --  : year (Year_Number)
            114 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : rec_type (Unbounded_String)
            115 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : variant (Unbounded_String)
            116 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : country (Unbounded_String)
            117 => ( Parameter_Integer, 0 ),   --  : edition (Year_Number)
            118 => ( Parameter_Text, null, Null_Unbounded_String )   --  : target_group (Unbounded_String)
       ) else (
-            1 => ( Parameter_Integer, 0 ),   --  : year (Integer)
+            1 => ( Parameter_Integer, 0 ),   --  : year (Year_Number)
             2 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : rec_type (Unbounded_String)
             3 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : variant (Unbounded_String)
             4 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : country (Unbounded_String)
@@ -364,7 +364,7 @@ package body Ukds.Target_Data.Population_Forecasts_IO is
    function Get_Configured_Retrieve_Params return GNATCOLL.SQL.Exec.SQL_Parameters is
    use GNATCOLL.SQL_Impl;
       params : constant SQL_Parameters( 1 .. 6 ) := (
-            1 => ( Parameter_Integer, 0 ),   --  : year (Integer)
+            1 => ( Parameter_Integer, 0 ),   --  : year (Year_Number)
             2 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : rec_type (Unbounded_String)
             3 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : variant (Unbounded_String)
             4 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : country (Unbounded_String)
@@ -432,9 +432,9 @@ package body Ukds.Target_Data.Population_Forecasts_IO is
    -- 
    -- Next highest avaiable value of year - useful for saving  
    --
-   function Next_Free_year( connection : Database_Connection := null) return Integer is
+   function Next_Free_year( connection : Database_Connection := null) return Year_Number is
       cursor              : gse.Forward_Cursor;
-      ai                  : Integer;
+      ai                  : Year_Number;
       local_connection    : Database_Connection;
       is_local_connection : Boolean;
    begin
@@ -449,7 +449,7 @@ package body Ukds.Target_Data.Population_Forecasts_IO is
       cursor.Fetch( local_connection, Next_Free_year_ps );
       Check_Result( local_connection );
       if( gse.Has_Row( cursor ))then
-         ai := gse.Integer_Value( cursor, 0, 0 );
+         ai := Year_Number'Value( gse.Value( cursor, 0 ));
 
       end if;
       if( is_local_connection )then
@@ -511,7 +511,7 @@ package body Ukds.Target_Data.Population_Forecasts_IO is
    -- returns the single Ukds.Target_Data.Population_Forecasts matching the primary key fields, or the Ukds.Target_Data.Null_Population_Forecasts record
    -- if no such record exists
    --
-   function Retrieve_By_PK( year : Integer; rec_type : Unbounded_String; variant : Unbounded_String; country : Unbounded_String; edition : Year_Number; target_group : Unbounded_String; connection : Database_Connection := null ) return Ukds.Target_Data.Population_Forecasts is
+   function Retrieve_By_PK( year : Year_Number; rec_type : Unbounded_String; variant : Unbounded_String; country : Unbounded_String; edition : Year_Number; target_group : Unbounded_String; connection : Database_Connection := null ) return Ukds.Target_Data.Population_Forecasts is
       l : Ukds.Target_Data.Population_Forecasts_List;
       a_population_forecasts : Ukds.Target_Data.Population_Forecasts;
       c : d.Criteria;
@@ -539,7 +539,7 @@ package body Ukds.Target_Data.Population_Forecasts_IO is
         "select 1 from target_data.population_forecasts where year = $1 and rec_type = $2 and variant = $3 and country = $4 and edition = $5 and target_group = $6", 
         On_Server => True );
         
-   function Exists( year : Integer; rec_type : Unbounded_String; variant : Unbounded_String; country : Unbounded_String; edition : Year_Number; target_group : Unbounded_String; connection : Database_Connection := null ) return Boolean  is
+   function Exists( year : Year_Number; rec_type : Unbounded_String; variant : Unbounded_String; country : Unbounded_String; edition : Year_Number; target_group : Unbounded_String; connection : Database_Connection := null ) return Boolean  is
       params : gse.SQL_Parameters := Get_Configured_Retrieve_Params;
       aliased_rec_type : aliased String := To_String( rec_type );
       aliased_variant : aliased String := To_String( variant );
@@ -557,7 +557,7 @@ package body Ukds.Target_Data.Population_Forecasts_IO is
          local_connection := connection;          
          is_local_connection := False;
       end if;
-      params( 1 ) := "+"( Integer'Pos( year ));
+      params( 1 ) := "+"( Year_Number'Pos( year ));
       params( 2 ) := "+"( aliased_rec_type'Access );
       params( 3 ) := "+"( aliased_variant'Access );
       params( 4 ) := "+"( aliased_country'Access );
@@ -589,7 +589,7 @@ package body Ukds.Target_Data.Population_Forecasts_IO is
       a_population_forecasts : Ukds.Target_Data.Population_Forecasts;
    begin
       if not gse.Is_Null( cursor, 0 )then
-         a_population_forecasts.year := gse.Integer_Value( cursor, 0 );
+         a_population_forecasts.year := Year_Number'Value( gse.Value( cursor, 0 ));
       end if;
       if not gse.Is_Null( cursor, 1 )then
          a_population_forecasts.rec_type:= To_Unbounded_String( gse.Value( cursor, 1 ));
@@ -1114,7 +1114,7 @@ package body Ukds.Target_Data.Population_Forecasts_IO is
       params( 110 ) := "+"( Float( a_population_forecasts.age_108 ));
       params( 111 ) := "+"( Float( a_population_forecasts.age_109 ));
       params( 112 ) := "+"( Float( a_population_forecasts.age_110 ));
-      params( 113 ) := "+"( Integer'Pos( a_population_forecasts.year ));
+      params( 113 ) := "+"( Year_Number'Pos( a_population_forecasts.year ));
       params( 114 ) := "+"( aliased_rec_type'Access );
       params( 115 ) := "+"( aliased_variant'Access );
       params( 116 ) := "+"( aliased_country'Access );
@@ -1158,7 +1158,7 @@ package body Ukds.Target_Data.Population_Forecasts_IO is
          end if;
          return;
       end if;
-      params( 1 ) := "+"( Integer'Pos( a_population_forecasts.year ));
+      params( 1 ) := "+"( Year_Number'Pos( a_population_forecasts.year ));
       params( 2 ) := "+"( aliased_rec_type'Access );
       params( 3 ) := "+"( aliased_variant'Access );
       params( 4 ) := "+"( aliased_country'Access );
@@ -1342,8 +1342,8 @@ package body Ukds.Target_Data.Population_Forecasts_IO is
    --
    -- functions to add something to a criteria
    --
-   procedure Add_year( c : in out d.Criteria; year : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
-   elem : d.Criterion := d.Make_Criterion_Element( "year", op, join, year );
+   procedure Add_year( c : in out d.Criteria; year : Year_Number; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "year", op, join, Integer( year ) );
    begin
       d.add_to_criteria( c, elem );
    end Add_year;

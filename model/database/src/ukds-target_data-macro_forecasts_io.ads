@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-21 15:55:23.062979
+-- Created by ada_generator.py on 2017-09-21 20:55:36.885895
 -- 
 with Ukds;
 with DB_Commons;
@@ -40,7 +40,7 @@ package Ukds.Target_Data.Macro_Forecasts_IO is
    -- === CUSTOM TYPES END ===
 
    
-   function Next_Free_year( connection : Database_Connection := null) return Integer;
+   function Next_Free_year( connection : Database_Connection := null) return Year_Number;
    function Next_Free_edition( connection : Database_Connection := null) return Year_Number;
 
    --
@@ -52,11 +52,11 @@ package Ukds.Target_Data.Macro_Forecasts_IO is
    -- returns the single a_macro_forecasts matching the primary key fields, or the Ukds.Target_Data.Null_Macro_Forecasts record
    -- if no such record exists
    --
-   function Retrieve_By_PK( year : Integer; rec_type : Unbounded_String; variant : Unbounded_String; country : Unbounded_String; edition : Year_Number; connection : Database_Connection := null ) return Ukds.Target_Data.Macro_Forecasts;
+   function Retrieve_By_PK( year : Year_Number; rec_type : Unbounded_String; variant : Unbounded_String; country : Unbounded_String; edition : Year_Number; connection : Database_Connection := null ) return Ukds.Target_Data.Macro_Forecasts;
    --
    -- Returns true if record with the given primary key exists
    --
-   function Exists( year : Integer; rec_type : Unbounded_String; variant : Unbounded_String; country : Unbounded_String; edition : Year_Number; connection : Database_Connection := null ) return Boolean ;
+   function Exists( year : Year_Number; rec_type : Unbounded_String; variant : Unbounded_String; country : Unbounded_String; edition : Year_Number; connection : Database_Connection := null ) return Boolean ;
    
    --
    -- Retrieves a list of Ukds.Target_Data.Macro_Forecasts matching the criteria, or throws an exception
@@ -94,7 +94,7 @@ package Ukds.Target_Data.Macro_Forecasts_IO is
    --
    -- functions to add something to a criteria
    --
-   procedure Add_year( c : in out d.Criteria; year : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_year( c : in out d.Criteria; year : Year_Number; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_rec_type( c : in out d.Criteria; rec_type : Unbounded_String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_rec_type( c : in out d.Criteria; rec_type : String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_variant( c : in out d.Criteria; variant : Unbounded_String; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
@@ -192,7 +192,7 @@ package Ukds.Target_Data.Macro_Forecasts_IO is
    -- 
    -- returns an array of GNATColl SQL Parameters indexed 1 .. 43, as follows
    -- Pos  |       Name               | SQL Type           | Ada Type             | Default
-   --    1 : year                     : Parameter_Integer  : Integer              :        0 
+   --    1 : year                     : Parameter_Integer  : Year_Number          :        0 
    --    2 : rec_type                 : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
    --    3 : variant                  : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
    --    4 : country                  : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
@@ -251,7 +251,7 @@ package Ukds.Target_Data.Macro_Forecasts_IO is
    -- 
    -- returns an array of GNATColl SQL Parameters indexed 1 .. 5, as follows
    -- Pos  |       Name               | SQL Type           | Ada Type             | Default
-   --    1 : year                     : Parameter_Integer  : Integer              :        0 
+   --    1 : year                     : Parameter_Integer  : Year_Number          :        0 
    --    2 : rec_type                 : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
    --    3 : variant                  : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
    --    4 : country                  : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 

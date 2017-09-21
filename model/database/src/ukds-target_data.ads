@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-21 15:55:22.498036
+-- Created by ada_generator.py on 2017-09-21 20:55:36.309888
 -- 
 with Ada.Containers.Vectors;
 --
@@ -40,7 +40,7 @@ package Ukds.target_data is
    type Target_Dataset is record
       run_id : Integer := MISSING_I_KEY;
       user_id : Integer := 0;
-      year : Integer := 0;
+      year : Year_Number := 1970;
       sernum : Sernum_Value := 0;
       country_uk : Amount := 0.0;
       country_scotland : Amount := 0.0;
@@ -408,7 +408,7 @@ package Ukds.target_data is
    Null_Target_Dataset : constant Target_Dataset := (
          run_id => MISSING_I_KEY,
          user_id => 0,
-         year => 0,
+         year => 1970,
          sernum => 0,
          country_uk => 0.0,
          country_scotland => 0.0,
@@ -772,11 +772,11 @@ package Ukds.target_data is
    -- record modelling Population_Forecasts : Population Data One row for each Country/Year/Variant/type [M/F/Both]
    --
    type Population_Forecasts is record
-      year : Integer := 0;
+      year : Year_Number := 1970;
       rec_type : Unbounded_String := To_Unbounded_String( "persons" );
       variant : Unbounded_String := MISSING_W_KEY;
       country : Unbounded_String := MISSING_W_KEY;
-      edition : Year_Number := Year_Number'First;
+      edition : Year_Number := 1970;
       target_group : Unbounded_String := MISSING_W_KEY;
       all_ages : Amount := 0.0;
       age_0 : Amount := 0.0;
@@ -902,11 +902,11 @@ package Ukds.target_data is
    -- default value for Population_Forecasts : Population Data One row for each Country/Year/Variant/type [M/F/Both]
    --
    Null_Population_Forecasts : constant Population_Forecasts := (
-         year => 0,
+         year => 1970,
          rec_type => To_Unbounded_String( "persons" ),
          variant => MISSING_W_KEY,
          country => MISSING_W_KEY,
-         edition => Year_Number'First,
+         edition => 1970,
          target_group => MISSING_W_KEY,
          all_ages => 0.0,
          age_0 => 0.0,
@@ -1030,11 +1030,11 @@ package Ukds.target_data is
    -- record modelling Macro_Forecasts : 
    --
    type Macro_Forecasts is record
-      year : Integer := 0;
+      year : Year_Number := 1970;
       rec_type : Unbounded_String := To_Unbounded_String( "macro" );
       variant : Unbounded_String := MISSING_W_KEY;
       country : Unbounded_String := MISSING_W_KEY;
-      edition : Year_Number := Year_Number'First;
+      edition : Year_Number := 1970;
       employment : Amount := 0.0;
       employment_rate : Amount := 0.0;
       employees : Amount := 0.0;
@@ -1085,11 +1085,11 @@ package Ukds.target_data is
    -- default value for Macro_Forecasts : 
    --
    Null_Macro_Forecasts : constant Macro_Forecasts := (
-         year => 0,
+         year => 1970,
          rec_type => To_Unbounded_String( "macro" ),
          variant => MISSING_W_KEY,
          country => MISSING_W_KEY,
-         edition => Year_Number'First,
+         edition => 1970,
          employment => 0.0,
          employment_rate => 0.0,
          employees => 0.0,
@@ -1140,8 +1140,9 @@ package Ukds.target_data is
    type Output_Weights is record
       run_id : Integer := MISSING_I_KEY;
       user_id : Integer := 0;
-      year : Integer := 0;
+      year : Year_Number := Year_Number'First;
       sernum : Sernum_Value := 0;
+      target_year : Year_Number := 1970;
       weight : Amount := 0.0;
    end record;
    --
@@ -1157,8 +1158,9 @@ package Ukds.target_data is
    Null_Output_Weights : constant Output_Weights := (
          run_id => MISSING_I_KEY,
          user_id => 0,
-         year => 0,
+         year => Year_Number'First,
          sernum => 0,
+         target_year => 1970,
          weight => 0.0
    );
    --
@@ -1238,7 +1240,7 @@ package Ukds.target_data is
       rec_type : Unbounded_String := To_Unbounded_String( "households" );
       variant : Unbounded_String := MISSING_W_KEY;
       country : Unbounded_String := MISSING_W_KEY;
-      edition : Year_Number := Year_Number'First;
+      edition : Year_Number := 1970;
       one_adult_male : Amount := 0.0;
       one_adult_female : Amount := 0.0;
       two_adults : Amount := 0.0;
@@ -1263,7 +1265,7 @@ package Ukds.target_data is
          rec_type => To_Unbounded_String( "households" ),
          variant => MISSING_W_KEY,
          country => MISSING_W_KEY,
-         edition => Year_Number'First,
+         edition => 1970,
          one_adult_male => 0.0,
          one_adult_female => 0.0,
          two_adults => 0.0,
@@ -1285,7 +1287,7 @@ package Ukds.target_data is
       rec_type : Unbounded_String := MISSING_W_KEY;
       variant : Unbounded_String := MISSING_W_KEY;
       country : Unbounded_String := MISSING_W_KEY;
-      edition : Year_Number := Year_Number'First;
+      edition : Year_Number := 1970;
       source : Unbounded_String := Ada.Strings.Unbounded.Null_Unbounded_String;
       description : Unbounded_String := Ada.Strings.Unbounded.Null_Unbounded_String;
       url : Unbounded_String := Ada.Strings.Unbounded.Null_Unbounded_String;
@@ -1305,7 +1307,7 @@ package Ukds.target_data is
          rec_type => MISSING_W_KEY,
          variant => MISSING_W_KEY,
          country => MISSING_W_KEY,
-         edition => Year_Number'First,
+         edition => 1970,
          source => Ada.Strings.Unbounded.Null_Unbounded_String,
          description => Ada.Strings.Unbounded.Null_Unbounded_String,
          url => Ada.Strings.Unbounded.Null_Unbounded_String,
@@ -1370,12 +1372,12 @@ package Ukds.target_data is
 
         
    -- === CUSTOM PROCS START ===
-                           
-   subtype Forecast_Age_Ranges is Natural range 0 .. 90;                        
-   type Age_Range_Array is array( Forecast_Age_Ranges ) of Amount;                         
-                          
-   function To_Array( popn : Population_Forecasts ) return Age_Range_Array;                        
-                           
+                               
+   subtype Forecast_Age_Ranges is Natural range 0 .. 90;                            
+   type Age_Range_Array is array( Forecast_Age_Ranges ) of Amount;                             
+                              
+   function To_Array( popn : Population_Forecasts ) return Age_Range_Array;                            
+                               
    -- === CUSTOM PROCS END ===
 
 end Ukds.target_data;

@@ -719,6 +719,7 @@ package body Model.SCP.Weights_Creator is
                            user_id => the_run.user_id,
                            year    => weights_indexes.all( row ).year,
                            sernum  => weights_indexes.all( row ).sernum,
+                           target_year => year,
                            weight  =>  weights( row ));
                      begin
                         null;

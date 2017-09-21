@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-21 15:55:23.208673
+-- Created by ada_generator.py on 2017-09-21 20:55:37.037496
 -- 
 with Ukds;
 
@@ -508,12 +508,12 @@ package body Ukds.Target_Data.Target_Dataset_IO is
            352 => ( Parameter_Float, 0.0 ),   --  : age_110 (Amount)
            353 => ( Parameter_Integer, 0 ),   --  : run_id (Integer)
            354 => ( Parameter_Integer, 0 ),   --  : user_id (Integer)
-           355 => ( Parameter_Integer, 0 ),   --  : year (Integer)
+           355 => ( Parameter_Integer, 0 ),   --  : year (Year_Number)
            356 => ( Parameter_Bigint, 0 )   --  : sernum (Sernum_Value)
       ) else (
             1 => ( Parameter_Integer, 0 ),   --  : run_id (Integer)
             2 => ( Parameter_Integer, 0 ),   --  : user_id (Integer)
-            3 => ( Parameter_Integer, 0 ),   --  : year (Integer)
+            3 => ( Parameter_Integer, 0 ),   --  : year (Year_Number)
             4 => ( Parameter_Bigint, 0 ),   --  : sernum (Sernum_Value)
             5 => ( Parameter_Float, 0.0 ),   --  : country_uk (Amount)
             6 => ( Parameter_Float, 0.0 ),   --  : country_scotland (Amount)
@@ -890,7 +890,7 @@ package body Ukds.Target_Data.Target_Dataset_IO is
       params : constant SQL_Parameters( 1 .. 4 ) := (
             1 => ( Parameter_Integer, 0 ),   --  : run_id (Integer)
             2 => ( Parameter_Integer, 0 ),   --  : user_id (Integer)
-            3 => ( Parameter_Integer, 0 ),   --  : year (Integer)
+            3 => ( Parameter_Integer, 0 ),   --  : year (Year_Number)
             4 => ( Parameter_Bigint, 0 )   --  : sernum (Sernum_Value)
       );
    begin
@@ -1022,9 +1022,9 @@ package body Ukds.Target_Data.Target_Dataset_IO is
    -- 
    -- Next highest avaiable value of year - useful for saving  
    --
-   function Next_Free_year( connection : Database_Connection := null) return Integer is
+   function Next_Free_year( connection : Database_Connection := null) return Year_Number is
       cursor              : gse.Forward_Cursor;
-      ai                  : Integer;
+      ai                  : Year_Number;
       local_connection    : Database_Connection;
       is_local_connection : Boolean;
    begin
@@ -1039,7 +1039,7 @@ package body Ukds.Target_Data.Target_Dataset_IO is
       cursor.Fetch( local_connection, Next_Free_year_ps );
       Check_Result( local_connection );
       if( gse.Has_Row( cursor ))then
-         ai := gse.Integer_Value( cursor, 0, 0 );
+         ai := Year_Number'Value( gse.Value( cursor, 0 ));
 
       end if;
       if( is_local_connection )then
@@ -1101,7 +1101,7 @@ package body Ukds.Target_Data.Target_Dataset_IO is
    -- returns the single Ukds.Target_Data.Target_Dataset matching the primary key fields, or the Ukds.Target_Data.Null_Target_Dataset record
    -- if no such record exists
    --
-   function Retrieve_By_PK( run_id : Integer; user_id : Integer; year : Integer; sernum : Sernum_Value; connection : Database_Connection := null ) return Ukds.Target_Data.Target_Dataset is
+   function Retrieve_By_PK( run_id : Integer; user_id : Integer; year : Year_Number; sernum : Sernum_Value; connection : Database_Connection := null ) return Ukds.Target_Data.Target_Dataset is
       l : Ukds.Target_Data.Target_Dataset_List;
       a_target_dataset : Ukds.Target_Data.Target_Dataset;
       c : d.Criteria;
@@ -1127,7 +1127,7 @@ package body Ukds.Target_Data.Target_Dataset_IO is
         "select 1 from target_data.target_dataset where run_id = $1 and user_id = $2 and year = $3 and sernum = $4", 
         On_Server => True );
         
-   function Exists( run_id : Integer; user_id : Integer; year : Integer; sernum : Sernum_Value; connection : Database_Connection := null ) return Boolean  is
+   function Exists( run_id : Integer; user_id : Integer; year : Year_Number; sernum : Sernum_Value; connection : Database_Connection := null ) return Boolean  is
       params : gse.SQL_Parameters := Get_Configured_Retrieve_Params;
       cursor : gse.Forward_Cursor;
       local_connection : Database_Connection;
@@ -1143,7 +1143,7 @@ package body Ukds.Target_Data.Target_Dataset_IO is
       end if;
       params( 1 ) := "+"( Integer'Pos( run_id ));
       params( 2 ) := "+"( Integer'Pos( user_id ));
-      params( 3 ) := "+"( Integer'Pos( year ));
+      params( 3 ) := "+"( Year_Number'Pos( year ));
       params( 4 ) := As_Bigint( sernum );
       cursor.Fetch( local_connection, EXISTS_PS, params );
       Check_Result( local_connection );
@@ -1177,7 +1177,7 @@ package body Ukds.Target_Data.Target_Dataset_IO is
          a_target_dataset.user_id := gse.Integer_Value( cursor, 1 );
       end if;
       if not gse.Is_Null( cursor, 2 )then
-         a_target_dataset.year := gse.Integer_Value( cursor, 2 );
+         a_target_dataset.year := Year_Number'Value( gse.Value( cursor, 2 ));
       end if;
       if not gse.Is_Null( cursor, 3 )then
          a_target_dataset.sernum := Sernum_Value'Value( gse.Value( cursor, 3 ));
@@ -2648,7 +2648,7 @@ package body Ukds.Target_Data.Target_Dataset_IO is
       params( 352 ) := "+"( Float( a_target_dataset.age_110 ));
       params( 353 ) := "+"( Integer'Pos( a_target_dataset.run_id ));
       params( 354 ) := "+"( Integer'Pos( a_target_dataset.user_id ));
-      params( 355 ) := "+"( Integer'Pos( a_target_dataset.year ));
+      params( 355 ) := "+"( Year_Number'Pos( a_target_dataset.year ));
       params( 356 ) := As_Bigint( a_target_dataset.sernum );
       
       gse.Execute( local_connection, UPDATE_PS, params );
@@ -2686,7 +2686,7 @@ package body Ukds.Target_Data.Target_Dataset_IO is
       end if;
       params( 1 ) := "+"( Integer'Pos( a_target_dataset.run_id ));
       params( 2 ) := "+"( Integer'Pos( a_target_dataset.user_id ));
-      params( 3 ) := "+"( Integer'Pos( a_target_dataset.year ));
+      params( 3 ) := "+"( Year_Number'Pos( a_target_dataset.year ));
       params( 4 ) := As_Bigint( a_target_dataset.sernum );
       params( 5 ) := "+"( Float( a_target_dataset.country_uk ));
       params( 6 ) := "+"( Float( a_target_dataset.country_scotland ));
@@ -3118,8 +3118,8 @@ package body Ukds.Target_Data.Target_Dataset_IO is
    end Add_user_id;
 
 
-   procedure Add_year( c : in out d.Criteria; year : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
-   elem : d.Criterion := d.Make_Criterion_Element( "year", op, join, year );
+   procedure Add_year( c : in out d.Criteria; year : Year_Number; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "year", op, join, Integer( year ) );
    begin
       d.add_to_criteria( c, elem );
    end Add_year;

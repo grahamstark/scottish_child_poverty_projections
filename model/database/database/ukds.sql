@@ -35,7 +35,7 @@ CREATE TABLE target_data.forecast_variant(
        rec_type TEXT not null,
        variant TEXT not null,
        country TEXT not null,
-       edition INTEGER not null,
+       edition INTEGER not null default 1970,
        source TEXT,
        description TEXT,
        url TEXT,
@@ -50,7 +50,7 @@ CREATE TABLE target_data.households_forecasts(
        rec_type TEXT not null default 'households',
        variant TEXT not null,
        country TEXT not null,
-       edition INTEGER not null,
+       edition INTEGER not null default 1970,
        one_adult_male DOUBLE PRECISION default 0.0,
        one_adult_female DOUBLE PRECISION default 0.0,
        two_adults DOUBLE PRECISION default 0.0,
@@ -91,19 +91,20 @@ CREATE TABLE target_data.run(
 CREATE TABLE target_data.output_weights( 
        run_id INTEGER not null,
        user_id INTEGER not null default 0,
-       year INTEGER not null default 0,
+       year INTEGER not null,
        sernum BIGINT not null default 0,
+       target_year INTEGER default 1970,
        weight DOUBLE PRECISION default 0.0,
        CONSTRAINT output_weights_pk PRIMARY KEY( run_id, user_id, year, sernum ),
        CONSTRAINT output_weights_FK_0 FOREIGN KEY( run_id, user_id) references run( run_id, user_id ) on delete CASCADE on update CASCADE
 );
 
 CREATE TABLE target_data.macro_forecasts( 
-       year INTEGER not null default 0,
+       year INTEGER not null default 1970,
        rec_type TEXT not null default 'macro',
        variant TEXT not null,
        country TEXT not null,
-       edition INTEGER not null,
+       edition INTEGER not null default 1970,
        employment DOUBLE PRECISION default 0.0,
        employment_rate DOUBLE PRECISION default 0.0,
        employees DOUBLE PRECISION default 0.0,
@@ -146,11 +147,11 @@ CREATE TABLE target_data.macro_forecasts(
 );
 
 CREATE TABLE target_data.population_forecasts( 
-       year INTEGER not null default 0,
+       year INTEGER not null default 1970,
        rec_type TEXT not null default 'persons',
        variant TEXT not null,
        country TEXT not null,
-       edition INTEGER not null,
+       edition INTEGER not null default 1970,
        target_group TEXT not null,
        all_ages DOUBLE PRECISION default 0.0,
        age_0 DOUBLE PRECISION default 0.0,
@@ -271,7 +272,7 @@ CREATE TABLE target_data.population_forecasts(
 CREATE TABLE target_data.target_dataset( 
        run_id INTEGER not null,
        user_id INTEGER not null default 0,
-       year INTEGER not null default 0,
+       year INTEGER not null default 1970,
        sernum BIGINT not null default 0,
        country_uk DOUBLE PRECISION default 0.0,
        country_scotland DOUBLE PRECISION default 0.0,
