@@ -594,6 +594,7 @@ package body Model.SCP.Weights_Creator is
       frs_criteria        : d.Criteria;
       mapped_target_data  : Vector( 1 .. num_data_cols );
     begin
+       
       Log( "Begining run for : " & To_String( the_run ));
       Connection_Pool.Initialise;
       conn := Connection_Pool.Lease;
@@ -608,9 +609,13 @@ package body Model.SCP.Weights_Creator is
       end if; -- and so on for Wales, Ireland; UK doesn't need this
       ps := Target_Dataset_IO.Get_Prepared_Retrieve_Statement( frs_criteria );            
       d_cursor.Fetch( conn, ps ); -- hack to get row count, otherwise unused
-      f_cursor.Fetch( conn, ps );
       num_data_rows := Rows_Count( d_cursor );
+      f_cursor.Fetch( conn, ps );
       Log( "num_data_rows " & num_data_rows'Img );
+      --
+      -- now we know how many rows & cols in the weighting dataset,
+      -- we can declare stuff..
+      --
       declare
          package Reweighter is new Maths_Funcs.Weights_Generator(    
             Num_Constraints   => num_data_cols,
