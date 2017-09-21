@@ -601,7 +601,6 @@ package body Model.SCP.Weights_Creator is
          mapped_frs_data    : Vector( 1 .. num_data_cols );
          new_totals         : Row_Vector;
          weights            : Col_Vector;
-         curr_iterations    : Natural := 0;
       begin
          Log( "Num Data Columns " & num_data_cols'Img & " Rows " & num_data_rows'Img );
          
@@ -639,6 +638,7 @@ package body Model.SCP.Weights_Creator is
                uniform_weight     : Amount;
                base_target        : Amount;
                initial_weights    : Col_Vector;
+               curr_iterations    : Natural := 0;
             begin
                -- we need this pro tem as we have no hhld count for UK/ENG yet
                if the_run.country = TuS( "SCO" ) then
@@ -688,8 +688,9 @@ package body Model.SCP.Weights_Creator is
                         sernum  => weights_indexes.all( row ).sernum,
                         weight  =>  weights( row ));
                   begin
+                     null;
                      -- Log( "adding " & To_String( out_weight ));
-                     Output_Weights_IO.Save( out_weight );
+                     -- Output_Weights_IO.Save( out_weight );
                      -- weighter.Add( year, id, this_weight, weight );
                   end;
                end loop;
