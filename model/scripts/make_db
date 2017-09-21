@@ -1,0 +1,5 @@
+DATE_FORMAT=`date '+%d_%m_%Y'`
+cd $PROJECTS_HOME/scottish_child_poverty_projections/model/database/
+/bin/cp database/ukds.sql database/ukds$DATE_FORMAT.sql
+/usr/bin/python $PROJECTS_HOME/ada_mill/scripts/mill.py . native
+/home/graham_s/bin/apgdiff database/ukds$DATE_FORMAT.sql database/ukds.sql > database/db_changes_$DATE_FORMAT.sql
