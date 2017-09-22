@@ -75,12 +75,12 @@ begin
    when weights_generation =>
       the_run.start_year := 2014;
       the_run.end_year := 2021;
-      the_run.run_id := 200_000;
+      the_run.run_id := 200_002;
 
       the_run.weighting_function := constrained_chi_square;
       the_run.weighting_lower_bound := 0.1;
       the_run.weighting_upper_bound := 3.0;
-      the_run.targets_run_id := 100_000;      
+      the_run.targets_run_id := 100_002;      
       the_run.targets_run_user_id := 1;
       the_run.data_run_id := 999_998;
       the_run.data_run_user_id := 1;

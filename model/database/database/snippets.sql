@@ -672,12 +672,12 @@ order by
         run_id,target_year,year; 
 
 select 
-        run_id,year,count(*) 
+        run_id,target_year,count(*) 
 from 
         target_data.output_weights
 where 
         run_id >= 200000
 group by 
-        run_id,year
+        run_id,target_year
 order by 
-        run_id,year; 
+        run_id,target_year; 
