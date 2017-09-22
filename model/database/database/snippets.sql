@@ -642,3 +642,42 @@ alter table target_data.run drop column macro_source;
 alter table target_data.run add column households_variant TEXT;
 alter table target_data.run add column population_variant TEXT;
 alter table target_data.run add column macro_variant TEXT;
+
+select 
+        run_id,count(*) 
+from                
+        target_data.target_dataset
+group by 
+        run_id
+order by
+        run_id;
+
+        
+select
+        *
+from
+        target_data.run
+order by
+        run_id;
+
+select 
+        run_id,year,target_year,count(*) 
+from 
+        target_data.output_weights
+where 
+        run_id >= 200000
+group by 
+        run_id,year,target_year
+order by 
+        run_id,target_year,year; 
+
+select 
+        run_id,year,count(*) 
+from 
+        target_data.output_weights
+where 
+        run_id >= 200000
+group by 
+        run_id,year
+order by 
+        run_id,year; 
