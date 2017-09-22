@@ -37,12 +37,8 @@ package body Model.SCP.Weights_Creator is
 
 
    log_trace : GNATColl.Traces.Trace_Handle := GNATColl.Traces.Create( "MODEL.SCP.WEIGHTS_CREATOR" );
-   procedure Log( s : String ) is
-   begin
-      GNATColl.Traces.Trace( log_trace, s );
-   end Log;
+   use GNATColl.Traces;
    
-
    procedure Print_Diffs( label : String; target_populations: Vector; new_populations : Vector ) is
    use Ada.Text_IO;
       diff : Amount;
@@ -595,7 +591,7 @@ package body Model.SCP.Weights_Creator is
       mapped_target_data  : Vector( 1 .. num_data_cols );
     begin
        
-      Log( "Begining run for : " & To_String( the_run ));
+      Trace( log_trace,  "Begining run for : " & To_String( the_run ));
       Connection_Pool.Initialise;
       conn := Connection_Pool.Lease;
       Target_Dataset_IO.Add_User_Id( frs_criteria, the_run.data_run_user_id );
@@ -611,7 +607,7 @@ package body Model.SCP.Weights_Creator is
       d_cursor.Fetch( conn, ps ); -- hack to get row count, otherwise unused
       num_data_rows := Rows_Count( d_cursor );
       f_cursor.Fetch( conn, ps );
-      Log( "num_data_rows " & num_data_rows'Img );
+      Trace( log_trace,  "num_data_rows " & num_data_rows'Img );
       --
       -- now we know how many rows & cols in the weighting dataset,
       -- we can declare stuff..
@@ -640,7 +636,7 @@ package body Model.SCP.Weights_Creator is
          new_totals         : Row_Vector;
          weights            : Col_Vector;
       begin
-         Log( "Num Data Columns " & num_data_cols'Img & " Rows " & num_data_rows'Img );
+         Trace( log_trace,  "Num Data Columns " & num_data_cols'Img & " Rows " & num_data_rows'Img );
          
          weights_indexes := new Indexes_Array;
          observations := new Dataset;
@@ -652,7 +648,7 @@ package body Model.SCP.Weights_Creator is
          for row in 1 .. num_data_rows loop
             frs_target_row := Target_Dataset_IO.Map_From_Cursor( f_cursor );
             Fill_One_Row( the_run.selected_clauses, frs_target_row, mapped_frs_data );
-            Log( "made row " &row'Img & "=" & To_String( mapped_frs_data ));
+            Trace( log_trace,  "made row " &row'Img & "=" & To_String( mapped_frs_data ));
             for col in mapped_target_data'Range loop
                observations.all( row, col ) :=  mapped_frs_data( col );                 
             end loop;
@@ -687,9 +683,9 @@ package body Model.SCP.Weights_Creator is
                uniform_weight := 
                   base_target / Amount( num_data_rows );
                initial_weights := ( others => uniform_weight );   
-               Log( "on year " & year'Img );
-               Log( "Initial Weight : " & Format( uniform_weight ));
-               Log( "Base Target : " & Format( base_target ));
+               Trace( log_trace,  "on year " & year'Img );
+               Trace( log_trace,  "Initial Weight : " & Format( uniform_weight ));
+               Trace( log_trace,  "Base Target : " & Format( base_target ));
                -- typecasting thing .. 
                Fill_One_Row( the_run.selected_clauses, targets, mapped_target_data ); 
                for c in target_populations'Range loop
@@ -713,8 +709,8 @@ package body Model.SCP.Weights_Creator is
                   New_Weights        => weights,
                   Iterations         => curr_iterations,
                   Error              => error );
-               Log( "error " & error'Img );
-               Log( "iterations " & curr_iterations'Img );
+               Trace( log_trace,  "error " & error'Img );
+               Trace( log_trace,  "iterations " & curr_iterations'Img );
                if error = normal then
                   for row in 1 .. num_data_rows loop
                      declare
@@ -728,7 +724,7 @@ package body Model.SCP.Weights_Creator is
                            weight  =>  weights( row ));
                      begin
                         null;
-                        -- Log( "adding " & To_String( out_weight ));
+                        -- Trace( log_trace,  "adding " & To_String( out_weight ));
                         Output_Weights_IO.Save( out_weight );
                         -- weighter.Add( year, id, this_weight, weight );
                      end;
@@ -738,12 +734,12 @@ package body Model.SCP.Weights_Creator is
                Print_Diffs( "FINAL WEIGHTED", target_populations, new_totals );
             end;
          end loop Each_Year;
-         Log( "Done; freeing datasets" );
+         Trace( log_trace,  "Done; freeing datasets" );
          Free_Dataset( observations );   
          Free_Indexes( weights_indexes );   
       end; -- decls for main dataset
-      Log( "returning connection" );
-      -- Connection_Pool.Return_Connection( conn );
+      Trace( log_trace,  "returning connection" );
+      Connection_Pool.Return_Connection( conn );
    end  Create_Weights; 
    
 end Model.SCP.Weights_Creator;
