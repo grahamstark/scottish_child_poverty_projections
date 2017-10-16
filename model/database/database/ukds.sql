@@ -1,5 +1,5 @@
 --
--- created on 21-09-2017 by Mill
+-- created on 16-10-2017 by Mill
 --
 drop database if exists ukds;
 create database ukds with encoding 'UTF-8';
@@ -267,6 +267,30 @@ CREATE TABLE target_data.population_forecasts(
        age_110 DOUBLE PRECISION default 0.0,
        CONSTRAINT population_forecasts_pk PRIMARY KEY( year, rec_type, variant, country, edition, target_group ),
        CONSTRAINT population_forecasts_FK_0 FOREIGN KEY( rec_type, variant, country, edition) references forecast_variant( rec_type, variant, country, edition ) on delete CASCADE on update CASCADE
+);
+
+CREATE TABLE target_data.obr_participation_rates( 
+       year INTEGER not null default 1970,
+       rec_type TEXT not null default 'persons',
+       variant TEXT not null,
+       country TEXT not null,
+       edition INTEGER not null default 1970,
+       target_group TEXT not null,
+       age_16_19 DOUBLE PRECISION default 0.0,
+       age_20_24 DOUBLE PRECISION default 0.0,
+       age_25_29 DOUBLE PRECISION default 0.0,
+       age_30_34 DOUBLE PRECISION default 0.0,
+       age_35_39 DOUBLE PRECISION default 0.0,
+       age_40_44 DOUBLE PRECISION default 0.0,
+       age_45_49 DOUBLE PRECISION default 0.0,
+       age_50_54 DOUBLE PRECISION default 0.0,
+       age_55_59 DOUBLE PRECISION default 0.0,
+       age_60_64 DOUBLE PRECISION default 0.0,
+       age_65_69 DOUBLE PRECISION default 0.0,
+       age_70_74 DOUBLE PRECISION default 0.0,
+       age_75_plus DOUBLE PRECISION default 0.0,
+       CONSTRAINT obr_participation_rates_pk PRIMARY KEY( year, rec_type, variant, country, edition, target_group ),
+       CONSTRAINT obr_participation_rates_FK_0 FOREIGN KEY( rec_type, variant, country, edition) references forecast_variant( rec_type, variant, country, edition ) on delete CASCADE on update CASCADE
 );
 
 CREATE TABLE target_data.target_dataset( 
@@ -626,6 +650,32 @@ CREATE TABLE target_data.target_dataset(
        age_108 DOUBLE PRECISION default 0.0,
        age_109 DOUBLE PRECISION default 0.0,
        age_110 DOUBLE PRECISION default 0.0,
+       participation_16_19_male DOUBLE PRECISION default 0.0,
+       participation_20_24_male DOUBLE PRECISION default 0.0,
+       participation_25_29_male DOUBLE PRECISION default 0.0,
+       participation_30_34_male DOUBLE PRECISION default 0.0,
+       participation_35_39_male DOUBLE PRECISION default 0.0,
+       participation_40_44_male DOUBLE PRECISION default 0.0,
+       participation_45_49_male DOUBLE PRECISION default 0.0,
+       participation_50_54_male DOUBLE PRECISION default 0.0,
+       participation_55_59_male DOUBLE PRECISION default 0.0,
+       participation_60_64_male DOUBLE PRECISION default 0.0,
+       participation_65_69_male DOUBLE PRECISION default 0.0,
+       participation_70_74_male DOUBLE PRECISION default 0.0,
+       participation_75_plus_male DOUBLE PRECISION default 0.0,
+       participation_16_19_female DOUBLE PRECISION default 0.0,
+       participation_20_24_female DOUBLE PRECISION default 0.0,
+       participation_25_29_female DOUBLE PRECISION default 0.0,
+       participation_30_34_female DOUBLE PRECISION default 0.0,
+       participation_35_39_female DOUBLE PRECISION default 0.0,
+       participation_40_44_female DOUBLE PRECISION default 0.0,
+       participation_45_49_female DOUBLE PRECISION default 0.0,
+       participation_50_54_female DOUBLE PRECISION default 0.0,
+       participation_55_59_female DOUBLE PRECISION default 0.0,
+       participation_60_64_female DOUBLE PRECISION default 0.0,
+       participation_65_69_female DOUBLE PRECISION default 0.0,
+       participation_70_74_female DOUBLE PRECISION default 0.0,
+       participation_75_plus_female DOUBLE PRECISION default 0.0,
        CONSTRAINT target_dataset_pk PRIMARY KEY( run_id, user_id, year, sernum ),
        CONSTRAINT target_dataset_FK_0 FOREIGN KEY( run_id, user_id) references run( run_id, user_id ) on delete CASCADE on update CASCADE
 );

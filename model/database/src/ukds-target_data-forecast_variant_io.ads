@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-21 21:49:51.575245
+-- Created by ada_generator.py on 2017-10-16 22:11:03.001956
 -- 
 with Ukds;
 with DB_Commons;
@@ -91,6 +91,7 @@ package Ukds.Target_Data.Forecast_Variant_IO is
    --
    function Retrieve_Associated_Ukds_Target_Data_Population_Forecasts( a_forecast_variant : Ukds.Target_Data.Forecast_Variant; connection : Database_Connection := null ) return Ukds.Target_Data.Population_Forecasts_List;
    function Retrieve_Associated_Ukds_Target_Data_Households_Forecasts( a_forecast_variant : Ukds.Target_Data.Forecast_Variant; connection : Database_Connection := null ) return Ukds.Target_Data.Households_Forecasts_List;
+   function Retrieve_Associated_Ukds_Target_Data_Obr_Participation_Rates( a_forecast_variant : Ukds.Target_Data.Forecast_Variant; connection : Database_Connection := null ) return Ukds.Target_Data.Obr_Participation_Rates_List;
 
    --
    -- functions to add something to a criteria

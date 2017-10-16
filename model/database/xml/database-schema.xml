@@ -306,6 +306,34 @@
                    </foreign-key>
            </table>
            
+           <table name='obr_participation_rates' description='Population Data One row for each Country/Year/Variant/type [M/F/Both]' >               
+                   <column name='year' type='INTEGER' adaTypeName="Year_Number"  default='1970' primaryKey='true'/>
+                   <column name='rec_type' type='CHAR' default='persons' primaryKey='true'/>
+                   <column name='variant' type='CHAR' size='20'  primaryKey='true' />
+                   <column name='country' type='CHAR' size='20'  primaryKey='true' />
+                   <column name='edition' type="INTEGER" adaTypeName="Year_Number" description="a number indicating a release or base year"  default='1970' primaryKey='true'/>
+                   <column name='target_group' type='CHAR' size='20'  primaryKey='true' description='males,females,all, etc..'/>
+                   <column name='age_16_19' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_20_24' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_25_29' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_30_34' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_35_39' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_40_44' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_45_49' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_50_54' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_55_59' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_60_64' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_65_69' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_70_74' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='age_75_plus' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <foreign-key foreignTable="forecast_variant"  onDelete='CASCADE'  onUpdate='CASCADE'>
+                           <reference foreign="rec_type" local="rec_type" />
+                           <reference foreign="variant" local="variant" />
+                           <reference foreign="country" local="country" />
+                           <reference foreign="edition" local="edition" />
+                   </foreign-key>
+           </table>                           
+           
            
            <table name='target_dataset'>
                   <column name='run_id' description='' primaryKey='true' type='INTEGER'/>
@@ -669,6 +697,36 @@
                   <column name='age_108' description='age_108' default='0.0' type='REAL' adaTypeName='Amount'/>
                   <column name='age_109' description='age_109' default='0.0' type='REAL' adaTypeName='Amount'/>
                   <column name='age_110' description='age_110' default='0.0' type='REAL' adaTypeName='Amount'/>
+                  
+                   <column name='participation_16_19_male' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='participation_20_24_male' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='participation_25_29_male' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='participation_30_34_male' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='participation_35_39_male' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='participation_40_44_male' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='participation_45_49_male' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='participation_50_54_male' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='participation_55_59_male' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='participation_60_64_male' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='participation_65_69_male' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='participation_70_74_male' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='participation_75_plus_male' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='participation_16_19_female' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='participation_20_24_female' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='participation_25_29_female' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='participation_30_34_female' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='participation_35_39_female' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='participation_40_44_female' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='participation_45_49_female' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='participation_50_54_female' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='participation_55_59_female' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='participation_60_64_female' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='participation_65_69_female' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='participation_70_74_female' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='participation_75_plus_female' type='REAL' adaTypeName='Amount' default='0.0'  />
+                  
+                  
+                  
                   <foreign-key  foreignTable="run"  onDelete='CASCADE'  onUpdate='CASCADE'>
                      <reference foreign="run_id" local="run_id" />
                      <reference foreign="user_id" local="user_id" />

@@ -661,7 +661,7 @@ order by
         run_id;
 
 select 
-        run_id,year,target_year,count(*) 
+        run_id,year,target_year,count(*),min( weight ), max( weight ), avg( weight )
 from 
         target_data.output_weights
 where 

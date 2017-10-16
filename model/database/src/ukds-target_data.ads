@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-21 21:49:51.083288
+-- Created by ada_generator.py on 2017-10-16 22:11:02.378472
 -- 
 with Ada.Containers.Vectors;
 --
@@ -394,6 +394,32 @@ package Ukds.target_data is
       age_108 : Amount := 0.0;
       age_109 : Amount := 0.0;
       age_110 : Amount := 0.0;
+      participation_16_19_male : Amount := 0.0;
+      participation_20_24_male : Amount := 0.0;
+      participation_25_29_male : Amount := 0.0;
+      participation_30_34_male : Amount := 0.0;
+      participation_35_39_male : Amount := 0.0;
+      participation_40_44_male : Amount := 0.0;
+      participation_45_49_male : Amount := 0.0;
+      participation_50_54_male : Amount := 0.0;
+      participation_55_59_male : Amount := 0.0;
+      participation_60_64_male : Amount := 0.0;
+      participation_65_69_male : Amount := 0.0;
+      participation_70_74_male : Amount := 0.0;
+      participation_75_plus_male : Amount := 0.0;
+      participation_16_19_female : Amount := 0.0;
+      participation_20_24_female : Amount := 0.0;
+      participation_25_29_female : Amount := 0.0;
+      participation_30_34_female : Amount := 0.0;
+      participation_35_39_female : Amount := 0.0;
+      participation_40_44_female : Amount := 0.0;
+      participation_45_49_female : Amount := 0.0;
+      participation_50_54_female : Amount := 0.0;
+      participation_55_59_female : Amount := 0.0;
+      participation_60_64_female : Amount := 0.0;
+      participation_65_69_female : Amount := 0.0;
+      participation_70_74_female : Amount := 0.0;
+      participation_75_plus_female : Amount := 0.0;
    end record;
    --
    -- container for Target_Dataset : 
@@ -761,12 +787,98 @@ package Ukds.target_data is
          age_107 => 0.0,
          age_108 => 0.0,
          age_109 => 0.0,
-         age_110 => 0.0
+         age_110 => 0.0,
+         participation_16_19_male => 0.0,
+         participation_20_24_male => 0.0,
+         participation_25_29_male => 0.0,
+         participation_30_34_male => 0.0,
+         participation_35_39_male => 0.0,
+         participation_40_44_male => 0.0,
+         participation_45_49_male => 0.0,
+         participation_50_54_male => 0.0,
+         participation_55_59_male => 0.0,
+         participation_60_64_male => 0.0,
+         participation_65_69_male => 0.0,
+         participation_70_74_male => 0.0,
+         participation_75_plus_male => 0.0,
+         participation_16_19_female => 0.0,
+         participation_20_24_female => 0.0,
+         participation_25_29_female => 0.0,
+         participation_30_34_female => 0.0,
+         participation_35_39_female => 0.0,
+         participation_40_44_female => 0.0,
+         participation_45_49_female => 0.0,
+         participation_50_54_female => 0.0,
+         participation_55_59_female => 0.0,
+         participation_60_64_female => 0.0,
+         participation_65_69_female => 0.0,
+         participation_70_74_female => 0.0,
+         participation_75_plus_female => 0.0
    );
    --
    -- simple print routine for Target_Dataset : 
    --
    function To_String( rec : Target_Dataset ) return String;
+
+   --
+   -- record modelling Obr_Participation_Rates : Population Data One row for each Country/Year/Variant/type [M/F/Both]
+   --
+   type Obr_Participation_Rates is record
+      year : Year_Number := 1970;
+      rec_type : Unbounded_String := To_Unbounded_String( "persons" );
+      variant : Unbounded_String := MISSING_W_KEY;
+      country : Unbounded_String := MISSING_W_KEY;
+      edition : Year_Number := 1970;
+      target_group : Unbounded_String := MISSING_W_KEY;
+      age_16_19 : Amount := 0.0;
+      age_20_24 : Amount := 0.0;
+      age_25_29 : Amount := 0.0;
+      age_30_34 : Amount := 0.0;
+      age_35_39 : Amount := 0.0;
+      age_40_44 : Amount := 0.0;
+      age_45_49 : Amount := 0.0;
+      age_50_54 : Amount := 0.0;
+      age_55_59 : Amount := 0.0;
+      age_60_64 : Amount := 0.0;
+      age_65_69 : Amount := 0.0;
+      age_70_74 : Amount := 0.0;
+      age_75_plus : Amount := 0.0;
+   end record;
+   --
+   -- container for Obr_Participation_Rates : Population Data One row for each Country/Year/Variant/type [M/F/Both]
+   --
+   package Obr_Participation_Rates_List_Package is new Ada.Containers.Vectors
+      (Element_Type => Obr_Participation_Rates,
+      Index_Type => Positive );
+   subtype Obr_Participation_Rates_List is Obr_Participation_Rates_List_Package.Vector;
+   --
+   -- default value for Obr_Participation_Rates : Population Data One row for each Country/Year/Variant/type [M/F/Both]
+   --
+   Null_Obr_Participation_Rates : constant Obr_Participation_Rates := (
+         year => 1970,
+         rec_type => To_Unbounded_String( "persons" ),
+         variant => MISSING_W_KEY,
+         country => MISSING_W_KEY,
+         edition => 1970,
+         target_group => MISSING_W_KEY,
+         age_16_19 => 0.0,
+         age_20_24 => 0.0,
+         age_25_29 => 0.0,
+         age_30_34 => 0.0,
+         age_35_39 => 0.0,
+         age_40_44 => 0.0,
+         age_45_49 => 0.0,
+         age_50_54 => 0.0,
+         age_55_59 => 0.0,
+         age_60_64 => 0.0,
+         age_65_69 => 0.0,
+         age_70_74 => 0.0,
+         age_75_plus => 0.0
+   );
+   --
+   -- simple print routine for Obr_Participation_Rates : Population Data One row for each Country/Year/Variant/type [M/F/Both]
+   --
+   function To_String( rec : Obr_Participation_Rates ) return String;
 
    --
    -- record modelling Population_Forecasts : Population Data One row for each Country/Year/Variant/type [M/F/Both]
@@ -1372,12 +1484,12 @@ package Ukds.target_data is
 
         
    -- === CUSTOM PROCS START ===
+                                   
+   subtype Forecast_Age_Ranges is Natural range 0 .. 90;                                
+   type Age_Range_Array is array( Forecast_Age_Ranges ) of Amount;                                 
                                   
-   subtype Forecast_Age_Ranges is Natural range 0 .. 90;                               
-   type Age_Range_Array is array( Forecast_Age_Ranges ) of Amount;                                
-                                 
-   function To_Array( popn : Population_Forecasts ) return Age_Range_Array;                               
-                                  
+   function To_Array( popn : Population_Forecasts ) return Age_Range_Array;                                
+                                   
    -- === CUSTOM PROCS END ===
 
 end Ukds.target_data;

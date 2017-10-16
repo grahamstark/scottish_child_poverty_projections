@@ -21,7 +21,8 @@ end
 TABLE_NAME ={
      'persons' => 'population_forecasts',   
      'households' => 'households_forecasts',
-     'macro' => "macro_forecasts"
+     'macro' => "macro_forecasts",
+     'participation' => 'obr_participation_rates'
         
 }
 
@@ -64,6 +65,7 @@ def loadBlockToDB( out, variant, country, edition, recType )
                 p keys
                 keys.each{
                         |key|
+                        puts "key: #{key} i #{i}\n"
                         v << out[:data][key][i]
                 }
                 if recType == 'persons' 

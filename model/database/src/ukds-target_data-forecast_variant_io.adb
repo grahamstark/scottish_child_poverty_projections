@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-21 21:49:51.584669
+-- Created by ada_generator.py on 2017-10-16 22:11:03.013098
 -- 
 with Ukds;
 
@@ -27,6 +27,7 @@ with GNATColl.Traces;
 
 with Ukds.Target_Data.Population_Forecasts_IO;
 with Ukds.Target_Data.Households_Forecasts_IO;
+with Ukds.Target_Data.Obr_Participation_Rates_IO;
 
 -- === CUSTOM IMPORTS START ===
 -- === CUSTOM IMPORTS END ===
@@ -531,6 +532,17 @@ package body Ukds.Target_Data.Forecast_Variant_IO is
       Ukds.Target_Data.Households_Forecasts_IO.Add_Edition( c, a_forecast_variant.Edition );
       return Ukds.Target_Data.Households_Forecasts_IO.retrieve( c, connection );
    end Retrieve_Associated_Ukds_Target_Data_Households_Forecasts;
+
+
+   function Retrieve_Associated_Ukds_Target_Data_Obr_Participation_Rates( a_forecast_variant : Ukds.Target_Data.Forecast_Variant; connection : Database_Connection := null ) return Ukds.Target_Data.Obr_Participation_Rates_List is
+      c : d.Criteria;
+   begin
+      Ukds.Target_Data.Obr_Participation_Rates_IO.Add_Rec_Type( c, a_forecast_variant.Rec_Type );
+      Ukds.Target_Data.Obr_Participation_Rates_IO.Add_Variant( c, a_forecast_variant.Variant );
+      Ukds.Target_Data.Obr_Participation_Rates_IO.Add_Country( c, a_forecast_variant.Country );
+      Ukds.Target_Data.Obr_Participation_Rates_IO.Add_Edition( c, a_forecast_variant.Edition );
+      return Ukds.Target_Data.Obr_Participation_Rates_IO.retrieve( c, connection );
+   end Retrieve_Associated_Ukds_Target_Data_Obr_Participation_Rates;
 
 
 

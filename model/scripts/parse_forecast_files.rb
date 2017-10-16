@@ -153,7 +153,8 @@ loop do
                 else
                         years = nil;
                 end
-                out = readONSPersonsBlock( lines, pos, fname, years )        
+                out = readONSPersonsBlock( lines, pos, fname, years )    
+           
         end
         pos = out[:pos]
         puts "pos end #{out[:pos]}\n"

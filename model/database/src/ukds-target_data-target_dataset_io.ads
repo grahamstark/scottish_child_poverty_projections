@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-09-21 21:49:51.676359
+-- Created by ada_generator.py on 2017-10-16 22:11:03.149508
 -- 
 with Ukds;
 with DB_Commons;
@@ -452,6 +452,32 @@ package Ukds.Target_Data.Target_Dataset_IO is
    procedure Add_age_108( c : in out d.Criteria; age_108 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_age_109( c : in out d.Criteria; age_109 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_age_110( c : in out d.Criteria; age_110 : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_participation_16_19_male( c : in out d.Criteria; participation_16_19_male : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_participation_20_24_male( c : in out d.Criteria; participation_20_24_male : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_participation_25_29_male( c : in out d.Criteria; participation_25_29_male : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_participation_30_34_male( c : in out d.Criteria; participation_30_34_male : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_participation_35_39_male( c : in out d.Criteria; participation_35_39_male : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_participation_40_44_male( c : in out d.Criteria; participation_40_44_male : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_participation_45_49_male( c : in out d.Criteria; participation_45_49_male : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_participation_50_54_male( c : in out d.Criteria; participation_50_54_male : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_participation_55_59_male( c : in out d.Criteria; participation_55_59_male : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_participation_60_64_male( c : in out d.Criteria; participation_60_64_male : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_participation_65_69_male( c : in out d.Criteria; participation_65_69_male : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_participation_70_74_male( c : in out d.Criteria; participation_70_74_male : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_participation_75_plus_male( c : in out d.Criteria; participation_75_plus_male : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_participation_16_19_female( c : in out d.Criteria; participation_16_19_female : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_participation_20_24_female( c : in out d.Criteria; participation_20_24_female : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_participation_25_29_female( c : in out d.Criteria; participation_25_29_female : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_participation_30_34_female( c : in out d.Criteria; participation_30_34_female : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_participation_35_39_female( c : in out d.Criteria; participation_35_39_female : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_participation_40_44_female( c : in out d.Criteria; participation_40_44_female : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_participation_45_49_female( c : in out d.Criteria; participation_45_49_female : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_participation_50_54_female( c : in out d.Criteria; participation_50_54_female : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_participation_55_59_female( c : in out d.Criteria; participation_55_59_female : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_participation_60_64_female( c : in out d.Criteria; participation_60_64_female : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_participation_65_69_female( c : in out d.Criteria; participation_65_69_female : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_participation_70_74_female( c : in out d.Criteria; participation_70_74_female : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_participation_75_plus_female( c : in out d.Criteria; participation_75_plus_female : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    --
    -- functions to add an ordering to a criteria
    --
@@ -811,11 +837,37 @@ package Ukds.Target_Data.Target_Dataset_IO is
    procedure Add_age_108_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_age_109_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_age_110_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_participation_16_19_male_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_participation_20_24_male_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_participation_25_29_male_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_participation_30_34_male_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_participation_35_39_male_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_participation_40_44_male_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_participation_45_49_male_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_participation_50_54_male_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_participation_55_59_male_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_participation_60_64_male_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_participation_65_69_male_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_participation_70_74_male_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_participation_75_plus_male_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_participation_16_19_female_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_participation_20_24_female_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_participation_25_29_female_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_participation_30_34_female_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_participation_35_39_female_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_participation_40_44_female_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_participation_45_49_female_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_participation_50_54_female_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_participation_55_59_female_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_participation_60_64_female_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_participation_65_69_female_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_participation_70_74_female_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_participation_75_plus_female_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
 
    function Map_From_Cursor( cursor : GNATCOLL.SQL.Exec.Forward_Cursor ) return Ukds.Target_Data.Target_Dataset;
 
    -- 
-   -- returns an array of GNATColl SQL Parameters indexed 1 .. 356, as follows
+   -- returns an array of GNATColl SQL Parameters indexed 1 .. 382, as follows
    -- Pos  |       Name               | SQL Type           | Ada Type             | Default
    --    1 : run_id                   : Parameter_Integer  : Integer              :        0 
    --    2 : user_id                  : Parameter_Integer  : Integer              :        0 
@@ -1173,6 +1225,32 @@ package Ukds.Target_Data.Target_Dataset_IO is
    --  354 : age_108                  : Parameter_Float    : Amount               :      0.0 
    --  355 : age_109                  : Parameter_Float    : Amount               :      0.0 
    --  356 : age_110                  : Parameter_Float    : Amount               :      0.0 
+   --  357 : participation_16_19_male : Parameter_Float    : Amount               :      0.0 
+   --  358 : participation_20_24_male : Parameter_Float    : Amount               :      0.0 
+   --  359 : participation_25_29_male : Parameter_Float    : Amount               :      0.0 
+   --  360 : participation_30_34_male : Parameter_Float    : Amount               :      0.0 
+   --  361 : participation_35_39_male : Parameter_Float    : Amount               :      0.0 
+   --  362 : participation_40_44_male : Parameter_Float    : Amount               :      0.0 
+   --  363 : participation_45_49_male : Parameter_Float    : Amount               :      0.0 
+   --  364 : participation_50_54_male : Parameter_Float    : Amount               :      0.0 
+   --  365 : participation_55_59_male : Parameter_Float    : Amount               :      0.0 
+   --  366 : participation_60_64_male : Parameter_Float    : Amount               :      0.0 
+   --  367 : participation_65_69_male : Parameter_Float    : Amount               :      0.0 
+   --  368 : participation_70_74_male : Parameter_Float    : Amount               :      0.0 
+   --  369 : participation_75_plus_male : Parameter_Float    : Amount               :      0.0 
+   --  370 : participation_16_19_female : Parameter_Float    : Amount               :      0.0 
+   --  371 : participation_20_24_female : Parameter_Float    : Amount               :      0.0 
+   --  372 : participation_25_29_female : Parameter_Float    : Amount               :      0.0 
+   --  373 : participation_30_34_female : Parameter_Float    : Amount               :      0.0 
+   --  374 : participation_35_39_female : Parameter_Float    : Amount               :      0.0 
+   --  375 : participation_40_44_female : Parameter_Float    : Amount               :      0.0 
+   --  376 : participation_45_49_female : Parameter_Float    : Amount               :      0.0 
+   --  377 : participation_50_54_female : Parameter_Float    : Amount               :      0.0 
+   --  378 : participation_55_59_female : Parameter_Float    : Amount               :      0.0 
+   --  379 : participation_60_64_female : Parameter_Float    : Amount               :      0.0 
+   --  380 : participation_65_69_female : Parameter_Float    : Amount               :      0.0 
+   --  381 : participation_70_74_female : Parameter_Float    : Amount               :      0.0 
+   --  382 : participation_75_plus_female : Parameter_Float    : Amount               :      0.0 
    function Get_Configured_Insert_Params( update_order : Boolean := False ) return GNATCOLL.SQL.Exec.SQL_Parameters;
 
 
