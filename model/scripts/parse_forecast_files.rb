@@ -5,7 +5,7 @@ require 'sequel'
 require './forecast_libs.rb'
 
 
-def readHouseholds( lines, variant )
+def readScottishHouseholds( lines, variant )
        pos = 3
        yearsStr = lines[pos][2..-1]
        years = []
@@ -145,7 +145,7 @@ loop do
                 if recType == 'persons' 
                         out = readNRSPersonsBlock( lines, pos )
                 else
-                        out = readHouseholds( lines, variant )
+                        out = readScottishHouseholds( lines, variant )
                 end
         elsif( source == 'ons' )
                 if p > 0 then

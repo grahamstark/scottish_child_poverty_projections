@@ -1,5 +1,5 @@
 --
--- created on 16-10-2017 by Mill
+-- created on 17-10-2017 by Mill
 --
 drop database if exists ukds;
 create database ukds with encoding 'UTF-8';
@@ -291,6 +291,61 @@ CREATE TABLE target_data.obr_participation_rates(
        age_75_plus DOUBLE PRECISION default 0.0,
        CONSTRAINT obr_participation_rates_pk PRIMARY KEY( year, rec_type, variant, country, edition, target_group ),
        CONSTRAINT obr_participation_rates_FK_0 FOREIGN KEY( rec_type, variant, country, edition) references forecast_variant( rec_type, variant, country, edition ) on delete CASCADE on update CASCADE
+);
+
+CREATE TABLE target_data.wales_households( 
+       year INTEGER not null default 1970,
+       rec_type TEXT not null default 'persons',
+       variant TEXT not null,
+       country TEXT not null,
+       edition INTEGER not null default 1970,
+       v_1_person DOUBLE PRECISION default 0.0,
+       v_2_person_no_children DOUBLE PRECISION default 0.0,
+       v_2_person_1_adult_1_child DOUBLE PRECISION default 0.0,
+       v_3_person_no_children DOUBLE PRECISION default 0.0,
+       v_3_person_2_adults_1_child DOUBLE PRECISION default 0.0,
+       v_3_person_1_adult_2_children DOUBLE PRECISION default 0.0,
+       v_4_person_no_children DOUBLE PRECISION default 0.0,
+       v_4_person_2_plus_adults_1_plus_children DOUBLE PRECISION default 0.0,
+       v_4_person_1_adult_3_children DOUBLE PRECISION default 0.0,
+       v_5_plus_person_no_children DOUBLE PRECISION default 0.0,
+       v_5_plus_person_2_plus_adults_1_plus_children DOUBLE PRECISION default 0.0,
+       v_5_plus_person_1_adult_4_plus_children DOUBLE PRECISION default 0.0,
+       CONSTRAINT wales_households_pk PRIMARY KEY( year, rec_type, variant, country, edition ),
+       CONSTRAINT wales_households_FK_0 FOREIGN KEY( rec_type, variant, country, edition) references forecast_variant( rec_type, variant, country, edition ) on delete CASCADE on update CASCADE
+);
+
+CREATE TABLE target_data.nireland_households( 
+       year INTEGER not null default 1970,
+       rec_type TEXT not null default 'persons',
+       variant TEXT not null,
+       country TEXT not null,
+       edition INTEGER not null default 1970,
+       one_adult_households DOUBLE PRECISION default 0.0,
+       two_adults_without_children DOUBLE PRECISION default 0.0,
+       other_households_without_children DOUBLE PRECISION default 0.0,
+       one_adult_households_with_children DOUBLE PRECISION default 0.0,
+       other_households_with_children DOUBLE PRECISION default 0.0,
+       CONSTRAINT nireland_households_pk PRIMARY KEY( year, rec_type, variant, country, edition ),
+       CONSTRAINT nireland_households_FK_0 FOREIGN KEY( rec_type, variant, country, edition) references forecast_variant( rec_type, variant, country, edition ) on delete CASCADE on update CASCADE
+);
+
+CREATE TABLE target_data.england_households( 
+       year INTEGER not null default 1970,
+       rec_type TEXT not null default 'persons',
+       variant TEXT not null,
+       country TEXT not null,
+       edition INTEGER not null default 1970,
+       one_person_households_male DOUBLE PRECISION default 0.0,
+       one_person_households_female DOUBLE PRECISION default 0.0,
+       one_family_and_no_others_couple_no_dependent_children DOUBLE PRECISION default 0.0,
+       a_couple_and_one_or_more_other_adults_no_dependent_children DOUBLE PRECISION default 0.0,
+       households_with_one_dependent_child DOUBLE PRECISION default 0.0,
+       households_with_two_dependent_children DOUBLE PRECISION default 0.0,
+       households_with_three_dependent_children DOUBLE PRECISION default 0.0,
+       other_households DOUBLE PRECISION default 0.0,
+       CONSTRAINT england_households_pk PRIMARY KEY( year, rec_type, variant, country, edition ),
+       CONSTRAINT england_households_FK_0 FOREIGN KEY( rec_type, variant, country, edition) references forecast_variant( rec_type, variant, country, edition ) on delete CASCADE on update CASCADE
 );
 
 CREATE TABLE target_data.target_dataset( 
@@ -676,6 +731,18 @@ CREATE TABLE target_data.target_dataset(
        participation_65_69_female DOUBLE PRECISION default 0.0,
        participation_70_74_female DOUBLE PRECISION default 0.0,
        participation_75_plus_female DOUBLE PRECISION default 0.0,
+       one_adult_hh_wales DOUBLE PRECISION default 0.0,
+       two_adult_hhs_wales DOUBLE PRECISION default 0.0,
+       other_hh_wales DOUBLE PRECISION default 0.0,
+       one_adult_hh_nireland DOUBLE PRECISION default 0.0,
+       two_adult_hhs_nireland DOUBLE PRECISION default 0.0,
+       other_hh_nireland DOUBLE PRECISION default 0.0,
+       one_adult_hh_england DOUBLE PRECISION default 0.0,
+       two_adult_hhs_england DOUBLE PRECISION default 0.0,
+       other_hh_england DOUBLE PRECISION default 0.0,
+       one_adult_hh_scotland DOUBLE PRECISION default 0.0,
+       two_adult_hhs_scotland DOUBLE PRECISION default 0.0,
+       other_hh_scotland DOUBLE PRECISION default 0.0,
        CONSTRAINT target_dataset_pk PRIMARY KEY( run_id, user_id, year, sernum ),
        CONSTRAINT target_dataset_FK_0 FOREIGN KEY( run_id, user_id) references run( run_id, user_id ) on delete CASCADE on update CASCADE
 );

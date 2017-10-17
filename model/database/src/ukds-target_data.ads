@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-10-16 22:11:02.378472
+-- Created by ada_generator.py on 2017-10-17 22:41:52.255924
 -- 
 with Ada.Containers.Vectors;
 --
@@ -420,6 +420,18 @@ package Ukds.target_data is
       participation_65_69_female : Amount := 0.0;
       participation_70_74_female : Amount := 0.0;
       participation_75_plus_female : Amount := 0.0;
+      one_adult_hh_wales : Amount := 0.0;
+      two_adult_hhs_wales : Amount := 0.0;
+      other_hh_wales : Amount := 0.0;
+      one_adult_hh_nireland : Amount := 0.0;
+      two_adult_hhs_nireland : Amount := 0.0;
+      other_hh_nireland : Amount := 0.0;
+      one_adult_hh_england : Amount := 0.0;
+      two_adult_hhs_england : Amount := 0.0;
+      other_hh_england : Amount := 0.0;
+      one_adult_hh_scotland : Amount := 0.0;
+      two_adult_hhs_scotland : Amount := 0.0;
+      other_hh_scotland : Amount := 0.0;
    end record;
    --
    -- container for Target_Dataset : 
@@ -813,12 +825,170 @@ package Ukds.target_data is
          participation_60_64_female => 0.0,
          participation_65_69_female => 0.0,
          participation_70_74_female => 0.0,
-         participation_75_plus_female => 0.0
+         participation_75_plus_female => 0.0,
+         one_adult_hh_wales => 0.0,
+         two_adult_hhs_wales => 0.0,
+         other_hh_wales => 0.0,
+         one_adult_hh_nireland => 0.0,
+         two_adult_hhs_nireland => 0.0,
+         other_hh_nireland => 0.0,
+         one_adult_hh_england => 0.0,
+         two_adult_hhs_england => 0.0,
+         other_hh_england => 0.0,
+         one_adult_hh_scotland => 0.0,
+         two_adult_hhs_scotland => 0.0,
+         other_hh_scotland => 0.0
    );
    --
    -- simple print routine for Target_Dataset : 
    --
    function To_String( rec : Target_Dataset ) return String;
+
+   --
+   -- record modelling England_Households : HH Projections for england in original format
+   --
+   type England_Households is record
+      year : Year_Number := 1970;
+      rec_type : Unbounded_String := To_Unbounded_String( "persons" );
+      variant : Unbounded_String := MISSING_W_KEY;
+      country : Unbounded_String := MISSING_W_KEY;
+      edition : Year_Number := 1970;
+      one_person_households_male : Amount := 0.0;
+      one_person_households_female : Amount := 0.0;
+      one_family_and_no_others_couple_no_dependent_children : Amount := 0.0;
+      a_couple_and_one_or_more_other_adults_no_dependent_children : Amount := 0.0;
+      households_with_one_dependent_child : Amount := 0.0;
+      households_with_two_dependent_children : Amount := 0.0;
+      households_with_three_dependent_children : Amount := 0.0;
+      other_households : Amount := 0.0;
+   end record;
+   --
+   -- container for England_Households : HH Projections for england in original format
+   --
+   package England_Households_List_Package is new Ada.Containers.Vectors
+      (Element_Type => England_Households,
+      Index_Type => Positive );
+   subtype England_Households_List is England_Households_List_Package.Vector;
+   --
+   -- default value for England_Households : HH Projections for england in original format
+   --
+   Null_England_Households : constant England_Households := (
+         year => 1970,
+         rec_type => To_Unbounded_String( "persons" ),
+         variant => MISSING_W_KEY,
+         country => MISSING_W_KEY,
+         edition => 1970,
+         one_person_households_male => 0.0,
+         one_person_households_female => 0.0,
+         one_family_and_no_others_couple_no_dependent_children => 0.0,
+         a_couple_and_one_or_more_other_adults_no_dependent_children => 0.0,
+         households_with_one_dependent_child => 0.0,
+         households_with_two_dependent_children => 0.0,
+         households_with_three_dependent_children => 0.0,
+         other_households => 0.0
+   );
+   --
+   -- simple print routine for England_Households : HH Projections for england in original format
+   --
+   function To_String( rec : England_Households ) return String;
+
+   --
+   -- record modelling Nireland_Households : HH Projections for nireland in original format
+   --
+   type Nireland_Households is record
+      year : Year_Number := 1970;
+      rec_type : Unbounded_String := To_Unbounded_String( "persons" );
+      variant : Unbounded_String := MISSING_W_KEY;
+      country : Unbounded_String := MISSING_W_KEY;
+      edition : Year_Number := 1970;
+      one_adult_households : Amount := 0.0;
+      two_adults_without_children : Amount := 0.0;
+      other_households_without_children : Amount := 0.0;
+      one_adult_households_with_children : Amount := 0.0;
+      other_households_with_children : Amount := 0.0;
+   end record;
+   --
+   -- container for Nireland_Households : HH Projections for nireland in original format
+   --
+   package Nireland_Households_List_Package is new Ada.Containers.Vectors
+      (Element_Type => Nireland_Households,
+      Index_Type => Positive );
+   subtype Nireland_Households_List is Nireland_Households_List_Package.Vector;
+   --
+   -- default value for Nireland_Households : HH Projections for nireland in original format
+   --
+   Null_Nireland_Households : constant Nireland_Households := (
+         year => 1970,
+         rec_type => To_Unbounded_String( "persons" ),
+         variant => MISSING_W_KEY,
+         country => MISSING_W_KEY,
+         edition => 1970,
+         one_adult_households => 0.0,
+         two_adults_without_children => 0.0,
+         other_households_without_children => 0.0,
+         one_adult_households_with_children => 0.0,
+         other_households_with_children => 0.0
+   );
+   --
+   -- simple print routine for Nireland_Households : HH Projections for nireland in original format
+   --
+   function To_String( rec : Nireland_Households ) return String;
+
+   --
+   -- record modelling Wales_Households : HH Projections for wales in original format
+   --
+   type Wales_Households is record
+      year : Year_Number := 1970;
+      rec_type : Unbounded_String := To_Unbounded_String( "persons" );
+      variant : Unbounded_String := MISSING_W_KEY;
+      country : Unbounded_String := MISSING_W_KEY;
+      edition : Year_Number := 1970;
+      v_1_person : Amount := 0.0;
+      v_2_person_no_children : Amount := 0.0;
+      v_2_person_1_adult_1_child : Amount := 0.0;
+      v_3_person_no_children : Amount := 0.0;
+      v_3_person_2_adults_1_child : Amount := 0.0;
+      v_3_person_1_adult_2_children : Amount := 0.0;
+      v_4_person_no_children : Amount := 0.0;
+      v_4_person_2_plus_adults_1_plus_children : Amount := 0.0;
+      v_4_person_1_adult_3_children : Amount := 0.0;
+      v_5_plus_person_no_children : Amount := 0.0;
+      v_5_plus_person_2_plus_adults_1_plus_children : Amount := 0.0;
+      v_5_plus_person_1_adult_4_plus_children : Amount := 0.0;
+   end record;
+   --
+   -- container for Wales_Households : HH Projections for wales in original format
+   --
+   package Wales_Households_List_Package is new Ada.Containers.Vectors
+      (Element_Type => Wales_Households,
+      Index_Type => Positive );
+   subtype Wales_Households_List is Wales_Households_List_Package.Vector;
+   --
+   -- default value for Wales_Households : HH Projections for wales in original format
+   --
+   Null_Wales_Households : constant Wales_Households := (
+         year => 1970,
+         rec_type => To_Unbounded_String( "persons" ),
+         variant => MISSING_W_KEY,
+         country => MISSING_W_KEY,
+         edition => 1970,
+         v_1_person => 0.0,
+         v_2_person_no_children => 0.0,
+         v_2_person_1_adult_1_child => 0.0,
+         v_3_person_no_children => 0.0,
+         v_3_person_2_adults_1_child => 0.0,
+         v_3_person_1_adult_2_children => 0.0,
+         v_4_person_no_children => 0.0,
+         v_4_person_2_plus_adults_1_plus_children => 0.0,
+         v_4_person_1_adult_3_children => 0.0,
+         v_5_plus_person_no_children => 0.0,
+         v_5_plus_person_2_plus_adults_1_plus_children => 0.0,
+         v_5_plus_person_1_adult_4_plus_children => 0.0
+   );
+   --
+   -- simple print routine for Wales_Households : HH Projections for wales in original format
+   --
+   function To_String( rec : Wales_Households ) return String;
 
    --
    -- record modelling Obr_Participation_Rates : Population Data One row for each Country/Year/Variant/type [M/F/Both]
@@ -1345,7 +1515,7 @@ package Ukds.target_data is
    function To_String( rec : Run ) return String;
 
    --
-   -- record modelling Households_Forecasts : Household Data One row for each Country/Year/Variant
+   -- record modelling Households_Forecasts : SCOTLAND ONLY:: see england_households, etc. below. Household Data One row for each Country/Year/Variant
    --
    type Households_Forecasts is record
       year : Integer := 0;
@@ -1363,14 +1533,14 @@ package Ukds.target_data is
       all_households : Amount := 0.0;
    end record;
    --
-   -- container for Households_Forecasts : Household Data One row for each Country/Year/Variant
+   -- container for Households_Forecasts : SCOTLAND ONLY:: see england_households, etc. below. Household Data One row for each Country/Year/Variant
    --
    package Households_Forecasts_List_Package is new Ada.Containers.Vectors
       (Element_Type => Households_Forecasts,
       Index_Type => Positive );
    subtype Households_Forecasts_List is Households_Forecasts_List_Package.Vector;
    --
-   -- default value for Households_Forecasts : Household Data One row for each Country/Year/Variant
+   -- default value for Households_Forecasts : SCOTLAND ONLY:: see england_households, etc. below. Household Data One row for each Country/Year/Variant
    --
    Null_Households_Forecasts : constant Households_Forecasts := (
          year => 0,
@@ -1388,7 +1558,7 @@ package Ukds.target_data is
          all_households => 0.0
    );
    --
-   -- simple print routine for Households_Forecasts : Household Data One row for each Country/Year/Variant
+   -- simple print routine for Households_Forecasts : SCOTLAND ONLY:: see england_households, etc. below. Household Data One row for each Country/Year/Variant
    --
    function To_String( rec : Households_Forecasts ) return String;
 
@@ -1484,12 +1654,12 @@ package Ukds.target_data is
 
         
    -- === CUSTOM PROCS START ===
-                                   
-   subtype Forecast_Age_Ranges is Natural range 0 .. 90;                                
-   type Age_Range_Array is array( Forecast_Age_Ranges ) of Amount;                                 
-                                  
-   function To_Array( popn : Population_Forecasts ) return Age_Range_Array;                                
-                                   
+                                      
+   subtype Forecast_Age_Ranges is Natural range 0 .. 90;                                   
+   type Age_Range_Array is array( Forecast_Age_Ranges ) of Amount;                                    
+                                     
+   function To_Array( popn : Population_Forecasts ) return Age_Range_Array;                                   
+                                      
    -- === CUSTOM PROCS END ===
 
 end Ukds.target_data;

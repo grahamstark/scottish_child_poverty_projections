@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-10-16 22:11:03.013098
+-- Created by ada_generator.py on 2017-10-17 22:41:52.854054
 -- 
 with Ukds;
 
@@ -25,9 +25,12 @@ with Ada.Strings.Maps;
 with Connection_Pool;
 with GNATColl.Traces;
 
-with Ukds.Target_Data.Population_Forecasts_IO;
-with Ukds.Target_Data.Households_Forecasts_IO;
 with Ukds.Target_Data.Obr_Participation_Rates_IO;
+with Ukds.Target_Data.Nireland_Households_IO;
+with Ukds.Target_Data.Households_Forecasts_IO;
+with Ukds.Target_Data.Population_Forecasts_IO;
+with Ukds.Target_Data.England_Households_IO;
+with Ukds.Target_Data.Wales_Households_IO;
 
 -- === CUSTOM IMPORTS START ===
 -- === CUSTOM IMPORTS END ===
@@ -512,15 +515,26 @@ package body Ukds.Target_Data.Forecast_Variant_IO is
    -- functions to retrieve records from tables with foreign keys
    -- referencing the table modelled by this package
    --
-   function Retrieve_Associated_Ukds_Target_Data_Population_Forecasts( a_forecast_variant : Ukds.Target_Data.Forecast_Variant; connection : Database_Connection := null ) return Ukds.Target_Data.Population_Forecasts_List is
+   function Retrieve_Associated_Ukds_Target_Data_Obr_Participation_Rates( a_forecast_variant : Ukds.Target_Data.Forecast_Variant; connection : Database_Connection := null ) return Ukds.Target_Data.Obr_Participation_Rates_List is
       c : d.Criteria;
    begin
-      Ukds.Target_Data.Population_Forecasts_IO.Add_Rec_Type( c, a_forecast_variant.Rec_Type );
-      Ukds.Target_Data.Population_Forecasts_IO.Add_Variant( c, a_forecast_variant.Variant );
-      Ukds.Target_Data.Population_Forecasts_IO.Add_Country( c, a_forecast_variant.Country );
-      Ukds.Target_Data.Population_Forecasts_IO.Add_Edition( c, a_forecast_variant.Edition );
-      return Ukds.Target_Data.Population_Forecasts_IO.retrieve( c, connection );
-   end Retrieve_Associated_Ukds_Target_Data_Population_Forecasts;
+      Ukds.Target_Data.Obr_Participation_Rates_IO.Add_Rec_Type( c, a_forecast_variant.Rec_Type );
+      Ukds.Target_Data.Obr_Participation_Rates_IO.Add_Variant( c, a_forecast_variant.Variant );
+      Ukds.Target_Data.Obr_Participation_Rates_IO.Add_Country( c, a_forecast_variant.Country );
+      Ukds.Target_Data.Obr_Participation_Rates_IO.Add_Edition( c, a_forecast_variant.Edition );
+      return Ukds.Target_Data.Obr_Participation_Rates_IO.retrieve( c, connection );
+   end Retrieve_Associated_Ukds_Target_Data_Obr_Participation_Rates;
+
+
+   function Retrieve_Associated_Ukds_Target_Data_Nireland_Households( a_forecast_variant : Ukds.Target_Data.Forecast_Variant; connection : Database_Connection := null ) return Ukds.Target_Data.Nireland_Households_List is
+      c : d.Criteria;
+   begin
+      Ukds.Target_Data.Nireland_Households_IO.Add_Rec_Type( c, a_forecast_variant.Rec_Type );
+      Ukds.Target_Data.Nireland_Households_IO.Add_Variant( c, a_forecast_variant.Variant );
+      Ukds.Target_Data.Nireland_Households_IO.Add_Country( c, a_forecast_variant.Country );
+      Ukds.Target_Data.Nireland_Households_IO.Add_Edition( c, a_forecast_variant.Edition );
+      return Ukds.Target_Data.Nireland_Households_IO.retrieve( c, connection );
+   end Retrieve_Associated_Ukds_Target_Data_Nireland_Households;
 
 
    function Retrieve_Associated_Ukds_Target_Data_Households_Forecasts( a_forecast_variant : Ukds.Target_Data.Forecast_Variant; connection : Database_Connection := null ) return Ukds.Target_Data.Households_Forecasts_List is
@@ -534,15 +548,37 @@ package body Ukds.Target_Data.Forecast_Variant_IO is
    end Retrieve_Associated_Ukds_Target_Data_Households_Forecasts;
 
 
-   function Retrieve_Associated_Ukds_Target_Data_Obr_Participation_Rates( a_forecast_variant : Ukds.Target_Data.Forecast_Variant; connection : Database_Connection := null ) return Ukds.Target_Data.Obr_Participation_Rates_List is
+   function Retrieve_Associated_Ukds_Target_Data_Population_Forecasts( a_forecast_variant : Ukds.Target_Data.Forecast_Variant; connection : Database_Connection := null ) return Ukds.Target_Data.Population_Forecasts_List is
       c : d.Criteria;
    begin
-      Ukds.Target_Data.Obr_Participation_Rates_IO.Add_Rec_Type( c, a_forecast_variant.Rec_Type );
-      Ukds.Target_Data.Obr_Participation_Rates_IO.Add_Variant( c, a_forecast_variant.Variant );
-      Ukds.Target_Data.Obr_Participation_Rates_IO.Add_Country( c, a_forecast_variant.Country );
-      Ukds.Target_Data.Obr_Participation_Rates_IO.Add_Edition( c, a_forecast_variant.Edition );
-      return Ukds.Target_Data.Obr_Participation_Rates_IO.retrieve( c, connection );
-   end Retrieve_Associated_Ukds_Target_Data_Obr_Participation_Rates;
+      Ukds.Target_Data.Population_Forecasts_IO.Add_Rec_Type( c, a_forecast_variant.Rec_Type );
+      Ukds.Target_Data.Population_Forecasts_IO.Add_Variant( c, a_forecast_variant.Variant );
+      Ukds.Target_Data.Population_Forecasts_IO.Add_Country( c, a_forecast_variant.Country );
+      Ukds.Target_Data.Population_Forecasts_IO.Add_Edition( c, a_forecast_variant.Edition );
+      return Ukds.Target_Data.Population_Forecasts_IO.retrieve( c, connection );
+   end Retrieve_Associated_Ukds_Target_Data_Population_Forecasts;
+
+
+   function Retrieve_Associated_Ukds_Target_Data_England_Households( a_forecast_variant : Ukds.Target_Data.Forecast_Variant; connection : Database_Connection := null ) return Ukds.Target_Data.England_Households_List is
+      c : d.Criteria;
+   begin
+      Ukds.Target_Data.England_Households_IO.Add_Rec_Type( c, a_forecast_variant.Rec_Type );
+      Ukds.Target_Data.England_Households_IO.Add_Variant( c, a_forecast_variant.Variant );
+      Ukds.Target_Data.England_Households_IO.Add_Country( c, a_forecast_variant.Country );
+      Ukds.Target_Data.England_Households_IO.Add_Edition( c, a_forecast_variant.Edition );
+      return Ukds.Target_Data.England_Households_IO.retrieve( c, connection );
+   end Retrieve_Associated_Ukds_Target_Data_England_Households;
+
+
+   function Retrieve_Associated_Ukds_Target_Data_Wales_Households( a_forecast_variant : Ukds.Target_Data.Forecast_Variant; connection : Database_Connection := null ) return Ukds.Target_Data.Wales_Households_List is
+      c : d.Criteria;
+   begin
+      Ukds.Target_Data.Wales_Households_IO.Add_Rec_Type( c, a_forecast_variant.Rec_Type );
+      Ukds.Target_Data.Wales_Households_IO.Add_Variant( c, a_forecast_variant.Variant );
+      Ukds.Target_Data.Wales_Households_IO.Add_Country( c, a_forecast_variant.Country );
+      Ukds.Target_Data.Wales_Households_IO.Add_Edition( c, a_forecast_variant.Edition );
+      return Ukds.Target_Data.Wales_Households_IO.retrieve( c, connection );
+   end Retrieve_Associated_Ukds_Target_Data_Wales_Households;
 
 
 

@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-10-16 22:11:03.258236
+-- Created by ada_generator.py on 2017-10-17 22:41:53.103687
 -- 
 with Ukds;
 
@@ -99,7 +99,8 @@ package body Ukds.Target_Data.Target_Dataset_IO is
          "age_105, age_106, age_107, age_108, age_109, age_110, participation_16_19_male, participation_20_24_male, participation_25_29_male, participation_30_34_male," &
          "participation_35_39_male, participation_40_44_male, participation_45_49_male, participation_50_54_male, participation_55_59_male, participation_60_64_male, participation_65_69_male, participation_70_74_male, participation_75_plus_male, participation_16_19_female," &
          "participation_20_24_female, participation_25_29_female, participation_30_34_female, participation_35_39_female, participation_40_44_female, participation_45_49_female, participation_50_54_female, participation_55_59_female, participation_60_64_female, participation_65_69_female," &
-         "participation_70_74_female, participation_75_plus_female " &
+         "participation_70_74_female, participation_75_plus_female, one_adult_hh_wales, two_adult_hhs_wales, other_hh_wales, one_adult_hh_nireland, two_adult_hhs_nireland, other_hh_nireland, one_adult_hh_england, two_adult_hhs_england," &
+         "other_hh_england, one_adult_hh_scotland, two_adult_hhs_scotland, other_hh_scotland " &
          " from target_data.target_dataset " ;
    
    --
@@ -144,7 +145,8 @@ package body Ukds.Target_Data.Target_Dataset_IO is
          "age_105, age_106, age_107, age_108, age_109, age_110, participation_16_19_male, participation_20_24_male, participation_25_29_male, participation_30_34_male," &
          "participation_35_39_male, participation_40_44_male, participation_45_49_male, participation_50_54_male, participation_55_59_male, participation_60_64_male, participation_65_69_male, participation_70_74_male, participation_75_plus_male, participation_16_19_female," &
          "participation_20_24_female, participation_25_29_female, participation_30_34_female, participation_35_39_female, participation_40_44_female, participation_45_49_female, participation_50_54_female, participation_55_59_female, participation_60_64_female, participation_65_69_female," &
-         "participation_70_74_female, participation_75_plus_female " &
+         "participation_70_74_female, participation_75_plus_female, one_adult_hh_wales, two_adult_hhs_wales, other_hh_wales, one_adult_hh_nireland, two_adult_hhs_nireland, other_hh_nireland, one_adult_hh_england, two_adult_hhs_england," &
+         "other_hh_england, one_adult_hh_scotland, two_adult_hhs_scotland, other_hh_scotland " &
          " ) values " ;
 
    
@@ -159,7 +161,7 @@ package body Ukds.Target_Data.Target_Dataset_IO is
    UPDATE_PART : constant String := "update target_data.target_dataset set  ";
    function Get_Configured_Insert_Params( update_order : Boolean := False )  return GNATCOLL.SQL.Exec.SQL_Parameters is
    use GNATCOLL.SQL_Impl;
-      params : constant SQL_Parameters( 1 .. 382 ) := ( if update_order then (
+      params : constant SQL_Parameters( 1 .. 394 ) := ( if update_order then (
             1 => ( Parameter_Float, 0.0 ),   --  : country_uk (Amount)
             2 => ( Parameter_Float, 0.0 ),   --  : country_scotland (Amount)
             3 => ( Parameter_Float, 0.0 ),   --  : country_england (Amount)
@@ -538,10 +540,22 @@ package body Ukds.Target_Data.Target_Dataset_IO is
            376 => ( Parameter_Float, 0.0 ),   --  : participation_65_69_female (Amount)
            377 => ( Parameter_Float, 0.0 ),   --  : participation_70_74_female (Amount)
            378 => ( Parameter_Float, 0.0 ),   --  : participation_75_plus_female (Amount)
-           379 => ( Parameter_Integer, 0 ),   --  : run_id (Integer)
-           380 => ( Parameter_Integer, 0 ),   --  : user_id (Integer)
-           381 => ( Parameter_Integer, 0 ),   --  : year (Year_Number)
-           382 => ( Parameter_Bigint, 0 )   --  : sernum (Sernum_Value)
+           379 => ( Parameter_Float, 0.0 ),   --  : one_adult_hh_wales (Amount)
+           380 => ( Parameter_Float, 0.0 ),   --  : two_adult_hhs_wales (Amount)
+           381 => ( Parameter_Float, 0.0 ),   --  : other_hh_wales (Amount)
+           382 => ( Parameter_Float, 0.0 ),   --  : one_adult_hh_nireland (Amount)
+           383 => ( Parameter_Float, 0.0 ),   --  : two_adult_hhs_nireland (Amount)
+           384 => ( Parameter_Float, 0.0 ),   --  : other_hh_nireland (Amount)
+           385 => ( Parameter_Float, 0.0 ),   --  : one_adult_hh_england (Amount)
+           386 => ( Parameter_Float, 0.0 ),   --  : two_adult_hhs_england (Amount)
+           387 => ( Parameter_Float, 0.0 ),   --  : other_hh_england (Amount)
+           388 => ( Parameter_Float, 0.0 ),   --  : one_adult_hh_scotland (Amount)
+           389 => ( Parameter_Float, 0.0 ),   --  : two_adult_hhs_scotland (Amount)
+           390 => ( Parameter_Float, 0.0 ),   --  : other_hh_scotland (Amount)
+           391 => ( Parameter_Integer, 0 ),   --  : run_id (Integer)
+           392 => ( Parameter_Integer, 0 ),   --  : user_id (Integer)
+           393 => ( Parameter_Integer, 0 ),   --  : year (Year_Number)
+           394 => ( Parameter_Bigint, 0 )   --  : sernum (Sernum_Value)
       ) else (
             1 => ( Parameter_Integer, 0 ),   --  : run_id (Integer)
             2 => ( Parameter_Integer, 0 ),   --  : user_id (Integer)
@@ -924,7 +938,19 @@ package body Ukds.Target_Data.Target_Dataset_IO is
            379 => ( Parameter_Float, 0.0 ),   --  : participation_60_64_female (Amount)
            380 => ( Parameter_Float, 0.0 ),   --  : participation_65_69_female (Amount)
            381 => ( Parameter_Float, 0.0 ),   --  : participation_70_74_female (Amount)
-           382 => ( Parameter_Float, 0.0 )   --  : participation_75_plus_female (Amount)
+           382 => ( Parameter_Float, 0.0 ),   --  : participation_75_plus_female (Amount)
+           383 => ( Parameter_Float, 0.0 ),   --  : one_adult_hh_wales (Amount)
+           384 => ( Parameter_Float, 0.0 ),   --  : two_adult_hhs_wales (Amount)
+           385 => ( Parameter_Float, 0.0 ),   --  : other_hh_wales (Amount)
+           386 => ( Parameter_Float, 0.0 ),   --  : one_adult_hh_nireland (Amount)
+           387 => ( Parameter_Float, 0.0 ),   --  : two_adult_hhs_nireland (Amount)
+           388 => ( Parameter_Float, 0.0 ),   --  : other_hh_nireland (Amount)
+           389 => ( Parameter_Float, 0.0 ),   --  : one_adult_hh_england (Amount)
+           390 => ( Parameter_Float, 0.0 ),   --  : two_adult_hhs_england (Amount)
+           391 => ( Parameter_Float, 0.0 ),   --  : other_hh_england (Amount)
+           392 => ( Parameter_Float, 0.0 ),   --  : one_adult_hh_scotland (Amount)
+           393 => ( Parameter_Float, 0.0 ),   --  : two_adult_hhs_scotland (Amount)
+           394 => ( Parameter_Float, 0.0 )   --  : other_hh_scotland (Amount)
       
       ));
    begin
@@ -935,7 +961,7 @@ package body Ukds.Target_Data.Target_Dataset_IO is
 
    function Get_Prepared_Insert_Statement return gse.Prepared_Statement is 
       ps : gse.Prepared_Statement; 
-      query : constant String := DB_Commons.Add_Schema_To_Query( INSERT_PART, SCHEMA_NAME ) & " ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $40, $41, $42, $43, $44, $45, $46, $47, $48, $49, $50, $51, $52, $53, $54, $55, $56, $57, $58, $59, $60, $61, $62, $63, $64, $65, $66, $67, $68, $69, $70, $71, $72, $73, $74, $75, $76, $77, $78, $79, $80, $81, $82, $83, $84, $85, $86, $87, $88, $89, $90, $91, $92, $93, $94, $95, $96, $97, $98, $99, $100, $101, $102, $103, $104, $105, $106, $107, $108, $109, $110, $111, $112, $113, $114, $115, $116, $117, $118, $119, $120, $121, $122, $123, $124, $125, $126, $127, $128, $129, $130, $131, $132, $133, $134, $135, $136, $137, $138, $139, $140, $141, $142, $143, $144, $145, $146, $147, $148, $149, $150, $151, $152, $153, $154, $155, $156, $157, $158, $159, $160, $161, $162, $163, $164, $165, $166, $167, $168, $169, $170, $171, $172, $173, $174, $175, $176, $177, $178, $179, $180, $181, $182, $183, $184, $185, $186, $187, $188, $189, $190, $191, $192, $193, $194, $195, $196, $197, $198, $199, $200, $201, $202, $203, $204, $205, $206, $207, $208, $209, $210, $211, $212, $213, $214, $215, $216, $217, $218, $219, $220, $221, $222, $223, $224, $225, $226, $227, $228, $229, $230, $231, $232, $233, $234, $235, $236, $237, $238, $239, $240, $241, $242, $243, $244, $245, $246, $247, $248, $249, $250, $251, $252, $253, $254, $255, $256, $257, $258, $259, $260, $261, $262, $263, $264, $265, $266, $267, $268, $269, $270, $271, $272, $273, $274, $275, $276, $277, $278, $279, $280, $281, $282, $283, $284, $285, $286, $287, $288, $289, $290, $291, $292, $293, $294, $295, $296, $297, $298, $299, $300, $301, $302, $303, $304, $305, $306, $307, $308, $309, $310, $311, $312, $313, $314, $315, $316, $317, $318, $319, $320, $321, $322, $323, $324, $325, $326, $327, $328, $329, $330, $331, $332, $333, $334, $335, $336, $337, $338, $339, $340, $341, $342, $343, $344, $345, $346, $347, $348, $349, $350, $351, $352, $353, $354, $355, $356, $357, $358, $359, $360, $361, $362, $363, $364, $365, $366, $367, $368, $369, $370, $371, $372, $373, $374, $375, $376, $377, $378, $379, $380, $381, $382 )"; 
+      query : constant String := DB_Commons.Add_Schema_To_Query( INSERT_PART, SCHEMA_NAME ) & " ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $40, $41, $42, $43, $44, $45, $46, $47, $48, $49, $50, $51, $52, $53, $54, $55, $56, $57, $58, $59, $60, $61, $62, $63, $64, $65, $66, $67, $68, $69, $70, $71, $72, $73, $74, $75, $76, $77, $78, $79, $80, $81, $82, $83, $84, $85, $86, $87, $88, $89, $90, $91, $92, $93, $94, $95, $96, $97, $98, $99, $100, $101, $102, $103, $104, $105, $106, $107, $108, $109, $110, $111, $112, $113, $114, $115, $116, $117, $118, $119, $120, $121, $122, $123, $124, $125, $126, $127, $128, $129, $130, $131, $132, $133, $134, $135, $136, $137, $138, $139, $140, $141, $142, $143, $144, $145, $146, $147, $148, $149, $150, $151, $152, $153, $154, $155, $156, $157, $158, $159, $160, $161, $162, $163, $164, $165, $166, $167, $168, $169, $170, $171, $172, $173, $174, $175, $176, $177, $178, $179, $180, $181, $182, $183, $184, $185, $186, $187, $188, $189, $190, $191, $192, $193, $194, $195, $196, $197, $198, $199, $200, $201, $202, $203, $204, $205, $206, $207, $208, $209, $210, $211, $212, $213, $214, $215, $216, $217, $218, $219, $220, $221, $222, $223, $224, $225, $226, $227, $228, $229, $230, $231, $232, $233, $234, $235, $236, $237, $238, $239, $240, $241, $242, $243, $244, $245, $246, $247, $248, $249, $250, $251, $252, $253, $254, $255, $256, $257, $258, $259, $260, $261, $262, $263, $264, $265, $266, $267, $268, $269, $270, $271, $272, $273, $274, $275, $276, $277, $278, $279, $280, $281, $282, $283, $284, $285, $286, $287, $288, $289, $290, $291, $292, $293, $294, $295, $296, $297, $298, $299, $300, $301, $302, $303, $304, $305, $306, $307, $308, $309, $310, $311, $312, $313, $314, $315, $316, $317, $318, $319, $320, $321, $322, $323, $324, $325, $326, $327, $328, $329, $330, $331, $332, $333, $334, $335, $336, $337, $338, $339, $340, $341, $342, $343, $344, $345, $346, $347, $348, $349, $350, $351, $352, $353, $354, $355, $356, $357, $358, $359, $360, $361, $362, $363, $364, $365, $366, $367, $368, $369, $370, $371, $372, $373, $374, $375, $376, $377, $378, $379, $380, $381, $382, $383, $384, $385, $386, $387, $388, $389, $390, $391, $392, $393, $394 )"; 
    begin 
       ps := gse.Prepare( query, On_Server => True ); 
       return ps; 
@@ -982,7 +1008,7 @@ package body Ukds.Target_Data.Target_Dataset_IO is
    function Get_Prepared_Update_Statement return gse.Prepared_Statement is 
       ps : gse.Prepared_Statement; 
       
-      query : constant String := DB_Commons.Add_Schema_To_Query( UPDATE_PART, SCHEMA_NAME ) & " country_uk = $1, country_scotland = $2, country_england = $3, country_wales = $4, country_n_ireland = $5, household_one_adult_male = $6, household_one_adult_female = $7, household_two_adults = $8, household_one_adult_one_child = $9, household_one_adult_two_plus_children = $10, household_two_plus_adult_one_plus_children = $11, household_three_plus_person_all_adult = $12, household_all_households = $13, male = $14, female = $15, employed = $16, employee = $17, ilo_unemployed = $18, jsa_claimant = $19, age_0_male = $20, age_1_male = $21, age_2_male = $22, age_3_male = $23, age_4_male = $24, age_5_male = $25, age_6_male = $26, age_7_male = $27, age_8_male = $28, age_9_male = $29, age_10_male = $30, age_11_male = $31, age_12_male = $32, age_13_male = $33, age_14_male = $34, age_15_male = $35, age_16_male = $36, age_17_male = $37, age_18_male = $38, age_19_male = $39, age_20_male = $40, age_21_male = $41, age_22_male = $42, age_23_male = $43, age_24_male = $44, age_25_male = $45, age_26_male = $46, age_27_male = $47, age_28_male = $48, age_29_male = $49, age_30_male = $50, age_31_male = $51, age_32_male = $52, age_33_male = $53, age_34_male = $54, age_35_male = $55, age_36_male = $56, age_37_male = $57, age_38_male = $58, age_39_male = $59, age_40_male = $60, age_41_male = $61, age_42_male = $62, age_43_male = $63, age_44_male = $64, age_45_male = $65, age_46_male = $66, age_47_male = $67, age_48_male = $68, age_49_male = $69, age_50_male = $70, age_51_male = $71, age_52_male = $72, age_53_male = $73, age_54_male = $74, age_55_male = $75, age_56_male = $76, age_57_male = $77, age_58_male = $78, age_59_male = $79, age_60_male = $80, age_61_male = $81, age_62_male = $82, age_63_male = $83, age_64_male = $84, age_65_male = $85, age_66_male = $86, age_67_male = $87, age_68_male = $88, age_69_male = $89, age_70_male = $90, age_71_male = $91, age_72_male = $92, age_73_male = $93, age_74_male = $94, age_75_male = $95, age_76_male = $96, age_77_male = $97, age_78_male = $98, age_79_male = $99, age_80_male = $100, age_81_male = $101, age_82_male = $102, age_83_male = $103, age_84_male = $104, age_85_male = $105, age_86_male = $106, age_87_male = $107, age_88_male = $108, age_89_male = $109, age_90_male = $110, age_91_male = $111, age_92_male = $112, age_93_male = $113, age_94_male = $114, age_95_male = $115, age_96_male = $116, age_97_male = $117, age_98_male = $118, age_99_male = $119, age_100_male = $120, age_101_male = $121, age_102_male = $122, age_103_male = $123, age_104_male = $124, age_105_male = $125, age_106_male = $126, age_107_male = $127, age_108_male = $128, age_109_male = $129, age_110_male = $130, age_0_female = $131, age_1_female = $132, age_2_female = $133, age_3_female = $134, age_4_female = $135, age_5_female = $136, age_6_female = $137, age_7_female = $138, age_8_female = $139, age_9_female = $140, age_10_female = $141, age_11_female = $142, age_12_female = $143, age_13_female = $144, age_14_female = $145, age_15_female = $146, age_16_female = $147, age_17_female = $148, age_18_female = $149, age_19_female = $150, age_20_female = $151, age_21_female = $152, age_22_female = $153, age_23_female = $154, age_24_female = $155, age_25_female = $156, age_26_female = $157, age_27_female = $158, age_28_female = $159, age_29_female = $160, age_30_female = $161, age_31_female = $162, age_32_female = $163, age_33_female = $164, age_34_female = $165, age_35_female = $166, age_36_female = $167, age_37_female = $168, age_38_female = $169, age_39_female = $170, age_40_female = $171, age_41_female = $172, age_42_female = $173, age_43_female = $174, age_44_female = $175, age_45_female = $176, age_46_female = $177, age_47_female = $178, age_48_female = $179, age_49_female = $180, age_50_female = $181, age_51_female = $182, age_52_female = $183, age_53_female = $184, age_54_female = $185, age_55_female = $186, age_56_female = $187, age_57_female = $188, age_58_female = $189, age_59_female = $190, age_60_female = $191, age_61_female = $192, age_62_female = $193, age_63_female = $194, age_64_female = $195, age_65_female = $196, age_66_female = $197, age_67_female = $198, age_68_female = $199, age_69_female = $200, age_70_female = $201, age_71_female = $202, age_72_female = $203, age_73_female = $204, age_74_female = $205, age_75_female = $206, age_76_female = $207, age_77_female = $208, age_78_female = $209, age_79_female = $210, age_80_female = $211, age_81_female = $212, age_82_female = $213, age_83_female = $214, age_84_female = $215, age_85_female = $216, age_86_female = $217, age_87_female = $218, age_88_female = $219, age_89_female = $220, age_90_female = $221, age_91_female = $222, age_92_female = $223, age_93_female = $224, age_94_female = $225, age_95_female = $226, age_96_female = $227, age_97_female = $228, age_98_female = $229, age_99_female = $230, age_100_female = $231, age_101_female = $232, age_102_female = $233, age_103_female = $234, age_104_female = $235, age_105_female = $236, age_106_female = $237, age_107_female = $238, age_108_female = $239, age_109_female = $240, age_110_female = $241, age_0 = $242, age_1 = $243, age_2 = $244, age_3 = $245, age_4 = $246, age_5 = $247, age_6 = $248, age_7 = $249, age_8 = $250, age_9 = $251, age_10 = $252, age_11 = $253, age_12 = $254, age_13 = $255, age_14 = $256, age_15 = $257, age_16 = $258, age_17 = $259, age_18 = $260, age_19 = $261, age_20 = $262, age_21 = $263, age_22 = $264, age_23 = $265, age_24 = $266, age_25 = $267, age_26 = $268, age_27 = $269, age_28 = $270, age_29 = $271, age_30 = $272, age_31 = $273, age_32 = $274, age_33 = $275, age_34 = $276, age_35 = $277, age_36 = $278, age_37 = $279, age_38 = $280, age_39 = $281, age_40 = $282, age_41 = $283, age_42 = $284, age_43 = $285, age_44 = $286, age_45 = $287, age_46 = $288, age_47 = $289, age_48 = $290, age_49 = $291, age_50 = $292, age_51 = $293, age_52 = $294, age_53 = $295, age_54 = $296, age_55 = $297, age_56 = $298, age_57 = $299, age_58 = $300, age_59 = $301, age_60 = $302, age_61 = $303, age_62 = $304, age_63 = $305, age_64 = $306, age_65 = $307, age_66 = $308, age_67 = $309, age_68 = $310, age_69 = $311, age_70 = $312, age_71 = $313, age_72 = $314, age_73 = $315, age_74 = $316, age_75 = $317, age_76 = $318, age_77 = $319, age_78 = $320, age_79 = $321, age_80 = $322, age_81 = $323, age_82 = $324, age_83 = $325, age_84 = $326, age_85 = $327, age_86 = $328, age_87 = $329, age_88 = $330, age_89 = $331, age_90 = $332, age_91 = $333, age_92 = $334, age_93 = $335, age_94 = $336, age_95 = $337, age_96 = $338, age_97 = $339, age_98 = $340, age_99 = $341, age_100 = $342, age_101 = $343, age_102 = $344, age_103 = $345, age_104 = $346, age_105 = $347, age_106 = $348, age_107 = $349, age_108 = $350, age_109 = $351, age_110 = $352, participation_16_19_male = $353, participation_20_24_male = $354, participation_25_29_male = $355, participation_30_34_male = $356, participation_35_39_male = $357, participation_40_44_male = $358, participation_45_49_male = $359, participation_50_54_male = $360, participation_55_59_male = $361, participation_60_64_male = $362, participation_65_69_male = $363, participation_70_74_male = $364, participation_75_plus_male = $365, participation_16_19_female = $366, participation_20_24_female = $367, participation_25_29_female = $368, participation_30_34_female = $369, participation_35_39_female = $370, participation_40_44_female = $371, participation_45_49_female = $372, participation_50_54_female = $373, participation_55_59_female = $374, participation_60_64_female = $375, participation_65_69_female = $376, participation_70_74_female = $377, participation_75_plus_female = $378 where run_id = $379 and user_id = $380 and year = $381 and sernum = $382"; 
+      query : constant String := DB_Commons.Add_Schema_To_Query( UPDATE_PART, SCHEMA_NAME ) & " country_uk = $1, country_scotland = $2, country_england = $3, country_wales = $4, country_n_ireland = $5, household_one_adult_male = $6, household_one_adult_female = $7, household_two_adults = $8, household_one_adult_one_child = $9, household_one_adult_two_plus_children = $10, household_two_plus_adult_one_plus_children = $11, household_three_plus_person_all_adult = $12, household_all_households = $13, male = $14, female = $15, employed = $16, employee = $17, ilo_unemployed = $18, jsa_claimant = $19, age_0_male = $20, age_1_male = $21, age_2_male = $22, age_3_male = $23, age_4_male = $24, age_5_male = $25, age_6_male = $26, age_7_male = $27, age_8_male = $28, age_9_male = $29, age_10_male = $30, age_11_male = $31, age_12_male = $32, age_13_male = $33, age_14_male = $34, age_15_male = $35, age_16_male = $36, age_17_male = $37, age_18_male = $38, age_19_male = $39, age_20_male = $40, age_21_male = $41, age_22_male = $42, age_23_male = $43, age_24_male = $44, age_25_male = $45, age_26_male = $46, age_27_male = $47, age_28_male = $48, age_29_male = $49, age_30_male = $50, age_31_male = $51, age_32_male = $52, age_33_male = $53, age_34_male = $54, age_35_male = $55, age_36_male = $56, age_37_male = $57, age_38_male = $58, age_39_male = $59, age_40_male = $60, age_41_male = $61, age_42_male = $62, age_43_male = $63, age_44_male = $64, age_45_male = $65, age_46_male = $66, age_47_male = $67, age_48_male = $68, age_49_male = $69, age_50_male = $70, age_51_male = $71, age_52_male = $72, age_53_male = $73, age_54_male = $74, age_55_male = $75, age_56_male = $76, age_57_male = $77, age_58_male = $78, age_59_male = $79, age_60_male = $80, age_61_male = $81, age_62_male = $82, age_63_male = $83, age_64_male = $84, age_65_male = $85, age_66_male = $86, age_67_male = $87, age_68_male = $88, age_69_male = $89, age_70_male = $90, age_71_male = $91, age_72_male = $92, age_73_male = $93, age_74_male = $94, age_75_male = $95, age_76_male = $96, age_77_male = $97, age_78_male = $98, age_79_male = $99, age_80_male = $100, age_81_male = $101, age_82_male = $102, age_83_male = $103, age_84_male = $104, age_85_male = $105, age_86_male = $106, age_87_male = $107, age_88_male = $108, age_89_male = $109, age_90_male = $110, age_91_male = $111, age_92_male = $112, age_93_male = $113, age_94_male = $114, age_95_male = $115, age_96_male = $116, age_97_male = $117, age_98_male = $118, age_99_male = $119, age_100_male = $120, age_101_male = $121, age_102_male = $122, age_103_male = $123, age_104_male = $124, age_105_male = $125, age_106_male = $126, age_107_male = $127, age_108_male = $128, age_109_male = $129, age_110_male = $130, age_0_female = $131, age_1_female = $132, age_2_female = $133, age_3_female = $134, age_4_female = $135, age_5_female = $136, age_6_female = $137, age_7_female = $138, age_8_female = $139, age_9_female = $140, age_10_female = $141, age_11_female = $142, age_12_female = $143, age_13_female = $144, age_14_female = $145, age_15_female = $146, age_16_female = $147, age_17_female = $148, age_18_female = $149, age_19_female = $150, age_20_female = $151, age_21_female = $152, age_22_female = $153, age_23_female = $154, age_24_female = $155, age_25_female = $156, age_26_female = $157, age_27_female = $158, age_28_female = $159, age_29_female = $160, age_30_female = $161, age_31_female = $162, age_32_female = $163, age_33_female = $164, age_34_female = $165, age_35_female = $166, age_36_female = $167, age_37_female = $168, age_38_female = $169, age_39_female = $170, age_40_female = $171, age_41_female = $172, age_42_female = $173, age_43_female = $174, age_44_female = $175, age_45_female = $176, age_46_female = $177, age_47_female = $178, age_48_female = $179, age_49_female = $180, age_50_female = $181, age_51_female = $182, age_52_female = $183, age_53_female = $184, age_54_female = $185, age_55_female = $186, age_56_female = $187, age_57_female = $188, age_58_female = $189, age_59_female = $190, age_60_female = $191, age_61_female = $192, age_62_female = $193, age_63_female = $194, age_64_female = $195, age_65_female = $196, age_66_female = $197, age_67_female = $198, age_68_female = $199, age_69_female = $200, age_70_female = $201, age_71_female = $202, age_72_female = $203, age_73_female = $204, age_74_female = $205, age_75_female = $206, age_76_female = $207, age_77_female = $208, age_78_female = $209, age_79_female = $210, age_80_female = $211, age_81_female = $212, age_82_female = $213, age_83_female = $214, age_84_female = $215, age_85_female = $216, age_86_female = $217, age_87_female = $218, age_88_female = $219, age_89_female = $220, age_90_female = $221, age_91_female = $222, age_92_female = $223, age_93_female = $224, age_94_female = $225, age_95_female = $226, age_96_female = $227, age_97_female = $228, age_98_female = $229, age_99_female = $230, age_100_female = $231, age_101_female = $232, age_102_female = $233, age_103_female = $234, age_104_female = $235, age_105_female = $236, age_106_female = $237, age_107_female = $238, age_108_female = $239, age_109_female = $240, age_110_female = $241, age_0 = $242, age_1 = $243, age_2 = $244, age_3 = $245, age_4 = $246, age_5 = $247, age_6 = $248, age_7 = $249, age_8 = $250, age_9 = $251, age_10 = $252, age_11 = $253, age_12 = $254, age_13 = $255, age_14 = $256, age_15 = $257, age_16 = $258, age_17 = $259, age_18 = $260, age_19 = $261, age_20 = $262, age_21 = $263, age_22 = $264, age_23 = $265, age_24 = $266, age_25 = $267, age_26 = $268, age_27 = $269, age_28 = $270, age_29 = $271, age_30 = $272, age_31 = $273, age_32 = $274, age_33 = $275, age_34 = $276, age_35 = $277, age_36 = $278, age_37 = $279, age_38 = $280, age_39 = $281, age_40 = $282, age_41 = $283, age_42 = $284, age_43 = $285, age_44 = $286, age_45 = $287, age_46 = $288, age_47 = $289, age_48 = $290, age_49 = $291, age_50 = $292, age_51 = $293, age_52 = $294, age_53 = $295, age_54 = $296, age_55 = $297, age_56 = $298, age_57 = $299, age_58 = $300, age_59 = $301, age_60 = $302, age_61 = $303, age_62 = $304, age_63 = $305, age_64 = $306, age_65 = $307, age_66 = $308, age_67 = $309, age_68 = $310, age_69 = $311, age_70 = $312, age_71 = $313, age_72 = $314, age_73 = $315, age_74 = $316, age_75 = $317, age_76 = $318, age_77 = $319, age_78 = $320, age_79 = $321, age_80 = $322, age_81 = $323, age_82 = $324, age_83 = $325, age_84 = $326, age_85 = $327, age_86 = $328, age_87 = $329, age_88 = $330, age_89 = $331, age_90 = $332, age_91 = $333, age_92 = $334, age_93 = $335, age_94 = $336, age_95 = $337, age_96 = $338, age_97 = $339, age_98 = $340, age_99 = $341, age_100 = $342, age_101 = $343, age_102 = $344, age_103 = $345, age_104 = $346, age_105 = $347, age_106 = $348, age_107 = $349, age_108 = $350, age_109 = $351, age_110 = $352, participation_16_19_male = $353, participation_20_24_male = $354, participation_25_29_male = $355, participation_30_34_male = $356, participation_35_39_male = $357, participation_40_44_male = $358, participation_45_49_male = $359, participation_50_54_male = $360, participation_55_59_male = $361, participation_60_64_male = $362, participation_65_69_male = $363, participation_70_74_male = $364, participation_75_plus_male = $365, participation_16_19_female = $366, participation_20_24_female = $367, participation_25_29_female = $368, participation_30_34_female = $369, participation_35_39_female = $370, participation_40_44_female = $371, participation_45_49_female = $372, participation_50_54_female = $373, participation_55_59_female = $374, participation_60_64_female = $375, participation_65_69_female = $376, participation_70_74_female = $377, participation_75_plus_female = $378, one_adult_hh_wales = $379, two_adult_hhs_wales = $380, other_hh_wales = $381, one_adult_hh_nireland = $382, two_adult_hhs_nireland = $383, other_hh_nireland = $384, one_adult_hh_england = $385, two_adult_hhs_england = $386, other_hh_england = $387, one_adult_hh_scotland = $388, two_adult_hhs_scotland = $389, other_hh_scotland = $390 where run_id = $391 and user_id = $392 and year = $393 and sernum = $394"; 
    begin 
       ps := gse.Prepare( 
         query, 
@@ -2374,6 +2400,42 @@ package body Ukds.Target_Data.Target_Dataset_IO is
       if not gse.Is_Null( cursor, 381 )then
          a_target_dataset.participation_75_plus_female:= Amount'Value( gse.Value( cursor, 381 ));
       end if;
+      if not gse.Is_Null( cursor, 382 )then
+         a_target_dataset.one_adult_hh_wales:= Amount'Value( gse.Value( cursor, 382 ));
+      end if;
+      if not gse.Is_Null( cursor, 383 )then
+         a_target_dataset.two_adult_hhs_wales:= Amount'Value( gse.Value( cursor, 383 ));
+      end if;
+      if not gse.Is_Null( cursor, 384 )then
+         a_target_dataset.other_hh_wales:= Amount'Value( gse.Value( cursor, 384 ));
+      end if;
+      if not gse.Is_Null( cursor, 385 )then
+         a_target_dataset.one_adult_hh_nireland:= Amount'Value( gse.Value( cursor, 385 ));
+      end if;
+      if not gse.Is_Null( cursor, 386 )then
+         a_target_dataset.two_adult_hhs_nireland:= Amount'Value( gse.Value( cursor, 386 ));
+      end if;
+      if not gse.Is_Null( cursor, 387 )then
+         a_target_dataset.other_hh_nireland:= Amount'Value( gse.Value( cursor, 387 ));
+      end if;
+      if not gse.Is_Null( cursor, 388 )then
+         a_target_dataset.one_adult_hh_england:= Amount'Value( gse.Value( cursor, 388 ));
+      end if;
+      if not gse.Is_Null( cursor, 389 )then
+         a_target_dataset.two_adult_hhs_england:= Amount'Value( gse.Value( cursor, 389 ));
+      end if;
+      if not gse.Is_Null( cursor, 390 )then
+         a_target_dataset.other_hh_england:= Amount'Value( gse.Value( cursor, 390 ));
+      end if;
+      if not gse.Is_Null( cursor, 391 )then
+         a_target_dataset.one_adult_hh_scotland:= Amount'Value( gse.Value( cursor, 391 ));
+      end if;
+      if not gse.Is_Null( cursor, 392 )then
+         a_target_dataset.two_adult_hhs_scotland:= Amount'Value( gse.Value( cursor, 392 ));
+      end if;
+      if not gse.Is_Null( cursor, 393 )then
+         a_target_dataset.other_hh_scotland:= Amount'Value( gse.Value( cursor, 393 ));
+      end if;
       return a_target_dataset;
    end Map_From_Cursor;
 
@@ -2808,10 +2870,22 @@ package body Ukds.Target_Data.Target_Dataset_IO is
       params( 376 ) := "+"( Float( a_target_dataset.participation_65_69_female ));
       params( 377 ) := "+"( Float( a_target_dataset.participation_70_74_female ));
       params( 378 ) := "+"( Float( a_target_dataset.participation_75_plus_female ));
-      params( 379 ) := "+"( Integer'Pos( a_target_dataset.run_id ));
-      params( 380 ) := "+"( Integer'Pos( a_target_dataset.user_id ));
-      params( 381 ) := "+"( Year_Number'Pos( a_target_dataset.year ));
-      params( 382 ) := As_Bigint( a_target_dataset.sernum );
+      params( 379 ) := "+"( Float( a_target_dataset.one_adult_hh_wales ));
+      params( 380 ) := "+"( Float( a_target_dataset.two_adult_hhs_wales ));
+      params( 381 ) := "+"( Float( a_target_dataset.other_hh_wales ));
+      params( 382 ) := "+"( Float( a_target_dataset.one_adult_hh_nireland ));
+      params( 383 ) := "+"( Float( a_target_dataset.two_adult_hhs_nireland ));
+      params( 384 ) := "+"( Float( a_target_dataset.other_hh_nireland ));
+      params( 385 ) := "+"( Float( a_target_dataset.one_adult_hh_england ));
+      params( 386 ) := "+"( Float( a_target_dataset.two_adult_hhs_england ));
+      params( 387 ) := "+"( Float( a_target_dataset.other_hh_england ));
+      params( 388 ) := "+"( Float( a_target_dataset.one_adult_hh_scotland ));
+      params( 389 ) := "+"( Float( a_target_dataset.two_adult_hhs_scotland ));
+      params( 390 ) := "+"( Float( a_target_dataset.other_hh_scotland ));
+      params( 391 ) := "+"( Integer'Pos( a_target_dataset.run_id ));
+      params( 392 ) := "+"( Integer'Pos( a_target_dataset.user_id ));
+      params( 393 ) := "+"( Year_Number'Pos( a_target_dataset.year ));
+      params( 394 ) := As_Bigint( a_target_dataset.sernum );
       
       gse.Execute( local_connection, UPDATE_PS, params );
       Check_Result( local_connection );
@@ -3228,6 +3302,18 @@ package body Ukds.Target_Data.Target_Dataset_IO is
       params( 380 ) := "+"( Float( a_target_dataset.participation_65_69_female ));
       params( 381 ) := "+"( Float( a_target_dataset.participation_70_74_female ));
       params( 382 ) := "+"( Float( a_target_dataset.participation_75_plus_female ));
+      params( 383 ) := "+"( Float( a_target_dataset.one_adult_hh_wales ));
+      params( 384 ) := "+"( Float( a_target_dataset.two_adult_hhs_wales ));
+      params( 385 ) := "+"( Float( a_target_dataset.other_hh_wales ));
+      params( 386 ) := "+"( Float( a_target_dataset.one_adult_hh_nireland ));
+      params( 387 ) := "+"( Float( a_target_dataset.two_adult_hhs_nireland ));
+      params( 388 ) := "+"( Float( a_target_dataset.other_hh_nireland ));
+      params( 389 ) := "+"( Float( a_target_dataset.one_adult_hh_england ));
+      params( 390 ) := "+"( Float( a_target_dataset.two_adult_hhs_england ));
+      params( 391 ) := "+"( Float( a_target_dataset.other_hh_england ));
+      params( 392 ) := "+"( Float( a_target_dataset.one_adult_hh_scotland ));
+      params( 393 ) := "+"( Float( a_target_dataset.two_adult_hhs_scotland ));
+      params( 394 ) := "+"( Float( a_target_dataset.other_hh_scotland ));
       gse.Execute( local_connection, SAVE_PS, params );  
       Check_Result( local_connection );
       if( is_local_connection )then
@@ -5966,6 +6052,90 @@ package body Ukds.Target_Data.Target_Dataset_IO is
    end Add_participation_75_plus_female;
 
 
+   procedure Add_one_adult_hh_wales( c : in out d.Criteria; one_adult_hh_wales : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "one_adult_hh_wales", op, join, Long_Float( one_adult_hh_wales ) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_one_adult_hh_wales;
+
+
+   procedure Add_two_adult_hhs_wales( c : in out d.Criteria; two_adult_hhs_wales : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "two_adult_hhs_wales", op, join, Long_Float( two_adult_hhs_wales ) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_two_adult_hhs_wales;
+
+
+   procedure Add_other_hh_wales( c : in out d.Criteria; other_hh_wales : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "other_hh_wales", op, join, Long_Float( other_hh_wales ) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_other_hh_wales;
+
+
+   procedure Add_one_adult_hh_nireland( c : in out d.Criteria; one_adult_hh_nireland : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "one_adult_hh_nireland", op, join, Long_Float( one_adult_hh_nireland ) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_one_adult_hh_nireland;
+
+
+   procedure Add_two_adult_hhs_nireland( c : in out d.Criteria; two_adult_hhs_nireland : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "two_adult_hhs_nireland", op, join, Long_Float( two_adult_hhs_nireland ) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_two_adult_hhs_nireland;
+
+
+   procedure Add_other_hh_nireland( c : in out d.Criteria; other_hh_nireland : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "other_hh_nireland", op, join, Long_Float( other_hh_nireland ) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_other_hh_nireland;
+
+
+   procedure Add_one_adult_hh_england( c : in out d.Criteria; one_adult_hh_england : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "one_adult_hh_england", op, join, Long_Float( one_adult_hh_england ) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_one_adult_hh_england;
+
+
+   procedure Add_two_adult_hhs_england( c : in out d.Criteria; two_adult_hhs_england : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "two_adult_hhs_england", op, join, Long_Float( two_adult_hhs_england ) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_two_adult_hhs_england;
+
+
+   procedure Add_other_hh_england( c : in out d.Criteria; other_hh_england : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "other_hh_england", op, join, Long_Float( other_hh_england ) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_other_hh_england;
+
+
+   procedure Add_one_adult_hh_scotland( c : in out d.Criteria; one_adult_hh_scotland : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "one_adult_hh_scotland", op, join, Long_Float( one_adult_hh_scotland ) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_one_adult_hh_scotland;
+
+
+   procedure Add_two_adult_hhs_scotland( c : in out d.Criteria; two_adult_hhs_scotland : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "two_adult_hhs_scotland", op, join, Long_Float( two_adult_hhs_scotland ) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_two_adult_hhs_scotland;
+
+
+   procedure Add_other_hh_scotland( c : in out d.Criteria; other_hh_scotland : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "other_hh_scotland", op, join, Long_Float( other_hh_scotland ) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_other_hh_scotland;
+
+
    
    --
    -- functions to add an ordering to a criteria
@@ -8642,6 +8812,90 @@ package body Ukds.Target_Data.Target_Dataset_IO is
    begin
       d.add_to_criteria( c, elem );
    end Add_participation_75_plus_female_To_Orderings;
+
+
+   procedure Add_one_adult_hh_wales_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "one_adult_hh_wales", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_one_adult_hh_wales_To_Orderings;
+
+
+   procedure Add_two_adult_hhs_wales_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "two_adult_hhs_wales", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_two_adult_hhs_wales_To_Orderings;
+
+
+   procedure Add_other_hh_wales_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "other_hh_wales", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_other_hh_wales_To_Orderings;
+
+
+   procedure Add_one_adult_hh_nireland_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "one_adult_hh_nireland", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_one_adult_hh_nireland_To_Orderings;
+
+
+   procedure Add_two_adult_hhs_nireland_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "two_adult_hhs_nireland", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_two_adult_hhs_nireland_To_Orderings;
+
+
+   procedure Add_other_hh_nireland_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "other_hh_nireland", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_other_hh_nireland_To_Orderings;
+
+
+   procedure Add_one_adult_hh_england_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "one_adult_hh_england", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_one_adult_hh_england_To_Orderings;
+
+
+   procedure Add_two_adult_hhs_england_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "two_adult_hhs_england", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_two_adult_hhs_england_To_Orderings;
+
+
+   procedure Add_other_hh_england_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "other_hh_england", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_other_hh_england_To_Orderings;
+
+
+   procedure Add_one_adult_hh_scotland_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "one_adult_hh_scotland", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_one_adult_hh_scotland_To_Orderings;
+
+
+   procedure Add_two_adult_hhs_scotland_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "two_adult_hhs_scotland", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_two_adult_hhs_scotland_To_Orderings;
+
+
+   procedure Add_other_hh_scotland_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "other_hh_scotland", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_other_hh_scotland_To_Orderings;
 
 
 

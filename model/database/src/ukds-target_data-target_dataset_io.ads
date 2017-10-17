@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-10-16 22:11:03.149508
+-- Created by ada_generator.py on 2017-10-17 22:41:53.005994
 -- 
 with Ukds;
 with DB_Commons;
@@ -478,6 +478,18 @@ package Ukds.Target_Data.Target_Dataset_IO is
    procedure Add_participation_65_69_female( c : in out d.Criteria; participation_65_69_female : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_participation_70_74_female( c : in out d.Criteria; participation_70_74_female : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_participation_75_plus_female( c : in out d.Criteria; participation_75_plus_female : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_one_adult_hh_wales( c : in out d.Criteria; one_adult_hh_wales : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_two_adult_hhs_wales( c : in out d.Criteria; two_adult_hhs_wales : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_other_hh_wales( c : in out d.Criteria; other_hh_wales : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_one_adult_hh_nireland( c : in out d.Criteria; one_adult_hh_nireland : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_two_adult_hhs_nireland( c : in out d.Criteria; two_adult_hhs_nireland : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_other_hh_nireland( c : in out d.Criteria; other_hh_nireland : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_one_adult_hh_england( c : in out d.Criteria; one_adult_hh_england : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_two_adult_hhs_england( c : in out d.Criteria; two_adult_hhs_england : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_other_hh_england( c : in out d.Criteria; other_hh_england : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_one_adult_hh_scotland( c : in out d.Criteria; one_adult_hh_scotland : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_two_adult_hhs_scotland( c : in out d.Criteria; two_adult_hhs_scotland : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_other_hh_scotland( c : in out d.Criteria; other_hh_scotland : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    --
    -- functions to add an ordering to a criteria
    --
@@ -863,11 +875,23 @@ package Ukds.Target_Data.Target_Dataset_IO is
    procedure Add_participation_65_69_female_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_participation_70_74_female_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_participation_75_plus_female_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_one_adult_hh_wales_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_two_adult_hhs_wales_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_other_hh_wales_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_one_adult_hh_nireland_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_two_adult_hhs_nireland_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_other_hh_nireland_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_one_adult_hh_england_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_two_adult_hhs_england_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_other_hh_england_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_one_adult_hh_scotland_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_two_adult_hhs_scotland_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_other_hh_scotland_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
 
    function Map_From_Cursor( cursor : GNATCOLL.SQL.Exec.Forward_Cursor ) return Ukds.Target_Data.Target_Dataset;
 
    -- 
-   -- returns an array of GNATColl SQL Parameters indexed 1 .. 382, as follows
+   -- returns an array of GNATColl SQL Parameters indexed 1 .. 394, as follows
    -- Pos  |       Name               | SQL Type           | Ada Type             | Default
    --    1 : run_id                   : Parameter_Integer  : Integer              :        0 
    --    2 : user_id                  : Parameter_Integer  : Integer              :        0 
@@ -1251,6 +1275,18 @@ package Ukds.Target_Data.Target_Dataset_IO is
    --  380 : participation_65_69_female : Parameter_Float    : Amount               :      0.0 
    --  381 : participation_70_74_female : Parameter_Float    : Amount               :      0.0 
    --  382 : participation_75_plus_female : Parameter_Float    : Amount               :      0.0 
+   --  383 : one_adult_hh_wales       : Parameter_Float    : Amount               :      0.0 
+   --  384 : two_adult_hhs_wales      : Parameter_Float    : Amount               :      0.0 
+   --  385 : other_hh_wales           : Parameter_Float    : Amount               :      0.0 
+   --  386 : one_adult_hh_nireland    : Parameter_Float    : Amount               :      0.0 
+   --  387 : two_adult_hhs_nireland   : Parameter_Float    : Amount               :      0.0 
+   --  388 : other_hh_nireland        : Parameter_Float    : Amount               :      0.0 
+   --  389 : one_adult_hh_england     : Parameter_Float    : Amount               :      0.0 
+   --  390 : two_adult_hhs_england    : Parameter_Float    : Amount               :      0.0 
+   --  391 : other_hh_england         : Parameter_Float    : Amount               :      0.0 
+   --  392 : one_adult_hh_scotland    : Parameter_Float    : Amount               :      0.0 
+   --  393 : two_adult_hhs_scotland   : Parameter_Float    : Amount               :      0.0 
+   --  394 : other_hh_scotland        : Parameter_Float    : Amount               :      0.0 
    function Get_Configured_Insert_Params( update_order : Boolean := False ) return GNATCOLL.SQL.Exec.SQL_Parameters;
 
 

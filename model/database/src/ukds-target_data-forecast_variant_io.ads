@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-10-16 22:11:03.001956
+-- Created by ada_generator.py on 2017-10-17 22:41:52.841400
 -- 
 with Ukds;
 with DB_Commons;
@@ -89,9 +89,12 @@ package Ukds.Target_Data.Forecast_Variant_IO is
    -- functions to retrieve records from tables with foreign keys
    -- referencing the table modelled by this package
    --
-   function Retrieve_Associated_Ukds_Target_Data_Population_Forecasts( a_forecast_variant : Ukds.Target_Data.Forecast_Variant; connection : Database_Connection := null ) return Ukds.Target_Data.Population_Forecasts_List;
-   function Retrieve_Associated_Ukds_Target_Data_Households_Forecasts( a_forecast_variant : Ukds.Target_Data.Forecast_Variant; connection : Database_Connection := null ) return Ukds.Target_Data.Households_Forecasts_List;
    function Retrieve_Associated_Ukds_Target_Data_Obr_Participation_Rates( a_forecast_variant : Ukds.Target_Data.Forecast_Variant; connection : Database_Connection := null ) return Ukds.Target_Data.Obr_Participation_Rates_List;
+   function Retrieve_Associated_Ukds_Target_Data_Nireland_Households( a_forecast_variant : Ukds.Target_Data.Forecast_Variant; connection : Database_Connection := null ) return Ukds.Target_Data.Nireland_Households_List;
+   function Retrieve_Associated_Ukds_Target_Data_Households_Forecasts( a_forecast_variant : Ukds.Target_Data.Forecast_Variant; connection : Database_Connection := null ) return Ukds.Target_Data.Households_Forecasts_List;
+   function Retrieve_Associated_Ukds_Target_Data_Population_Forecasts( a_forecast_variant : Ukds.Target_Data.Forecast_Variant; connection : Database_Connection := null ) return Ukds.Target_Data.Population_Forecasts_List;
+   function Retrieve_Associated_Ukds_Target_Data_England_Households( a_forecast_variant : Ukds.Target_Data.Forecast_Variant; connection : Database_Connection := null ) return Ukds.Target_Data.England_Households_List;
+   function Retrieve_Associated_Ukds_Target_Data_Wales_Households( a_forecast_variant : Ukds.Target_Data.Forecast_Variant; connection : Database_Connection := null ) return Ukds.Target_Data.Wales_Households_List;
 
    --
    -- functions to add something to a criteria

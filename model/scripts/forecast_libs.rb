@@ -50,7 +50,7 @@ def reCensorKey( key )
         key.gsub( "1", 'one' ).gsub( "2", 'two').gsub( '3', 'three' ).gsub( 'v_', '' )
 end
 
-def loadBlockToDB( out, variant, country, edition, recType )
+def loadBlockToDB( out, variant, country, edition, recType, table=nil )
         p out # [:data]
         i = 0
         out[:years].each{
@@ -75,9 +75,12 @@ def loadBlockToDB( out, variant, country, edition, recType )
                 i += 1
                 puts "#{year}\n"
                 vs = v.join(', ')
-                table = TABLE_NAME[ recType ]
+                
+                table = TABLE_NAME[ recType ] if table.nil?
+                
                 dataStmt = "insert into target_data.#{table}( year, rec_type, variant, country, edition, #{keys.join(', ')} ) values( #{vs} )";
                 puts "stmt #{dataStmt}\n"                
                 CONNECTION.run( dataStmt )
         }
 end
+
