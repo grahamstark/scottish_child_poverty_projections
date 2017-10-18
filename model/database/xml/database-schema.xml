@@ -333,9 +333,6 @@
                            <reference foreign="edition" local="edition" />
                    </foreign-key>
            </table>   
-           
-           
-           
 
             <table name='wales_households' description='HH Projections for wales in original format' >
                    <column name='year' type='INTEGER' adaTypeName='Year_Number'  default='1970' primaryKey='true'/>
@@ -421,17 +418,45 @@
                   <column name='country_england' description='' default='0.0' type='REAL' adaTypeName='Amount'/>
                   <column name='country_wales' description='' default='0.0' type='REAL' adaTypeName='Amount'/>
                   <column name='country_n_ireland' description='' default='0.0' type='REAL' adaTypeName='Amount'/>
-
                   
+                  <column name='household_all_households' description='sco_hhld_all_sco_hhlds' default='0.0' type='REAL' adaTypeName='Amount'/>
+                  <column name='sco_hhld_one_adult_male' description='sco_hhld_one_adult_male' default='0.0' type='REAL' adaTypeName='Amount'/>
+                  <column name='sco_hhld_one_adult_female' description='sco_hhld_one_adult_female' default='0.0' type='REAL' adaTypeName='Amount'/>
+                  <column name='sco_hhld_two_adults' description='sco_hhld_two_adults' default='0.0' type='REAL' adaTypeName='Amount'/>
+                  <column name='sco_hhld_one_adult_one_child' description='sco_hhld_one_adult_one_child' default='0.0' type='REAL' adaTypeName='Amount'/>
+                  <column name='sco_hhld_one_adult_two_plus_children' description='sco_hhld_one_adult_two_plus_children' default='0.0' type='REAL' adaTypeName='Amount'/>
+                  <column name='sco_hhld_two_plus_adult_one_plus_children' description='sco_hhld_two_plus_adult_one_plus_children' default='0.0' type='REAL' adaTypeName='Amount'/>
+                  <column name='sco_hhld_three_plus_person_all_adult' description='sco_hhld_three_plus_person_all_adult' default='0.0' type='REAL' adaTypeName='Amount'/>
                   
-                  <column name='household_one_adult_male' description='household_one_adult_male' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='household_one_adult_female' description='household_one_adult_female' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='household_two_adults' description='household_two_adults' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='household_one_adult_one_child' description='household_one_adult_one_child' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='household_one_adult_two_plus_children' description='household_one_adult_two_plus_children' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='household_two_plus_adult_one_plus_children' description='household_two_plus_adult_one_plus_children' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='household_three_plus_person_all_adult' description='household_three_plus_person_all_adult' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='household_all_households' description='household_all_households' default='0.0' type='REAL' adaTypeName='Amount'/>
+                  <column name='eng_hhld_one_person_households_male' description='One person households: Male' default='0.0' type='REAL' adaTypeName='Amount' />
+                  <column name='eng_hhld_one_person_households_female' description='One person households: Female' default='0.0' type='REAL' adaTypeName='Amount' />
+                  <column name='eng_hhld_one_family_and_no_others_couple_no_dependent_chi' description='One family and no others: Couple: No dependent children' default='0.0' type='REAL' adaTypeName='Amount' />
+                  <column name='eng_hhld_a_couple_and_one_or_more_other_adults_no_dependent_children' description='A couple and one or more other adults: No dependent children' default='0.0' type='REAL' adaTypeName='Amount' />
+                  <column name='eng_hhld_households_with_one_dependent_child' description='Households with one dependent child' default='0.0' type='REAL' adaTypeName='Amount' />
+                  <column name='eng_hhld_households_with_two_dependent_children' description='Households with two dependent children' default='0.0' type='REAL' adaTypeName='Amount' />
+                  <column name='eng_hhld_households_with_three_dependent_children' description='Households with three dependent children' default='0.0' type='REAL' adaTypeName='Amount' />
+                  <column name='eng_hhld_other_households' description='Other Households' default='0.0' type='REAL' adaTypeName='Amount' />
+                  
+                  <column name='nir_hhld_one_adult_households' description='One adult households' default='0.0' type='REAL' adaTypeName='Amount' />
+                  <column name='nir_hhld_two_adults_without_children' description='Two adults without children' default='0.0' type='REAL' adaTypeName='Amount' />
+                  <column name='nir_hhld_other_households_without_children' description='Other households without children' default='0.0' type='REAL' adaTypeName='Amount' />
+                  <column name='nir_hhld_one_adult_households_with_children' description='One adult households with children' default='0.0' type='REAL' adaTypeName='Amount' />
+                  <column name='nir_hhld_other_households_with_children' description='Other households with children' default='0.0' type='REAL' adaTypeName='Amount' />
+                   
+                  <column name='wal_hhld_1_person' description='1 person ' default='0.0' type='REAL' adaTypeName='Amount' />
+                  <column name='wal_hhld_2_person_no_children' description='2 person (No children) ' default='0.0' type='REAL' adaTypeName='Amount' />
+                  <column name='wal_hhld_2_person_1_adult_1_child' description='2 person (1 adult, 1 child) ' default='0.0' type='REAL' adaTypeName='Amount' />
+                  <column name='wal_hhld_3_person_no_children' description='3 person (No children) ' default='0.0' type='REAL' adaTypeName='Amount' />
+                  <column name='wal_hhld_3_person_2_adults_1_child' description='3 person (2 adults, 1 child) ' default='0.0' type='REAL' adaTypeName='Amount' />
+                  <column name='wal_hhld_3_person_1_adult_2_children' description='3 person (1 adult, 2 children) ' default='0.0' type='REAL' adaTypeName='Amount' />
+                  <column name='wal_hhld_4_person_no_children' description='4 person (No children) ' default='0.0' type='REAL' adaTypeName='Amount' />
+                  <column name='wal_hhld_4_person_2_plus_adults_1_plus_children' description='4 person (2+ adults, 1+ children) ' default='0.0' type='REAL' adaTypeName='Amount' />
+                  <column name='wal_hhld_4_person_1_adult_3_children' description='4 person (1 adult, 3 children) ' default='0.0' type='REAL' adaTypeName='Amount' />
+                  <column name='wal_hhld_5_plus_person_no_children' description='5+ person (No children) ' default='0.0' type='REAL' adaTypeName='Amount' />
+                  <column name='wal_hhld_5_plus_person_2_plus_adults_1_plus_children' description='5+ person (2+ adults, 1+ children) ' default='0.0' type='REAL' adaTypeName='Amount' />
+                  <column name='wal_hhld_5_plus_person_1_adult_4_plus_children' description='5+ person (1 adult, 4+ children) ' default='0.0' type='REAL' adaTypeName='Amount' />
+                   
+                   
                   <column name='male' description='male' default='0.0' type='REAL' adaTypeName='Amount'/>
                   <column name='female' description='female' default='0.0' type='REAL' adaTypeName='Amount'/>
                   <column name='employed' description='employed' default='0.0' type='REAL' adaTypeName='Amount'/>
@@ -660,6 +685,7 @@
                   <column name='age_108_female' description='age_108_female' default='0.0' type='REAL' adaTypeName='Amount'/>
                   <column name='age_109_female' description='age_109_female' default='0.0' type='REAL' adaTypeName='Amount'/>
                   <column name='age_110_female' description='age_110_female' default='0.0' type='REAL' adaTypeName='Amount'/>
+                  <!--
                   <column name='age_0' description='age_0' default='0.0' type='REAL' adaTypeName='Amount'/>
                   <column name='age_1' description='age_1' default='0.0' type='REAL' adaTypeName='Amount'/>
                   <column name='age_2' description='age_2' default='0.0' type='REAL' adaTypeName='Amount'/>
@@ -771,7 +797,7 @@
                   <column name='age_108' description='age_108' default='0.0' type='REAL' adaTypeName='Amount'/>
                   <column name='age_109' description='age_109' default='0.0' type='REAL' adaTypeName='Amount'/>
                   <column name='age_110' description='age_110' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  
+                  -->
                    <column name='participation_16_19_male' type='REAL' adaTypeName='Amount' default='0.0'  />
                    <column name='participation_20_24_male' type='REAL' adaTypeName='Amount' default='0.0'  />
                    <column name='participation_25_29_male' type='REAL' adaTypeName='Amount' default='0.0'  />

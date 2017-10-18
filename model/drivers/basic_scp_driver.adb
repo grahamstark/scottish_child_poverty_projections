@@ -3,6 +3,7 @@
 --
 with Ada.Calendar;
 with Ada.Exceptions;
+with Ada.Command_Line;
 with Ada.Strings.Unbounded; 
 with Ada.Text_IO;
 
@@ -95,8 +96,9 @@ begin
             employment               => True,
             employees                => True,
             ilo_unemployment         => True,
-            jsa_claimants            => True );
-      the_run.country := TuS( "SCO" );
+            jsa_claimants            => True,
+            participation_rate       => True );
+      the_run.country := SCO;
       for i in 1 .. 1 loop
          Log( "Starting Run with ID " & the_run.run_id'Img & " targets " & the_run.targets_run_id'Img );
          UKDS.Target_Data.Run_IO.Save( the_run );

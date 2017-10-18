@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-10-17 22:41:52.472401
+-- Created by ada_generator.py on 2017-10-18 13:47:19.212529
 -- 
 
 with GNAT.Calendar.Time_IO;
@@ -27,14 +27,39 @@ package body Ukds.target_data is
          "country_england = " & rec.country_england'Img &
          "country_wales = " & rec.country_wales'Img &
          "country_n_ireland = " & rec.country_n_ireland'Img &
-         "household_one_adult_male = " & rec.household_one_adult_male'Img &
-         "household_one_adult_female = " & rec.household_one_adult_female'Img &
-         "household_two_adults = " & rec.household_two_adults'Img &
-         "household_one_adult_one_child = " & rec.household_one_adult_one_child'Img &
-         "household_one_adult_two_plus_children = " & rec.household_one_adult_two_plus_children'Img &
-         "household_two_plus_adult_one_plus_children = " & rec.household_two_plus_adult_one_plus_children'Img &
-         "household_three_plus_person_all_adult = " & rec.household_three_plus_person_all_adult'Img &
          "household_all_households = " & rec.household_all_households'Img &
+         "sco_hhld_one_adult_male = " & rec.sco_hhld_one_adult_male'Img &
+         "sco_hhld_one_adult_female = " & rec.sco_hhld_one_adult_female'Img &
+         "sco_hhld_two_adults = " & rec.sco_hhld_two_adults'Img &
+         "sco_hhld_one_adult_one_child = " & rec.sco_hhld_one_adult_one_child'Img &
+         "sco_hhld_one_adult_two_plus_children = " & rec.sco_hhld_one_adult_two_plus_children'Img &
+         "sco_hhld_two_plus_adult_one_plus_children = " & rec.sco_hhld_two_plus_adult_one_plus_children'Img &
+         "sco_hhld_three_plus_person_all_adult = " & rec.sco_hhld_three_plus_person_all_adult'Img &
+         "eng_hhld_one_person_households_male = " & rec.eng_hhld_one_person_households_male'Img &
+         "eng_hhld_one_person_households_female = " & rec.eng_hhld_one_person_households_female'Img &
+         "eng_hhld_one_family_and_no_others_couple_no_dependent_chi = " & rec.eng_hhld_one_family_and_no_others_couple_no_dependent_chi'Img &
+         "eng_hhld_a_couple_and_one_or_more_other_adults_no_dependent_children = " & rec.eng_hhld_a_couple_and_one_or_more_other_adults_no_dependent_children'Img &
+         "eng_hhld_households_with_one_dependent_child = " & rec.eng_hhld_households_with_one_dependent_child'Img &
+         "eng_hhld_households_with_two_dependent_children = " & rec.eng_hhld_households_with_two_dependent_children'Img &
+         "eng_hhld_households_with_three_dependent_children = " & rec.eng_hhld_households_with_three_dependent_children'Img &
+         "eng_hhld_other_households = " & rec.eng_hhld_other_households'Img &
+         "nir_hhld_one_adult_households = " & rec.nir_hhld_one_adult_households'Img &
+         "nir_hhld_two_adults_without_children = " & rec.nir_hhld_two_adults_without_children'Img &
+         "nir_hhld_other_households_without_children = " & rec.nir_hhld_other_households_without_children'Img &
+         "nir_hhld_one_adult_households_with_children = " & rec.nir_hhld_one_adult_households_with_children'Img &
+         "nir_hhld_other_households_with_children = " & rec.nir_hhld_other_households_with_children'Img &
+         "wal_hhld_1_person = " & rec.wal_hhld_1_person'Img &
+         "wal_hhld_2_person_no_children = " & rec.wal_hhld_2_person_no_children'Img &
+         "wal_hhld_2_person_1_adult_1_child = " & rec.wal_hhld_2_person_1_adult_1_child'Img &
+         "wal_hhld_3_person_no_children = " & rec.wal_hhld_3_person_no_children'Img &
+         "wal_hhld_3_person_2_adults_1_child = " & rec.wal_hhld_3_person_2_adults_1_child'Img &
+         "wal_hhld_3_person_1_adult_2_children = " & rec.wal_hhld_3_person_1_adult_2_children'Img &
+         "wal_hhld_4_person_no_children = " & rec.wal_hhld_4_person_no_children'Img &
+         "wal_hhld_4_person_2_plus_adults_1_plus_children = " & rec.wal_hhld_4_person_2_plus_adults_1_plus_children'Img &
+         "wal_hhld_4_person_1_adult_3_children = " & rec.wal_hhld_4_person_1_adult_3_children'Img &
+         "wal_hhld_5_plus_person_no_children = " & rec.wal_hhld_5_plus_person_no_children'Img &
+         "wal_hhld_5_plus_person_2_plus_adults_1_plus_children = " & rec.wal_hhld_5_plus_person_2_plus_adults_1_plus_children'Img &
+         "wal_hhld_5_plus_person_1_adult_4_plus_children = " & rec.wal_hhld_5_plus_person_1_adult_4_plus_children'Img &
          "male = " & rec.male'Img &
          "female = " & rec.female'Img &
          "employed = " & rec.employed'Img &
@@ -263,117 +288,6 @@ package body Ukds.target_data is
          "age_108_female = " & rec.age_108_female'Img &
          "age_109_female = " & rec.age_109_female'Img &
          "age_110_female = " & rec.age_110_female'Img &
-         "age_0 = " & rec.age_0'Img &
-         "age_1 = " & rec.age_1'Img &
-         "age_2 = " & rec.age_2'Img &
-         "age_3 = " & rec.age_3'Img &
-         "age_4 = " & rec.age_4'Img &
-         "age_5 = " & rec.age_5'Img &
-         "age_6 = " & rec.age_6'Img &
-         "age_7 = " & rec.age_7'Img &
-         "age_8 = " & rec.age_8'Img &
-         "age_9 = " & rec.age_9'Img &
-         "age_10 = " & rec.age_10'Img &
-         "age_11 = " & rec.age_11'Img &
-         "age_12 = " & rec.age_12'Img &
-         "age_13 = " & rec.age_13'Img &
-         "age_14 = " & rec.age_14'Img &
-         "age_15 = " & rec.age_15'Img &
-         "age_16 = " & rec.age_16'Img &
-         "age_17 = " & rec.age_17'Img &
-         "age_18 = " & rec.age_18'Img &
-         "age_19 = " & rec.age_19'Img &
-         "age_20 = " & rec.age_20'Img &
-         "age_21 = " & rec.age_21'Img &
-         "age_22 = " & rec.age_22'Img &
-         "age_23 = " & rec.age_23'Img &
-         "age_24 = " & rec.age_24'Img &
-         "age_25 = " & rec.age_25'Img &
-         "age_26 = " & rec.age_26'Img &
-         "age_27 = " & rec.age_27'Img &
-         "age_28 = " & rec.age_28'Img &
-         "age_29 = " & rec.age_29'Img &
-         "age_30 = " & rec.age_30'Img &
-         "age_31 = " & rec.age_31'Img &
-         "age_32 = " & rec.age_32'Img &
-         "age_33 = " & rec.age_33'Img &
-         "age_34 = " & rec.age_34'Img &
-         "age_35 = " & rec.age_35'Img &
-         "age_36 = " & rec.age_36'Img &
-         "age_37 = " & rec.age_37'Img &
-         "age_38 = " & rec.age_38'Img &
-         "age_39 = " & rec.age_39'Img &
-         "age_40 = " & rec.age_40'Img &
-         "age_41 = " & rec.age_41'Img &
-         "age_42 = " & rec.age_42'Img &
-         "age_43 = " & rec.age_43'Img &
-         "age_44 = " & rec.age_44'Img &
-         "age_45 = " & rec.age_45'Img &
-         "age_46 = " & rec.age_46'Img &
-         "age_47 = " & rec.age_47'Img &
-         "age_48 = " & rec.age_48'Img &
-         "age_49 = " & rec.age_49'Img &
-         "age_50 = " & rec.age_50'Img &
-         "age_51 = " & rec.age_51'Img &
-         "age_52 = " & rec.age_52'Img &
-         "age_53 = " & rec.age_53'Img &
-         "age_54 = " & rec.age_54'Img &
-         "age_55 = " & rec.age_55'Img &
-         "age_56 = " & rec.age_56'Img &
-         "age_57 = " & rec.age_57'Img &
-         "age_58 = " & rec.age_58'Img &
-         "age_59 = " & rec.age_59'Img &
-         "age_60 = " & rec.age_60'Img &
-         "age_61 = " & rec.age_61'Img &
-         "age_62 = " & rec.age_62'Img &
-         "age_63 = " & rec.age_63'Img &
-         "age_64 = " & rec.age_64'Img &
-         "age_65 = " & rec.age_65'Img &
-         "age_66 = " & rec.age_66'Img &
-         "age_67 = " & rec.age_67'Img &
-         "age_68 = " & rec.age_68'Img &
-         "age_69 = " & rec.age_69'Img &
-         "age_70 = " & rec.age_70'Img &
-         "age_71 = " & rec.age_71'Img &
-         "age_72 = " & rec.age_72'Img &
-         "age_73 = " & rec.age_73'Img &
-         "age_74 = " & rec.age_74'Img &
-         "age_75 = " & rec.age_75'Img &
-         "age_76 = " & rec.age_76'Img &
-         "age_77 = " & rec.age_77'Img &
-         "age_78 = " & rec.age_78'Img &
-         "age_79 = " & rec.age_79'Img &
-         "age_80 = " & rec.age_80'Img &
-         "age_81 = " & rec.age_81'Img &
-         "age_82 = " & rec.age_82'Img &
-         "age_83 = " & rec.age_83'Img &
-         "age_84 = " & rec.age_84'Img &
-         "age_85 = " & rec.age_85'Img &
-         "age_86 = " & rec.age_86'Img &
-         "age_87 = " & rec.age_87'Img &
-         "age_88 = " & rec.age_88'Img &
-         "age_89 = " & rec.age_89'Img &
-         "age_90 = " & rec.age_90'Img &
-         "age_91 = " & rec.age_91'Img &
-         "age_92 = " & rec.age_92'Img &
-         "age_93 = " & rec.age_93'Img &
-         "age_94 = " & rec.age_94'Img &
-         "age_95 = " & rec.age_95'Img &
-         "age_96 = " & rec.age_96'Img &
-         "age_97 = " & rec.age_97'Img &
-         "age_98 = " & rec.age_98'Img &
-         "age_99 = " & rec.age_99'Img &
-         "age_100 = " & rec.age_100'Img &
-         "age_101 = " & rec.age_101'Img &
-         "age_102 = " & rec.age_102'Img &
-         "age_103 = " & rec.age_103'Img &
-         "age_104 = " & rec.age_104'Img &
-         "age_105 = " & rec.age_105'Img &
-         "age_106 = " & rec.age_106'Img &
-         "age_107 = " & rec.age_107'Img &
-         "age_108 = " & rec.age_108'Img &
-         "age_109 = " & rec.age_109'Img &
-         "age_110 = " & rec.age_110'Img &
          "participation_16_19_male = " & rec.participation_16_19_male'Img &
          "participation_20_24_male = " & rec.participation_20_24_male'Img &
          "participation_25_29_male = " & rec.participation_25_29_male'Img &
@@ -761,123 +675,123 @@ package body Ukds.target_data is
 
         
    -- === CUSTOM PROCS START ===
-                                      
-   function To_Array( popn : Population_Forecasts ) return Age_Range_Array is                                   
-      a : Age_Range_Array;                                   
-   begin                                   
-      a( 0 ) := popn.age_0;                                   
-      a( 1 ) := popn.age_1;                                   
-      a( 2 ) := popn.age_2;                                   
-      a( 3 ) := popn.age_3;                                   
-      a( 4 ) := popn.age_4;                                   
-      a( 5 ) := popn.age_5;                                   
-      a( 6 ) := popn.age_6;                                   
-      a( 7 ) := popn.age_7;                                   
-      a( 8 ) := popn.age_8;                                   
-      a( 9 ) := popn.age_9;                                   
-      a( 10 ) := popn.age_10;                                   
-      a( 11 ) := popn.age_11;                                   
-      a( 12 ) := popn.age_12;                                   
-      a( 13 ) := popn.age_13;                                   
-      a( 14 ) := popn.age_14;                                   
-      a( 15 ) := popn.age_15;                                   
-      a( 16 ) := popn.age_16;                                   
-      a( 17 ) := popn.age_17;                                   
-      a( 18 ) := popn.age_18;                                   
-      a( 19 ) := popn.age_19;                                   
-      a( 20 ) := popn.age_20;                                   
-      a( 21 ) := popn.age_21;                                   
-      a( 22 ) := popn.age_22;                                   
-      a( 23 ) := popn.age_23;                                   
-      a( 24 ) := popn.age_24;                                   
-      a( 25 ) := popn.age_25;                                   
-      a( 26 ) := popn.age_26;                                   
-      a( 27 ) := popn.age_27;                                   
-      a( 28 ) := popn.age_28;                                   
-      a( 29 ) := popn.age_29;                                   
-      a( 30 ) := popn.age_30;                                   
-      a( 31 ) := popn.age_31;                                   
-      a( 32 ) := popn.age_32;                                   
-      a( 33 ) := popn.age_33;                                   
-      a( 34 ) := popn.age_34;                                   
-      a( 35 ) := popn.age_35;                                   
-      a( 36 ) := popn.age_36;                                   
-      a( 37 ) := popn.age_37;                                   
-      a( 38 ) := popn.age_38;                                   
-      a( 39 ) := popn.age_39;                                   
-      a( 40 ) := popn.age_40;                                   
-      a( 41 ) := popn.age_41;                                   
-      a( 42 ) := popn.age_42;                                   
-      a( 43 ) := popn.age_43;                                   
-      a( 44 ) := popn.age_44;                                   
-      a( 45 ) := popn.age_45;                                   
-      a( 46 ) := popn.age_46;                                   
-      a( 47 ) := popn.age_47;                                   
-      a( 48 ) := popn.age_48;                                   
-      a( 49 ) := popn.age_49;                                   
-      a( 50 ) := popn.age_50;                                   
-      a( 51 ) := popn.age_51;                                   
-      a( 52 ) := popn.age_52;                                   
-      a( 53 ) := popn.age_53;                                   
-      a( 54 ) := popn.age_54;                                   
-      a( 55 ) := popn.age_55;                                   
-      a( 56 ) := popn.age_56;                                   
-      a( 57 ) := popn.age_57;                                   
-      a( 58 ) := popn.age_58;                                   
-      a( 59 ) := popn.age_59;                                   
-      a( 60 ) := popn.age_60;                                   
-      a( 61 ) := popn.age_61;                                   
-      a( 62 ) := popn.age_62;                                   
-      a( 63 ) := popn.age_63;                                   
-      a( 64 ) := popn.age_64;                                   
-      a( 65 ) := popn.age_65;                                   
-      a( 66 ) := popn.age_66;                                   
-      a( 67 ) := popn.age_67;                                   
-      a( 68 ) := popn.age_68;                                   
-      a( 69 ) := popn.age_69;                                   
-      a( 70 ) := popn.age_70;                                   
-      a( 71 ) := popn.age_71;                                   
-      a( 72 ) := popn.age_72;                                   
-      a( 73 ) := popn.age_73;                                   
-      a( 74 ) := popn.age_74;                                   
-      a( 75 ) := popn.age_75;                                   
-      a( 76 ) := popn.age_76;                                   
-      a( 77 ) := popn.age_77;                                   
-      a( 78 ) := popn.age_78;                                   
-      a( 79 ) := popn.age_79;                                   
-      a( 80 ) := popn.age_80;                                   
-      a( 81 ) := popn.age_81;                                   
-      a( 82 ) := popn.age_82;                                   
-      a( 83 ) := popn.age_83;                                   
-      a( 84 ) := popn.age_84;                                   
-      a( 85 ) := popn.age_85;                                   
-      a( 86 ) := popn.age_86;                                   
-      a( 87 ) := popn.age_87;                                   
-      a( 88 ) := popn.age_88;                                   
-      a( 89 ) := popn.age_89;                                   
-      a( 90 ) := popn.age_90 +                                  
-         popn.age_91 +                                  
-         popn.age_92 +                                  
-         popn.age_93 +                                  
-         popn.age_94 +                                  
-         popn.age_95 +                                  
-         popn.age_96 +                                  
-         popn.age_97 +                                  
-         popn.age_98 +                                  
-         popn.age_99 +                                  
-         popn.age_100+                                  
-         popn.age_102 +                                  
-         popn.age_103 +                                  
-         popn.age_104 +                                  
-         popn.age_105 +                                  
-         popn.age_106 +                                  
-         popn.age_107 +                                  
-         popn.age_108 +                                  
-         popn.age_109 +                                  
-         popn.age_110;                                   
-      return a;                                   
-   end To_Array;                                   
-                                      
+                                          
+   function To_Array( popn : Population_Forecasts ) return Age_Range_Array is                                       
+      a : Age_Range_Array;                                       
+   begin                                       
+      a( 0 ) := popn.age_0;                                       
+      a( 1 ) := popn.age_1;                                       
+      a( 2 ) := popn.age_2;                                       
+      a( 3 ) := popn.age_3;                                       
+      a( 4 ) := popn.age_4;                                       
+      a( 5 ) := popn.age_5;                                       
+      a( 6 ) := popn.age_6;                                       
+      a( 7 ) := popn.age_7;                                       
+      a( 8 ) := popn.age_8;                                       
+      a( 9 ) := popn.age_9;                                       
+      a( 10 ) := popn.age_10;                                       
+      a( 11 ) := popn.age_11;                                       
+      a( 12 ) := popn.age_12;                                       
+      a( 13 ) := popn.age_13;                                       
+      a( 14 ) := popn.age_14;                                       
+      a( 15 ) := popn.age_15;                                       
+      a( 16 ) := popn.age_16;                                       
+      a( 17 ) := popn.age_17;                                       
+      a( 18 ) := popn.age_18;                                       
+      a( 19 ) := popn.age_19;                                       
+      a( 20 ) := popn.age_20;                                       
+      a( 21 ) := popn.age_21;                                       
+      a( 22 ) := popn.age_22;                                       
+      a( 23 ) := popn.age_23;                                       
+      a( 24 ) := popn.age_24;                                       
+      a( 25 ) := popn.age_25;                                       
+      a( 26 ) := popn.age_26;                                       
+      a( 27 ) := popn.age_27;                                       
+      a( 28 ) := popn.age_28;                                       
+      a( 29 ) := popn.age_29;                                       
+      a( 30 ) := popn.age_30;                                       
+      a( 31 ) := popn.age_31;                                       
+      a( 32 ) := popn.age_32;                                       
+      a( 33 ) := popn.age_33;                                       
+      a( 34 ) := popn.age_34;                                       
+      a( 35 ) := popn.age_35;                                       
+      a( 36 ) := popn.age_36;                                       
+      a( 37 ) := popn.age_37;                                       
+      a( 38 ) := popn.age_38;                                       
+      a( 39 ) := popn.age_39;                                       
+      a( 40 ) := popn.age_40;                                       
+      a( 41 ) := popn.age_41;                                       
+      a( 42 ) := popn.age_42;                                       
+      a( 43 ) := popn.age_43;                                       
+      a( 44 ) := popn.age_44;                                       
+      a( 45 ) := popn.age_45;                                       
+      a( 46 ) := popn.age_46;                                       
+      a( 47 ) := popn.age_47;                                       
+      a( 48 ) := popn.age_48;                                       
+      a( 49 ) := popn.age_49;                                       
+      a( 50 ) := popn.age_50;                                       
+      a( 51 ) := popn.age_51;                                       
+      a( 52 ) := popn.age_52;                                       
+      a( 53 ) := popn.age_53;                                       
+      a( 54 ) := popn.age_54;                                       
+      a( 55 ) := popn.age_55;                                       
+      a( 56 ) := popn.age_56;                                       
+      a( 57 ) := popn.age_57;                                       
+      a( 58 ) := popn.age_58;                                       
+      a( 59 ) := popn.age_59;                                       
+      a( 60 ) := popn.age_60;                                       
+      a( 61 ) := popn.age_61;                                       
+      a( 62 ) := popn.age_62;                                       
+      a( 63 ) := popn.age_63;                                       
+      a( 64 ) := popn.age_64;                                       
+      a( 65 ) := popn.age_65;                                       
+      a( 66 ) := popn.age_66;                                       
+      a( 67 ) := popn.age_67;                                       
+      a( 68 ) := popn.age_68;                                       
+      a( 69 ) := popn.age_69;                                       
+      a( 70 ) := popn.age_70;                                       
+      a( 71 ) := popn.age_71;                                       
+      a( 72 ) := popn.age_72;                                       
+      a( 73 ) := popn.age_73;                                       
+      a( 74 ) := popn.age_74;                                       
+      a( 75 ) := popn.age_75;                                       
+      a( 76 ) := popn.age_76;                                       
+      a( 77 ) := popn.age_77;                                       
+      a( 78 ) := popn.age_78;                                       
+      a( 79 ) := popn.age_79;                                       
+      a( 80 ) := popn.age_80;                                       
+      a( 81 ) := popn.age_81;                                       
+      a( 82 ) := popn.age_82;                                       
+      a( 83 ) := popn.age_83;                                       
+      a( 84 ) := popn.age_84;                                       
+      a( 85 ) := popn.age_85;                                       
+      a( 86 ) := popn.age_86;                                       
+      a( 87 ) := popn.age_87;                                       
+      a( 88 ) := popn.age_88;                                       
+      a( 89 ) := popn.age_89;                                       
+      a( 90 ) := popn.age_90 +                                      
+         popn.age_91 +                                      
+         popn.age_92 +                                      
+         popn.age_93 +                                      
+         popn.age_94 +                                      
+         popn.age_95 +                                      
+         popn.age_96 +                                      
+         popn.age_97 +                                      
+         popn.age_98 +                                      
+         popn.age_99 +                                      
+         popn.age_100+                                      
+         popn.age_102 +                                      
+         popn.age_103 +                                      
+         popn.age_104 +                                      
+         popn.age_105 +                                      
+         popn.age_106 +                                      
+         popn.age_107 +                                      
+         popn.age_108 +                                      
+         popn.age_109 +                                      
+         popn.age_110;                                       
+      return a;                                       
+   end To_Array;                                       
+                                          
    -- === CUSTOM PROCS END ===
 
 end Ukds.target_data;

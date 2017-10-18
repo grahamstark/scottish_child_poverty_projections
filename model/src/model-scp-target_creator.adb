@@ -8,6 +8,7 @@ with Ada.Text_IO;
 with Data_Constants;
 with Base_Model_Types;
 with Text_Utils;
+with SCP_Types;
 
 with GNATColl.Traces;
 with GNATCOLL.SQL.Exec;
@@ -34,6 +35,7 @@ package body Model.SCP.Target_Creator is
    use Ada.Calendar;
    use Ada.Strings.Unbounded;
    use GNATCOLL.SQL.Exec;
+   use SCP_Types;
    
    package d renames DB_Commons;
    
@@ -66,26 +68,29 @@ package body Model.SCP.Target_Creator is
             );
             male_popn : constant Population_Forecasts := Population_Forecasts_IO.Retrieve_By_PK(
                year     => year,
-               rec_type => TuS( "persons" ),
+               rec_type => PERSONS,
                variant  => the_run.population_variant,
                country  => the_run.country,
                edition  => the_run.population_edition,
                target_group => TuS( "MALES" )                           
             );
-            households : constant Households_Forecasts := Households_Forecasts_IO.Retrieve_By_PK(
+            scottish_households : constant Households_Forecasts := Households_Forecasts_IO.Retrieve_By_PK(
                year     => year,
-               rec_type => TuS( "households" ),
+               rec_type => HOUSEHOLDS,
                variant  => the_run.households_variant,
-               country  => the_run.country,
+               country  => SCO,
                edition  => the_run.households_edition                   
             );
-            macro : constant Macro_Forecasts := Macro_Forecasts_IO.Retrieve_By_PK(
+            macro_data : constant Macro_Forecasts := Macro_Forecasts_IO.Retrieve_By_PK(
                year     => year,
-               rec_type => TuS( "macro" ),
+               rec_type => MACRO,
                variant  => the_run.macro_variant,
-               country  => TuS( "uk" ), -- for now ..
+               country  => UK, -- for now ..
                edition  => the_run.macro_edition                   
-            ); 
+            );
+            
+            
+            
             age_16_plus : Amount := 0.0;
             targets     : Target_Dataset; 
          begin
@@ -95,22 +100,17 @@ package body Model.SCP.Target_Creator is
             targets.year := year;
             targets.sernum := Sernum_Value'First;
 
-            targets.household_one_adult_male := households.one_adult_male;
-            targets.household_one_adult_female := households.one_adult_female;
-            targets.household_two_adults := households.two_adults;
-            targets.household_one_adult_one_child := households.one_adult_one_child;
-            targets.household_one_adult_two_plus_children := households.one_adult_two_plus_children;
-            targets.household_two_plus_adult_one_plus_children := households.two_plus_adult_one_plus_children;
-            targets.household_three_plus_person_all_adult := households.three_plus_person_all_adult;
-            targets.household_all_households := households.all_households;
-            if the_run.country = TuS( "SCO" )then
-               targets.country_scotland := households.all_households;
-            elsif the_run.country = TuS( "UK" )then
-               targets.country_uk := households.all_households;
-            elsif the_run.country = TuS( "ENG" )then
-               targets.country_england := households.all_households;
-               -- FIXME wales/ire
-            end if;
+            targets.sco_hhld_one_adult_male := scottish_households.one_adult_male;
+            targets.sco_hhld_one_adult_female := scottish_households.one_adult_female;
+            targets.sco_hhld_two_adults := scottish_households.two_adults;
+            targets.sco_hhld_one_adult_one_child := scottish_households.one_adult_one_child;
+            targets.sco_hhld_one_adult_two_plus_children := scottish_households.one_adult_two_plus_children;
+            targets.sco_hhld_two_plus_adult_one_plus_children := scottish_households.two_plus_adult_one_plus_children;
+            targets.sco_hhld_three_plus_person_all_adult := scottish_households.three_plus_person_all_adult;
+            
+            targets.household_all_households := scottish_households.all_households;
+            targets.country_scotland := scottish_households.all_households;
+    
             
             targets.age_0_male := male_popn.age_0;
             targets.age_0_female := female_popn.age_0;
@@ -652,125 +652,132 @@ package body Model.SCP.Target_Creator is
             Inc( age_16_plus, male_popn.age_108 + female_popn.age_108 );
             Inc( age_16_plus, male_popn.age_109 + female_popn.age_109 );
             Inc( age_16_plus, male_popn.age_110 + female_popn.age_110 );
-            targets.age_0 := male_popn.age_0 + female_popn.age_0;
-            targets.age_1 := male_popn.age_1 + female_popn.age_1;
-            targets.age_2 := male_popn.age_2 + female_popn.age_2;
-            targets.age_3 := male_popn.age_3 + female_popn.age_3;
-            targets.age_4 := male_popn.age_4 + female_popn.age_4;
-            targets.age_5 := male_popn.age_5 + female_popn.age_5;
-            targets.age_6 := male_popn.age_6 + female_popn.age_6;
-            targets.age_7 := male_popn.age_7 + female_popn.age_7;
-            targets.age_8 := male_popn.age_8 + female_popn.age_8;
-            targets.age_9 := male_popn.age_9 + female_popn.age_9;
-            targets.age_10 := male_popn.age_10 + female_popn.age_10;
-            targets.age_11 := male_popn.age_11 + female_popn.age_11;
-            targets.age_12 := male_popn.age_12 + female_popn.age_12;
-            targets.age_13 := male_popn.age_13 + female_popn.age_13;
-            targets.age_14 := male_popn.age_14 + female_popn.age_14;
-            targets.age_15 := male_popn.age_15 + female_popn.age_15;
-            targets.age_16 := male_popn.age_16 + female_popn.age_16;
-            targets.age_17 := male_popn.age_17 + female_popn.age_17;
-            targets.age_18 := male_popn.age_18 + female_popn.age_18;
-            targets.age_19 := male_popn.age_19 + female_popn.age_19;
-            targets.age_20 := male_popn.age_20 + female_popn.age_20;
-            targets.age_21 := male_popn.age_21 + female_popn.age_21;
-            targets.age_22 := male_popn.age_22 + female_popn.age_22;
-            targets.age_23 := male_popn.age_23 + female_popn.age_23;
-            targets.age_24 := male_popn.age_24 + female_popn.age_24;
-            targets.age_25 := male_popn.age_25 + female_popn.age_25;
-            targets.age_26 := male_popn.age_26 + female_popn.age_26;
-            targets.age_27 := male_popn.age_27 + female_popn.age_27;
-            targets.age_28 := male_popn.age_28 + female_popn.age_28;
-            targets.age_29 := male_popn.age_29 + female_popn.age_29;
-            targets.age_30 := male_popn.age_30 + female_popn.age_30;
-            targets.age_31 := male_popn.age_31 + female_popn.age_31;
-            targets.age_32 := male_popn.age_32 + female_popn.age_32;
-            targets.age_33 := male_popn.age_33 + female_popn.age_33;
-            targets.age_34 := male_popn.age_34 + female_popn.age_34;
-            targets.age_35 := male_popn.age_35 + female_popn.age_35;
-            targets.age_36 := male_popn.age_36 + female_popn.age_36;
-            targets.age_37 := male_popn.age_37 + female_popn.age_37;
-            targets.age_38 := male_popn.age_38 + female_popn.age_38;
-            targets.age_39 := male_popn.age_39 + female_popn.age_39;
-            targets.age_40 := male_popn.age_40 + female_popn.age_40;
-            targets.age_41 := male_popn.age_41 + female_popn.age_41;
-            targets.age_42 := male_popn.age_42 + female_popn.age_42;
-            targets.age_43 := male_popn.age_43 + female_popn.age_43;
-            targets.age_44 := male_popn.age_44 + female_popn.age_44;
-            targets.age_45 := male_popn.age_45 + female_popn.age_45;
-            targets.age_46 := male_popn.age_46 + female_popn.age_46;
-            targets.age_47 := male_popn.age_47 + female_popn.age_47;
-            targets.age_48 := male_popn.age_48 + female_popn.age_48;
-            targets.age_49 := male_popn.age_49 + female_popn.age_49;
-            targets.age_50 := male_popn.age_50 + female_popn.age_50;
-            targets.age_51 := male_popn.age_51 + female_popn.age_51;
-            targets.age_52 := male_popn.age_52 + female_popn.age_52;
-            targets.age_53 := male_popn.age_53 + female_popn.age_53;
-            targets.age_54 := male_popn.age_54 + female_popn.age_54;
-            targets.age_55 := male_popn.age_55 + female_popn.age_55;
-            targets.age_56 := male_popn.age_56 + female_popn.age_56;
-            targets.age_57 := male_popn.age_57 + female_popn.age_57;
-            targets.age_58 := male_popn.age_58 + female_popn.age_58;
-            targets.age_59 := male_popn.age_59 + female_popn.age_59;
-            targets.age_60 := male_popn.age_60 + female_popn.age_60;
-            targets.age_61 := male_popn.age_61 + female_popn.age_61;
-            targets.age_62 := male_popn.age_62 + female_popn.age_62;
-            targets.age_63 := male_popn.age_63 + female_popn.age_63;
-            targets.age_64 := male_popn.age_64 + female_popn.age_64;
-            targets.age_65 := male_popn.age_65 + female_popn.age_65;
-            targets.age_66 := male_popn.age_66 + female_popn.age_66;
-            targets.age_67 := male_popn.age_67 + female_popn.age_67;
-            targets.age_68 := male_popn.age_68 + female_popn.age_68;
-            targets.age_69 := male_popn.age_69 + female_popn.age_69;
-            targets.age_70 := male_popn.age_70 + female_popn.age_70;
-            targets.age_71 := male_popn.age_71 + female_popn.age_71;
-            targets.age_72 := male_popn.age_72 + female_popn.age_72;
-            targets.age_73 := male_popn.age_73 + female_popn.age_73;
-            targets.age_74 := male_popn.age_74 + female_popn.age_74;
-            targets.age_75 := male_popn.age_75 + female_popn.age_75;
-            targets.age_76 := male_popn.age_76 + female_popn.age_76;
-            targets.age_77 := male_popn.age_77 + female_popn.age_77;
-            targets.age_78 := male_popn.age_78 + female_popn.age_78;
-            targets.age_79 := male_popn.age_79 + female_popn.age_79;
-            targets.age_80 := male_popn.age_80 + female_popn.age_80;
-            targets.age_81 := male_popn.age_81 + female_popn.age_81;
-            targets.age_82 := male_popn.age_82 + female_popn.age_82;
-            targets.age_83 := male_popn.age_83 + female_popn.age_83;
-            targets.age_84 := male_popn.age_84 + female_popn.age_84;
-            targets.age_85 := male_popn.age_85 + female_popn.age_85;
-            targets.age_86 := male_popn.age_86 + female_popn.age_86;
-            targets.age_87 := male_popn.age_87 + female_popn.age_87;
-            targets.age_88 := male_popn.age_88 + female_popn.age_88;
-            targets.age_89 := male_popn.age_89 + female_popn.age_89;
-            targets.age_90 := male_popn.age_90 + female_popn.age_90;
-            targets.age_91 := male_popn.age_91 + female_popn.age_91;
-            targets.age_92 := male_popn.age_92 + female_popn.age_92;
-            targets.age_93 := male_popn.age_93 + female_popn.age_93;
-            targets.age_94 := male_popn.age_94 + female_popn.age_94;
-            targets.age_95 := male_popn.age_95 + female_popn.age_95;
-            targets.age_96 := male_popn.age_96 + female_popn.age_96;
-            targets.age_97 := male_popn.age_97 + female_popn.age_97;
-            targets.age_98 := male_popn.age_98 + female_popn.age_98;
-            targets.age_99 := male_popn.age_99 + female_popn.age_99;
-            targets.age_100 := male_popn.age_100 + female_popn.age_100;
-            targets.age_101 := male_popn.age_101 + female_popn.age_101;
-            targets.age_102 := male_popn.age_102 + female_popn.age_102;
-            targets.age_103 := male_popn.age_103 + female_popn.age_103;
-            targets.age_104 := male_popn.age_104 + female_popn.age_104;
-            targets.age_105 := male_popn.age_105 + female_popn.age_105;
-            targets.age_106 := male_popn.age_106 + female_popn.age_106;
-            targets.age_107 := male_popn.age_107 + female_popn.age_107;
-            targets.age_108 := male_popn.age_108 + female_popn.age_108;
-            targets.age_109 := male_popn.age_109 + female_popn.age_109;
-            targets.age_110 := male_popn.age_110 + female_popn.age_110;     
+            -- targets.age_0 := male_popn.age_0 + female_popn.age_0;
+            -- targets.age_1 := male_popn.age_1 + female_popn.age_1;
+            -- targets.age_2 := male_popn.age_2 + female_popn.age_2;
+            -- targets.age_3 := male_popn.age_3 + female_popn.age_3;
+            -- targets.age_4 := male_popn.age_4 + female_popn.age_4;
+            -- targets.age_5 := male_popn.age_5 + female_popn.age_5;
+            -- targets.age_6 := male_popn.age_6 + female_popn.age_6;
+            -- targets.age_7 := male_popn.age_7 + female_popn.age_7;
+            -- targets.age_8 := male_popn.age_8 + female_popn.age_8;
+            -- targets.age_9 := male_popn.age_9 + female_popn.age_9;
+            -- targets.age_10 := male_popn.age_10 + female_popn.age_10;
+            -- targets.age_11 := male_popn.age_11 + female_popn.age_11;
+            -- targets.age_12 := male_popn.age_12 + female_popn.age_12;
+            -- targets.age_13 := male_popn.age_13 + female_popn.age_13;
+            -- targets.age_14 := male_popn.age_14 + female_popn.age_14;
+            -- targets.age_15 := male_popn.age_15 + female_popn.age_15;
+            -- targets.age_16 := male_popn.age_16 + female_popn.age_16;
+            -- targets.age_17 := male_popn.age_17 + female_popn.age_17;
+            -- targets.age_18 := male_popn.age_18 + female_popn.age_18;
+            -- targets.age_19 := male_popn.age_19 + female_popn.age_19;
+            -- targets.age_20 := male_popn.age_20 + female_popn.age_20;
+            -- targets.age_21 := male_popn.age_21 + female_popn.age_21;
+            -- targets.age_22 := male_popn.age_22 + female_popn.age_22;
+            -- targets.age_23 := male_popn.age_23 + female_popn.age_23;
+            -- targets.age_24 := male_popn.age_24 + female_popn.age_24;
+            -- targets.age_25 := male_popn.age_25 + female_popn.age_25;
+            -- targets.age_26 := male_popn.age_26 + female_popn.age_26;
+            -- targets.age_27 := male_popn.age_27 + female_popn.age_27;
+            -- targets.age_28 := male_popn.age_28 + female_popn.age_28;
+            -- targets.age_29 := male_popn.age_29 + female_popn.age_29;
+            -- targets.age_30 := male_popn.age_30 + female_popn.age_30;
+            -- targets.age_31 := male_popn.age_31 + female_popn.age_31;
+            -- targets.age_32 := male_popn.age_32 + female_popn.age_32;
+            -- targets.age_33 := male_popn.age_33 + female_popn.age_33;
+            -- targets.age_34 := male_popn.age_34 + female_popn.age_34;
+            -- targets.age_35 := male_popn.age_35 + female_popn.age_35;
+            -- targets.age_36 := male_popn.age_36 + female_popn.age_36;
+            -- targets.age_37 := male_popn.age_37 + female_popn.age_37;
+            -- targets.age_38 := male_popn.age_38 + female_popn.age_38;
+            -- targets.age_39 := male_popn.age_39 + female_popn.age_39;
+            -- targets.age_40 := male_popn.age_40 + female_popn.age_40;
+            -- targets.age_41 := male_popn.age_41 + female_popn.age_41;
+            -- targets.age_42 := male_popn.age_42 + female_popn.age_42;
+            -- targets.age_43 := male_popn.age_43 + female_popn.age_43;
+            -- targets.age_44 := male_popn.age_44 + female_popn.age_44;
+            -- targets.age_45 := male_popn.age_45 + female_popn.age_45;
+            -- targets.age_46 := male_popn.age_46 + female_popn.age_46;
+            -- targets.age_47 := male_popn.age_47 + female_popn.age_47;
+            -- targets.age_48 := male_popn.age_48 + female_popn.age_48;
+            -- targets.age_49 := male_popn.age_49 + female_popn.age_49;
+            -- targets.age_50 := male_popn.age_50 + female_popn.age_50;
+            -- targets.age_51 := male_popn.age_51 + female_popn.age_51;
+            -- targets.age_52 := male_popn.age_52 + female_popn.age_52;
+            -- targets.age_53 := male_popn.age_53 + female_popn.age_53;
+            -- targets.age_54 := male_popn.age_54 + female_popn.age_54;
+            -- targets.age_55 := male_popn.age_55 + female_popn.age_55;
+            -- targets.age_56 := male_popn.age_56 + female_popn.age_56;
+            -- targets.age_57 := male_popn.age_57 + female_popn.age_57;
+            -- targets.age_58 := male_popn.age_58 + female_popn.age_58;
+            -- targets.age_59 := male_popn.age_59 + female_popn.age_59;
+            -- targets.age_60 := male_popn.age_60 + female_popn.age_60;
+            -- targets.age_61 := male_popn.age_61 + female_popn.age_61;
+            -- targets.age_62 := male_popn.age_62 + female_popn.age_62;
+            -- targets.age_63 := male_popn.age_63 + female_popn.age_63;
+            -- targets.age_64 := male_popn.age_64 + female_popn.age_64;
+            -- targets.age_65 := male_popn.age_65 + female_popn.age_65;
+            -- targets.age_66 := male_popn.age_66 + female_popn.age_66;
+            -- targets.age_67 := male_popn.age_67 + female_popn.age_67;
+            -- targets.age_68 := male_popn.age_68 + female_popn.age_68;
+            -- targets.age_69 := male_popn.age_69 + female_popn.age_69;
+            -- targets.age_70 := male_popn.age_70 + female_popn.age_70;
+            -- targets.age_71 := male_popn.age_71 + female_popn.age_71;
+            -- targets.age_72 := male_popn.age_72 + female_popn.age_72;
+            -- targets.age_73 := male_popn.age_73 + female_popn.age_73;
+            -- targets.age_74 := male_popn.age_74 + female_popn.age_74;
+            -- targets.age_75 := male_popn.age_75 + female_popn.age_75;
+            -- targets.age_76 := male_popn.age_76 + female_popn.age_76;
+            -- targets.age_77 := male_popn.age_77 + female_popn.age_77;
+            -- targets.age_78 := male_popn.age_78 + female_popn.age_78;
+            -- targets.age_79 := male_popn.age_79 + female_popn.age_79;
+            -- targets.age_80 := male_popn.age_80 + female_popn.age_80;
+            -- targets.age_81 := male_popn.age_81 + female_popn.age_81;
+            -- targets.age_82 := male_popn.age_82 + female_popn.age_82;
+            -- targets.age_83 := male_popn.age_83 + female_popn.age_83;
+            -- targets.age_84 := male_popn.age_84 + female_popn.age_84;
+            -- targets.age_85 := male_popn.age_85 + female_popn.age_85;
+            -- targets.age_86 := male_popn.age_86 + female_popn.age_86;
+            -- targets.age_87 := male_popn.age_87 + female_popn.age_87;
+            -- targets.age_88 := male_popn.age_88 + female_popn.age_88;
+            -- targets.age_89 := male_popn.age_89 + female_popn.age_89;
+            -- targets.age_90 := male_popn.age_90 + female_popn.age_90;
+            -- targets.age_91 := male_popn.age_91 + female_popn.age_91;
+            -- targets.age_92 := male_popn.age_92 + female_popn.age_92;
+            -- targets.age_93 := male_popn.age_93 + female_popn.age_93;
+            -- targets.age_94 := male_popn.age_94 + female_popn.age_94;
+            -- targets.age_95 := male_popn.age_95 + female_popn.age_95;
+            -- targets.age_96 := male_popn.age_96 + female_popn.age_96;
+            -- targets.age_97 := male_popn.age_97 + female_popn.age_97;
+            -- targets.age_98 := male_popn.age_98 + female_popn.age_98;
+            -- targets.age_99 := male_popn.age_99 + female_popn.age_99;
+            -- targets.age_100 := male_popn.age_100 + female_popn.age_100;
+            -- targets.age_101 := male_popn.age_101 + female_popn.age_101;
+            -- targets.age_102 := male_popn.age_102 + female_popn.age_102;
+            -- targets.age_103 := male_popn.age_103 + female_popn.age_103;
+            -- targets.age_104 := male_popn.age_104 + female_popn.age_104;
+            -- targets.age_105 := male_popn.age_105 + female_popn.age_105;
+            -- targets.age_106 := male_popn.age_106 + female_popn.age_106;
+            -- targets.age_107 := male_popn.age_107 + female_popn.age_107;
+            -- targets.age_108 := male_popn.age_108 + female_popn.age_108;
+            -- targets.age_109 := male_popn.age_109 + female_popn.age_109;
+            -- targets.age_110 := male_popn.age_110 + female_popn.age_110;     
             
-            targets.employed := age_16_plus * macro.employment_rate/100.0;
-            targets.ilo_unemployed := age_16_plus * macro.ilo_unemployment_rate/100.0;
+            targets.employed := age_16_plus * macro_data.employment_rate/100.0;
+            targets.ilo_unemployed := age_16_plus * macro_data.ilo_unemployment_rate/100.0;
+            
+            --
+            -- TODO participation scale down for scotland
+            -- 
+            
+            
             -- horrible reverse engineering
+            -- TODO BOUNDS ON YEARS
             declare               
-               implied_16_plus        : constant Amount := 100.0*macro.employment/macro.employment_rate;
-               implied_employees_rate : constant Amount := macro.employees/implied_16_plus;
-               implied_claimant_rate  : constant Amount := macro.claimant_count/implied_16_plus;
+               implied_16_plus        : constant Amount := 100.0*macro_data.employment/macro_data.employment_rate;
+               implied_employees_rate : constant Amount := macro_data.employees/implied_16_plus;
+               implied_claimant_rate  : constant Amount := macro_data.claimant_count/implied_16_plus;
             begin
                Log( "over 16s " & Format( age_16_plus ));
                Log( "implied 16 plus (UK) " & Format( implied_16_plus ));
