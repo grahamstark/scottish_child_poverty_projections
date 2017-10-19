@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-10-18 13:47:18.984993
+-- Created by ada_generator.py on 2017-10-19 12:07:27.861250
 -- 
 with Ada.Containers.Vectors;
 --
@@ -58,7 +58,7 @@ package Ukds.target_data is
       eng_hhld_one_person_households_male : Amount := 0.0;
       eng_hhld_one_person_households_female : Amount := 0.0;
       eng_hhld_one_family_and_no_others_couple_no_dependent_chi : Amount := 0.0;
-      eng_hhld_a_couple_and_one_or_more_other_adults_no_dependent_children : Amount := 0.0;
+      eng_hhld_a_couple_and_other_adults_no_dependent_children : Amount := 0.0;
       eng_hhld_households_with_one_dependent_child : Amount := 0.0;
       eng_hhld_households_with_two_dependent_children : Amount := 0.0;
       eng_hhld_households_with_three_dependent_children : Amount := 0.0;
@@ -378,7 +378,7 @@ package Ukds.target_data is
          eng_hhld_one_person_households_male => 0.0,
          eng_hhld_one_person_households_female => 0.0,
          eng_hhld_one_family_and_no_others_couple_no_dependent_chi => 0.0,
-         eng_hhld_a_couple_and_one_or_more_other_adults_no_dependent_children => 0.0,
+         eng_hhld_a_couple_and_other_adults_no_dependent_children => 0.0,
          eng_hhld_households_with_one_dependent_child => 0.0,
          eng_hhld_households_with_two_dependent_children => 0.0,
          eng_hhld_households_with_three_dependent_children => 0.0,
@@ -1482,12 +1482,12 @@ package Ukds.target_data is
 
         
    -- === CUSTOM PROCS START ===
+                                           
+   subtype Forecast_Age_Ranges is Natural range 0 .. 90;                                        
+   type Age_Range_Array is array( Forecast_Age_Ranges ) of Amount;                                         
                                           
-   subtype Forecast_Age_Ranges is Natural range 0 .. 90;                                       
-   type Age_Range_Array is array( Forecast_Age_Ranges ) of Amount;                                        
-                                         
-   function To_Array( popn : Population_Forecasts ) return Age_Range_Array;                                       
-                                          
+   function To_Array( popn : Population_Forecasts ) return Age_Range_Array;                                        
+                                           
    -- === CUSTOM PROCS END ===
 
 end Ukds.target_data;

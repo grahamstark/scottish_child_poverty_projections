@@ -431,7 +431,7 @@
                   <column name='eng_hhld_one_person_households_male' description='One person households: Male' default='0.0' type='REAL' adaTypeName='Amount' />
                   <column name='eng_hhld_one_person_households_female' description='One person households: Female' default='0.0' type='REAL' adaTypeName='Amount' />
                   <column name='eng_hhld_one_family_and_no_others_couple_no_dependent_chi' description='One family and no others: Couple: No dependent children' default='0.0' type='REAL' adaTypeName='Amount' />
-                  <column name='eng_hhld_a_couple_and_one_or_more_other_adults_no_dependent_children' description='A couple and one or more other adults: No dependent children' default='0.0' type='REAL' adaTypeName='Amount' />
+                  <column name='eng_hhld_a_couple_and_other_adults_no_dependent_children' description='A couple and one or more other adults: No dependent children' default='0.0' type='REAL' adaTypeName='Amount' />
                   <column name='eng_hhld_households_with_one_dependent_child' description='Households with one dependent child' default='0.0' type='REAL' adaTypeName='Amount' />
                   <column name='eng_hhld_households_with_two_dependent_children' description='Households with two dependent children' default='0.0' type='REAL' adaTypeName='Amount' />
                   <column name='eng_hhld_households_with_three_dependent_children' description='Households with three dependent children' default='0.0' type='REAL' adaTypeName='Amount' />

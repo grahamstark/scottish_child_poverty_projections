@@ -87,6 +87,39 @@ package body Model.SCP.FRS_Creator is
             case household_r.gvtregn is
                when 1 .. 10 | 112000001 .. 112000009 =>
                   Inc( targets.country_england );
+                  case household_r.hhcomps is
+                     when 1 | -- One male adult, no children over pension age
+                          3 =>  -- One male adult, no children, under pension age  
+                        Inc( targets.eng_hhld_one_person_households_male );
+                     when 2 | -- One female adult, no children over pension age
+                          4 =>  -- One female adult, no children, under pension age
+                        Inc( targets.eng_hhld_one_person_households_female );
+                     when 5 | -- Two adults, no children, both over pension age
+                          6 | -- Two adults, no children, one over pension age
+                          7 => -- Two adults, no children, both under pension age
+                        Inc( targets.eng_hhld_one_family_and_no_others_couple_no_dependent_chi );
+                     when 8 => -- Three or more adults, no children
+                        Inc( targets.eng_hhld_a_couple_and_other_adults_no_dependent_children );
+                     when 9 | -- One adult, one child
+                         12 | -- Two adults, one child
+                         15 => -- Three or more adults, one child
+                          
+                        Inc( targets.eng_hhld_households_with_one_dependent_child );
+                     when 10 | -- One adult, two children
+                          13 | -- Two adults, two children            
+                          16 => -- Three or more adults, two children                     
+                       Inc( targets.eng_hhld_households_with_two_dependent_children );
+                     when 
+                          11 | -- One adult, three or more children
+                          14 | -- Two adults, three or more children
+                          17 => -- Three or more adults, three or more chidren
+                        if household_r.depchldh = 3 then
+                           Inc( targets.eng_hhld_households_with_three_dependent_children );
+                        else
+                           Inc( targets.eng_hhld_other_households );
+                        end if;
+                     when others => null; -- covered by assert
+                  end case;
                when 11 | 399999999 =>
                   Inc( targets.country_wales );
                   case household_r.hhcomps is
@@ -191,7 +224,7 @@ package body Model.SCP.FRS_Creator is
                          17 => -- Three or more adults, three or more chidren
                         Inc( targets.nir_hhld_other_households_with_children );
                      when others => null; -- covered by assert
-                  
+                  end case;
                   
                when others =>
                   Assert( false, "out of range region " & household_r.gvtregn'Img );

@@ -1,5 +1,5 @@
 --
--- created on 18-10-2017 by Mill
+-- created on 19-10-2017 by Mill
 --
 drop database if exists ukds;
 create database ukds with encoding 'UTF-8';
@@ -369,7 +369,7 @@ CREATE TABLE target_data.target_dataset(
        eng_hhld_one_person_households_male DOUBLE PRECISION default 0.0,
        eng_hhld_one_person_households_female DOUBLE PRECISION default 0.0,
        eng_hhld_one_family_and_no_others_couple_no_dependent_chi DOUBLE PRECISION default 0.0,
-       eng_hhld_a_couple_and_one_or_more_other_adults_no_dependent_children DOUBLE PRECISION default 0.0,
+       eng_hhld_a_couple_and_other_adults_no_dependent_children DOUBLE PRECISION default 0.0,
        eng_hhld_households_with_one_dependent_child DOUBLE PRECISION default 0.0,
        eng_hhld_households_with_two_dependent_children DOUBLE PRECISION default 0.0,
        eng_hhld_households_with_three_dependent_children DOUBLE PRECISION default 0.0,

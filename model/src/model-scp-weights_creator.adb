@@ -134,7 +134,7 @@ package body Model.SCP.Weights_Creator is
             Add_Col( targets.eng_hhld_one_person_households_male );
             Add_Col( targets.eng_hhld_one_person_households_female );
             Add_Col( targets.eng_hhld_one_family_and_no_others_couple_no_dependent_chi );
-            Add_Col( targets.eng_hhld_a_couple_and_one_or_more_other_adults_no_dependent_children );
+            Add_Col( targets.eng_hhld_a_couple_and_other_adults_no_dependent_children );
             Add_Col( targets.eng_hhld_households_with_one_dependent_child );
             Add_Col( targets.eng_hhld_households_with_two_dependent_children );
             Add_Col( targets.eng_hhld_households_with_three_dependent_children );

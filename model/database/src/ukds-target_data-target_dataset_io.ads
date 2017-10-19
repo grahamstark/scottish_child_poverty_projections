@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-10-18 13:47:19.756833
+-- Created by ada_generator.py on 2017-10-19 12:07:28.664309
 -- 
 with Ukds;
 with DB_Commons;
@@ -116,7 +116,7 @@ package Ukds.Target_Data.Target_Dataset_IO is
    procedure Add_eng_hhld_one_person_households_male( c : in out d.Criteria; eng_hhld_one_person_households_male : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_eng_hhld_one_person_households_female( c : in out d.Criteria; eng_hhld_one_person_households_female : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_eng_hhld_one_family_and_no_others_couple_no_dependent_chi( c : in out d.Criteria; eng_hhld_one_family_and_no_others_couple_no_dependent_chi : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
-   procedure Add_eng_hhld_a_couple_and_one_or_more_other_adults_no_dependent_children( c : in out d.Criteria; eng_hhld_a_couple_and_one_or_more_other_adults_no_dependent_children : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_eng_hhld_a_couple_and_other_adults_no_dependent_children( c : in out d.Criteria; eng_hhld_a_couple_and_other_adults_no_dependent_children : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_eng_hhld_households_with_one_dependent_child( c : in out d.Criteria; eng_hhld_households_with_one_dependent_child : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_eng_hhld_households_with_two_dependent_children( c : in out d.Criteria; eng_hhld_households_with_two_dependent_children : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_eng_hhld_households_with_three_dependent_children( c : in out d.Criteria; eng_hhld_households_with_three_dependent_children : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
@@ -427,7 +427,7 @@ package Ukds.Target_Data.Target_Dataset_IO is
    procedure Add_eng_hhld_one_person_households_male_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_eng_hhld_one_person_households_female_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_eng_hhld_one_family_and_no_others_couple_no_dependent_chi_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
-   procedure Add_eng_hhld_a_couple_and_one_or_more_other_adults_no_dependent_children_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_eng_hhld_a_couple_and_other_adults_no_dependent_children_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_eng_hhld_households_with_one_dependent_child_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_eng_hhld_households_with_two_dependent_children_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_eng_hhld_households_with_three_dependent_children_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
@@ -741,7 +741,7 @@ package Ukds.Target_Data.Target_Dataset_IO is
    --   18 : eng_hhld_one_person_households_male : Parameter_Float    : Amount               :      0.0 
    --   19 : eng_hhld_one_person_households_female : Parameter_Float    : Amount               :      0.0 
    --   20 : eng_hhld_one_family_and_no_others_couple_no_dependent_chi : Parameter_Float    : Amount               :      0.0 
-   --   21 : eng_hhld_a_couple_and_one_or_more_other_adults_no_dependent_children : Parameter_Float    : Amount               :      0.0 
+   --   21 : eng_hhld_a_couple_and_other_adults_no_dependent_children : Parameter_Float    : Amount               :      0.0 
    --   22 : eng_hhld_households_with_one_dependent_child : Parameter_Float    : Amount               :      0.0 
    --   23 : eng_hhld_households_with_two_dependent_children : Parameter_Float    : Amount               :      0.0 
    --   24 : eng_hhld_households_with_three_dependent_children : Parameter_Float    : Amount               :      0.0 
