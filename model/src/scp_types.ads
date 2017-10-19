@@ -15,6 +15,8 @@ package SCP_Types is
       NIR_C,
       UK_C );
       
+   type Genders is ( male, female );   
+      
    function Image( c : Countries ) return Unbounded_String; 
    
    SCO : constant Unbounded_String := To_Unbounded_String( "SCO" );

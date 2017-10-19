@@ -50,7 +50,13 @@ package body Model.SCP.Target_Creator is
    begin
       GNATColl.Traces.Trace( log_trace, s );
    end Log;
-
+   
+   function Get_Participation_Scale( the_run : Run; sex : Integer; age : Integer ) return Amount is
+      type Age_Range is ( v_16_19, v20_24, v25_34, v35_49, v50_64, v65_plus );
+      type Weight_Array is array( age_range ), ( countries ), ( Genders ) of Amount;
+   begin
+      return 0.0;
+   end Get_Participation_Scale;
    
    procedure Create_Dataset( the_run : Run ) is
       pop_crit : d.Criteria;
