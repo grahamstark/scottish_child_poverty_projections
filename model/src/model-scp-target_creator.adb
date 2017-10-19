@@ -146,6 +146,20 @@ package body Model.SCP.Target_Creator is
                targets.eng_hhld_households_with_two_dependent_children := england_hhlds.households_with_two_dependent_children;
                targets.eng_hhld_households_with_three_dependent_children := england_hhlds.households_with_three_dependent_children;
                targets.eng_hhld_other_households := england_hhlds.other_households;
+               declare
+                  s : constant Amount := 
+                  targets.eng_hhld_one_person_households_male +
+                  targets.eng_hhld_one_person_households_female +
+                  targets.eng_hhld_one_family_and_no_others_couple_no_dependent_chi +
+                  targets.eng_hhld_a_couple_and_other_adults_no_dependent_children +
+                  targets.eng_hhld_households_with_one_dependent_child +
+                  targets.eng_hhld_households_with_two_dependent_children +
+                  targets.eng_hhld_households_with_three_dependent_children +
+                  targets.eng_hhld_other_households;
+               begin      
+                  Inc( targets.household_all_households, s );
+                  Inc( targets.country_england, s );              
+               end;
             end if;
             
             
