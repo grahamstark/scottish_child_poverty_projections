@@ -167,6 +167,32 @@ package body Model.SCP.FRS_Creator is
 
                when 13 | 499999999 =>
                   Inc( targets.country_n_ireland );
+                  case household_r.hhcomps is
+                     when 1 | -- One male adult, no children over pension age
+                          3 =>  -- One male adult, no children, under pension age  
+                        Inc( targets.nir_hhld_one_adult_households );
+                     when 2 | -- One female adult, no children over pension age
+                          4 =>  -- One female adult, no children, under pension age
+                        Inc( targets.nir_hhld_one_adult_households );
+                     when 5 | -- Two adults, no children, both over pension age
+                          6 | -- Two adults, no children, one over pension age
+                          7 => -- Two adults, no children, both under pension age
+                        Inc( targets.nir_hhld_two_adults_without_children );
+                     when 8 => -- Three or more adults, no children
+                        Inc( targets.nir_hhld_other_households_without_children );
+                     when 9 | -- One adult, one child
+                         10 | -- One adult, two children
+                         11 | -- One adult, three or more children
+                         12 | -- Two adults, one child
+                         13 | -- Two adults, two children            
+                         14 | -- Two adults, three or more children
+                         15 | -- Three or more adults, one child
+                         16 | -- Three or more adults, two children
+                         17 => -- Three or more adults, three or more chidren
+                        Inc( targets.nir_hhld_other_households_with_children );
+                     when others => null; -- covered by assert
+                  
+                  
                when others =>
                   Assert( false, "out of range region " & household_r.gvtregn'Img );
             end case;
