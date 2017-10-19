@@ -975,6 +975,26 @@ package body Model.SCP.FRS_Creator is
                         end if;
                      when others => null; -- the assert above covers this                            
                   end case;
+                  
+                  if adult.DVIL04A /= 4 then -- not inactive == active in our terms
+                     case adult.age80 is
+                        when 16 .. 19 => if( adult.sex = 1 ) then Inc( targets.participation_16_19_male ); else Inc(  targets.participation_16_19_female ); end if;
+                        when 20 .. 24 => if( adult.sex = 1 ) then Inc( targets.participation_20_24_male ); else Inc(  targets.participation_20_24_female ); end if;
+                        when 25 .. 29 => if( adult.sex = 1 ) then Inc( targets.participation_25_29_male ); else Inc(  targets.participation_25_29_female ); end if;
+                        when 30 .. 34 => if( adult.sex = 1 ) then Inc( targets.participation_30_34_male ); else Inc(  targets.participation_30_34_female ); end if;
+                        when 35 .. 39 => if( adult.sex = 1 ) then Inc( targets.participation_35_39_male ); else Inc(  targets.participation_35_39_female ); end if;
+                        when 40 .. 44 => if( adult.sex = 1 ) then Inc( targets.participation_40_44_male ); else Inc(  targets.participation_40_44_female ); end if;
+                        when 45 .. 49 => if( adult.sex = 1 ) then Inc( targets.participation_45_49_male ); else Inc(  targets.participation_45_49_female ); end if;
+                        when 50 .. 54 => if( adult.sex = 1 ) then Inc( targets.participation_50_54_male ); else Inc(  targets.participation_50_54_female ); end if;
+                        when 55 .. 59 => if( adult.sex = 1 ) then Inc( targets.participation_55_59_male ); else Inc(  targets.participation_55_59_female ); end if;
+                        when 60 .. 64 => if( adult.sex = 1 ) then Inc( targets.participation_60_64_male ); else Inc(  targets.participation_60_64_female ); end if;
+                        when 65 .. 69 => if( adult.sex = 1 ) then Inc( targets.participation_65_69_male ); else Inc(  targets.participation_65_69_female ); end if;
+                        when 70 .. 74 => if( adult.sex = 1 ) then Inc( targets.participation_70_74_male ); else Inc(  targets.participation_70_74_female ); end if;
+                        when 75 .. 120 => if( adult.sex = 1 ) then Inc( targets.participation_75_plus_male ); else Inc(  targets.participation_75_plus_female ); end if;
+                        when others => Assert( false, "age out of range for adult; " & adult.age80'Img );
+                     end case;
+                  end if;
+                  
                end loop Adult_Loop;
             end;
             UKDS.Target_Data.Target_Dataset_IO.Save( targets );

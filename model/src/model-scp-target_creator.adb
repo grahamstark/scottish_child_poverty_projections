@@ -17,6 +17,11 @@ with Ukds.Target_Data.Households_Forecasts_IO;
 with Ukds.Target_Data.Run_IO;
 with Ukds.Target_Data.Macro_Forecasts_IO;
 with Ukds.Target_Data.Households_Forecasts_IO;
+with Ukds.Target_Data.England_Households_IO;
+with Ukds.Target_Data.Wales_Households_IO;
+with Ukds.Target_Data.Nireland_Households_IO;
+
+
 with Ukds.Target_Data.Population_Forecasts_IO;
 with Ukds.Target_Data.Target_Dataset_IO;
 
@@ -81,6 +86,28 @@ package body Model.SCP.Target_Creator is
                country  => SCO,
                edition  => the_run.households_edition                   
             );
+           england_hhlds : constant England_Households := England_Households_IO.Retrieve_By_PK(
+               year     => year,
+               rec_type => HOUSEHOLDS,
+               variant  => the_run.households_variant,
+               country  => ENG,
+               edition  => the_run.households_edition                   
+            );
+            wales_hhlds : constant Wales_Households := Wales_Households_IO.Retrieve_By_PK(
+               year     => year,
+               rec_type => HOUSEHOLDS,
+               variant  => the_run.households_variant,
+               country  => WAL,
+               edition  => the_run.households_edition                   
+            );
+            nireland_hhlds : constant Nireland_Households := Nireland_Households_IO.Retrieve_By_PK(
+               year     => year,
+               rec_type => HOUSEHOLDS,
+               variant  => the_run.households_variant,
+               country  => NIR,
+               edition  => the_run.households_edition                   
+            );
+            
             macro_data : constant Macro_Forecasts := Macro_Forecasts_IO.Retrieve_By_PK(
                year     => year,
                rec_type => MACRO,
@@ -99,18 +126,29 @@ package body Model.SCP.Target_Creator is
             targets.user_id := the_run.user_id;
             targets.year := year;
             targets.sernum := Sernum_Value'First;
-
-            targets.sco_hhld_one_adult_male := scottish_households.one_adult_male;
-            targets.sco_hhld_one_adult_female := scottish_households.one_adult_female;
-            targets.sco_hhld_two_adults := scottish_households.two_adults;
-            targets.sco_hhld_one_adult_one_child := scottish_households.one_adult_one_child;
-            targets.sco_hhld_one_adult_two_plus_children := scottish_households.one_adult_two_plus_children;
-            targets.sco_hhld_two_plus_adult_one_plus_children := scottish_households.two_plus_adult_one_plus_children;
-            targets.sco_hhld_three_plus_person_all_adult := scottish_households.three_plus_person_all_adult;
+            if scottish_households /= Null_Households_Forecasts then
+               targets.sco_hhld_one_adult_male := scottish_households.one_adult_male;
+               targets.sco_hhld_one_adult_female := scottish_households.one_adult_female;
+               targets.sco_hhld_two_adults := scottish_households.two_adults;
+               targets.sco_hhld_one_adult_one_child := scottish_households.one_adult_one_child;
+               targets.sco_hhld_one_adult_two_plus_children := scottish_households.one_adult_two_plus_children;
+               targets.sco_hhld_two_plus_adult_one_plus_children := scottish_households.two_plus_adult_one_plus_children;
+               targets.sco_hhld_three_plus_person_all_adult := scottish_households.three_plus_person_all_adult;
+               targets.household_all_households := targets.household_all_households + scottish_households.all_households;
+               targets.country_scotland := scottish_households.all_households;
+            end if;
+            if england_hhlds /= Null_England_Households then   -- actually this is redundant since we'll assign to zero either way          
+               targets.eng_hhld_one_person_households_male := england_hhlds.one_person_households_male;
+               targets.eng_hhld_one_person_households_female := england_hhlds.one_person_households_female;
+               targets.eng_hhld_one_family_and_no_others_couple_no_dependent_chi := england_hhlds.one_family_and_no_others_couple_no_dependent_children;
+               targets.eng_hhld_a_couple_and_other_adults_no_dependent_children := england_hhlds.a_couple_and_one_or_more_other_adults_no_dependent_children;
+               targets.eng_hhld_households_with_one_dependent_child := england_hhlds.households_with_one_dependent_child;
+               targets.eng_hhld_households_with_two_dependent_children := england_hhlds.households_with_two_dependent_children;
+               targets.eng_hhld_households_with_three_dependent_children := england_hhlds.households_with_three_dependent_children;
+               targets.eng_hhld_other_households := england_hhlds.other_households;
+            end if;
             
-            targets.household_all_households := scottish_households.all_households;
-            targets.country_scotland := scottish_households.all_households;
-    
+            
             
             targets.age_0_male := male_popn.age_0;
             targets.age_0_female := female_popn.age_0;
