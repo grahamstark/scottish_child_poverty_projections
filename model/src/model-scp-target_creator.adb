@@ -193,12 +193,23 @@ package body Model.SCP.Target_Creator is
                Inc( targets.country_wales, s );              
             end;
             
-            targets.nir_hhld_one_adult_households := nireland_hhlds.v_one_adult_households;
-            targets.nir_hhld_two_adults_without_children := nireland_hhlds.v_two_adults_without_children;
-            targets.nir_hhld_other_households_without_children := nireland_hhlds.v_other_households_without_children;
-            targets.nir_hhld_one_adult_households_with_children := nireland_hhlds.v_one_adult_households_with_children;
-            targets.nir_hhld_other_households_with_children := nireland_hhlds.v_other_households_with_children;
+            targets.nir_hhld_one_adult_households := nireland_hhlds.one_adult_households;
+            targets.nir_hhld_two_adults_without_children := nireland_hhlds.two_adults_without_children;
+            targets.nir_hhld_other_households_without_children := nireland_hhlds.other_households_without_children;
+            targets.nir_hhld_one_adult_households_with_children := nireland_hhlds.one_adult_households_with_children;
+            targets.nir_hhld_other_households_with_children := nireland_hhlds.other_households_with_children;
             
+            declare 
+               s : constant Amount := 
+               targets.nir_hhld_one_adult_households +
+               targets.nir_hhld_two_adults_without_children +
+               targets.nir_hhld_other_households_without_children +
+               targets.nir_hhld_one_adult_households_with_children +
+               targets.nir_hhld_other_households_with_children;
+            begin
+               Inc( targets.household_all_households, s );
+               Inc( targets.country_n_ireland, s );              
+            end;
             
             targets.age_0_male := male_popn.age_0;
             targets.age_0_female := female_popn.age_0;
