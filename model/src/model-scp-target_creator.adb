@@ -146,7 +146,7 @@ package body Model.SCP.Target_Creator is
                targets.eng_hhld_households_with_two_dependent_children := england_hhlds.households_with_two_dependent_children;
                targets.eng_hhld_households_with_three_dependent_children := england_hhlds.households_with_three_dependent_children;
                targets.eng_hhld_other_households := england_hhlds.other_households;
-               declare
+               declare -- stupid - just have a sum field ..
                   s : constant Amount := 
                   targets.eng_hhld_one_person_households_male +
                   targets.eng_hhld_one_person_households_female +
@@ -161,8 +161,37 @@ package body Model.SCP.Target_Creator is
                   Inc( targets.country_england, s );              
                end;
             end if;
-            
-            
+            -- wales
+            targets.wal_hhld_1_person := wales_hhlds.v_1_person;
+            targets.wal_hhld_2_person_no_children := wales_hhlds.v_2_person_no_children;
+            targets.wal_hhld_2_person_1_adult_1_child := wales_hhlds.v_2_person_1_adult_1_child;
+            targets.wal_hhld_3_person_no_children := wales_hhlds.v_3_person_no_children;
+            targets.wal_hhld_3_person_2_adults_1_child := wales_hhlds.v_3_person_2_adults_1_child;
+            targets.wal_hhld_3_person_1_adult_2_children := wales_hhlds.v_3_person_1_adult_2_children;
+            targets.wal_hhld_4_person_no_children := wales_hhlds.v_4_person_no_children;
+            targets.wal_hhld_4_person_2_plus_adults_1_plus_children := wales_hhlds.v_4_person_2_plus_adults_1_plus_children;
+            targets.wal_hhld_4_person_1_adult_3_children := wales_hhlds.v_4_person_1_adult_3_children;
+            targets.wal_hhld_5_plus_person_no_children := wales_hhlds.v_5_plus_person_no_children;
+            targets.wal_hhld_5_plus_person_2_plus_adults_1_plus_children := wales_hhlds.v_5_plus_person_2_plus_adults_1_plus_children;
+            targets.wal_hhld_5_plus_person_1_adult_4_plus_children := wales_hhlds.v_5_plus_person_1_adult_4_plus_children;
+            declare
+               s : constant Amount := 
+                  targets.wal_hhld_1_person +
+                  targets.wal_hhld_2_person_no_children +
+                  targets.wal_hhld_2_person_1_adult_1_child +
+                  targets.wal_hhld_3_person_no_children +
+                  targets.wal_hhld_3_person_2_adults_1_child +
+                  targets.wal_hhld_3_person_1_adult_2_children +
+                  targets.wal_hhld_4_person_no_children +
+                  targets.wal_hhld_4_person_2_plus_adults_1_plus_children +
+                  targets.wal_hhld_4_person_1_adult_3_children +
+                  targets.wal_hhld_5_plus_person_no_children +
+                  targets.wal_hhld_5_plus_person_2_plus_adults_1_plus_children +
+                  targets.wal_hhld_5_plus_person_1_adult_4_plus_children;
+            begin
+               Inc( targets.household_all_households, s );
+               Inc( targets.country_wales, s );              
+            end;
             
             targets.age_0_male := male_popn.age_0;
             targets.age_0_female := female_popn.age_0;
