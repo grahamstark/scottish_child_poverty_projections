@@ -15,7 +15,7 @@ package SCP_Types is
       NIR_C,
       UK_C );
       
-   type Genders is ( male, female );   
+   type Genders_Type is ( male, female );   
       
    function Image( c : Countries ) return Unbounded_String; 
    
@@ -24,6 +24,8 @@ package SCP_Types is
    WAL : constant Unbounded_String := To_Unbounded_String( "WAL" );
    NIR : constant Unbounded_String := To_Unbounded_String( "NIR" );
    UK  : constant Unbounded_String := To_Unbounded_String( "UK" );
+   
+   function Country_From_Country( s : Unbounded_String ) return Countries; -- amazingly stupid design
    
    PERSONS       : constant Unbounded_String := To_Unbounded_String( "persons" );
    HOUSEHOLDS    : constant Unbounded_String := To_Unbounded_String( "households" );

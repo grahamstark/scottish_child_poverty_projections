@@ -52,10 +52,61 @@ package body Model.SCP.Target_Creator is
    end Log;
    
    function Get_Participation_Scale( the_run : Run; sex : Integer; age : Integer ) return Amount is
-      type Age_Range is ( v_16_19, v20_24, v25_34, v35_49, v50_64, v65_plus );
-      type Weight_Array is array( age_range ), ( countries ), ( Genders ) of Amount;
+      type Age_Range is ( v16_19, v20_24, v25_34, v35_49, v50_64, v65_plus );
+      type Weight_Array is array( age_range, Countries,  Genders_Type ) of Amount;
+      sex_c : Genders_Type := ( if sex = 1 then male else female );
+      cntry : Countries := Country_From_Country( the_run.country );
+      ager : Age_Range; 
+      weights : Weight_Array := ( 
+         v16_19 => (
+                   ( sco_c => ( males => 50.0, females => 49.6 )),
+                   ( eng_c => ( males => 43.5, females => 43.5 )),
+                   ( wal_c => ( males => 42.9, females => 45.0 )),
+                   ( nir_c => ( males => 33.2, females => 33.3 )),
+                   ( uk_c  => ( males => 43.7, females => 43.7 ))),
+         v20_24 => (
+                  ( sco_c => ( males => 76.0, females => 71.8 )),
+                  ( eng_c => ( males => 76.7, females => 71.0 )),
+                  ( wal_c => ( males => 68.2, females => 66.6 )),
+                  ( nir_c => ( males => 75.3, females => 77.5 )),
+                  ( uk_c  => ( males => 76.1, females => 71.0 ))),
+            
+         v25_34 => ( 
+                  ( sco_c => ( males => 91.1, females => 79.7 )),
+                  ( eng_c => ( males => 93.4, females => 78.5 )),
+                  ( wal_c => ( males => 90.1, females => 78.4 )),
+                  ( nir_c => ( males => 89.4, females => 79.9 )),
+                  ( uk_c  => ( males => 92.9, females => 78.7 ))),
+         v35_49 => ( 
+                  ( sco_c => ( males => 88.7, females => 81.2 )),
+                  ( eng_c => ( males => 93.0, females => 81.1 )),
+                  ( wal_c => ( males => 89.9, females => 83.2 )),
+                  ( nir_c => ( males => 90.8, females => 76.4 )),
+                  ( uk_c  => ( males => 92.4, females => 81.0 ))),
+            
+         v50_64 => ( 
+                  ( sco_c => ( males => 75.9, females => 66.2 )),
+                  ( eng_c => ( males => 79.1, females => 67.7 )),
+                  ( wal_c => ( males => 73.8, females => 64.8 )),
+                  ( nir_c => ( males => 73.1, females => 57.0 )),
+                  ( uk_c  => ( males => 78.4, females => 67.1 ))),
+         v65_plus => (             
+                  ( sco_c => ( males => 12.0, females => 6.6 )),
+                  ( eng_c => ( males => 14.0, females => 7.7 )),
+                  ( wal_c => ( males => 11.5, females => 7.2 )),
+                  ( nir_c => ( males => 13.9, females => 4.4 )),
+                  ( uk_c  => ( males => 13.7, females => 7.5 ))));
    begin
-      return 0.0;
+      case age is
+         when 16 .. 19 => ager := v16_19;
+         when 20 .. 24 => ager := v20_24; 
+         when 25 .. 34 => ager := v25_34; 
+         when 35 .. 49 => ager := v35_49; 
+         when 50 .. 64 => ager := v50_64; 
+         when 65 .. 120 => ager := v65_plus;
+         when others => Assert( false, "age out of range " & age'Img );
+      end case;
+      return weights( ager, cntry, sex_c ) / weights( ager, UK_C, sex_c );
    end Get_Participation_Scale;
    
    procedure Create_Dataset( the_run : Run ) is
