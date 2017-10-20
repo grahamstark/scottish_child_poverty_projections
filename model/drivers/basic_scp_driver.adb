@@ -7,6 +7,7 @@ with Ada.Command_Line;
 with Ada.Strings.Unbounded; 
 with Ada.Text_IO;
 
+with GNAT.Command_Line; 
 with GNATColl.Traces;
 
 with Text_Utils;
@@ -31,6 +32,20 @@ procedure Basic_SCP_Driver is
    use Text_Utils;
    use SCP_Types;
    use Weighting_Commons;
+   
+   HELP_MESSAGE : constant String := 
+      "-d : dataset id " & LINE_BREAK &
+      "-v : data variant " & LINE_BREAK &
+      "     1 = full" & LINE_BREAK &
+      "     2 = 1:3 subsample; (default 2)" & LINE_BREAK &
+      "-f : Population forecast ID " & LINE_BREAK &
+      "-p : population_weighting = " & LINE_BREAK &     
+      "     none" & LINE_BREAK &                        
+      "     compressed_population" & LINE_BREAK &       
+      "     full_population" & LINE_BREAK &             
+      "     popn_plus_others_compressed [DEFAULT]" & LINE_BREAK & 
+      "     popn_plus_others_full" & LINE_BREAK;
+   
 
    log_trace : GNATColl.Traces.Trace_Handle := GNATColl.Traces.Create( "BASIC_SCP_DRIVER" );
    procedure Log( s : String ) is
