@@ -2,7 +2,6 @@ with Ada.Calendar;
 with Ada.Exceptions;
 with Ada.Assertions;
 with Ada.Calendar;
-with Ada.Strings.Unbounded; 
 with Ada.Text_IO;
 
 with Data_Constants;
@@ -20,7 +19,7 @@ with Ukds.Target_Data.Households_Forecasts_IO;
 with Ukds.Target_Data.England_Households_IO;
 with Ukds.Target_Data.Wales_Households_IO;
 with Ukds.Target_Data.Nireland_Households_IO;
-
+with Ukds.Target_Data.Obr_Participation_Rates_IO;
 
 with Ukds.Target_Data.Population_Forecasts_IO;
 with Ukds.Target_Data.Target_Dataset_IO;
@@ -38,7 +37,6 @@ package body Model.SCP.Target_Creator is
    use Ada.Assertions;
    use Ada.Text_IO;
    use Ada.Calendar;
-   use Ada.Strings.Unbounded;
    use GNATCOLL.SQL.Exec;
    use SCP_Types;
    
@@ -61,7 +59,7 @@ package body Model.SCP.Target_Creator is
       cntry : Countries := Country_From_Country( country );
       ager : Age_Range; 
       weights : Weight_Array := ( 
-        -- I think there is a compiler bug here 
+        -- I think there is a compiler bug here with named arrays
         -- v16_19 => ( 
                    -- ( sco_c => ( males => 50.0, females => 49.6 )),
                    -- ( eng_c => ( males => 43.5, females => 43.5 )),
@@ -100,44 +98,44 @@ package body Model.SCP.Target_Creator is
                   -- ( nir_c => ( males => 13.9, females => 4.4 )),
                   -- ( uk_c  => ( males => 13.7, females => 7.5 ))));
                   
+         (
+          (( 50.0, 49.6 )),
+          (( 43.5, 43.5 )),
+          (( 42.9, 45.0 )),
+          (( 33.2, 33.3 )),
+          (( 43.7, 43.7 ))),
+         (
+          (( 76.0, 71.8 )),
+          (( 76.7, 71.0 )),
+          (( 68.2, 66.6 )),
+          (( 75.3, 77.5 )),
+          (( 76.1, 71.0 ))),
+          
+         (
+          (( 91.1, 79.7 )),
+          (( 93.4, 78.5 )),
+          (( 90.1, 78.4 )),
+          (( 89.4, 79.9 )),
+          (( 92.9, 78.7 ))),
+         (
+          (( 88.7, 81.2 )),
+          (( 93.0, 81.1 )),
+          (( 89.9, 83.2 )),
+          (( 90.8, 76.4 )),
+          (( 92.4, 81.0 ))),
         ( 
-                   ( ( 50.0, 49.6 )),
-                   ( ( 43.5, 43.5 )),
-                   ( ( 42.9, 45.0 )),
-                   ( ( 33.2, 33.3 )),
-                   ( ( 43.7, 43.7 ))),
-         ( 
-                  ( ( 76.0, 71.8 )),
-                  ( ( 76.7, 71.0 )),
-                  ( ( 68.2, 66.6 )),
-                  ( ( 75.3, 77.5 )),
-                  ( ( 76.1, 71.0 ))),
-            
-         ( 
-                  ( ( 91.1, 79.7 )),
-                  ( ( 93.4, 78.5 )),
-                  ( ( 90.1, 78.4 )),
-                  ( ( 89.4, 79.9 )),
-                  ( ( 92.9, 78.7 ))),
-         (  
-                  ( ( 88.7, 81.2 )),
-                  ( ( 93.0, 81.1 )),
-                  ( ( 89.9, 83.2 )),
-                  ( ( 90.8, 76.4 )),
-                  ( ( 92.4, 81.0 ))),
-        ( 
-                  ( ( 75.9, 66.2 )),
-                  ( ( 79.1, 67.7 )),
-                  ( ( 73.8, 64.8 )),
-                  ( ( 73.1, 57.0 )),
-                  ( ( 78.4, 67.1 ))),
-         (              
-                  ( ( 12.0, 6.6 )),
-                  ( ( 14.0, 7.7 )),
-                  ( ( 11.5, 7.2 )),
-                  ( ( 13.9, 4.4 )),
-                  ( ( 13.7, 7.5 ))));
-                  
+          (( 75.9, 66.2 )),
+          (( 79.1, 67.7 )),
+          (( 73.8, 64.8 )),
+          (( 73.1, 57.0 )),
+          (( 78.4, 67.1 ))),
+         (      
+          (( 12.0, 6.6 )),
+          (( 14.0, 7.7 )),
+          (( 11.5, 7.2 )),
+          (( 13.9, 4.4 )),
+          (( 13.7, 7.5 ))));
+          
                   
    begin
       case age is
@@ -216,7 +214,23 @@ package body Model.SCP.Target_Creator is
                edition  => the_run.macro_edition                   
             );
             
-            
+            participation_males : constant Obr_Participation_Rates := Obr_Participation_Rates_IO.Retrieve_By_PK(
+               year     => year,
+               rec_type => PERSONS,
+               variant  => the_run.macro_variant,
+               country  => the_run.country,
+               edition  => the_run.macro_edition,
+               target_group => TuS( "MALES" )                           
+            );
+                        
+            participation_females : constant Obr_Participation_Rates := Obr_Participation_Rates_IO.Retrieve_By_PK(
+               year     => year,
+               rec_type => PERSONS,
+               variant  => the_run.macro_variant,
+               country  => the_run.country,
+               edition  => the_run.macro_edition,
+               target_group => TuS( "FEMALES" )                           
+            );
             
             age_16_plus : Amount := 0.0;
             targets     : Target_Dataset; 
@@ -966,10 +980,273 @@ package body Model.SCP.Target_Creator is
             targets.employed := age_16_plus * macro_data.employment_rate/100.0;
             targets.ilo_unemployed := age_16_plus * macro_data.ilo_unemployment_rate/100.0;
             
-            --
-            -- TODO participation scale down for scotland
-            -- 
-            
+            targets.participation_16_19_male := (
+               male_popn.age_16+
+               male_popn.age_17+
+               male_popn.age_18+
+               male_popn.age_19 ) * ( participation_males.age_16_19 / 100.0 ) * 
+            Get_Participation_Scale( the_run.country, 1, 16 );
+      
+            targets.participation_20_24_male := (
+               male_popn.age_20+
+               male_popn.age_21+
+               male_popn.age_22+
+               male_popn.age_23+
+               male_popn.age_24 ) * ( participation_males.age_20_24 / 100.0 ) * 
+            Get_Participation_Scale( the_run.country, 1, 20 );
+      
+            targets.participation_25_29_male := (
+               male_popn.age_25+
+               male_popn.age_26+
+               male_popn.age_27+
+               male_popn.age_28+
+               male_popn.age_29 ) * ( participation_males.age_25_29 / 100.0 ) * 
+            Get_Participation_Scale( the_run.country, 1, 25 );
+            targets.participation_30_34_male := (
+               male_popn.age_30+
+               male_popn.age_31+
+               male_popn.age_32+
+               male_popn.age_33+
+               male_popn.age_34 ) * ( participation_males.age_30_34 / 100.0 ) * 
+            Get_Participation_Scale( the_run.country, 1, 30 );
+      
+            targets.participation_35_39_male := (
+               male_popn.age_35+
+               male_popn.age_36+
+               male_popn.age_37+
+               male_popn.age_38+
+               male_popn.age_39 ) * ( participation_males.age_35_39 / 100.0 ) * 
+            Get_Participation_Scale( the_run.country, 1, 35 );
+      
+            targets.participation_40_44_male := (
+               male_popn.age_40+
+               male_popn.age_41+
+               male_popn.age_42+
+               male_popn.age_43+
+               male_popn.age_44 ) * ( participation_males.age_40_44 / 100.0 ) * 
+            Get_Participation_Scale( the_run.country, 1, 40 );
+      
+            targets.participation_45_49_male := (
+               male_popn.age_45+
+               male_popn.age_46+
+               male_popn.age_47+
+               male_popn.age_48+
+               male_popn.age_49 ) * ( participation_males.age_45_49 / 100.0 ) * 
+            Get_Participation_Scale( the_run.country, 1, 45 );
+      
+            targets.participation_50_54_male := (
+               male_popn.age_50+
+               male_popn.age_51+
+               male_popn.age_52+
+               male_popn.age_53+
+               male_popn.age_54 ) * ( participation_males.age_50_54 / 100.0 ) * 
+            Get_Participation_Scale( the_run.country, 1, 50 );
+      
+            targets.participation_55_59_male := (
+               male_popn.age_55+
+               male_popn.age_56+
+               male_popn.age_57+
+               male_popn.age_58+
+               male_popn.age_59 ) * ( participation_males.age_55_59 / 100.0 ) * 
+            Get_Participation_Scale( the_run.country, 1, 55 );
+      
+            targets.participation_60_64_male := (
+               male_popn.age_60+
+               male_popn.age_61+
+               male_popn.age_62+
+               male_popn.age_63+
+               male_popn.age_64 ) * ( participation_males.age_60_64 / 100.0 ) * 
+            Get_Participation_Scale( the_run.country, 1, 60 );
+      
+            targets.participation_65_69_male := (
+               male_popn.age_65+
+               male_popn.age_66+
+               male_popn.age_67+
+               male_popn.age_68+
+               male_popn.age_69 ) * ( participation_males.age_65_69 / 100.0 ) * 
+            Get_Participation_Scale( the_run.country, 1, 65 );
+      
+            targets.participation_70_74_male := (
+               male_popn.age_70+
+               male_popn.age_71+
+               male_popn.age_72+
+               male_popn.age_73+
+               male_popn.age_74 ) * ( participation_males.age_70_74 / 100.0 ) * 
+            Get_Participation_Scale( the_run.country, 1, 70 );
+      
+            targets.participation_75_plus_male := (
+               male_popn.age_75+
+               male_popn.age_76+
+               male_popn.age_77+
+               male_popn.age_78+
+               male_popn.age_79+
+               male_popn.age_80+
+               male_popn.age_81+
+               male_popn.age_82+
+               male_popn.age_83+
+               male_popn.age_84+
+               male_popn.age_85+
+               male_popn.age_86+
+               male_popn.age_87+
+               male_popn.age_88+
+               male_popn.age_89+
+               male_popn.age_90+
+               male_popn.age_91+
+               male_popn.age_92+
+               male_popn.age_93+
+               male_popn.age_94+
+               male_popn.age_95+
+               male_popn.age_96+
+               male_popn.age_97+
+               male_popn.age_98+
+               male_popn.age_99+
+               male_popn.age_100+
+               male_popn.age_101+
+               male_popn.age_102+
+               male_popn.age_103+
+               male_popn.age_104+
+               male_popn.age_105+
+               male_popn.age_106+
+               male_popn.age_107+
+               male_popn.age_108+
+               male_popn.age_109+
+               male_popn.age_110 ) * ( participation_males.age_75_plus / 100.0 ) * 
+            Get_Participation_Scale( the_run.country, 1, 75 );
+      
+            targets.participation_16_19_female := (
+               female_popn.age_16+
+               female_popn.age_17+
+               female_popn.age_18+
+               female_popn.age_19 ) * ( participation_females.age_16_19 / 100.0 ) * 
+            Get_Participation_Scale( the_run.country, 2, 16 );
+      
+            targets.participation_20_24_female := (
+               female_popn.age_20+
+               female_popn.age_21+
+               female_popn.age_22+
+               female_popn.age_23+
+               female_popn.age_24 ) * ( participation_females.age_20_24 / 100.0 ) * 
+            Get_Participation_Scale( the_run.country, 2, 20 );
+      
+            targets.participation_25_29_female := (
+               female_popn.age_25+
+               female_popn.age_26+
+               female_popn.age_27+
+               female_popn.age_28+
+               female_popn.age_29 ) * ( participation_females.age_25_29 / 100.0 ) * 
+            Get_Participation_Scale( the_run.country, 2, 25 );
+      
+            targets.participation_30_34_female := (
+               female_popn.age_30+
+               female_popn.age_31+
+               female_popn.age_32+
+               female_popn.age_33+
+               female_popn.age_34 ) * ( participation_females.age_30_34 / 100.0 ) * 
+            Get_Participation_Scale( the_run.country, 2, 30 );
+      
+            targets.participation_35_39_female := (
+               female_popn.age_35+
+               female_popn.age_36+
+               female_popn.age_37+
+               female_popn.age_38+
+               female_popn.age_39 ) * ( participation_females.age_35_39 / 100.0 ) * 
+            Get_Participation_Scale( the_run.country, 2, 35 );
+      
+            targets.participation_40_44_female := (
+               female_popn.age_40+
+               female_popn.age_41+
+               female_popn.age_42+
+               female_popn.age_43+
+               female_popn.age_44 ) * ( participation_females.age_40_44 / 100.0 ) * 
+            Get_Participation_Scale( the_run.country, 2, 40 );
+      
+            targets.participation_45_49_female := (
+               female_popn.age_45+
+               female_popn.age_46+
+               female_popn.age_47+
+               female_popn.age_48+
+               female_popn.age_49 ) * ( participation_females.age_45_49 / 100.0 ) * 
+            Get_Participation_Scale( the_run.country, 2, 45 );
+      
+            targets.participation_50_54_female := (
+               female_popn.age_50+
+               female_popn.age_51+
+               female_popn.age_52+
+               female_popn.age_53+
+               female_popn.age_54 ) * ( participation_females.age_50_54 / 100.0 ) * 
+            Get_Participation_Scale( the_run.country, 2, 50 );
+      
+            targets.participation_55_59_female := (
+               female_popn.age_55+
+               female_popn.age_56+
+               female_popn.age_57+
+               female_popn.age_58+
+               female_popn.age_59 ) * ( participation_females.age_55_59 / 100.0 ) * 
+            Get_Participation_Scale( the_run.country, 2, 55 );
+      
+            targets.participation_60_64_female := (
+               female_popn.age_60+
+               female_popn.age_61+
+               female_popn.age_62+
+               female_popn.age_63+
+               female_popn.age_64 ) * ( participation_females.age_60_64 / 100.0 ) * 
+            Get_Participation_Scale( the_run.country, 2, 60 );
+      
+            targets.participation_65_69_female := (
+               female_popn.age_65+
+               female_popn.age_66+
+               female_popn.age_67+
+               female_popn.age_68+
+               female_popn.age_69 ) * ( participation_females.age_65_69 / 100.0 ) * 
+            Get_Participation_Scale( the_run.country, 2, 65 );
+      
+            targets.participation_70_74_female := (
+               female_popn.age_70+
+               female_popn.age_71+
+               female_popn.age_72+
+               female_popn.age_73+
+               female_popn.age_74 ) * ( participation_females.age_70_74 / 100.0 ) * 
+            Get_Participation_Scale( the_run.country, 2, 70 );
+      
+            targets.participation_75_plus_female := (
+               female_popn.age_75+
+               female_popn.age_76+
+               female_popn.age_77+
+               female_popn.age_78+
+               female_popn.age_79+
+               female_popn.age_80+
+               female_popn.age_81+
+               female_popn.age_82+
+               female_popn.age_83+
+               female_popn.age_84+
+               female_popn.age_85+
+               female_popn.age_86+
+               female_popn.age_87+
+               female_popn.age_88+
+               female_popn.age_89+
+               female_popn.age_90+
+               female_popn.age_91+
+               female_popn.age_92+
+               female_popn.age_93+
+               female_popn.age_94+
+               female_popn.age_95+
+               female_popn.age_96+
+               female_popn.age_97+
+               female_popn.age_98+
+               female_popn.age_99+
+               female_popn.age_100+
+               female_popn.age_101+
+               female_popn.age_102+
+               female_popn.age_103+
+               female_popn.age_104+
+               female_popn.age_105+
+               female_popn.age_106+
+               female_popn.age_107+
+               female_popn.age_108+
+               female_popn.age_109+
+               female_popn.age_110 ) * ( participation_females.age_75_plus / 100.0 ) * 
+            Get_Participation_Scale( the_run.country, 2, 75 );
+
             
             -- horrible reverse engineering
             -- TODO BOUNDS ON YEARS
@@ -985,6 +1262,7 @@ package body Model.SCP.Target_Creator is
                targets.employee := implied_employees_rate*age_16_plus;
                targets.jsa_claimant := implied_claimant_rate*age_16_plus;
             end; 
+            
             
             Log( To_String( targets )); 
             
