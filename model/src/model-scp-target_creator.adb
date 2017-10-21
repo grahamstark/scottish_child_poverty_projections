@@ -216,18 +216,18 @@ package body Model.SCP.Target_Creator is
             
             participation_males : constant Obr_Participation_Rates := Obr_Participation_Rates_IO.Retrieve_By_PK(
                year     => year,
-               rec_type => PERSONS,
+               rec_type => PARTICIPATION,
                variant  => the_run.macro_variant,
-               country  => the_run.country,
+               country  => UK,
                edition  => the_run.macro_edition,
                target_group => TuS( "MALES" )                           
             );
                         
             participation_females : constant Obr_Participation_Rates := Obr_Participation_Rates_IO.Retrieve_By_PK(
                year     => year,
-               rec_type => PERSONS,
+               rec_type => PARTICIPATION,
                variant  => the_run.macro_variant,
-               country  => the_run.country,
+               country  => UK,
                edition  => the_run.macro_edition,
                target_group => TuS( "FEMALES" )                           
             );
@@ -1245,27 +1245,25 @@ package body Model.SCP.Target_Creator is
                female_popn.age_108+
                female_popn.age_109+
                female_popn.age_110 ) * ( participation_females.age_75_plus / 100.0 ) * 
-            Get_Participation_Scale( the_run.country, 2, 75 );
-
+            Get_Participation_Scale( the_run.country, 2, 75 ); 
             
-            -- horrible reverse engineering
-            -- TODO BOUNDS ON YEARS
-            declare               
-               implied_16_plus        : constant Amount := 100.0*macro_data.employment/macro_data.employment_rate;
-               implied_employees_rate : constant Amount := macro_data.employees/implied_16_plus;
-               implied_claimant_rate  : constant Amount := macro_data.claimant_count/implied_16_plus;
-            begin
-               Log( "over 16s " & Format( age_16_plus ));
-               Log( "implied 16 plus (UK) " & Format( implied_16_plus ));
-               Log( "implied employees_rate " & Format( implied_employees_rate*100.0 ));               
-               Log( "implied_claimant_rate " & Format( implied_claimant_rate*100.0 ));               
-               targets.employee := implied_employees_rate*age_16_plus;
-               targets.jsa_claimant := implied_claimant_rate*age_16_plus;
-            end; 
-            
-            
+            if macro_data /= Null_Macro_Forecasts then
+               -- horrible reverse engineering
+               -- TODO BOUNDS ON YEARS
+               declare               
+                  implied_16_plus        : constant Amount := 100.0*macro_data.employment/macro_data.employment_rate;
+                  implied_employees_rate : constant Amount := macro_data.employees/implied_16_plus;
+                  implied_claimant_rate  : constant Amount := macro_data.claimant_count/implied_16_plus;
+               begin
+                  Log( "over 16s " & Format( age_16_plus ));
+                  Log( "implied 16 plus (UK) " & Format( implied_16_plus ));
+                  Log( "implied employees_rate " & Format( implied_employees_rate*100.0 ));               
+                  Log( "implied_claimant_rate " & Format( implied_claimant_rate*100.0 ));               
+                  targets.employee := implied_employees_rate*age_16_plus;
+                  targets.jsa_claimant := implied_claimant_rate*age_16_plus;
+               end; 
+            end if;
             Log( To_String( targets )); 
-            
             UKDS.Target_Data.Target_Dataset_IO.Save( targets );
          end;
       end loop;

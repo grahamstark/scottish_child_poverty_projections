@@ -86,7 +86,7 @@ source = 'obr'
 }
 
 p out
-country = 'uk'
+country = 'UK'
 edition = 2017
 recType = 'macro'
 variant = 'baseline'
