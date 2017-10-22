@@ -517,8 +517,16 @@ package body Model.SCP.Weights_Creator is
       Target_Dataset_IO.Add_Run_Id( frs_criteria, the_run.data_run_id );
       -- Target_Dataset_IO.Add_Year( frs_criteria, 2012, d.GE );
       -- NO!! we want all years in the FRS dataset Target_Dataset_IO.Add_Year( frs_criteria, year );
-      if the_run.country = TuS( "SCO" ) then
+      if the_run.country = SCO then
          Target_Dataset_IO.Add_Country_Scotland( frs_criteria, 1.0 );
+      elsif the_run.country = UK then
+         Target_Dataset_IO.Add_Country_UK( frs_criteria, 1.0 );
+      elsif the_run.country = WAL then
+         Target_Dataset_IO.Add_Country_Wales( frs_criteria, 1.0 );
+      elsif the_run.country = NIR then
+         Target_Dataset_IO.Add_Country_NIrelabd( frs_criteria, 1.0 );
+      elsif the_run.country = ENG then
+         Target_Dataset_IO.Add_Country_England( frs_criteria, 1.0 );
       elsif the_run.country = TuS( "UK" ) then
          Target_Dataset_IO.Add_Country_UK( frs_criteria, 1.0 );
       end if; -- and so on for Wales, Ireland; UK doesn't need this
