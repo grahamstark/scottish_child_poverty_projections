@@ -58,7 +58,7 @@ procedure Basic_SCP_Driver is
    endTime      : Time;
    elapsed      : Duration;
    the_run      : UKDS.Target_Data.Run;
-   run_type     : constant Type_Of_Run := data_generation;
+   run_type     : constant Type_Of_Run := weights_generation;
    error        : Model.Maths_Funcs.Eval_Error_Type;
 begin
      -- case Getopt ("d: v: f: p: h") is
@@ -95,7 +95,7 @@ begin
    when target_generation =>
       the_run.start_year := 2014;
       the_run.end_year := 2037;
-      the_run.run_id := 100_003;
+      the_run.run_id := 100_004;
       
       the_run.households_variant := TuS( "ppp" );
       the_run.households_edition := 2014;
@@ -109,17 +109,18 @@ begin
       
    when weights_generation =>
       the_run.start_year := 2014;
-      the_run.end_year := 2021;
-      the_run.run_id := 200_002;
+      the_run.end_year := 2037;
+      the_run.run_id := 200_004;
 
       the_run.weighting_function := constrained_chi_square;
       the_run.weighting_lower_bound := 0.1;
       the_run.weighting_upper_bound := 3.0;
-      the_run.targets_run_id := 100_003;      
+      the_run.targets_run_id := 100_004;      
       the_run.targets_run_user_id := 1;
       the_run.data_run_id := 999_997;
       the_run.data_run_user_id := 1;
-      
+      the_run.data_start_year := 2012;
+      the_run.data_end_year := 2015;
       the_run.selected_clauses := ( 
             genders                  => False,
             household_type           => True,
@@ -127,12 +128,12 @@ begin
             by_year_ages_by_gender   => False,
             aggregate_ages           => False,
             aggregate_ages_by_gender => True,
-            employment               => True,
-            employees                => True,
-            ilo_unemployment         => True,
-            jsa_claimants            => True,
+            employment               => False,
+            employees                => False,
+            ilo_unemployment         => False,
+            jsa_claimants            => False,
             participation_rate       => True );
-      the_run.country := SCO;
+      the_run.country := UK;
       for i in 1 .. 1 loop
          Log( "Starting Run with ID " & the_run.run_id'Img & " targets " & the_run.targets_run_id'Img );
          UKDS.Target_Data.Run_IO.Save( the_run );

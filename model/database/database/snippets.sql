@@ -966,7 +966,6 @@ select
         min( sco_hhld_three_plus_person_all_adult ) as min_sco_hhld_three_plus_person_all_adult, max( sco_hhld_three_plus_person_all_adult ) as max_sco_hhld_three_plus_person_all_adult, count( nullif( sco_hhld_three_plus_person_all_adult, 0 )) as non_zero_sco_hhld_three_plus_person_all_adult,
         min( eng_hhld_one_person_households_male ) as min_eng_hhld_one_person_households_male, max( eng_hhld_one_person_households_male ) as max_eng_hhld_one_person_households_male, count( nullif( eng_hhld_one_person_households_male, 0 )) as non_zero_eng_hhld_one_person_households_male,
         min( eng_hhld_one_person_households_female ) as min_eng_hhld_one_person_households_female, max( eng_hhld_one_person_households_female ) as max_eng_hhld_one_person_households_female, count( nullif( eng_hhld_one_person_households_female, 0 )) as non_zero_eng_hhld_one_person_households_female,
-        min( eng_hhld_a_couple_and_one_or_more_other_adults_no_dependent_chi ) as min_eng_hhld_a_couple_and_one_or_more_other_adults_no_dependent_chi, max( eng_hhld_a_couple_and_one_or_more_other_adults_no_dependent_chi ) as max_eng_hhld_a_couple_and_one_or_more_other_adults_no_dependent_chi, count( nullif( eng_hhld_a_couple_and_one_or_more_other_adults_no_dependent_chi, 0 )) as non_zero_eng_hhld_a_couple_and_one_or_more_other_adults_no_dependent_chi,
         min( eng_hhld_households_with_one_dependent_child ) as min_eng_hhld_households_with_one_dependent_child, max( eng_hhld_households_with_one_dependent_child ) as max_eng_hhld_households_with_one_dependent_child, count( nullif( eng_hhld_households_with_one_dependent_child, 0 )) as non_zero_eng_hhld_households_with_one_dependent_child,
         min( eng_hhld_households_with_two_dependent_children ) as min_eng_hhld_households_with_two_dependent_children, max( eng_hhld_households_with_two_dependent_children ) as max_eng_hhld_households_with_two_dependent_children, count( nullif( eng_hhld_households_with_two_dependent_children, 0 )) as non_zero_eng_hhld_households_with_two_dependent_children,
         min( eng_hhld_households_with_three_dependent_children ) as min_eng_hhld_households_with_three_dependent_children, max( eng_hhld_households_with_three_dependent_children ) as max_eng_hhld_households_with_three_dependent_children, count( nullif( eng_hhld_households_with_three_dependent_children, 0 )) as non_zero_eng_hhld_households_with_three_dependent_children,
@@ -991,4 +990,25 @@ select
         min( eng_hhld_one_family_and_no_others_couple_no_dependent_chi ) as min_eng_hhld_one_family_and_no_others_couple_no_dependent_chi, max( eng_hhld_one_family_and_no_others_couple_no_dependent_chi ) as max_eng_hhld_one_family_and_no_others_couple_no_dependent_chi, count( nullif( eng_hhld_one_family_and_no_others_couple_no_dependent_chi, 0 )) as non_zero_eng_hhld_one_family_and_no_others_couple_no_dependent_chi,
         min( household_all_households ) as min_household_all_households, max( household_all_households ) as max_household_all_households, count( nullif( household_all_households, 0 )) as non_zero_household_all_households,
         min( eng_hhld_a_couple_and_other_adults_no_dependent_children ) as min_eng_hhld_a_couple_and_other_adults_no_dependent_children, max( eng_hhld_a_couple_and_other_adults_no_dependent_children ) as max_eng_hhld_a_couple_and_other_adults_no_dependent_children, count( nullif( eng_hhld_a_couple_and_other_adults_no_dependent_children, 0 )) as non_zero_eng_hhld_a_couple_and_other_adults_no_dependent_children
-from target_data.target_dataset group by run_id,user_id,year order by run_id,user_id,year;       
+from target_data.target_dataset group by run_id,user_id,year order by run_id,user_id,year;
+
+--
+-- counts of 16-21 labour force from child and adult recs
+--
+select year,count(age), min(age), max(age) from frs.child where age >= 16 and trainee = 1 group by year;
+select year,count(age80), min(age80), max(age80) from frs.adult where age80 <= 21 group by year order by year;
+
+select
+        run_id,
+        user_id,
+        year,
+        min( nir_hhld_one_adult_households ) as min_nir_hhld_one_adult_households, max( nir_hhld_one_adult_households ) as max_nir_hhld_one_adult_households, count( nullif( nir_hhld_one_adult_households, 0 )) as non_zero_nir_hhld_one_adult_households,
+        min( nir_hhld_two_adults_without_children ) as min_nir_hhld_two_adults_without_children, max( nir_hhld_two_adults_without_children ) as max_nir_hhld_two_adults_without_children, count( nullif( nir_hhld_two_adults_without_children, 0 )) as non_zero_nir_hhld_two_adults_without_children,
+        min( nir_hhld_other_households_without_children ) as min_nir_hhld_other_households_without_children, max( nir_hhld_other_households_without_children ) as max_nir_hhld_other_households_without_children, count( nullif( nir_hhld_other_households_without_children, 0 )) as non_zero_nir_hhld_other_households_without_children,
+        min( nir_hhld_one_adult_households_with_children ) as min_nir_hhld_one_adult_households_with_children, max( nir_hhld_one_adult_households_with_children ) as max_nir_hhld_one_adult_households_with_children, count( nullif( nir_hhld_one_adult_households_with_children, 0 )) as non_zero_nir_hhld_one_adult_households_with_children,
+        min( nir_hhld_other_households_with_children ) as min_nir_hhld_other_households_with_children, max( nir_hhld_other_households_with_children ) as max_nir_hhld_other_households_with_children, count( nullif( nir_hhld_other_households_with_children, 0 )) as non_zero_nir_hhld_other_households_with_children
+from target_data.target_dataset 
+where run_id = 100004 
+group by run_id,user_id,year 
+order by run_id,user_id,year;
+

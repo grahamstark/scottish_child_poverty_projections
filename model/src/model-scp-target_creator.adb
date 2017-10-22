@@ -203,7 +203,7 @@ package body Model.SCP.Target_Creator is
                rec_type => HOUSEHOLDS,
                variant  => the_run.households_variant,
                country  => NIR,
-               edition  => the_run.households_edition                   
+               edition  => 2012 -- the_run.households_edition FIXME!!! only this one for NIRE                   
             );
             
             macro_data : constant Macro_Forecasts := Macro_Forecasts_IO.Retrieve_By_PK(
@@ -250,6 +250,14 @@ package body Model.SCP.Target_Creator is
                targets.sco_hhld_three_plus_person_all_adult := scottish_households.three_plus_person_all_adult;
                targets.household_all_households := targets.household_all_households + scottish_households.all_households;
                targets.country_scotland := scottish_households.all_households;
+              Inc( targets.other_hh, 
+                  scottish_households.one_adult_one_child +
+                  scottish_households.one_adult_two_plus_children +
+                  scottish_households.two_plus_adult_one_plus_children +
+                  scottish_households.three_plus_person_all_adult
+                      );               
+               Inc( targets.two_adult_hh, scottish_households.two_adults );
+               Inc( targets.one_adult_hh, scottish_households.one_adult_male + scottish_households.one_adult_female );
             end if;
             if england_hhlds /= Null_England_Households then   -- actually this is redundant since we'll assign to zero either way          
                targets.eng_hhld_one_person_households_male := england_hhlds.one_person_households_male;
@@ -274,6 +282,19 @@ package body Model.SCP.Target_Creator is
                   Inc( targets.household_all_households, s );
                   Inc( targets.country_england, s );              
                end;
+               Inc( targets.other_hh, 
+                  targets.eng_hhld_a_couple_and_other_adults_no_dependent_children +
+                  targets.eng_hhld_households_with_one_dependent_child +
+                  targets.eng_hhld_households_with_two_dependent_children +
+                  targets.eng_hhld_households_with_three_dependent_children +
+                  targets.eng_hhld_other_households                     
+                   );               
+               Inc( targets.two_adult_hh, targets.eng_hhld_one_family_and_no_others_couple_no_dependent_chi );
+               Inc( targets.one_adult_hh, targets.eng_hhld_one_person_households_male +
+                  targets.eng_hhld_one_person_households_female );
+               
+               
+               
             end if;
             -- wales
             targets.wal_hhld_1_person := wales_hhlds.v_1_person;
@@ -307,11 +328,35 @@ package body Model.SCP.Target_Creator is
                Inc( targets.country_wales, s );              
             end;
             
+            Inc( targets.other_hh, 
+                  targets.wal_hhld_2_person_1_adult_1_child +
+                  targets.wal_hhld_3_person_no_children +
+                  targets.wal_hhld_3_person_2_adults_1_child +
+                  targets.wal_hhld_3_person_1_adult_2_children +
+                  targets.wal_hhld_4_person_no_children +
+                  targets.wal_hhld_4_person_2_plus_adults_1_plus_children +
+                  targets.wal_hhld_4_person_1_adult_3_children +
+                  targets.wal_hhld_5_plus_person_no_children +
+                  targets.wal_hhld_5_plus_person_2_plus_adults_1_plus_children +
+                  targets.wal_hhld_5_plus_person_1_adult_4_plus_children
+                );               
+            Inc( targets.two_adult_hh, targets.wal_hhld_2_person_no_children );
+            Inc( targets.one_adult_hh, targets.wal_hhld_1_person );
+            
+            
             targets.nir_hhld_one_adult_households := nireland_hhlds.one_adult_households;
             targets.nir_hhld_two_adults_without_children := nireland_hhlds.two_adults_without_children;
             targets.nir_hhld_other_households_without_children := nireland_hhlds.other_households_without_children;
             targets.nir_hhld_one_adult_households_with_children := nireland_hhlds.one_adult_households_with_children;
             targets.nir_hhld_other_households_with_children := nireland_hhlds.other_households_with_children;
+            
+            Inc( targets.other_hh, 
+               nireland_hhlds.other_households_without_children + 
+               nireland_hhlds.one_adult_households_with_children + 
+               nireland_hhlds.other_households_with_children );               
+            Inc( targets.two_adult_hh, nireland_hhlds.two_adults_without_children );
+            Inc( targets.one_adult_hh, nireland_hhlds.one_adult_households );
+            
             
             declare 
                s : constant Amount := 

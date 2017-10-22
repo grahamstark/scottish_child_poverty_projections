@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-10-19 12:07:28.502064
+-- Created by ada_generator.py on 2017-10-22 22:29:12.283101
 -- 
 with Ukds;
 with DB_Commons;
@@ -114,6 +114,8 @@ package Ukds.Target_Data.Run_IO is
    procedure Add_population_edition( c : in out d.Criteria; population_edition : Year_Number; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_start_year( c : in out d.Criteria; start_year : Year_Number; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_end_year( c : in out d.Criteria; end_year : Year_Number; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_data_start_year( c : in out d.Criteria; data_start_year : Year_Number; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_data_end_year( c : in out d.Criteria; data_end_year : Year_Number; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_weighting_function( c : in out d.Criteria; weighting_function : Distance_Function_Type; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_weighting_lower_bound( c : in out d.Criteria; weighting_lower_bound : Rate; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_weighting_upper_bound( c : in out d.Criteria; weighting_upper_bound : Rate; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
@@ -138,6 +140,8 @@ package Ukds.Target_Data.Run_IO is
    procedure Add_population_edition_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_start_year_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_end_year_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_data_start_year_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_data_end_year_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_weighting_function_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_weighting_lower_bound_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_weighting_upper_bound_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
@@ -150,7 +154,7 @@ package Ukds.Target_Data.Run_IO is
    function Map_From_Cursor( cursor : GNATCOLL.SQL.Exec.Forward_Cursor ) return Ukds.Target_Data.Run;
 
    -- 
-   -- returns an array of GNATColl SQL Parameters indexed 1 .. 21, as follows
+   -- returns an array of GNATColl SQL Parameters indexed 1 .. 23, as follows
    -- Pos  |       Name               | SQL Type           | Ada Type             | Default
    --    1 : run_id                   : Parameter_Integer  : Integer              :        0 
    --    2 : user_id                  : Parameter_Integer  : Integer              :        0 
@@ -165,14 +169,16 @@ package Ukds.Target_Data.Run_IO is
    --   11 : population_edition       : Parameter_Integer  : Year_Number          :        0 
    --   12 : start_year               : Parameter_Integer  : Year_Number          :        0 
    --   13 : end_year                 : Parameter_Integer  : Year_Number          :        0 
-   --   14 : weighting_function       : Parameter_Integer  : Distance_Function_Type :        0 
-   --   15 : weighting_lower_bound    : Parameter_Float    : Rate                 :      0.0 
-   --   16 : weighting_upper_bound    : Parameter_Float    : Rate                 :      0.0 
-   --   17 : targets_run_id           : Parameter_Integer  : Integer              :        0 
-   --   18 : targets_run_user_id      : Parameter_Integer  : Integer              :        0 
-   --   19 : data_run_id              : Parameter_Integer  : Integer              :        0 
-   --   20 : data_run_user_id         : Parameter_Integer  : Integer              :        0 
-   --   21 : selected_clauses         : Parameter_Text     : Boolean              : null, Null_Unbounded_String 
+   --   14 : data_start_year          : Parameter_Integer  : Year_Number          :        0 
+   --   15 : data_end_year            : Parameter_Integer  : Year_Number          :        0 
+   --   16 : weighting_function       : Parameter_Integer  : Distance_Function_Type :        0 
+   --   17 : weighting_lower_bound    : Parameter_Float    : Rate                 :      0.0 
+   --   18 : weighting_upper_bound    : Parameter_Float    : Rate                 :      0.0 
+   --   19 : targets_run_id           : Parameter_Integer  : Integer              :        0 
+   --   20 : targets_run_user_id      : Parameter_Integer  : Integer              :        0 
+   --   21 : data_run_id              : Parameter_Integer  : Integer              :        0 
+   --   22 : data_run_user_id         : Parameter_Integer  : Integer              :        0 
+   --   23 : selected_clauses         : Parameter_Text     : Boolean              : null, Null_Unbounded_String 
    function Get_Configured_Insert_Params( update_order : Boolean := False ) return GNATCOLL.SQL.Exec.SQL_Parameters;
 
 

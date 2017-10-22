@@ -85,6 +85,11 @@
                   
                   <column name='start_year'  type='INTEGER' adaTypeName='Year_Number' default='1970' />
                   <column name='end_year'  type='INTEGER' adaTypeName='Year_Number' default='1970' />
+                  
+                  <column name='data_start_year'  type='INTEGER' adaTypeName='Year_Number' default='1970' />
+                  <column name='data_end_year'  type='INTEGER' adaTypeName='Year_Number' default='2030' />
+                  
+                  
                   <!-- maybe fks? -->
                   <!-- maybe stuff about fixes to macro as in Soton model -->
 
@@ -824,24 +829,11 @@
                    <column name='participation_65_69_female' type='REAL' adaTypeName='Amount' default='0.0'  />
                    <column name='participation_70_74_female' type='REAL' adaTypeName='Amount' default='0.0'  />
                    <column name='participation_75_plus_female' type='REAL' adaTypeName='Amount' default='0.0'  />
-                  
-                   <column name='one_adult_hh_wales' type='REAL' adaTypeName='Amount' default='0.0'  />
-                   <column name='two_adult_hhs_wales' type='REAL' adaTypeName='Amount' default='0.0'  />
-                   <column name='other_hh_wales' type='REAL' adaTypeName='Amount' default='0.0'  />
-                  
-                   <column name='one_adult_hh_nireland' type='REAL' adaTypeName='Amount' default='0.0'  />
-                   <column name='two_adult_hhs_nireland' type='REAL' adaTypeName='Amount' default='0.0'  />
-                   <column name='other_hh_nireland' type='REAL' adaTypeName='Amount' default='0.0'  />
-                  
-                   <column name='one_adult_hh_england' type='REAL' adaTypeName='Amount' default='0.0'  />
-                   <column name='two_adult_hhs_england' type='REAL' adaTypeName='Amount' default='0.0'  />
-                   <column name='other_hh_england' type='REAL' adaTypeName='Amount' default='0.0'  />
-                  
-                   <column name='one_adult_hh_scotland' type='REAL' adaTypeName='Amount' default='0.0'  />
-                   <column name='two_adult_hhs_scotland' type='REAL' adaTypeName='Amount' default='0.0'  />
-                   <column name='other_hh_scotland' type='REAL' adaTypeName='Amount' default='0.0'  />
-                  
-                  
+
+                   <column name='one_adult_hh' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='two_adult_hh' type='REAL' adaTypeName='Amount' default='0.0'  />
+                   <column name='other_hh' type='REAL' adaTypeName='Amount' default='0.0'  />
+                                    
                   <foreign-key  foreignTable="run"  onDelete='CASCADE'  onUpdate='CASCADE'>
                      <reference foreign="run_id" local="run_id" />
                      <reference foreign="user_id" local="user_id" />

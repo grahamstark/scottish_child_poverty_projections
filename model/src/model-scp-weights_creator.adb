@@ -109,7 +109,7 @@ package body Model.SCP.Weights_Creator is
          Inc( count, 34 );
       end if;
       if clauses( participation_rate ) then
-         Inc( count, 26 );
+         Inc( count, 22 ); -- 26 with 075s
       end if;
       return count;
    end Col_Count;
@@ -461,7 +461,7 @@ package body Model.SCP.Weights_Creator is
          Add_Col( tmp );
       end if;      
       if clauses( participation_rate ) then
-         Add_Col( targets.participation_16_19_male );
+         -- Add_Col( targets.participation_16_19_male );
          Add_Col( targets.participation_20_24_male );
          Add_Col( targets.participation_25_29_male );
          Add_Col( targets.participation_30_34_male );
@@ -473,8 +473,8 @@ package body Model.SCP.Weights_Creator is
          Add_Col( targets.participation_60_64_male );
          Add_Col( targets.participation_65_69_male );
          Add_Col( targets.participation_70_74_male );
-         Add_Col( targets.participation_75_plus_male );
-         Add_Col( targets.participation_16_19_female );
+         -- Add_Col( targets.participation_75_plus_male );
+         -- Add_Col( targets.participation_16_19_female );
          Add_Col( targets.participation_20_24_female );
          Add_Col( targets.participation_25_29_female );
          Add_Col( targets.participation_30_34_female );
@@ -486,11 +486,26 @@ package body Model.SCP.Weights_Creator is
          Add_Col( targets.participation_60_64_female );
          Add_Col( targets.participation_65_69_female );
          Add_Col( targets.participation_70_74_female );
-         Add_Col( targets.participation_75_plus_female );
+         -- Add_Col( targets.participation_75_plus_female );
       end if;
       Assert( p = row'Length, " not all rows filled " & p'Img & " vs " & row'Length'Img );
     end Fill_One_Row;
       
+    
+   function Filename_From_Run( the_run : Run ) return String is
+      targets_run : Run := Run_IO.Retrieve_By_PK( the_run.targets_run_id, 1 );
+   begin
+      return 
+         Censor_String( the_run.run_id'Img ) & "_" &
+         Censor_String( TS( the_run.country )) & "_" &
+         Censor_String( the_run.start_year'Img ) & "_" &
+         Censor_String( the_run.end_year'Img ) & "_" &
+         Censor_String( TS( targets_run.households_variant )) & "_" &
+         Censor_String( TS( targets_run.population_variant )) & "_" &
+         Censor_String( TS( targets_run.macro_variant )) & "_" &
+         Censor_String( the_run.data_start_year'Img ) & "_" &
+         Censor_String( the_run.data_end_year'Img ) & ".tab";
+   end  Filename_From_Run;
    
    procedure Create_Weights( 
       the_run : Run;
@@ -508,9 +523,12 @@ package body Model.SCP.Weights_Creator is
       count               : Natural := 0;
       frs_criteria        : d.Criteria;
       mapped_target_data  : Vector( 1 .. num_data_cols );
+      outfile_name       : constant String := "output/" & Filename_From_Run( the_run );
+      outf               : File_Type;
     begin
        
       Trace( log_trace,  "Begining run for : " & To_String( the_run ));
+      Create( outf, Out_File, outfile_name );         
       Connection_Pool.Initialise;
       conn := Connection_Pool.Lease;
       Target_Dataset_IO.Add_User_Id( frs_criteria, the_run.data_run_user_id );
@@ -524,12 +542,14 @@ package body Model.SCP.Weights_Creator is
       elsif the_run.country = WAL then
          Target_Dataset_IO.Add_Country_Wales( frs_criteria, 1.0 );
       elsif the_run.country = NIR then
-         Target_Dataset_IO.Add_Country_NIrelabd( frs_criteria, 1.0 );
+         Target_Dataset_IO.Add_Country_N_Ireland( frs_criteria, 1.0 );
       elsif the_run.country = ENG then
          Target_Dataset_IO.Add_Country_England( frs_criteria, 1.0 );
-      elsif the_run.country = TuS( "UK" ) then
-         Target_Dataset_IO.Add_Country_UK( frs_criteria, 1.0 );
       end if; -- and so on for Wales, Ireland; UK doesn't need this
+      
+      Target_Dataset_IO.Add_Year( frs_criteria, the_run.data_start_year, d.GE );
+      Target_Dataset_IO.Add_Year( frs_criteria, the_run.data_end_year, d.LE );
+            
       ps := Target_Dataset_IO.Get_Prepared_Retrieve_Statement( frs_criteria );            
       d_cursor.Fetch( conn, ps ); -- hack to get row count, otherwise unused
       num_data_rows := Rows_Count( d_cursor );
@@ -605,8 +625,8 @@ package body Model.SCP.Weights_Creator is
                if the_run.country = TuS( "SCO" ) then
                   base_target := targets.country_scotland;
                elsif the_run.country = TuS( "UK" ) then
-                  base_target := targets.country_uk;
-               end if; -- and so on for Wales, Ireland; UK doesn't need this
+                  base_target := targets.household_all_households;
+               end if; 
                uniform_weight := 
                   base_target / Amount( num_data_rows );
                initial_weights := ( others => uniform_weight );   
@@ -651,8 +671,9 @@ package body Model.SCP.Weights_Creator is
                            weight  =>  weights( row ));
                      begin
                         null;
+                        Put_Line( outf, To_Tab( out_weight ));
                         -- Trace( log_trace,  "adding " & To_String( out_weight ));
-                        Output_Weights_IO.Save( out_weight );
+                        -- Output_Weights_IO.Save( out_weight );
                         -- weighter.Add( year, id, this_weight, weight );
                      end;
                   end loop;
@@ -667,6 +688,7 @@ package body Model.SCP.Weights_Creator is
       end; -- decls for main dataset
       Trace( log_trace,  "returning connection" );
       Connection_Pool.Return_Connection( conn );
+      Close( outf );
    end  Create_Weights; 
    
 end Model.SCP.Weights_Creator;

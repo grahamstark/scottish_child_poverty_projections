@@ -1,5 +1,5 @@
 --
--- created on 19-10-2017 by Mill
+-- created on 22-10-2017 by Mill
 --
 drop database if exists ukds;
 create database ukds with encoding 'UTF-8';
@@ -77,6 +77,8 @@ CREATE TABLE target_data.run(
        population_edition INTEGER default 1970,
        start_year INTEGER default 1970,
        end_year INTEGER default 1970,
+       data_start_year INTEGER default 1970,
+       data_end_year INTEGER default 2030,
        weighting_function INTEGER,
        weighting_lower_bound DOUBLE PRECISION default 0.2,
        weighting_upper_bound DOUBLE PRECISION default 2.0,
@@ -645,18 +647,9 @@ CREATE TABLE target_data.target_dataset(
        participation_65_69_female DOUBLE PRECISION default 0.0,
        participation_70_74_female DOUBLE PRECISION default 0.0,
        participation_75_plus_female DOUBLE PRECISION default 0.0,
-       one_adult_hh_wales DOUBLE PRECISION default 0.0,
-       two_adult_hhs_wales DOUBLE PRECISION default 0.0,
-       other_hh_wales DOUBLE PRECISION default 0.0,
-       one_adult_hh_nireland DOUBLE PRECISION default 0.0,
-       two_adult_hhs_nireland DOUBLE PRECISION default 0.0,
-       other_hh_nireland DOUBLE PRECISION default 0.0,
-       one_adult_hh_england DOUBLE PRECISION default 0.0,
-       two_adult_hhs_england DOUBLE PRECISION default 0.0,
-       other_hh_england DOUBLE PRECISION default 0.0,
-       one_adult_hh_scotland DOUBLE PRECISION default 0.0,
-       two_adult_hhs_scotland DOUBLE PRECISION default 0.0,
-       other_hh_scotland DOUBLE PRECISION default 0.0,
+       one_adult_hh DOUBLE PRECISION default 0.0,
+       two_adult_hh DOUBLE PRECISION default 0.0,
+       other_hh DOUBLE PRECISION default 0.0,
        CONSTRAINT target_dataset_pk PRIMARY KEY( run_id, user_id, year, sernum ),
        CONSTRAINT target_dataset_FK_0 FOREIGN KEY( run_id, user_id) references run( run_id, user_id ) on delete CASCADE on update CASCADE
 );

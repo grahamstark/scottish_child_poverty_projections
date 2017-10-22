@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-10-19 12:07:27.861250
+-- Created by ada_generator.py on 2017-10-22 22:29:11.680747
 -- 
 with Ada.Containers.Vectors;
 --
@@ -334,18 +334,9 @@ package Ukds.target_data is
       participation_65_69_female : Amount := 0.0;
       participation_70_74_female : Amount := 0.0;
       participation_75_plus_female : Amount := 0.0;
-      one_adult_hh_wales : Amount := 0.0;
-      two_adult_hhs_wales : Amount := 0.0;
-      other_hh_wales : Amount := 0.0;
-      one_adult_hh_nireland : Amount := 0.0;
-      two_adult_hhs_nireland : Amount := 0.0;
-      other_hh_nireland : Amount := 0.0;
-      one_adult_hh_england : Amount := 0.0;
-      two_adult_hhs_england : Amount := 0.0;
-      other_hh_england : Amount := 0.0;
-      one_adult_hh_scotland : Amount := 0.0;
-      two_adult_hhs_scotland : Amount := 0.0;
-      other_hh_scotland : Amount := 0.0;
+      one_adult_hh : Amount := 0.0;
+      two_adult_hh : Amount := 0.0;
+      other_hh : Amount := 0.0;
    end record;
    --
    -- container for Target_Dataset : 
@@ -654,18 +645,9 @@ package Ukds.target_data is
          participation_65_69_female => 0.0,
          participation_70_74_female => 0.0,
          participation_75_plus_female => 0.0,
-         one_adult_hh_wales => 0.0,
-         two_adult_hhs_wales => 0.0,
-         other_hh_wales => 0.0,
-         one_adult_hh_nireland => 0.0,
-         two_adult_hhs_nireland => 0.0,
-         other_hh_nireland => 0.0,
-         one_adult_hh_england => 0.0,
-         two_adult_hhs_england => 0.0,
-         other_hh_england => 0.0,
-         one_adult_hh_scotland => 0.0,
-         two_adult_hhs_scotland => 0.0,
-         other_hh_scotland => 0.0
+         one_adult_hh => 0.0,
+         two_adult_hh => 0.0,
+         other_hh => 0.0
    );
    --
    -- simple print routine for Target_Dataset : 
@@ -1295,6 +1277,8 @@ package Ukds.target_data is
       population_edition : Year_Number := 1970;
       start_year : Year_Number := 1970;
       end_year : Year_Number := 1970;
+      data_start_year : Year_Number := 1970;
+      data_end_year : Year_Number := 2030;
       weighting_function : Distance_Function_Type := Distance_Function_Type'First;
       weighting_lower_bound : Rate := 0.2;
       weighting_upper_bound : Rate := 2.0;
@@ -1328,6 +1312,8 @@ package Ukds.target_data is
          population_edition => 1970,
          start_year => 1970,
          end_year => 1970,
+         data_start_year => 1970,
+         data_end_year => 2030,
          weighting_function => Distance_Function_Type'First,
          weighting_lower_bound => 0.2,
          weighting_upper_bound => 2.0,
@@ -1482,12 +1468,14 @@ package Ukds.target_data is
 
         
    -- === CUSTOM PROCS START ===
-                                           
-   subtype Forecast_Age_Ranges is Natural range 0 .. 90;                                        
-   type Age_Range_Array is array( Forecast_Age_Ranges ) of Amount;                                         
-                                          
-   function To_Array( popn : Population_Forecasts ) return Age_Range_Array;                                        
-                                           
+                                             
+   subtype Forecast_Age_Ranges is Natural range 0 .. 90;                                          
+   type Age_Range_Array is array( Forecast_Age_Ranges ) of Amount;                                           
+                                            
+   function To_Array( popn : Population_Forecasts ) return Age_Range_Array;   
+    
+   function To_Tab( weight : Output_Weights ) return String; 
+                                             
    -- === CUSTOM PROCS END ===
 
 end Ukds.target_data;

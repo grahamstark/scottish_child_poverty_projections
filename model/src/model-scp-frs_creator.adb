@@ -84,6 +84,15 @@ package body Model.SCP.FRS_Creator is
             Inc( targets.household_all_households );
             Inc( targets.country_uk );
             Assert( household_r.hhcomps >= 1 and household_r.hhcomps <= 17, "household_r.hhcomps out of range " &household_r.hhcomps'Img );
+            
+            if household_r.depchldh > 0 or household_r.adulth > 2 then
+               Inc( targets.other_hh );
+            elsif household_r.adulth = 2 then
+               Inc( targets.two_adult_hh );               
+            else
+               Inc( targets.one_adult_hh );
+            end if;
+            
             case household_r.gvtregn is
                when 1 .. 10 | 112000001 .. 112000009 =>
                   Inc( targets.country_england );
@@ -202,9 +211,8 @@ package body Model.SCP.FRS_Creator is
                   Inc( targets.country_n_ireland );
                   case household_r.hhcomps is
                      when 1 | -- One male adult, no children over pension age
-                          3 =>  -- One male adult, no children, under pension age  
-                        Inc( targets.nir_hhld_one_adult_households );
-                     when 2 | -- One female adult, no children over pension age
+                          3 |  -- One male adult, no children, under pension age  
+                          2 | -- One female adult, no children over pension age
                           4 =>  -- One female adult, no children, under pension age
                         Inc( targets.nir_hhld_one_adult_households );
                      when 5 | -- Two adults, no children, both over pension age
@@ -215,7 +223,9 @@ package body Model.SCP.FRS_Creator is
                         Inc( targets.nir_hhld_other_households_without_children );
                      when 9 | -- One adult, one child
                          10 | -- One adult, two children
-                         11 | -- One adult, three or more children
+                         11 => -- One adult, three or more children
+                            Inc( targets.nir_hhld_one_adult_households_with_children );
+                     when
                          12 | -- Two adults, one child
                          13 | -- Two adults, two children            
                          14 | -- Two adults, three or more children
@@ -229,6 +239,7 @@ package body Model.SCP.FRS_Creator is
                when others =>
                   Assert( false, "out of range region " & household_r.gvtregn'Img );
             end case;
+            
             
             
             Adult_IO.Add_Person_To_Orderings( hh_crit, d.Asc );
@@ -978,8 +989,18 @@ package body Model.SCP.FRS_Creator is
                   
                   if adult.DVIL04A /= 4 then -- not inactive == active in our terms
                      case adult.age80 is
-                        when 16 .. 19 => if( adult.sex = 1 ) then Inc( targets.participation_16_19_male ); else Inc(  targets.participation_16_19_female ); end if;
-                        when 20 .. 24 => if( adult.sex = 1 ) then Inc( targets.participation_20_24_male ); else Inc(  targets.participation_20_24_female ); end if;
+                        when 16 .. 19 => if( adult.sex = 1 ) then 
+                           Inc( targets.participation_16_19_male ); 
+                        else 
+                           Inc(  targets.participation_16_19_female ); 
+                        end if;
+                        
+                        when 20 .. 24 => 
+                           if( adult.sex = 1 ) then 
+                              Inc( targets.participation_20_24_male ); 
+                           else 
+                              Inc(  targets.participation_20_24_female ); 
+                           end if;
                         when 25 .. 29 => if( adult.sex = 1 ) then Inc( targets.participation_25_29_male ); else Inc(  targets.participation_25_29_female ); end if;
                         when 30 .. 34 => if( adult.sex = 1 ) then Inc( targets.participation_30_34_male ); else Inc(  targets.participation_30_34_female ); end if;
                         when 35 .. 39 => if( adult.sex = 1 ) then Inc( targets.participation_35_39_male ); else Inc(  targets.participation_35_39_female ); end if;
@@ -996,6 +1017,7 @@ package body Model.SCP.FRS_Creator is
                   end if;
                   
                end loop Adult_Loop;
+               
             end;
             UKDS.Target_Data.Target_Dataset_IO.Save( targets );
          end;
