@@ -76,7 +76,7 @@ package body Model.SCP.Weights_Creator is
             Inc( count, 5 );
          end if;
          if country = UK or country = ENG then
-            Inc( count, 8 );
+            Inc( count, 7 ); -- was 8; see weighting note 
          end if;
             
       end if;
@@ -116,10 +116,11 @@ package body Model.SCP.Weights_Creator is
    
 
    procedure Fill_One_Row( 
-      clauses  : Selected_Clauses_Array;
-      country  : Unbounded_String;
-      targets  : Target_Dataset;
-      row      : out Vector ) is
+      clauses        : Selected_Clauses_Array;
+      country        : Unbounded_String;
+      targets        : Target_Dataset;
+      row            : out Vector;
+      initial_weight : out Amount ) is
          
          p : Natural := 0;
          tmp : Amount;
@@ -135,6 +136,18 @@ package body Model.SCP.Weights_Creator is
       Assert( not (clauses( by_year_ages ) and clauses( by_year_ages_by_gender )), " by_year_ages and by_year_ages_by_gender can't both be on " );
       Assert( not (clauses( aggregate_ages ) and clauses( aggregate_ages_by_gender )), " aggregate_ages and aggregate_ages_by_gender can't both be on " );
        
+      --
+      -- this is a SCO/NI oversampling correction 
+      --
+      initial_weight := 1.0;
+      if country = UK then
+         if targets.country_scotland > 0.0 then
+            initial_weight := 0.5;
+         elsif targets.country_n_ireland > 0.0 then
+            initial_weight := 0.2;
+         end if;
+      end if;
+      
       row := ( others => 0.0 );
       if clauses( household_type ) then 
          if( country = SCO or country = UK ) then
@@ -149,12 +162,12 @@ package body Model.SCP.Weights_Creator is
          if( country = ENG or country = UK ) then
             Add_Col( targets.eng_hhld_one_person_households_male );
             Add_Col( targets.eng_hhld_one_person_households_female );
-            Add_Col( targets.eng_hhld_one_family_and_no_others_couple_no_dependent_chi );
+            Add_Col( targets.eng_hhld_one_family_and_no_others_couple_no_dependent_chi + targets.eng_hhld_other_households );
             Add_Col( targets.eng_hhld_a_couple_and_other_adults_no_dependent_children );
             Add_Col( targets.eng_hhld_households_with_one_dependent_child );
             Add_Col( targets.eng_hhld_households_with_two_dependent_children );
             Add_Col( targets.eng_hhld_households_with_three_dependent_children );
-            Add_Col( targets.eng_hhld_other_households );
+            -- Add_Col( targets.eng_hhld_other_households );
          end if;
          if( country = NIR or country = UK ) then
             Add_Col( targets.nir_hhld_one_adult_households );
@@ -511,8 +524,9 @@ package body Model.SCP.Weights_Creator is
       the_run : Run;
       error   : out Eval_Error_Type ) is
 
-   use GNATCOLL.SQL.Exec;   
+   use GNATCOLL.SQL.Exec;
    package d renames DB_Commons;
+   
       num_data_cols : constant Positive := Col_Count( the_run.selected_clauses, the_run.country );
       num_data_rows : Positive;
       conn          : Database_Connection;
@@ -528,7 +542,9 @@ package body Model.SCP.Weights_Creator is
     begin
        
       Trace( log_trace,  "Begining run for : " & To_String( the_run ));
-      Create( outf, Out_File, outfile_name );         
+      Create( outf, Out_File, outfile_name );   
+      Put_Line( outf, "run_id" & TAB & "user" & TAB & "frs_year" & TAB & "sernum" & TAB & "forecast_year" & TAB & "weight" );
+
       Connection_Pool.Initialise;
       conn := Connection_Pool.Lease;
       Target_Dataset_IO.Add_User_Id( frs_criteria, the_run.data_run_user_id );
@@ -537,8 +553,8 @@ package body Model.SCP.Weights_Creator is
       -- NO!! we want all years in the FRS dataset Target_Dataset_IO.Add_Year( frs_criteria, year );
       if the_run.country = SCO then
          Target_Dataset_IO.Add_Country_Scotland( frs_criteria, 1.0 );
-      elsif the_run.country = UK then
-         Target_Dataset_IO.Add_Country_UK( frs_criteria, 1.0 );
+      -- elsif the_run.country = UK then
+         -- Target_Dataset_IO.Add_Country_UK( frs_criteria, 1.0 );
       elsif the_run.country = WAL then
          Target_Dataset_IO.Add_Country_Wales( frs_criteria, 1.0 );
       elsif the_run.country = NIR then
@@ -582,6 +598,7 @@ package body Model.SCP.Weights_Creator is
          mapped_frs_data    : Vector( 1 .. num_data_cols );
          new_totals         : Row_Vector;
          weights            : Col_Vector;
+         by_country_sample_frequencies : Col_Vector;
       begin
          Trace( log_trace,  "Num Data Columns " & num_data_cols'Img & " Rows " & num_data_rows'Img );
          
@@ -594,7 +611,7 @@ package body Model.SCP.Weights_Creator is
          Load_Main_Dataset:
          for row in 1 .. num_data_rows loop
             frs_target_row := Target_Dataset_IO.Map_From_Cursor( f_cursor );
-            Fill_One_Row( the_run.selected_clauses, the_run.country, frs_target_row, mapped_frs_data );
+            Fill_One_Row( the_run.selected_clauses, the_run.country, frs_target_row, mapped_frs_data, by_country_sample_frequencies( row ));
             Trace( log_trace,  "made row " &row'Img & "=" & To_String( mapped_frs_data ));
             for col in mapped_target_data'Range loop
                observations.all( row, col ) :=  mapped_frs_data( col );                 
@@ -618,8 +635,9 @@ package body Model.SCP.Weights_Creator is
                );
                uniform_weight     : Amount;
                base_target        : Amount;
-               initial_weights    : Col_Vector;
                curr_iterations    : Natural := 0;
+               initial_weights    : Col_Vector;
+               dummy              : Amount;
             begin
                -- we need this pro tem as we have no hhld count for UK/ENG yet
                if the_run.country = TuS( "SCO" ) then
@@ -628,13 +646,15 @@ package body Model.SCP.Weights_Creator is
                   base_target := targets.household_all_households;
                end if; 
                uniform_weight := 
-                  base_target / Amount( num_data_rows );
-               initial_weights := ( others => uniform_weight );   
+                  base_target / sum( by_country_sample_frequencies );
+               for row in initial_weights'Range loop -- FIXME should just need '*' but doesn't work..
+                  initial_weights(row) := by_country_sample_frequencies(row) * uniform_weight;
+               end loop;
                Trace( log_trace,  "on year " & year'Img );
                Trace( log_trace,  "Initial Weight : " & Format( uniform_weight ));
                Trace( log_trace,  "Base Target : " & Format( base_target ));
                -- typecasting thing .. 
-               Fill_One_Row( the_run.selected_clauses, the_run.country, targets, mapped_target_data ); 
+               Fill_One_Row( the_run.selected_clauses, the_run.country, targets, mapped_target_data, dummy ); 
                for c in target_populations'Range loop
                   target_populations( c ) :=  mapped_target_data( c );                 
                end loop;

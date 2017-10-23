@@ -9,6 +9,7 @@ with Ada.Text_IO;
 
 with GNAT.Command_Line; 
 with GNATColl.Traces;
+with GNAT.Strings;
 
 with Text_Utils;
 with Weighting_Commons;
@@ -32,6 +33,9 @@ procedure Basic_SCP_Driver is
    use Text_Utils;
    use SCP_Types;
    use Weighting_Commons;
+   use GNAT.Strings;
+   use GNAT.Command_Line;
+   -- use Ada.Strings.Unbounded;
    
    HELP_MESSAGE : constant String := 
       "-d : dataset id " & LINE_BREAK &
@@ -58,22 +62,43 @@ procedure Basic_SCP_Driver is
    endTime      : Time;
    elapsed      : Duration;
    the_run      : UKDS.Target_Data.Run;
-   run_type     : constant Type_Of_Run := weights_generation;
+   run_type     : Type_Of_Run := weights_generation;
    error        : Model.Maths_Funcs.Eval_Error_Type;
+   
+   -- cmd_config   : Command_Line_Configuration;
+   -- 
+   -- start_year : aliased Year_Number := 2014;
+   -- end_year   : aliased Year_Number := 2037;
+   -- run_id     : aliased Integer := 100_005;
+    
+   
+   --
+   -- households_variant : aliased String_Access; -- := new String("ppp")'Access;
+   -- households_edition : aliased Integer := 2014;
+   -- 
+   -- population_variant : aliased String_Access; -- = TuS( "ppp" );
+   -- population_edition : aliased Integer := 2014;
+   -- macro_variant      : aliased String_Access := TuS( "baseline" );
+      -- the_run.macro_edition := 2017;
+      -- the_run.country := UK      
+   
 begin
-     -- case Getopt ("d: v: f: p: h") is
+   
+   -- Define_Switch( cmd_config, households_variant'Access, Long_Switch=> "Households Projections Variant", Help=>"Households Variant" );
+   -- Define_Switch( cmd_config, run_type'Access, Switch=> "Type of Run", Help=>"Type of Run" );
+   
+   -- loop
+     -- case Getopt ("t: -r: -start_year= -end_year=  -popn= -macro= -hh= -country= v: f: p: h") is
       -- when ASCII.NUL => exit;
+      -- when 't' =>
+         -- run_type := Type_Of_Run'Value( Parameter );
       -- when 'h' =>
          -- Put_Line( HELP_MESSAGE );
          -- return;
-      -- when 'd' =>
-            -- the_run.base_dataset_run_id := Positive'Value( Parameter );
-      -- when 'v' =>
-            -- the_run.base_dataset_variant := Positive'Value( Parameter );
-      -- when 'f' =>
-            -- the_run.population_forecast := Positive'Value( Parameter );
-      -- when 'p' =>
-            -- the_run.population_weighting := Population_Weighting_Level'Value( Parameter );
+      -- when '-' =>
+         -- if Full_Switch = "--start " then
+            -- null; -- the_run.base_dataset_run_id := Positive'Value( Parameter );
+         -- end if;
       -- when others =>
          -- raise Program_Error;  
       -- end case;
@@ -89,13 +114,13 @@ begin
    when data_generation =>      
       the_run.start_year := 2008;
       the_run.end_year := 2015;
-      the_run.run_id := 999_997;
+      the_run.run_id := 999_996;
       UKDS.Target_Data.Run_IO.Save( the_run );
       Model.SCP.FRS_Creator.Create_Dataset( the_run );
    when target_generation =>
       the_run.start_year := 2014;
       the_run.end_year := 2037;
-      the_run.run_id := 100_004;
+      the_run.run_id := 100_005;
       
       the_run.households_variant := TuS( "ppp" );
       the_run.households_edition := 2014;
@@ -103,21 +128,21 @@ begin
       the_run.population_edition := 2014;
       the_run.macro_variant := TuS( "baseline" );
       the_run.macro_edition := 2017;
-      the_run.country := TuS( "SCO" );      
+      the_run.country := UK;     
       UKDS.Target_Data.Run_IO.Save( the_run );
       Model.SCP.Target_Creator.Create_Dataset( the_run );
       
    when weights_generation =>
       the_run.start_year := 2014;
       the_run.end_year := 2037;
-      the_run.run_id := 200_004;
+      the_run.run_id := 200_006;
 
       the_run.weighting_function := constrained_chi_square;
-      the_run.weighting_lower_bound := 0.1;
-      the_run.weighting_upper_bound := 3.0;
-      the_run.targets_run_id := 100_004;      
+      the_run.weighting_lower_bound := 0.05;
+      the_run.weighting_upper_bound := 6.0;
+      the_run.targets_run_id := 100_005;      
       the_run.targets_run_user_id := 1;
-      the_run.data_run_id := 999_997;
+      the_run.data_run_id := 999_996;
       the_run.data_run_user_id := 1;
       the_run.data_start_year := 2012;
       the_run.data_end_year := 2015;

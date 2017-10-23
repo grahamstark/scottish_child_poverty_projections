@@ -85,17 +85,12 @@ package body Model.SCP.FRS_Creator is
             Inc( targets.country_uk );
             Assert( household_r.hhcomps >= 1 and household_r.hhcomps <= 17, "household_r.hhcomps out of range " &household_r.hhcomps'Img );
             
-            if household_r.depchldh > 0 or household_r.adulth > 2 then
-               Inc( targets.other_hh );
-            elsif household_r.adulth = 2 then
-               Inc( targets.two_adult_hh );               
-            else
-               Inc( targets.one_adult_hh );
-            end if;
-            
+         
             case household_r.gvtregn is
                when 1 .. 10 | 112000001 .. 112000009 =>
                   Inc( targets.country_england );
+                  
+                  
                   case household_r.hhcomps is
                      when 1 | -- One male adult, no children over pension age
                           3 =>  -- One male adult, no children, under pension age  
