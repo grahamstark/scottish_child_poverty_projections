@@ -1,0 +1,149 @@
+# NOTE ON WEIGHTING
+
+Two sets. Short run with employment, etc (to 2021) long run to 2031 by household composition,
+population, labour force participation only.
+
+## 2014 - 2031
+
+# Sources:
+
+## People:
+
+For Scotland: [Projected Population of Scotland (2014-based)][SCOTPOP]. Everywhere else from [ONS Zipped
+bundle][ONSBUNDLE](file Z1).
+
+The three letter key in the file name indicates the projection type the data relates to as follows:
+
+    ppp – principal projection
+    hpp – high fertility variant
+    lpp – low fertility variant
+    php – high life expectancy variant
+    plp – low life expectancy variant
+    pph – high migration variant
+    ppl – low migration variant
+    hhh – high population variant
+    lll – low population variant
+    ppz – zero net migration (natural change only) variant
+    
+By Gender, in 5 - year bands to 79, then 80+. 34 Targets.
+
+### Households
+
+All this stuff is scattered and uses inconsistent breakdowns. So in the final weights, seperate breakdowns for each
+country are used.
+
+#### England
+
+From [ONS][ENGLANDHH]. Breakdown:
+
+    one person households male
+    one person households female
+    one family and no others couple no dependent children
+    a couple and one or more other adults no dependent children
+    households with one dependent child
+    households with two dependent children
+    households with three dependent children
+    other households
+        
+
+Couldn't find alternative assumption tables.    
+    
+Problems: mapping from FRS produces many fewer "other households" and many more `one family and no other`, stopping
+convergence. These fields are therefore merged.
+
+5 targets.
+
+#### Scotland
+
+From [National records of Scotland][SCOTHH]. Breakdown:
+
+    one adult male
+    one adult female
+    two adults
+    one adult one child
+    one adult two plus children
+    two plus adult one plus children
+    three plus person all adult
+
+7 targets.
+
+Three variants available, corresponding to `ppp`, `ppl`, `pph` (see popn above). 
+
+####  N. Ireland [][NIRHH]
+
+2012 based; only 1 variant. 
+
+    one adult households
+    two adults without children
+    other households without children
+    one adult households with children
+    other households with children
+
+5 targets.
+
+#### Wales:
+
+From [Stats Wales][WALESHH]. No variants available. Breakdown:
+
+    1 person
+    2 person no children
+    2 person 1 adult 1 child
+    3 person no children
+    3 person 2 adults 1 child
+    3 person 1 adult 2 children
+    4 person no children
+    4 person 2 plus adults 1 plus children
+    4 person 1 adult 3 children
+    5 plus person no children
+    5 plus person 2 plus adults 1 plus children
+    5 plus person 1 adult 4 plus children
+
+12 Targets.
+    
+Note there is almost no overlap between the 4 countries. Nearest is:
+
+    one adult hh
+    two adult hh
+    other hh
+
+which seems pointless. So we use all the Household breakdowns, except for England as noted.
+
+## PARTICIPATION
+
+From [OBR Fiscal Sustainability report][OBRSUST] Tables 3-1,3.2. Breakdowns (by males/females): 
+
+    age 16 19 
+    age 20 24
+    age 25 29
+    age 30 34
+    age 35 39
+    age 40 44
+    age 45 49
+    age 50 54
+    age 55 59
+    age 60 64
+    age 65 69
+    age 70 74
+    age 75 plus
+
+Mapped in FRS to `DVIL04A /= 4` in `adult` record. 
+
+OBR figure for 16-19 missing for 2009-2021; interpolated figure is much to high compared to FRS age 16-19 M/F compared
+to data. Possibly we need `child` records also. This field, and `75 plus`, dropped from weights targets.
+
+So, 22 targets.
+
+OBR figure is for UK so rates for countries are weighted by [NOMIS][NOMIS] data retrieved 19/10/2017 on country-level
+participation rates by age band and gender from Annual Population Survey.
+
+This gives us 87 target cols for the UK wide weighting, 63 for Scotland only. Converged using
+constrained_chi_square with bounds 0.05 - 6.0. TODO try narrower bounds.
+
+[SCOTPOP]:https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/population/population-projections/population-projections-scotland
+[ONSBUNDLE]:https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationprojections
+[NOMIS]:https://www.nomisweb.co.uk/
+[ENGLANDHH]: https://www.gov.uk/government/statistical-data-sets/2014-based-household-projections-detailed-data-for-modelling-and-analytical-purposes
+[SCOTHH]: https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/households/household-projections/2014-based-household-projections
+[WALESHH]: http://gov.wales/statistics-and-research/household-projections/?lang=en
+[NIRHH]: https://www.nisra.gov.uk/publications/northern-ireland-household-projections-2012-based
+[OBRSUST]: http://budgetresponsibility.org.uk/fsr/fiscal-sustainability-report-january-2017/
