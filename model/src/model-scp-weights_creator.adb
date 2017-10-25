@@ -562,7 +562,7 @@ package body Model.SCP.Weights_Creator is
       elsif the_run.country = ENG then
          Target_Dataset_IO.Add_Country_England( frs_criteria, 1.0 );
       end if; -- and so on for Wales, Ireland; UK doesn't need this
-      
+      Target_Dataset_IO.Add_hbai_excluded( frs_criteria, False, d.NE );
       Target_Dataset_IO.Add_Year( frs_criteria, the_run.data_start_year, d.GE );
       Target_Dataset_IO.Add_Year( frs_criteria, the_run.data_end_year, d.LE );
             
