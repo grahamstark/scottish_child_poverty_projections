@@ -1,16 +1,18 @@
 # NOTE ON WEIGHTING
 
-Two sets. Short run with employment, etc (to 2021) long run to 2031 by household composition,
-population, labour force participation only.
+I've produced two sets of weights. Both match household composition and population by age and sex.
 
-## 2014 - 2031
+* a short run (2014-2021). This has with employment, employment, ilo_unemployment, jsa_claimants from OBR
+* a long run to 2031 by household composition, population, labour force participation only.
+
+I'll discuss the long run one here.
 
 # Sources:
 
 ## People:
 
 For Scotland: [Projected Population of Scotland (2014-based)][SCOTPOP]. Everywhere else from [ONS Zipped
-bundle][ONSBUNDLE](file Z1).
+bundle][ONSBUNDLE](file Z1). We can hit UK-wide, or each country individually.
 
 The three letter key in the file name indicates the projection type the data relates to as follows:
 
@@ -25,7 +27,9 @@ The three letter key in the file name indicates the projection type the data rel
     lll – low population variant
     ppz – zero net migration (natural change only) variant
     
-By Gender, in 5 - year bands to 79, then 80+. 34 Targets.
+   
+    
+I match by gender, in 5 - year bands to 79, then 80+. This is a total of 34 Targets.
 
 ### Households
 
@@ -69,7 +73,9 @@ From [National records of Scotland][SCOTHH]. Breakdown:
 
 Three variants available, corresponding to `ppp`, `ppl`, `pph` (see popn above). 
 
-####  N. Ireland [][NIRHH]
+####  N. Ireland 
+
+From [Northern Ireland Household Projections][NIRHH].
 
 2012 based; only 1 variant. 
 
@@ -139,6 +145,40 @@ participation rates by age band and gender from Annual Population Survey.
 This gives us 87 target cols for the UK wide weighting, 63 for Scotland only. Converged using
 constrained_chi_square with bounds 0.05 - 6.0. TODO try narrower bounds.
 
+## Weights Stats
+
+### UK Base Case
+
+    Mean                         379.55
+    Median                       378.06
+    Minimum                      4.7666
+    Maximum                      2140.6
+    Standard deviation           184.82
+    C.V.                        0.48694
+    Skewness                    0.57622
+    Ex. kurtosis                 1.0669
+    5% percentile                85.612
+    95% percentile               696.80
+    Interquartile range          243.51
+
+![UK Base Distribution](uk_base_weights.png)
+
+### SCOT BASE CASE
+
+    Mean                         222.57
+    Median                       213.73
+    Minimum                      20.746
+    Maximum                      706.16
+    Standard deviation           99.522
+    C.V.                        0.44715
+    Skewness                     1.1295
+    Ex. kurtosis                 3.5338
+    5% percentile                74.330
+    95% percentile               379.69
+    Interquartile range          107.31
+
+![Scot Base Distribution](sco_base_weights.png "S" )    
+    
 [SCOTPOP]:https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/population/population-projections/population-projections-scotland
 [ONSBUNDLE]:https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationprojections
 [NOMIS]:https://www.nomisweb.co.uk/
@@ -147,3 +187,57 @@ constrained_chi_square with bounds 0.05 - 6.0. TODO try narrower bounds.
 [WALESHH]: http://gov.wales/statistics-and-research/household-projections/?lang=en
 [NIRHH]: https://www.nisra.gov.uk/publications/northern-ireland-household-projections-2012-based
 [OBRSUST]: http://budgetresponsibility.org.uk/fsr/fiscal-sustainability-report-january-2017/
+
+## Bibliography
+
+‘2014-Based Household Projections in England, 2014 to 2039 - GOV.UK’. Accessed 19 September 2017. https://www.gov.uk/government/statistics/2014-based-household-projections-in-england-2014-to-2039.
+
+‘A05 NSA: Employment, Unemployment and Economic Inactivity by Age Group (Not Seasonally Adjusted) - Office for National Statistics’. Accessed 9 October 2017. https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/datasets/employmentunemploymentandeconomicinactivitybyagegroupnotseasonallyadjusteda05nsa.
+
+‘Data’. Office for Budget Responsibility. Accessed 9 October 2017. http://budgetresponsibility.org.uk/data/.
+
+‘Economic and Fiscal Outlook – March 2017’. Office for Budget Responsibility. Accessed 29 August 2017. http://budgetresponsibility.org.uk/efo/economic-fiscal-outlook-march-2017/.
+
+‘Family Resources Survey: Financial Year 2015/16 - GOV.UK’. Accessed 23 October 2017. https://www.gov.uk/government/statistics/family-resources-survey-financial-year-201516.
+
+‘Fiscal Sustainability Report - January 2017’. Office for Budget Responsibility. Accessed 24 October 2017. http://budgetresponsibility.org.uk/fsr/fiscal-sustainability-report-january-2017/.
+
+‘Glossary:Inactive - Statistics Explained’. Accessed 9 October 2017. http://ec.europa.eu/eurostat/statistics-explained/index.php/Glossary:Inactive.
+
+‘Household Projections for Scotland, 2014-Based | National Records of Scotland’. Accessed 30 August 2017. https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/households/household-projections/2014-based-household-projections.
+
+‘Household Projections for Scotland, 2014-Based | National Records of Scotland’. Accessed 30 August 2017. https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/households/household-projections/2014-based-household-projections.
+
+‘Initial Review of the Family Resources Survey Weighting Scheme - GOV.UK’. Accessed 23 October 2017. https://www.gov.uk/government/publications/initial-review-of-the-family-resources-survey-weighting-scheme.
+
+‘Labour Market Statistics Time Series Dataset - Office for National Statistics’. Accessed 9 October 2017. https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/datasets/labourmarketstatistics.
+
+‘Long Term Conditions Projections - Scottish Centre for Telehealth and Telecare’. Accessed 31 August 2017. https://sctt.org.uk/programmes/home-and-mobile-monitoring/long-term-conditions/.
+
+‘Nomis - Official Labour Market Statistics’. Accessed 24 October 2017. https://www.nomisweb.co.uk/.
+
+‘Northern Ireland Household Projections (2012-Based)’. Northern Ireland Statistics and Research Agency, 21 December 2016. https://www.nisra.gov.uk/publications/northern-ireland-household-projections-2012-based.
+
+ONS. ‘Release Edition Reference Tables’. Text, 2 July 2010. http://webarchive.nationalarchives.gov.uk/20160108043217/http://www.ons.gov.uk/ons/publications/re-reference-tables.html?newquery=*&newoffset=50&pageSize=25&edition=tcm%3A77-395151.
+
+‘Population Projections - Office for National Statistics’. Accessed 24 October 2017. https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationprojections.
+
+‘Projected Population of Scotland (2014-Based): Additional Variants Using Alternative European Union Migration Assumptions | National Records of Scotland’. Accessed 30 August 2017. https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/population/population-projections/population-projections-scotland/2014-based-additional-variants.
+
+Scottish Government, St Andrew’s House. ‘Estimated and Projected Diagnosis Rates for Dementia in Scotland 2014-2020’. Research Publications, 13 December 2016. http://www.gov.scot/Publications/2016/12/9363/downloads.
+
+———. ‘Health and Community Care - Statistics Publications’. Info Page, 1 April 2003. http://www.gov.scot/Topics/Statistics/Browse/Health/Publications.
+
+———. ‘More Homes Scotland’. Website Section, 26 February 2016. http://www.gov.scot/Topics/Built-Environment/Housing/reform/more-homes-scotland.
+
+———. ‘Scottish Health Survey’. Website Section, 1 April 2003. http://www.gov.scot/Topics/Statistics/Browse/Health/scottish-health-survey.
+
+‘Snapshot’. Accessed 19 September 2017. https://www.gov.uk/government/statistics/2014-based-household-projections-in-england-2014-to-2039.
+
+Team, National Records of Scotland Web. ‘National Records of Scotland’. Document. National Records of Scotland, 31 May 2013. https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/population/population-projections/population-projections-scotland.
+
+———. ‘National Records of Scotland’. Document. National Records of Scotland, 31 May 2013. /statistics-and-data/statistics/statistics-by-theme/housholds/household-projections.
+
+‘Welsh Government | Household Projections’. Accessed 17 October 2017. http://gov.wales/statistics-and-research/household-projections/?lang=en.
+
+‘Z5 - Zipped Population Projections Data Files - Extra Variants, Scotland - Office for National Statistics’. Accessed 4 September 2017. https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationprojections/datasets/z5zippedpopulationprojectionsdatafilesextravariantsscotland.

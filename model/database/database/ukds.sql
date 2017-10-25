@@ -1,5 +1,5 @@
 --
--- created on 22-10-2017 by Mill
+-- created on 25-10-2017 by Mill
 --
 drop database if exists ukds;
 create database ukds with encoding 'UTF-8';
@@ -355,6 +355,7 @@ CREATE TABLE target_data.target_dataset(
        user_id INTEGER not null default 0,
        year INTEGER not null default 1970,
        sernum BIGINT not null default 0,
+       hbai_excluded BOOLEAN default False,
        country_uk DOUBLE PRECISION default 0.0,
        country_scotland DOUBLE PRECISION default 0.0,
        country_england DOUBLE PRECISION default 0.0,

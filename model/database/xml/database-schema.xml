@@ -417,7 +417,7 @@
                   <column name='user_id' type='INTEGER' default='0' primaryKey='true'/>
                   <column name='year' type='INTEGER' adaTypeName="Year_Number"  default='1970' primaryKey='true'/>
                   <column name='sernum' description='Sernum; only for FRS ones really' type='BIGINT' adaTypeName='Sernum_Value' primaryKey='true' default='0' />
-                           
+                  <column name='hbai_excluded' type='BOOLEAN' description='this hhld excluded from HBAI' adaTypeName='Boolean' default='False' />        
                   <column name='country_uk' description='' default='0.0' type='REAL' adaTypeName='Amount'/>
                   <column name='country_scotland' description='' default='0.0' type='REAL' adaTypeName='Amount'/>
                   <column name='country_england' description='' default='0.0' type='REAL' adaTypeName='Amount'/>
@@ -690,120 +690,8 @@
                   <column name='age_108_female' description='age_108_female' default='0.0' type='REAL' adaTypeName='Amount'/>
                   <column name='age_109_female' description='age_109_female' default='0.0' type='REAL' adaTypeName='Amount'/>
                   <column name='age_110_female' description='age_110_female' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <!--
-                  <column name='age_0' description='age_0' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_1' description='age_1' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_2' description='age_2' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_3' description='age_3' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_4' description='age_4' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_5' description='age_5' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_6' description='age_6' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_7' description='age_7' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_8' description='age_8' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_9' description='age_9' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_10' description='age_10' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_11' description='age_11' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_12' description='age_12' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_13' description='age_13' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_14' description='age_14' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_15' description='age_15' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_16' description='age_16' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_17' description='age_17' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_18' description='age_18' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_19' description='age_19' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_20' description='age_20' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_21' description='age_21' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_22' description='age_22' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_23' description='age_23' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_24' description='age_24' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_25' description='age_25' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_26' description='age_26' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_27' description='age_27' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_28' description='age_28' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_29' description='age_29' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_30' description='age_30' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_31' description='age_31' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_32' description='age_32' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_33' description='age_33' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_34' description='age_34' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_35' description='age_35' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_36' description='age_36' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_37' description='age_37' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_38' description='age_38' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_39' description='age_39' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_40' description='age_40' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_41' description='age_41' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_42' description='age_42' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_43' description='age_43' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_44' description='age_44' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_45' description='age_45' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_46' description='age_46' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_47' description='age_47' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_48' description='age_48' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_49' description='age_49' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_50' description='age_50' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_51' description='age_51' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_52' description='age_52' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_53' description='age_53' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_54' description='age_54' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_55' description='age_55' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_56' description='age_56' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_57' description='age_57' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_58' description='age_58' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_59' description='age_59' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_60' description='age_60' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_61' description='age_61' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_62' description='age_62' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_63' description='age_63' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_64' description='age_64' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_65' description='age_65' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_66' description='age_66' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_67' description='age_67' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_68' description='age_68' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_69' description='age_69' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_70' description='age_70' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_71' description='age_71' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_72' description='age_72' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_73' description='age_73' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_74' description='age_74' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_75' description='age_75' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_76' description='age_76' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_77' description='age_77' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_78' description='age_78' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_79' description='age_79' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_80' description='age_80' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_81' description='age_81' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_82' description='age_82' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_83' description='age_83' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_84' description='age_84' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_85' description='age_85' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_86' description='age_86' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_87' description='age_87' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_88' description='age_88' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_89' description='age_89' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_90' description='age_90' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_91' description='age_91' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_92' description='age_92' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_93' description='age_93' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_94' description='age_94' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_95' description='age_95' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_96' description='age_96' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_97' description='age_97' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_98' description='age_98' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_99' description='age_99' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_100' description='age_100' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_101' description='age_101' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_102' description='age_102' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_103' description='age_103' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_104' description='age_104' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_105' description='age_105' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_106' description='age_106' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_107' description='age_107' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_108' description='age_108' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_109' description='age_109' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  <column name='age_110' description='age_110' default='0.0' type='REAL' adaTypeName='Amount'/>
-                  -->
-                   <column name='participation_16_19_male' type='REAL' adaTypeName='Amount' default='0.0'  />
+
+                  <column name='participation_16_19_male' type='REAL' adaTypeName='Amount' default='0.0'  />
                    <column name='participation_20_24_male' type='REAL' adaTypeName='Amount' default='0.0'  />
                    <column name='participation_25_29_male' type='REAL' adaTypeName='Amount' default='0.0'  />
                    <column name='participation_30_34_male' type='REAL' adaTypeName='Amount' default='0.0'  />
