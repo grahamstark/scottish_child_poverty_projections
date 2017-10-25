@@ -98,7 +98,8 @@ procedure Basic_SCP_Driver is
       run_type       : Type_Of_Run;
       data_run_id    : Integer;
       country        : Unbounded_String;
-      targets_run_id : Integer ) is
+      targets_run_id : Integer;
+      variant        : Unbounded_String := PPP ) is
           
       startTime    : Time;
       endTime      : Time;
@@ -113,36 +114,33 @@ procedure Basic_SCP_Driver is
       the_run.user_id := 1;
       Put_Line( "We're making a start on this.." );
       Log( "type of run is " & run_type'Img );
+      
+      the_run.run_id := run_id;
+      the_run.country := country;     
+         
       case run_type is
       when data_generation =>      
          the_run.start_year := 2008;
          the_run.end_year := 2015;
-         the_run.run_id := 999_996;
          UKDS.Target_Data.Run_IO.Save( the_run );
          Model.SCP.FRS_Creator.Create_Dataset( the_run );
       when target_generation =>
          the_run.start_year := 2014;
          the_run.end_year := 2037;
-         the_run.run_id := 100_006;
-         
-         the_run.households_variant := TuS( "ppl" );
+         the_run.households_variant := variant;
          the_run.households_edition := 2014;
-         the_run.population_variant := TuS( "ppl" );
+         the_run.population_variant := variant;
          the_run.population_edition := 2014;
-         the_run.macro_variant := TuS( "baseline" );
+         the_run.macro_variant := BASELINE;
          the_run.macro_edition := 2017;
-         the_run.country := SCO;     
          UKDS.Target_Data.Run_IO.Save( the_run );
          Model.SCP.Target_Creator.Create_Dataset( the_run );
-         
       when weights_generation =>
          the_run.start_year := 2014;
          the_run.end_year := 2037;
-         the_run.run_id := run_id;
-   
          the_run.weighting_function := constrained_chi_square;
          the_run.weighting_lower_bound := 0.1;
-         the_run.weighting_upper_bound := 3.0;
+         the_run.weighting_upper_bound := 4.0;
          the_run.targets_run_id := targets_run_id; -- 100_007;      
          the_run.targets_run_user_id := 1;
          the_run.data_run_id := data_run_id; -- 999_996;
@@ -161,7 +159,6 @@ procedure Basic_SCP_Driver is
                ilo_unemployment         => False,
                jsa_claimants            => False,
                participation_rate       => True );
-         the_run.country := country;
          Log( "Starting Run with ID " & the_run.run_id'Img & " targets " & the_run.targets_run_id'Img );
          UKDS.Target_Data.Run_IO.Save( the_run );
          Model.SCP.Weights_Creator.Create_Weights( the_run, error );
@@ -179,22 +176,32 @@ procedure Basic_SCP_Driver is
    
    
 begin
-   for targets_run_id in 100_005 .. 100_007 loop
+   if true then
       Run_One(  
-         run_id         => 100_010 + targets_run_id, 
-         run_type       => weights_generation, 
+         run_id         => 100_008, 
+         run_type       => target_generation, 
          data_run_id    => 999_996,
          country        => SCO,
-         targets_run_id => targets_run_id );
-   end loop;
-   
-   for targets_run_id in 100_005 .. 100_005 loop
-      Run_One(  
-         run_id         => 100_020 + targets_run_id, 
-         run_type       => weights_generation, 
-         data_run_id    => 999_996,
-         country        => UK,
-         targets_run_id => targets_run_id );
-   end loop;
-   
+         targets_run_id => 100_008 );
+   end if;
+   if true then
+      for targets_run_id in 100_008 .. 100_008 loop -- 7
+         Run_One(  
+            run_id         => 100_010 + targets_run_id, 
+            run_type       => weights_generation, 
+            data_run_id    => 999_996,
+            country        => SCO,
+            targets_run_id => targets_run_id );
+      end loop;
+   end if;
+   if false then
+      for targets_run_id in 100_005 .. 100_005 loop
+         Run_One(  
+            run_id         => 100_020 + targets_run_id, 
+            run_type       => weights_generation, 
+            data_run_id    => 999_996,
+            country        => UK,
+            targets_run_id => targets_run_id );
+      end loop;
+   end if;
 end Basic_SCP_Driver;

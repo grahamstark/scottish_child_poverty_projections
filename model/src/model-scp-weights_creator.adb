@@ -565,7 +565,9 @@ package body Model.SCP.Weights_Creator is
       Target_Dataset_IO.Add_hbai_excluded( frs_criteria, False );
       Target_Dataset_IO.Add_Year( frs_criteria, the_run.data_start_year, d.GE );
       Target_Dataset_IO.Add_Year( frs_criteria, the_run.data_end_year, d.LE );
-            
+      Target_Dataset_IO.Add_Year_To_Orderings( frs_criteria, d.Asc );
+      Target_Dataset_IO.Add_Sernum_To_Orderings( frs_criteria, d.Asc );
+      
       ps := Target_Dataset_IO.Get_Prepared_Retrieve_Statement( frs_criteria );            
       d_cursor.Fetch( conn, ps ); -- hack to get row count, otherwise unused
       num_data_rows := Rows_Count( d_cursor );

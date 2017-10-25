@@ -25,6 +25,19 @@ package SCP_Types is
    NIR : constant Unbounded_String := To_Unbounded_String( "NIR" );
    UK  : constant Unbounded_String := To_Unbounded_String( "UK" );
    
+   PPP : constant Unbounded_String := To_Unbounded_String( "ppp" ); -- principal projection
+   HPP : constant Unbounded_String := To_Unbounded_String( "hpp" ); -- high fertility variant
+   LPP : constant Unbounded_String := To_Unbounded_String( "lpp" ); -- low fertility variant
+   PHP : constant Unbounded_String := To_Unbounded_String( "php" ); -- high life expectancy variant
+   PLP : constant Unbounded_String := To_Unbounded_String( "plp" ); -- low life expectancy variant
+   PPH : constant Unbounded_String := To_Unbounded_String( "pph" ); -- high migration variant
+   PPL : constant Unbounded_String := To_Unbounded_String( "ppl" ); -- low migration variant
+   HHH : constant Unbounded_String := To_Unbounded_String( "hhh" ); -- high population variant
+   LLL : constant Unbounded_String := To_Unbounded_String( "lll" ); -- low population variant
+   PPZ : constant Unbounded_String := To_Unbounded_String( "ppz" ); -- zero net migration (natural change only) variant
+       
+   BASELINE : constant Unbounded_String := To_Unbounded_String( "baseline" );
+   
    function Country_From_Country( s : Unbounded_String ) return Countries; -- amazingly stupid design
    
    PERSONS       : constant Unbounded_String := To_Unbounded_String( "persons" );
