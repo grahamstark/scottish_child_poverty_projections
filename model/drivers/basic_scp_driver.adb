@@ -141,8 +141,8 @@ procedure Basic_SCP_Driver is
          the_run.run_id := run_id;
    
          the_run.weighting_function := constrained_chi_square;
-         the_run.weighting_lower_bound := 0.05;
-         the_run.weighting_upper_bound := 4.0;
+         the_run.weighting_lower_bound := 0.1;
+         the_run.weighting_upper_bound := 3.0;
          the_run.targets_run_id := targets_run_id; -- 100_007;      
          the_run.targets_run_user_id := 1;
          the_run.data_run_id := data_run_id; -- 999_996;
@@ -177,11 +177,24 @@ procedure Basic_SCP_Driver is
       Put_Line( "Time Taken " & elapsed'Img & " secs" );
    end Run_One;
    
+   
 begin
-   Run_One(  
-      run_id         => 200_010, 
-      run_type       => weights_generation, 
-      data_run_id    => 999_996,
-      country        => SCO,
-      targets_run_id => 100_007 );
+   for targets_run_id in 100_005 .. 100_007 loop
+      Run_One(  
+         run_id         => 100_010 + targets_run_id, 
+         run_type       => weights_generation, 
+         data_run_id    => 999_996,
+         country        => SCO,
+         targets_run_id => targets_run_id );
+   end loop;
+   
+   for targets_run_id in 100_005 .. 100_005 loop
+      Run_One(  
+         run_id         => 100_020 + targets_run_id, 
+         run_type       => weights_generation, 
+         data_run_id    => 999_996,
+         country        => UK,
+         targets_run_id => targets_run_id );
+   end loop;
+   
 end Basic_SCP_Driver;
