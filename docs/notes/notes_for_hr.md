@@ -31,12 +31,12 @@ The three letter key in the file name indicates the projection type the data rel
     
 I match by gender, in 5 - year bands to 79, then 80+. This is a total of 34 Targets.
 
-### Households
+## Households
 
 All this stuff is scattered and uses inconsistent breakdowns. So in the final weights, seperate breakdowns for each
 country are used.
 
-#### England
+### England
 
 From [ONS][ENGLANDHH]. Breakdown:
 
@@ -57,7 +57,7 @@ convergence. These fields are therefore merged.
 
 5 targets.
 
-#### Scotland
+### Scotland
 
 From [National records of Scotland][SCOTHH]. Breakdown:
 
@@ -73,7 +73,7 @@ From [National records of Scotland][SCOTHH]. Breakdown:
 
 Three variants available, corresponding to `ppp`, `ppl`, `pph` (see popn above). 
 
-####  N. Ireland 
+###  N. Ireland 
 
 From [Northern Ireland Household Projections][NIRHH].
 
@@ -87,7 +87,7 @@ From [Northern Ireland Household Projections][NIRHH].
 
 5 targets.
 
-#### Wales:
+### Wales:
 
 From [Stats Wales][WALESHH]. No variants available. Breakdown:
 
@@ -149,35 +149,42 @@ constrained_chi_square with bounds 0.05 - 6.0. TODO try narrower bounds.
 
 ### UK Base Case
 
-    Mean                         379.55
-    Median                       378.06
-    Minimum                      4.7666
-    Maximum                      2140.6
-    Standard deviation           184.82
-    C.V.                        0.48694
-    Skewness                    0.57622
-    Ex. kurtosis                 1.0669
-    5% percentile                85.612
-    95% percentile               696.80
-    Interquartile range          243.51
+(1,893,336 observations)
 
-![UK Base Distribution](uk_base_weights.png)
+    Mean                         381.00
+    Median                       378.95
+    Minimum                      9.4434
+    Maximum                      1950.8
+    Standard deviation           185.91
+    C.V.                        0.48796
+    Skewness                    0.57440
+    Ex. kurtosis                 1.0269
+    5% percentile                85.686
+    95% percentile               701.47
+    Interquartile range          244.83
+    Missing obs.                      0
+
+
+![UK Base Distribution](images/200_025.png)
 
 ### SCOT BASE CASE
 
-    Mean                         222.57
-    Median                       213.73
-    Minimum                      20.746
-    Maximum                      706.16
-    Standard deviation           99.522
-    C.V.                        0.44715
-    Skewness                     1.1295
-    Ex. kurtosis                 3.5338
-    5% percentile                74.330
-    95% percentile               379.69
-    Interquartile range          107.31
+(278,736 valid observations)
 
-![Scot Base Distribution](sco_base_weights.png "S" )    
+    Mean                         223.40
+    Median                       214.45
+    Minimum                      20.823
+    Maximum                      945.03
+    Standard deviation           98.558
+    C.V.                        0.44118
+    Skewness                     1.4767
+    Ex. kurtosis                 6.5580
+    5% percentile                81.902
+    95% percentile               376.42
+    Interquartile range          105.78
+    Missing obs.                      0
+
+![Scot Base Distribution](images/200_018.png "S" )    
     
 [SCOTPOP]:https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/population/population-projections/population-projections-scotland
 [ONSBUNDLE]:https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationprojections
