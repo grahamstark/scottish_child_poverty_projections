@@ -30,10 +30,15 @@ FORECAST_LABELS = {
         'ppp' => 'principal projection',
         'hpp' => 'high fertility variant',
         'lpp' => 'low fertility variant',
-        'php' => 'high life expectancy variant',
+        'php' => 'high life expectancy variant',  
         'plp' => 'low life expectancy variant',
         'pph' => 'high migration variant',
         'ppl' => 'low migration variant',
+        'pjp' => 'moderately high life expectancy variant',
+        'pkp' => 'moderately low life expectancy variant',
+        'ppq' => '0% future EU migration variant (not National Statistics)',
+        'ppr' => '50% future EU migration variant (not National Statistics)',
+        'pps' => '150% future EU migration variant (not National Statistics)',
         'hhh' => 'high population variant',
         'lll' => 'low population variant',
         'ppz' => 'zero net migration (natural change only) variant',
@@ -84,3 +89,113 @@ def loadBlockToDB( out, variant, country, edition, recType, table=nil )
         }
 end
 
+
+
+def readScottishHouseholds( lines, variant )
+       pos = 3
+       yearsStr = lines[pos][2..-1]
+       years = []
+       yearsStr.each{
+               |ystr|
+                years << ystr.to_i       
+       }
+       puts "years #{years}"
+       label = FORECAST_LABELS[ variant ]
+       targetGroup = 'HOUSEHOLDS'
+       keys = []
+       data = {}
+       begin
+              pos += 1
+              key = if ! lines[pos][1].nil? then lines[pos][1] else lines[pos][0] end
+              key = reCensorKey(censor( key )) 
+              puts "got key as #{key}"
+              keys << key
+              data[key]=[] if data[key].nil?
+              lines[pos][2..-1].each{
+                       |cell|
+                       # puts "on year #{year} cell |#{cell}|"
+                       data[key] << cell.to_i
+              }
+              
+       end while ! lines[pos][1].nil?       
+       return {:pos=>pos+1,:data=>data, :label=>label, :targetGroup=>targetGroup, :years=>years, :keys=>keys }        
+end
+
+def readONSPersonsBlock( lines, pos, fname, years )
+       if( years.nil? )then
+               yearsStr = lines[pos][2..-1]
+               years = []
+               yearsStr.each{
+                       |ystr|
+                        years << ystr.to_i       
+               }
+               pos += 1       
+       end
+       data = {}
+       if fname =~ /(.*?)_(.*?)_.*/ then
+               label = FORECAST_LABELS[$2] 
+       end
+       keys = []
+       begin
+              target = lines[pos][0].to_i
+              key = lines[pos][1]
+              
+              if key =~ /(\d+).*/ then
+                     key = "age_#{$1}" 
+              end
+              keys << key
+              data[key]=[] if data[key].nil?
+              lines[pos][2..-1].each{
+                       |cell|
+                       # puts "on year #{year} cell |#{cell}|"
+                       data[key] << cell.to_i
+              }
+              pos += 1 
+              break if pos >= lines.length
+              break if target != lines[pos][0].to_i
+       end while pos < lines.length 
+       targetGroup = if target == 1 then 'MALES' else 'FEMALES' end
+       return {:pos=>pos,:data=>data, :label=>label, :targetGroup=>targetGroup, :years=>years, :keys=>keys }               
+end
+
+def readNRSPersonsBlock( lines, pos )
+       label = lines[pos][0]
+       puts "label #{label}\n"
+       pos += 1
+       pos += 1 if lines[pos][1].nil? # check for irregular spacing
+       puts "on line #{pos}\n"
+       p lines[pos]
+       data = {}
+       years = []
+       yearsStr = lines[pos][1..-1]
+       yearsStr.each{
+               |ystr|
+                years << ystr.to_i       
+       }
+       pos += 1
+       pos +=1 if lines[pos][0].nil?
+       targetGroup = lines[pos][0]
+       p years      
+       puts "target group #{targetGroup}\n"
+       pos += 1
+       keys = []
+       begin
+               
+               key = lines[pos][0]
+               if key =~ /(\d+).*/ then
+                       key = "age_#{$1}" 
+               end
+               key = censor("#{key}")
+               puts "on line #{pos} |#{lines[pos][0]}| key #{key}\n"
+               data[key]=[] if data[key].nil?
+               lines[pos][1..-1].each{
+                       |cell|
+                       # puts "on year #{year} cell |#{cell}|"
+                       data[key] << cell.to_i
+               }
+               keys << key
+               pos +=1
+               
+       end while ! lines[pos][1].nil?
+       return {:pos=>pos+1,:data=>data, :label=>label, :targetGroup=>targetGroup, :years=>years, :keys=>keys }
+end
