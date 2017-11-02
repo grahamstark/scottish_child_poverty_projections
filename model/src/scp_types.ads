@@ -25,16 +25,36 @@ package SCP_Types is
    NIR : constant Unbounded_String := To_Unbounded_String( "NIR" );
    UK  : constant Unbounded_String := To_Unbounded_String( "UK" );
    
-   PPP : constant Unbounded_String := To_Unbounded_String( "ppp" ); -- principal projection
-   HPP : constant Unbounded_String := To_Unbounded_String( "hpp" ); -- high fertility variant
-   LPP : constant Unbounded_String := To_Unbounded_String( "lpp" ); -- low fertility variant
-   PHP : constant Unbounded_String := To_Unbounded_String( "php" ); -- high life expectancy variant
-   PLP : constant Unbounded_String := To_Unbounded_String( "plp" ); -- low life expectancy variant
-   PPH : constant Unbounded_String := To_Unbounded_String( "pph" ); -- high migration variant
-   PPL : constant Unbounded_String := To_Unbounded_String( "ppl" ); -- low migration variant
-   HHH : constant Unbounded_String := To_Unbounded_String( "hhh" ); -- high population variant
-   LLL : constant Unbounded_String := To_Unbounded_String( "lll" ); -- low population variant
-   PPZ : constant Unbounded_String := To_Unbounded_String( "ppz" ); -- zero net migration (natural change only) variant
+   Target_Countries : constant array( 1 .. 2 ) of Unbounded_String := ( SCO, UK );
+   
+   PPP : constant Unbounded_String := To_Unbounded_String( "ppp" ); -- principal projection,
+   HPP : constant Unbounded_String := To_Unbounded_String( "hpp" ); -- high fertility variant,
+   LPP : constant Unbounded_String := To_Unbounded_String( "lpp" ); -- low fertility variant,
+   PHP : constant Unbounded_String := To_Unbounded_String( "php" ); -- high life expectancy variant,  
+   PLP : constant Unbounded_String := To_Unbounded_String( "plp" ); -- low life expectancy variant,
+   PPH : constant Unbounded_String := To_Unbounded_String( "pph" ); -- high migration variant,
+   PPL : constant Unbounded_String := To_Unbounded_String( "ppl" ); -- low migration variant,
+   PJP : constant Unbounded_String := To_Unbounded_String( "pjp" ); -- moderately high life expectancy variant,
+   PKP : constant Unbounded_String := To_Unbounded_String( "pkp" ); -- moderately low life expectancy variant,
+   PPQ : constant Unbounded_String := To_Unbounded_String( "ppq" ); -- 0% future EU migration variant (not National Statistics),
+   PPR : constant Unbounded_String := To_Unbounded_String( "ppr" ); -- 50% future EU migration variant (not National Statistics),
+   PPS : constant Unbounded_String := To_Unbounded_String( "pps" ); -- 150% future EU migration variant (not National Statistics),
+   HHH : constant Unbounded_String := To_Unbounded_String( "hhh" ); -- high population variant,
+   LLL : constant Unbounded_String := To_Unbounded_String( "lll" ); -- low population variant,
+   PPZ : constant Unbounded_String := To_Unbounded_String( "ppz" ); -- zero net migration (natural change only) variant,
+   HLH : constant Unbounded_String := To_Unbounded_String( "hlh" ); -- young age structure variant,
+   LHL : constant Unbounded_String := To_Unbounded_String( "lhl" ); -- old age structure variant,
+   RPP : constant Unbounded_String := To_Unbounded_String( "rpp" ); -- replacement fertility variant,
+   CPP : constant Unbounded_String := To_Unbounded_String( "cpp" ); -- constant fertility variant,
+   PNP : constant Unbounded_String := To_Unbounded_String( "pnp" ); -- no mortality improvement variant,
+   CNP : constant Unbounded_String := To_Unbounded_String( "cnp" ); -- no change variant,
+   PPB : constant Unbounded_String := To_Unbounded_String( "ppb" ); -- long term balanced net migration variant
+   
+   Variants : constant array( 1 .. 22 ) of Unbounded_String := ( 
+      PPP , HPP , LPP , PHP , PLP , PPH , PPL , PJP , PKP , PPQ , PPR , PPS , 
+      HHH , LLL , PPZ , HLH , LHL , RPP , CPP , PNP , CNP , PPB ); 
+   
+   -- zero net migration (natural change only) variant
        
    BASELINE : constant Unbounded_String := To_Unbounded_String( "baseline" );
    

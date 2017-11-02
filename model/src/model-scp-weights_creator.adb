@@ -70,10 +70,11 @@ package body Model.SCP.Weights_Creator is
             Inc( count, 7 );
          end if;
          if country = UK or country = WAL then
-            Inc( count, 12 );
+            Inc( count, 1 );
+            -- Inc( count, 12 );
          end if;
          if country = UK or country = NIR then
-            Inc( count, 5 );
+            Inc( count, 4 );
          end if;
          if country = UK or country = ENG then
             Inc( count, 7 ); -- was 8; see weighting note 
@@ -171,24 +172,36 @@ package body Model.SCP.Weights_Creator is
          end if;
          if( country = NIR or country = UK ) then
             Add_Col( targets.nir_hhld_one_adult_households );
-            Add_Col( targets.nir_hhld_two_adults_without_children );
-            Add_Col( targets.nir_hhld_other_households_without_children );
+            Add_Col( targets.nir_hhld_two_adults_without_children + targets.nir_hhld_other_households_without_children );
+            -- Add_Col(  );
             Add_Col( targets.nir_hhld_one_adult_households_with_children );
             Add_Col( targets.nir_hhld_other_households_with_children );
          end if;
          if( country = WAL or country = UK ) then
-            Add_Col( targets.wal_hhld_1_person );
-            Add_Col( targets.wal_hhld_2_person_no_children );
-            Add_Col( targets.wal_hhld_2_person_1_adult_1_child );
-            Add_Col( targets.wal_hhld_3_person_no_children );
-            Add_Col( targets.wal_hhld_3_person_2_adults_1_child );
-            Add_Col( targets.wal_hhld_3_person_1_adult_2_children );
-            Add_Col( targets.wal_hhld_4_person_no_children );
-            Add_Col( targets.wal_hhld_4_person_2_plus_adults_1_plus_children );
-            Add_Col( targets.wal_hhld_4_person_1_adult_3_children );
-            Add_Col( targets.wal_hhld_5_plus_person_no_children );
-            Add_Col( targets.wal_hhld_5_plus_person_2_plus_adults_1_plus_children );
-            Add_Col( targets.wal_hhld_5_plus_person_1_adult_4_plus_children );
+            -- Add_Col( targets.wal_hhld_1_person );
+            -- Add_Col( targets.wal_hhld_2_person_no_children );
+            -- Add_Col( targets.wal_hhld_2_person_1_adult_1_child );
+            -- Add_Col( targets.wal_hhld_3_person_no_children );
+            -- Add_Col( targets.wal_hhld_3_person_2_adults_1_child );
+            -- Add_Col( targets.wal_hhld_3_person_1_adult_2_children );
+            -- Add_Col( targets.wal_hhld_4_person_no_children );
+            -- Add_Col( targets.wal_hhld_4_person_2_plus_adults_1_plus_children );
+            -- Add_Col( targets.wal_hhld_4_person_1_adult_3_children );
+            -- Add_Col( targets.wal_hhld_5_plus_person_no_children );
+            -- Add_Col( targets.wal_hhld_5_plus_person_2_plus_adults_1_plus_children );
+            -- Add_Col( targets.wal_hhld_5_plus_person_1_adult_4_plus_children +
+            Add_Col( targets.wal_hhld_1_person +
+               targets.wal_hhld_2_person_no_children +
+               targets.wal_hhld_2_person_1_adult_1_child +
+               targets.wal_hhld_3_person_no_children +
+               targets.wal_hhld_3_person_2_adults_1_child +
+               targets.wal_hhld_3_person_1_adult_2_children +
+               targets.wal_hhld_4_person_no_children +
+               targets.wal_hhld_4_person_2_plus_adults_1_plus_children +
+               targets.wal_hhld_4_person_1_adult_3_children +
+               targets.wal_hhld_5_plus_person_no_children +
+               targets.wal_hhld_5_plus_person_2_plus_adults_1_plus_children +
+               targets.wal_hhld_5_plus_person_1_adult_4_plus_children );
          end if;
       end if;
       -- household_all_households : Amount := 0.0;

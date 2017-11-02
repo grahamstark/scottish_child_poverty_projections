@@ -258,6 +258,33 @@ where
         variant='ppl' and target_group in ( 'MALES', 'FEMALES' )
 group by year order by year;
 
+select 
+        year,
+        sum( coalesce( age_0, 0.0 ) +
+        coalesce( age_1, 0.0 ) + 
+        coalesce( age_2, 0.0 ) +
+        coalesce( age_3, 0.0 ) +
+        coalesce( age_4, 0.0 ) +
+        coalesce( age_5, 0.0 ) +
+        coalesce( age_6, 0.0 ) +
+        coalesce( age_7, 0.0 ) +
+        coalesce( age_8, 0.0 ) +
+        coalesce( age_9, 0.0 ) +
+        coalesce( age_10, 0.0 ) +
+        coalesce( age_11, 0.0 ) +
+        coalesce( age_12, 0.0 ) +
+        coalesce( age_13, 0.0 ) +
+        coalesce( age_14, 0.0 ) +
+        coalesce( age_15, 0.0 ) + 
+        coalesce( age_16, 0.0 ) ) as children
+from target_data.population_forecasts 
+where 
+        country = 'SCO' and 
+        edition = 2014 and
+        variant ='ppp' and 
+        target_group in ( 'MALES', 'FEMALES' )
+group by year order by year;
+
 select year,target_group,age_105 from target_data.population_forecasts order by year,target_group;
 
 select distinct year  from frs.adult where age80 is null or age80 < 16;

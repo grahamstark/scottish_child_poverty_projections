@@ -62,8 +62,8 @@ procedure Basic_SCP_Driver is
       -- start_year : aliased Year_Number := 2014;
       -- end_year   : aliased Year_Number := 2037;
       -- run_id     : aliased Integer := 100_005;
-       
-      
+    Variants_2016 : constant array( 1 .. 14 ) of Unbounded_String := (
+      PPS, LLL, PPQ, PPR, PLP, PPP, PHP, HPP, PKP, PJP, LPP, PPH, PPL, HHH );    
       --
       -- households_variant : aliased String_Access; -- := new String("ppp")'Access;
       -- households_edition : aliased Integer := 2014;
@@ -125,12 +125,12 @@ procedure Basic_SCP_Driver is
          UKDS.Target_Data.Run_IO.Save( the_run );
          Model.SCP.FRS_Creator.Create_Dataset( the_run );
       when target_generation =>
-         the_run.start_year := 2014;
+         the_run.start_year := 2016;
          the_run.end_year := 2037;
          the_run.households_variant := variant;
          the_run.households_edition := 2014;
          the_run.population_variant := variant;
-         the_run.population_edition := 2014;
+         the_run.population_edition := 2016;
          the_run.macro_variant := BASELINE;
          the_run.macro_edition := 2017;
          UKDS.Target_Data.Run_IO.Save( the_run );
@@ -141,11 +141,11 @@ procedure Basic_SCP_Driver is
          the_run.weighting_function := constrained_chi_square;
          the_run.weighting_lower_bound := 0.1;
          the_run.weighting_upper_bound := 4.0;
-         the_run.targets_run_id := targets_run_id; -- 100_007;      
+         the_run.targets_run_id := targets_run_id;     
          the_run.targets_run_user_id := 1;
-         the_run.data_run_id := data_run_id; -- 999_996;
+         the_run.data_run_id := data_run_id;
          the_run.data_run_user_id := 1;
-         the_run.data_start_year := 2012;
+         the_run.data_start_year := 2015; -- NOTE 1 year for HR 2/11
          the_run.data_end_year := 2015;
          the_run.selected_clauses := ( 
                genders                  => False,
@@ -174,34 +174,34 @@ procedure Basic_SCP_Driver is
       Put_Line( "Time Taken " & elapsed'Img & " secs" );
    end Run_One;
    
-   
+   run_id : Integer := 100_100;
 begin
-   if true then
-      Run_One(  
-         run_id         => 100_008, 
-         run_type       => target_generation, 
-         data_run_id    => 999_996,
-         country        => SCO,
-         targets_run_id => 100_008 );
-   end if;
-   if true then
-      for targets_run_id in 100_008 .. 100_008 loop -- 7
-         Run_One(  
-            run_id         => 100_010 + targets_run_id, 
-            run_type       => weights_generation, 
-            data_run_id    => 999_996,
-            country        => SCO,
-            targets_run_id => targets_run_id );
+   if false then
+      for country of Target_Countries loop
+         for variant of Variants_2016 loop
+            Run_One(  
+               run_id         => run_id, 
+               run_type       => target_generation, 
+               data_run_id    => 999_996,
+               country        => country,
+               targets_run_id => run_id,
+               variant        => variant );
+            run_id := run_id + 1;
+         end loop;
       end loop;
    end if;
-   if false then
+   if true then
       for targets_run_id in 100_005 .. 100_005 loop
-         Run_One(  
-            run_id         => 100_020 + targets_run_id, 
-            run_type       => weights_generation, 
-            data_run_id    => 999_996,
-            country        => UK,
-            targets_run_id => targets_run_id );
+         declare
+            country : Unbounded_String := ( if targets_run_id = 100_005 then UK else SCO );
+         begin
+               Run_One(  
+                  run_id         => 100_900 + targets_run_id, 
+                  run_type       => weights_generation, 
+                  data_run_id    => 999_996,
+                  country        => country,
+                  targets_run_id => targets_run_id );
+         end;
       end loop;
    end if;
 end Basic_SCP_Driver;
