@@ -1,5 +1,5 @@
 --
--- created on 25-10-2017 by Mill
+-- created on 13-11-2017 by Mill
 --
 drop database if exists ukds;
 create database ukds with encoding 'UTF-8';
@@ -145,6 +145,8 @@ CREATE TABLE target_data.macro_forecasts(
        real_household_disposable_income_age_16_plus DOUBLE PRECISION default 0.0,
        real_consumption_age_16_plus DOUBLE PRECISION default 0.0,
        real_gdp_age_16_plus DOUBLE PRECISION default 0.0,
+       private_sector_employment DOUBLE PRECISION default 0.0,
+       public_sector_employment DOUBLE PRECISION default 0.0,
        CONSTRAINT macro_forecasts_pk PRIMARY KEY( year, rec_type, variant, country, edition )
 );
 
@@ -400,6 +402,8 @@ CREATE TABLE target_data.target_dataset(
        employee DOUBLE PRECISION default 0.0,
        ilo_unemployed DOUBLE PRECISION default 0.0,
        jsa_claimant DOUBLE PRECISION default 0.0,
+       private_sector_employed DOUBLE PRECISION default 0.0,
+       public_sector_employed DOUBLE PRECISION default 0.0,
        age_0_male DOUBLE PRECISION default 0.0,
        age_1_male DOUBLE PRECISION default 0.0,
        age_2_male DOUBLE PRECISION default 0.0,

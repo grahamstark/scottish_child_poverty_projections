@@ -1039,3 +1039,37 @@ where run_id = 100004
 group by run_id,user_id,year 
 order by run_id,user_id,year;
 
+--
+-- people with public sector jobs as 2nd jobs
+--
+select 
+        year,counter,jobsect,count(counter) 
+from 
+        frs.job where year>=2010 and jobsect=2 and counter > 1 
+group by 
+        year,jobsect,counter 
+order by 
+        year,jobsect,counter;
+        
+select 
+        year,private_sector_employment,public_sector_employment 
+from 
+        target_data.macro_forecasts;        
+        
+-- insert public/private employment.        
+-- FROM OBR SupplementaryEconomytablesMarch2017-2.xlsx table 1.12
+-- 1.12 Market Sector and general government employment (millions, final quarter of the financial year)
+-- March 2017 forecast
+
+update target_data.macro_forecasts set private_sector_employment = 23.8, public_sector_employment=5.47 where year=2011;
+update target_data.macro_forecasts set private_sector_employment = 24.4, public_sector_employment=5.19 where year=2012;
+update target_data.macro_forecasts set private_sector_employment = 25.1, public_sector_employment=5.20 where year=2013;
+update target_data.macro_forecasts set private_sector_employment = 25.8, public_sector_employment=5.16 where year=2014;
+update target_data.macro_forecasts set private_sector_employment = 26.3, public_sector_employment=5.13 where year=2015;
+update target_data.macro_forecasts set private_sector_employment = 26.5, public_sector_employment=5.14 where year=2016;
+update target_data.macro_forecasts set private_sector_employment = 26.6, public_sector_employment=5.18 where year=2017;
+update target_data.macro_forecasts set private_sector_employment = 26.8, public_sector_employment=5.16 where year=2018;
+update target_data.macro_forecasts set private_sector_employment = 27.0, public_sector_employment=5.12 where year=2019;
+update target_data.macro_forecasts set private_sector_employment = 27.1, public_sector_employment=5.09 where year=2020;
+update target_data.macro_forecasts set private_sector_employment = 27.3, public_sector_employment=5.01 where year=2021;
+        

@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-10-25 13:04:25.719502
+-- Created by ada_generator.py on 2017-11-13 10:51:12.555366
 -- 
 with Ada.Containers.Vectors;
 --
@@ -87,6 +87,8 @@ package Ukds.target_data is
       employee : Amount := 0.0;
       ilo_unemployed : Amount := 0.0;
       jsa_claimant : Amount := 0.0;
+      private_sector_employed : Amount := 0.0;
+      public_sector_employed : Amount := 0.0;
       age_0_male : Amount := 0.0;
       age_1_male : Amount := 0.0;
       age_2_male : Amount := 0.0;
@@ -399,6 +401,8 @@ package Ukds.target_data is
          employee => 0.0,
          ilo_unemployed => 0.0,
          jsa_claimant => 0.0,
+         private_sector_employed => 0.0,
+         public_sector_employed => 0.0,
          age_0_male => 0.0,
          age_1_male => 0.0,
          age_2_male => 0.0,
@@ -1167,6 +1171,8 @@ package Ukds.target_data is
       real_household_disposable_income_age_16_plus : Amount := 0.0;
       real_consumption_age_16_plus : Amount := 0.0;
       real_gdp_age_16_plus : Amount := 0.0;
+      private_sector_employment : Amount := 0.0;
+      public_sector_employment : Amount := 0.0;
    end record;
    --
    -- container for Macro_Forecasts : 
@@ -1221,7 +1227,9 @@ package Ukds.target_data is
          lfs_employment_age_16_plus => 0.0,
          real_household_disposable_income_age_16_plus => 0.0,
          real_consumption_age_16_plus => 0.0,
-         real_gdp_age_16_plus => 0.0
+         real_gdp_age_16_plus => 0.0,
+         private_sector_employment => 0.0,
+         public_sector_employment => 0.0
    );
    --
    -- simple print routine for Macro_Forecasts : 
@@ -1470,14 +1478,14 @@ package Ukds.target_data is
 
         
    -- === CUSTOM PROCS START ===
-                                               
-   subtype Forecast_Age_Ranges is Natural range 0 .. 90;                                            
-   type Age_Range_Array is array( Forecast_Age_Ranges ) of Amount;                                             
-                                              
-   function To_Array( popn : Population_Forecasts ) return Age_Range_Array;     
-      
-   function To_Tab( weight : Output_Weights ) return String;   
-                                               
+                                                 
+   subtype Forecast_Age_Ranges is Natural range 0 .. 90;                                              
+   type Age_Range_Array is array( Forecast_Age_Ranges ) of Amount;                                               
+                                                
+   function To_Array( popn : Population_Forecasts ) return Age_Range_Array;       
+        
+   function To_Tab( weight : Output_Weights ) return String;     
+                                                 
    -- === CUSTOM PROCS END ===
 
 end Ukds.target_data;

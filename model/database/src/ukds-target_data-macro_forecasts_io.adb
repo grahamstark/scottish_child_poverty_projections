@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-10-25 13:04:26.391711
+-- Created by ada_generator.py on 2017-11-13 10:51:13.307192
 -- 
 with Ukds;
 
@@ -65,7 +65,7 @@ package body Ukds.Target_Data.Macro_Forecasts_IO is
          "participation_rate, claimant_count, average_hours_worked, total_hours_worked, labour_share, compensation_of_employees, wages_and_salaries, employers_social_contributions, mixed_income, average_earnings_growth," &
          "average_earnings_index, average_hourly_earnings_index, productivity_per_hour_index, productivity_per_worker_index, real_product_wage, real_consumption_wage, rpi, rpix, cpi, producer_output_prices," &
          "mortgage_interest_payments, actual_rents_for_housing, consumer_expenditure_deflator, house_price_index, gdp_deflator, lfs_employment, real_household_disposable_income, real_consumption, real_gdp, lfs_employment_age_16_plus," &
-         "real_household_disposable_income_age_16_plus, real_consumption_age_16_plus, real_gdp_age_16_plus " &
+         "real_household_disposable_income_age_16_plus, real_consumption_age_16_plus, real_gdp_age_16_plus, private_sector_employment, public_sector_employment " &
          " from target_data.macro_forecasts " ;
    
    --
@@ -76,7 +76,7 @@ package body Ukds.Target_Data.Macro_Forecasts_IO is
          "participation_rate, claimant_count, average_hours_worked, total_hours_worked, labour_share, compensation_of_employees, wages_and_salaries, employers_social_contributions, mixed_income, average_earnings_growth," &
          "average_earnings_index, average_hourly_earnings_index, productivity_per_hour_index, productivity_per_worker_index, real_product_wage, real_consumption_wage, rpi, rpix, cpi, producer_output_prices," &
          "mortgage_interest_payments, actual_rents_for_housing, consumer_expenditure_deflator, house_price_index, gdp_deflator, lfs_employment, real_household_disposable_income, real_consumption, real_gdp, lfs_employment_age_16_plus," &
-         "real_household_disposable_income_age_16_plus, real_consumption_age_16_plus, real_gdp_age_16_plus " &
+         "real_household_disposable_income_age_16_plus, real_consumption_age_16_plus, real_gdp_age_16_plus, private_sector_employment, public_sector_employment " &
          " ) values " ;
 
    
@@ -91,7 +91,7 @@ package body Ukds.Target_Data.Macro_Forecasts_IO is
    UPDATE_PART : constant String := "update target_data.macro_forecasts set  ";
    function Get_Configured_Insert_Params( update_order : Boolean := False )  return GNATCOLL.SQL.Exec.SQL_Parameters is
    use GNATCOLL.SQL_Impl;
-      params : constant SQL_Parameters( 1 .. 43 ) := ( if update_order then (
+      params : constant SQL_Parameters( 1 .. 45 ) := ( if update_order then (
             1 => ( Parameter_Float, 0.0 ),   --  : employment (Amount)
             2 => ( Parameter_Float, 0.0 ),   --  : employment_rate (Amount)
             3 => ( Parameter_Float, 0.0 ),   --  : employees (Amount)
@@ -130,11 +130,13 @@ package body Ukds.Target_Data.Macro_Forecasts_IO is
            36 => ( Parameter_Float, 0.0 ),   --  : real_household_disposable_income_age_16_plus (Amount)
            37 => ( Parameter_Float, 0.0 ),   --  : real_consumption_age_16_plus (Amount)
            38 => ( Parameter_Float, 0.0 ),   --  : real_gdp_age_16_plus (Amount)
-           39 => ( Parameter_Integer, 0 ),   --  : year (Year_Number)
-           40 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : rec_type (Unbounded_String)
-           41 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : variant (Unbounded_String)
-           42 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : country (Unbounded_String)
-           43 => ( Parameter_Integer, 0 )   --  : edition (Year_Number)
+           39 => ( Parameter_Float, 0.0 ),   --  : private_sector_employment (Amount)
+           40 => ( Parameter_Float, 0.0 ),   --  : public_sector_employment (Amount)
+           41 => ( Parameter_Integer, 0 ),   --  : year (Year_Number)
+           42 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : rec_type (Unbounded_String)
+           43 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : variant (Unbounded_String)
+           44 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : country (Unbounded_String)
+           45 => ( Parameter_Integer, 0 )   --  : edition (Year_Number)
       ) else (
             1 => ( Parameter_Integer, 0 ),   --  : year (Year_Number)
             2 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : rec_type (Unbounded_String)
@@ -178,7 +180,9 @@ package body Ukds.Target_Data.Macro_Forecasts_IO is
            40 => ( Parameter_Float, 0.0 ),   --  : lfs_employment_age_16_plus (Amount)
            41 => ( Parameter_Float, 0.0 ),   --  : real_household_disposable_income_age_16_plus (Amount)
            42 => ( Parameter_Float, 0.0 ),   --  : real_consumption_age_16_plus (Amount)
-           43 => ( Parameter_Float, 0.0 )   --  : real_gdp_age_16_plus (Amount)
+           43 => ( Parameter_Float, 0.0 ),   --  : real_gdp_age_16_plus (Amount)
+           44 => ( Parameter_Float, 0.0 ),   --  : private_sector_employment (Amount)
+           45 => ( Parameter_Float, 0.0 )   --  : public_sector_employment (Amount)
       
       ));
    begin
@@ -189,7 +193,7 @@ package body Ukds.Target_Data.Macro_Forecasts_IO is
 
    function Get_Prepared_Insert_Statement return gse.Prepared_Statement is 
       ps : gse.Prepared_Statement; 
-      query : constant String := DB_Commons.Add_Schema_To_Query( INSERT_PART, SCHEMA_NAME ) & " ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $40, $41, $42, $43 )"; 
+      query : constant String := DB_Commons.Add_Schema_To_Query( INSERT_PART, SCHEMA_NAME ) & " ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $40, $41, $42, $43, $44, $45 )"; 
    begin 
       ps := gse.Prepare( query, On_Server => True ); 
       return ps; 
@@ -237,7 +241,7 @@ package body Ukds.Target_Data.Macro_Forecasts_IO is
    function Get_Prepared_Update_Statement return gse.Prepared_Statement is 
       ps : gse.Prepared_Statement; 
       
-      query : constant String := DB_Commons.Add_Schema_To_Query( UPDATE_PART, SCHEMA_NAME ) & " employment = $1, employment_rate = $2, employees = $3, ilo_unemployment = $4, ilo_unemployment_rate = $5, participation_rate = $6, claimant_count = $7, average_hours_worked = $8, total_hours_worked = $9, labour_share = $10, compensation_of_employees = $11, wages_and_salaries = $12, employers_social_contributions = $13, mixed_income = $14, average_earnings_growth = $15, average_earnings_index = $16, average_hourly_earnings_index = $17, productivity_per_hour_index = $18, productivity_per_worker_index = $19, real_product_wage = $20, real_consumption_wage = $21, rpi = $22, rpix = $23, cpi = $24, producer_output_prices = $25, mortgage_interest_payments = $26, actual_rents_for_housing = $27, consumer_expenditure_deflator = $28, house_price_index = $29, gdp_deflator = $30, lfs_employment = $31, real_household_disposable_income = $32, real_consumption = $33, real_gdp = $34, lfs_employment_age_16_plus = $35, real_household_disposable_income_age_16_plus = $36, real_consumption_age_16_plus = $37, real_gdp_age_16_plus = $38 where year = $39 and rec_type = $40 and variant = $41 and country = $42 and edition = $43"; 
+      query : constant String := DB_Commons.Add_Schema_To_Query( UPDATE_PART, SCHEMA_NAME ) & " employment = $1, employment_rate = $2, employees = $3, ilo_unemployment = $4, ilo_unemployment_rate = $5, participation_rate = $6, claimant_count = $7, average_hours_worked = $8, total_hours_worked = $9, labour_share = $10, compensation_of_employees = $11, wages_and_salaries = $12, employers_social_contributions = $13, mixed_income = $14, average_earnings_growth = $15, average_earnings_index = $16, average_hourly_earnings_index = $17, productivity_per_hour_index = $18, productivity_per_worker_index = $19, real_product_wage = $20, real_consumption_wage = $21, rpi = $22, rpix = $23, cpi = $24, producer_output_prices = $25, mortgage_interest_payments = $26, actual_rents_for_housing = $27, consumer_expenditure_deflator = $28, house_price_index = $29, gdp_deflator = $30, lfs_employment = $31, real_household_disposable_income = $32, real_consumption = $33, real_gdp = $34, lfs_employment_age_16_plus = $35, real_household_disposable_income_age_16_plus = $36, real_consumption_age_16_plus = $37, real_gdp_age_16_plus = $38, private_sector_employment = $39, public_sector_employment = $40 where year = $41 and rec_type = $42 and variant = $43 and country = $44 and edition = $45"; 
    begin 
       ps := gse.Prepare( 
         query, 
@@ -549,6 +553,12 @@ package body Ukds.Target_Data.Macro_Forecasts_IO is
       if not gse.Is_Null( cursor, 42 )then
          a_macro_forecasts.real_gdp_age_16_plus:= Amount'Value( gse.Value( cursor, 42 ));
       end if;
+      if not gse.Is_Null( cursor, 43 )then
+         a_macro_forecasts.private_sector_employment:= Amount'Value( gse.Value( cursor, 43 ));
+      end if;
+      if not gse.Is_Null( cursor, 44 )then
+         a_macro_forecasts.public_sector_employment:= Amount'Value( gse.Value( cursor, 44 ));
+      end if;
       return a_macro_forecasts;
    end Map_From_Cursor;
 
@@ -646,11 +656,13 @@ package body Ukds.Target_Data.Macro_Forecasts_IO is
       params( 36 ) := "+"( Float( a_macro_forecasts.real_household_disposable_income_age_16_plus ));
       params( 37 ) := "+"( Float( a_macro_forecasts.real_consumption_age_16_plus ));
       params( 38 ) := "+"( Float( a_macro_forecasts.real_gdp_age_16_plus ));
-      params( 39 ) := "+"( Year_Number'Pos( a_macro_forecasts.year ));
-      params( 40 ) := "+"( aliased_rec_type'Access );
-      params( 41 ) := "+"( aliased_variant'Access );
-      params( 42 ) := "+"( aliased_country'Access );
-      params( 43 ) := "+"( Year_Number'Pos( a_macro_forecasts.edition ));
+      params( 39 ) := "+"( Float( a_macro_forecasts.private_sector_employment ));
+      params( 40 ) := "+"( Float( a_macro_forecasts.public_sector_employment ));
+      params( 41 ) := "+"( Year_Number'Pos( a_macro_forecasts.year ));
+      params( 42 ) := "+"( aliased_rec_type'Access );
+      params( 43 ) := "+"( aliased_variant'Access );
+      params( 44 ) := "+"( aliased_country'Access );
+      params( 45 ) := "+"( Year_Number'Pos( a_macro_forecasts.edition ));
       
       gse.Execute( local_connection, UPDATE_PS, params );
       Check_Result( local_connection );
@@ -731,6 +743,8 @@ package body Ukds.Target_Data.Macro_Forecasts_IO is
       params( 41 ) := "+"( Float( a_macro_forecasts.real_household_disposable_income_age_16_plus ));
       params( 42 ) := "+"( Float( a_macro_forecasts.real_consumption_age_16_plus ));
       params( 43 ) := "+"( Float( a_macro_forecasts.real_gdp_age_16_plus ));
+      params( 44 ) := "+"( Float( a_macro_forecasts.private_sector_employment ));
+      params( 45 ) := "+"( Float( a_macro_forecasts.public_sector_employment ));
       gse.Execute( local_connection, SAVE_PS, params );  
       Check_Result( local_connection );
       if( is_local_connection )then
@@ -1118,6 +1132,20 @@ package body Ukds.Target_Data.Macro_Forecasts_IO is
    end Add_real_gdp_age_16_plus;
 
 
+   procedure Add_private_sector_employment( c : in out d.Criteria; private_sector_employment : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "private_sector_employment", op, join, Long_Float( private_sector_employment ) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_private_sector_employment;
+
+
+   procedure Add_public_sector_employment( c : in out d.Criteria; public_sector_employment : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "public_sector_employment", op, join, Long_Float( public_sector_employment ) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_public_sector_employment;
+
+
    
    --
    -- functions to add an ordering to a criteria
@@ -1421,6 +1449,20 @@ package body Ukds.Target_Data.Macro_Forecasts_IO is
    begin
       d.add_to_criteria( c, elem );
    end Add_real_gdp_age_16_plus_To_Orderings;
+
+
+   procedure Add_private_sector_employment_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "private_sector_employment", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_private_sector_employment_To_Orderings;
+
+
+   procedure Add_public_sector_employment_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "public_sector_employment", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_public_sector_employment_To_Orderings;
 
 
 

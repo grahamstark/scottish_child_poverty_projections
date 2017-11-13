@@ -178,8 +178,8 @@
                    <column name='real_household_disposable_income_age_16_plus' description='Real household disposable income' default='0.0' type='REAL' adaTypeName='Amount'/>
                    <column name='real_consumption_age_16_plus' description='Real consumption' default='0.0' type='REAL' adaTypeName='Amount'/>
                    <column name='real_gdp_age_16_plus' description='Real GDP' default='0.0' type='REAL' adaTypeName='Amount'/>
-                   
-               
+                   <column name='private_sector_employment' description='Market sector employment defined as total LFS employment (ONS identifier: MGRZ) minus: general government employment (ONS identifier: G6NW), LFS unpaid family workers (ONS identifier: MGRT) and government supported trainees (ONS identifier: MGRW; FRS job.jobsect = 1' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='public_sector_employment' description='General government employment (ONS identifier: G6NW); FRS job.jobsect = 2' default='0.0' type='REAL' adaTypeName='Amount'/>
                </table>
                
                <table name='population_forecasts' description='Population Data One row for each Country/Year/Variant/type [M/F/Both]' >
@@ -468,6 +468,9 @@
                   <column name='employee' description='employee' default='0.0' type='REAL' adaTypeName='Amount'/>
                   <column name='ilo_unemployed' description='ilo_unemployed' default='0.0' type='REAL' adaTypeName='Amount'/>
                   <column name='jsa_claimant' description='jsa_claimant' default='0.0' type='REAL' adaTypeName='Amount'/>
+                  <column name='private_sector_employed' description='private_sector_employed' default='0.0' type='REAL' adaTypeName='Amount'/>
+                  <column name='public_sector_employed' description='private_sector_employed' default='0.0' type='REAL' adaTypeName='Amount'/>
+                  
                   <column name='age_0_male' description='age_0_male' default='0.0' type='REAL' adaTypeName='Amount'/>
                   <column name='age_1_male' description='age_1_male' default='0.0' type='REAL' adaTypeName='Amount'/>
                   <column name='age_2_male' description='age_2_male' default='0.0' type='REAL' adaTypeName='Amount'/>

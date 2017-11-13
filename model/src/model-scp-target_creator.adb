@@ -1305,7 +1305,9 @@ package body Model.SCP.Target_Creator is
                   Log( "implied employees_rate " & Format( implied_employees_rate*100.0 ));               
                   Log( "implied_claimant_rate " & Format( implied_claimant_rate*100.0 ));               
                   targets.employee := implied_employees_rate*age_16_plus;
-                  targets.jsa_claimant := implied_claimant_rate*age_16_plus;
+                  targets.jsa_claimant := implied_claimant_rate*age_16_plus;                  
+                  targets.private_sector_employed := macro_data.private_sector_employment;
+                  targets.public_sector_employed := macro_data.public_sector_employment;
                end; 
             end if;
             Log( To_String( targets )); 

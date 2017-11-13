@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-10-25 13:04:26.375348
+-- Created by ada_generator.py on 2017-11-13 10:51:13.272558
 -- 
 with Ukds;
 with DB_Commons;
@@ -140,6 +140,8 @@ package Ukds.Target_Data.Macro_Forecasts_IO is
    procedure Add_real_household_disposable_income_age_16_plus( c : in out d.Criteria; real_household_disposable_income_age_16_plus : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_real_consumption_age_16_plus( c : in out d.Criteria; real_consumption_age_16_plus : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_real_gdp_age_16_plus( c : in out d.Criteria; real_gdp_age_16_plus : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_private_sector_employment( c : in out d.Criteria; private_sector_employment : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_public_sector_employment( c : in out d.Criteria; public_sector_employment : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    --
    -- functions to add an ordering to a criteria
    --
@@ -186,11 +188,13 @@ package Ukds.Target_Data.Macro_Forecasts_IO is
    procedure Add_real_household_disposable_income_age_16_plus_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_real_consumption_age_16_plus_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_real_gdp_age_16_plus_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_private_sector_employment_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_public_sector_employment_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
 
    function Map_From_Cursor( cursor : GNATCOLL.SQL.Exec.Forward_Cursor ) return Ukds.Target_Data.Macro_Forecasts;
 
    -- 
-   -- returns an array of GNATColl SQL Parameters indexed 1 .. 43, as follows
+   -- returns an array of GNATColl SQL Parameters indexed 1 .. 45, as follows
    -- Pos  |       Name               | SQL Type           | Ada Type             | Default
    --    1 : year                     : Parameter_Integer  : Year_Number          :        0 
    --    2 : rec_type                 : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
@@ -235,6 +239,8 @@ package Ukds.Target_Data.Macro_Forecasts_IO is
    --   41 : real_household_disposable_income_age_16_plus : Parameter_Float    : Amount               :      0.0 
    --   42 : real_consumption_age_16_plus : Parameter_Float    : Amount               :      0.0 
    --   43 : real_gdp_age_16_plus     : Parameter_Float    : Amount               :      0.0 
+   --   44 : private_sector_employment : Parameter_Float    : Amount               :      0.0 
+   --   45 : public_sector_employment : Parameter_Float    : Amount               :      0.0 
    function Get_Configured_Insert_Params( update_order : Boolean := False ) return GNATCOLL.SQL.Exec.SQL_Parameters;
 
 

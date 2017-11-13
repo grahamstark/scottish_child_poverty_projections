@@ -18,6 +18,7 @@ with Ukds.Target_Data.Target_Dataset_IO;
 with Ukds.Frs.Househol_IO;
 with Ukds.Frs.Adult_IO;
 with Ukds.Frs.Child_IO;
+with Ukds.Frs.Job_IO;
 with DB_Commons;
 
 with Connection_Pool;
@@ -243,6 +244,7 @@ package body Model.SCP.FRS_Creator is
             declare
                adult_l : FRS.Adult_List := Adult_IO.Retrieve( hh_crit );
                child_l : FRS.Child_List := Child_IO.Retrieve( hh_crit );
+               
             begin
                Log( "num adults " & adult_l.Length'Img );
                Log( "num children " & child_l.Length'Img );
@@ -981,6 +983,38 @@ package body Model.SCP.FRS_Creator is
                         end if;
                      when others => null; -- the assert above covers this                            
                   end case;
+                  
+                  --
+                  -- public / private split
+                  -- ??? here, we'll add one for each job a person has, so possibly
+                  -- both public and private
+                  --
+                  declare
+                     
+                     job_l : FRS.Job_List;  
+                     job_crit : d.Criteria;
+                  begin
+
+                     Job_IO.Add_User_Id( job_crit, adult.user_id );
+                     Job_IO.Add_Edition( job_crit, adult.edition );
+                     Job_IO.Add_Year( job_crit, adult.year );
+                     Job_IO.Add_Sernum( job_crit, adult.sernum );
+                     Job_IO.Add_Benunit( job_crit, adult.benunit );
+                     Job_IO.Add_Person( job_crit, adult.person );
+                     job_l  := Job_IO.Retrieve( job_crit );
+                     for job of job_l loop
+                        case job.jobsect is
+                           when 1 => 
+                              Inc( targets.private_sector_employed );
+                           when 2 =>   
+                              Inc( targets.public_sector_employed );
+                           when -1 | -2 =>
+                               null; -- harmless missing indicators
+                           when others =>
+                              Assert( false, "pub/priv(jobsect) indicator out of range " & job.jobsect'Img );
+                           end case;
+                     end loop;
+                  end;
                   
                   if adult.DVIL04A /= 4 then -- not inactive == active in our terms
                      case adult.age80 is
