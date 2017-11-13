@@ -58,3 +58,13 @@ Scottish Activity
 [OBRSUSTAB]:http://budgetresponsibility.org.uk/download/fiscal-sustainability-report-supplementary-data-series-january-2017/
 [OBRFISTAB]: http://budgetresponsibility.org.uk/download/march-2017-economic-and-fiscal-outlook-supplementary-economy-tables/
 [ONSINACTIVE]: https://www.ons.gov.uk/employmentandlabourmarket/peoplenotinwork/economicinactivity
+
+### Public private employment
+
+
+
+insert public/private employment. For comparisons with IFS.
+
+FROM OBR SupplementaryEconomytablesMarch2017-2.xlsx table 1.12
+1.12 Market Sector and general government employment (millions, final quarter of the financial year)
+March 2017 forecast
