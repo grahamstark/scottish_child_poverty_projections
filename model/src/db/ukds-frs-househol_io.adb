@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-11-14 11:49:19.253438
+-- Created by ada_generator.py on 2017-11-14 12:23:41.021078
 -- 
 with Ukds;
 
@@ -65,8 +65,6 @@ with Ukds.Frs.Pianom0809_IO;
 with Ukds.Frs.Pianon0910_IO;
 
 -- === CUSTOM IMPORTS START ===
-with Ada.Text_IO;use Ada.Text_IO;                                                      
-with Ada.Calendar.Formatting;                                                      
 -- === CUSTOM IMPORTS END ===
 
 package body Ukds.Frs.Househol_IO is

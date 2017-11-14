@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-11-14 11:49:18.935063
+-- Created by ada_generator.py on 2017-11-14 12:23:40.711198
 -- 
 with Ukds;
 with DB_Commons;
@@ -16,7 +16,6 @@ with SCP_Types;
 with Weighting_Commons;
 
 -- === CUSTOM IMPORTS START ===
--- THIS IS AN RSYNC TESTX
 -- === CUSTOM IMPORTS END ===
 
 package Ukds.Target_Data.Run_IO is
