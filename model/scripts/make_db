@@ -6,4 +6,4 @@ cd $PROJECTS_HOME/scottish_child_poverty_projections/model/database/
 /home/graham_s/bin/apgdiff database/ukds_backup_$DATE_FORMAT.sql database/ukds.sql > database/db_changes_$DATE_FORMAT.sql
 
 cd $PROJECTS_HOME/scottish_child_poverty_projections/model/
-scripts/sync_db_src
+# scripts/sync_db_src

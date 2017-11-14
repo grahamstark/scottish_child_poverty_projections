@@ -81,6 +81,10 @@ package body Model.SCP.Weights_Creator is
          end if;
             
       end if;
+      if clauses( employment_by_sector ) then
+         Inc( count, 2 );
+      end if;
+      
       -- household_all_households : Amount := 0.0;
       if clauses( genders ) then
          Inc( count, 2 );
@@ -148,7 +152,14 @@ package body Model.SCP.Weights_Creator is
             initial_weight := 0.2;
          end if;
       end if;
+
+
+      if clauses( employment_by_sector ) then
+         Add_Col( targets.private_sector_employed );
+         Add_Col( targets.public_sector_employed );
+      end if;
       
+
       row := ( others => 0.0 );
       if clauses( household_type ) then 
          if( country = SCO or country = UK ) then
