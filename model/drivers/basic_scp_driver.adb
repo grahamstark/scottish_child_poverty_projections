@@ -158,7 +158,8 @@ procedure Basic_SCP_Driver is
                employees                => False,
                ilo_unemployment         => False,
                jsa_claimants            => False,
-               participation_rate       => True );
+               participation_rate       => True,
+               employment_by_sector     => False );
          Log( "Starting Run with ID " & the_run.run_id'Img & " targets " & the_run.targets_run_id'Img );
          UKDS.Target_Data.Run_IO.Save( the_run );
          Model.SCP.Weights_Creator.Create_Weights( the_run, error );

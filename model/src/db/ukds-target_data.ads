@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-11-13 10:51:12.555366
+-- Created by ada_generator.py on 2017-11-14 11:49:18.388116
 -- 
 with Ada.Containers.Vectors;
 --
@@ -1296,6 +1296,7 @@ package Ukds.target_data is
       targets_run_user_id : Integer := 1;
       data_run_id : Integer := 0;
       data_run_user_id : Integer := 1;
+      uk_wide_only : Boolean := false;
       selected_clauses : Selected_Clauses_Array := ( others => false );
    end record;
    --
@@ -1331,6 +1332,7 @@ package Ukds.target_data is
          targets_run_user_id => 1,
          data_run_id => 0,
          data_run_user_id => 1,
+         uk_wide_only => false,
          selected_clauses => ( others => false )
    );
    --
@@ -1478,14 +1480,14 @@ package Ukds.target_data is
 
         
    -- === CUSTOM PROCS START ===
+                                                  
+   subtype Forecast_Age_Ranges is Natural range 0 .. 90;                                               
+   type Age_Range_Array is array( Forecast_Age_Ranges ) of Amount;                                                
                                                  
-   subtype Forecast_Age_Ranges is Natural range 0 .. 90;                                              
-   type Age_Range_Array is array( Forecast_Age_Ranges ) of Amount;                                               
-                                                
-   function To_Array( popn : Population_Forecasts ) return Age_Range_Array;       
-        
-   function To_Tab( weight : Output_Weights ) return String;     
-                                                 
+   function To_Array( popn : Population_Forecasts ) return Age_Range_Array;        
+         
+   function To_Tab( weight : Output_Weights ) return String;      
+                                                  
    -- === CUSTOM PROCS END ===
 
 end Ukds.target_data;

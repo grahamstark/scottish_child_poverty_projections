@@ -1,0 +1,9 @@
+#!/bin/sh
+#
+# make a diff of the database using APG and sync a copy of the DB Mill code from where it's created
+# to the place git and the compiler expects it 
+# 
+/home/graham_s/bin/apgdiff database/ukds_backup_$DATE_FORMAT.sql database/ukds.sql > database/db_changes_$DATE_FORMAT.sql
+/usr/bin/rsync -av database/src/*.ad* src/db/
+git add src/db/*.ads
+git add src/db/*.adb

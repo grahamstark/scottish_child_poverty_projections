@@ -1,5 +1,5 @@
 --
--- Created by ada_generator.py on 2017-11-13 10:51:13.252988
+-- Created by ada_generator.py on 2017-11-14 11:49:18.945569
 -- 
 with Ukds;
 
@@ -65,7 +65,7 @@ package body Ukds.Target_Data.Run_IO is
    SELECT_PART : constant String := "select " &
          "run_id, user_id, run_type, description, country, macro_variant, macro_edition, households_variant, households_edition, population_variant," &
          "population_edition, start_year, end_year, data_start_year, data_end_year, weighting_function, weighting_lower_bound, weighting_upper_bound, targets_run_id, targets_run_user_id," &
-         "data_run_id, data_run_user_id, selected_clauses " &
+         "data_run_id, data_run_user_id, uk_wide_only, selected_clauses " &
          " from target_data.run " ;
    
    --
@@ -74,7 +74,7 @@ package body Ukds.Target_Data.Run_IO is
    INSERT_PART : constant String := "insert into target_data.run (" &
          "run_id, user_id, run_type, description, country, macro_variant, macro_edition, households_variant, households_edition, population_variant," &
          "population_edition, start_year, end_year, data_start_year, data_end_year, weighting_function, weighting_lower_bound, weighting_upper_bound, targets_run_id, targets_run_user_id," &
-         "data_run_id, data_run_user_id, selected_clauses " &
+         "data_run_id, data_run_user_id, uk_wide_only, selected_clauses " &
          " ) values " ;
 
    
@@ -89,7 +89,7 @@ package body Ukds.Target_Data.Run_IO is
    UPDATE_PART : constant String := "update target_data.run set  ";
    function Get_Configured_Insert_Params( update_order : Boolean := False )  return GNATCOLL.SQL.Exec.SQL_Parameters is
    use GNATCOLL.SQL_Impl;
-      params : constant SQL_Parameters( 1 .. 23 ) := ( if update_order then (
+      params : constant SQL_Parameters( 1 .. 24 ) := ( if update_order then (
             1 => ( Parameter_Integer, 0 ),   --  : run_type (Type_Of_Run)
             2 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : description (Unbounded_String)
             3 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : country (Unbounded_String)
@@ -110,9 +110,10 @@ package body Ukds.Target_Data.Run_IO is
            18 => ( Parameter_Integer, 0 ),   --  : targets_run_user_id (Integer)
            19 => ( Parameter_Integer, 0 ),   --  : data_run_id (Integer)
            20 => ( Parameter_Integer, 0 ),   --  : data_run_user_id (Integer)
-           21 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : selected_clauses (Boolean)
-           22 => ( Parameter_Integer, 0 ),   --  : run_id (Integer)
-           23 => ( Parameter_Integer, 0 )   --  : user_id (Integer)
+           21 => ( Parameter_Integer, 0 ),   --  : uk_wide_only (Boolean)
+           22 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : selected_clauses (Boolean)
+           23 => ( Parameter_Integer, 0 ),   --  : run_id (Integer)
+           24 => ( Parameter_Integer, 0 )   --  : user_id (Integer)
       ) else (
             1 => ( Parameter_Integer, 0 ),   --  : run_id (Integer)
             2 => ( Parameter_Integer, 0 ),   --  : user_id (Integer)
@@ -136,7 +137,8 @@ package body Ukds.Target_Data.Run_IO is
            20 => ( Parameter_Integer, 0 ),   --  : targets_run_user_id (Integer)
            21 => ( Parameter_Integer, 0 ),   --  : data_run_id (Integer)
            22 => ( Parameter_Integer, 0 ),   --  : data_run_user_id (Integer)
-           23 => ( Parameter_Text, null, Null_Unbounded_String )   --  : selected_clauses (Boolean)
+           23 => ( Parameter_Integer, 0 ),   --  : uk_wide_only (Boolean)
+           24 => ( Parameter_Text, null, Null_Unbounded_String )   --  : selected_clauses (Boolean)
       
       ));
    begin
@@ -147,7 +149,7 @@ package body Ukds.Target_Data.Run_IO is
 
    function Get_Prepared_Insert_Statement return gse.Prepared_Statement is 
       ps : gse.Prepared_Statement; 
-      query : constant String := DB_Commons.Add_Schema_To_Query( INSERT_PART, SCHEMA_NAME ) & " ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23 )"; 
+      query : constant String := DB_Commons.Add_Schema_To_Query( INSERT_PART, SCHEMA_NAME ) & " ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24 )"; 
    begin 
       ps := gse.Prepare( query, On_Server => True ); 
       return ps; 
@@ -192,7 +194,7 @@ package body Ukds.Target_Data.Run_IO is
    function Get_Prepared_Update_Statement return gse.Prepared_Statement is 
       ps : gse.Prepared_Statement; 
       
-      query : constant String := DB_Commons.Add_Schema_To_Query( UPDATE_PART, SCHEMA_NAME ) & " run_type = $1, description = $2, country = $3, macro_variant = $4, macro_edition = $5, households_variant = $6, households_edition = $7, population_variant = $8, population_edition = $9, start_year = $10, end_year = $11, data_start_year = $12, data_end_year = $13, weighting_function = $14, weighting_lower_bound = $15, weighting_upper_bound = $16, targets_run_id = $17, targets_run_user_id = $18, data_run_id = $19, data_run_user_id = $20, selected_clauses = $21 where run_id = $22 and user_id = $23"; 
+      query : constant String := DB_Commons.Add_Schema_To_Query( UPDATE_PART, SCHEMA_NAME ) & " run_type = $1, description = $2, country = $3, macro_variant = $4, macro_edition = $5, households_variant = $6, households_edition = $7, population_variant = $8, population_edition = $9, start_year = $10, end_year = $11, data_start_year = $12, data_end_year = $13, weighting_function = $14, weighting_lower_bound = $15, weighting_upper_bound = $16, targets_run_id = $17, targets_run_user_id = $18, data_run_id = $19, data_run_user_id = $20, uk_wide_only = $21, selected_clauses = $22 where run_id = $23 and user_id = $24"; 
    begin 
       ps := gse.Prepare( 
         query, 
@@ -441,8 +443,11 @@ package body Ukds.Target_Data.Run_IO is
          a_run.data_run_user_id := gse.Integer_Value( cursor, 21 );
       end if;
       if not gse.Is_Null( cursor, 22 )then
+         a_run.uk_wide_only := gse.Boolean_Value( cursor, 22 );
+      end if;
+      if not gse.Is_Null( cursor, 23 )then
          declare
-            s : constant String := gse.Value( cursor, 22 );
+            s : constant String := gse.Value( cursor, 23 );
          begin
             Selected_Clauses_Array_Package.SQL_Map_To_Array( s, a_run.selected_clauses );
          end;
@@ -529,9 +534,10 @@ package body Ukds.Target_Data.Run_IO is
       params( 18 ) := "+"( Integer'Pos( a_run.targets_run_user_id ));
       params( 19 ) := "+"( Integer'Pos( a_run.data_run_id ));
       params( 20 ) := "+"( Integer'Pos( a_run.data_run_user_id ));
-      params( 21 ) := "+"( aliased_selected_clauses'Access );
-      params( 22 ) := "+"( Integer'Pos( a_run.run_id ));
-      params( 23 ) := "+"( Integer'Pos( a_run.user_id ));
+      params( 21 ) := "+"( Boolean'Pos( a_run.uk_wide_only ));
+      params( 22 ) := "+"( aliased_selected_clauses'Access );
+      params( 23 ) := "+"( Integer'Pos( a_run.run_id ));
+      params( 24 ) := "+"( Integer'Pos( a_run.user_id ));
       
       gse.Execute( local_connection, UPDATE_PS, params );
       Check_Result( local_connection );
@@ -594,7 +600,8 @@ package body Ukds.Target_Data.Run_IO is
       params( 20 ) := "+"( Integer'Pos( a_run.targets_run_user_id ));
       params( 21 ) := "+"( Integer'Pos( a_run.data_run_id ));
       params( 22 ) := "+"( Integer'Pos( a_run.data_run_user_id ));
-      params( 23 ) := "+"( aliased_selected_clauses'Access );
+      params( 23 ) := "+"( Boolean'Pos( a_run.uk_wide_only ));
+      params( 24 ) := "+"( aliased_selected_clauses'Access );
       gse.Execute( local_connection, SAVE_PS, params );  
       Check_Result( local_connection );
       if( is_local_connection )then
@@ -864,6 +871,13 @@ package body Ukds.Target_Data.Run_IO is
    end Add_data_run_user_id;
 
 
+   procedure Add_uk_wide_only( c : in out d.Criteria; uk_wide_only : Boolean; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "uk_wide_only", op, join, uk_wide_only );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_uk_wide_only;
+
+
    procedure Add_selected_clauses( c : in out d.Criteria; selected_clauses : Selected_Clauses_Array; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
    elem : d.Criterion := d.Make_Criterion_Element( "selected_clauses", op, join, Selected_Clauses_Array_Package.Array_To_SQL_String( selected_clauses ) );
    begin
@@ -1027,6 +1041,13 @@ package body Ukds.Target_Data.Run_IO is
    begin
       d.add_to_criteria( c, elem );
    end Add_data_run_user_id_To_Orderings;
+
+
+   procedure Add_uk_wide_only_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "uk_wide_only", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_uk_wide_only_To_Orderings;
 
 
    procedure Add_selected_clauses_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   

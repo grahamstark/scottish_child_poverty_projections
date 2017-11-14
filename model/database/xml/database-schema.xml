@@ -90,6 +90,7 @@
                   <column name='data_end_year'  type='INTEGER' adaTypeName='Year_Number' default='2030' />
                   
                   
+                  
                   <!-- maybe fks? -->
                   <!-- maybe stuff about fixes to macro as in Soton model -->
 
@@ -102,6 +103,8 @@
                   
                   <column name='data_run_id' type='INTEGER' />
                   <column name='data_run_user_id' type='INTEGER' default='1' />
+                  
+                  <column name='uk_wide_only' type='BOOLEAN' default='false' />
                                           
                   <column name="selected_clauses"  
                                 required="false"

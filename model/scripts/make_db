@@ -3,4 +3,4 @@ DATE_FORMAT=`date '+%H_%M-%d_%m_%Y'`
 cd $PROJECTS_HOME/scottish_child_poverty_projections/model/database/
 /bin/cp database/ukds.sql database/ukds_backup_$DATE_FORMAT.sql
 /usr/bin/python $PROJECTS_HOME/ada_mill/scripts/mill.py . native
-/home/graham_s/bin/apgdiff database/ukds_backup_$DATE_FORMAT.sql database/ukds.sql > database/db_changes_$DATE_FORMAT.sql
+scripts/sync_db_src

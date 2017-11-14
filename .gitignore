@@ -10,3 +10,4 @@ docs/tender
 docs/world_bank
 model/tmp/*
 model/bin/*
+model/database/src/*
