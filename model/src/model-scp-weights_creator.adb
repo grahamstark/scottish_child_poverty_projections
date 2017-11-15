@@ -59,6 +59,15 @@ package body Model.SCP.Weights_Creator is
       end loop;
    end Print_Diffs;
 
+   function Col_Names(
+      clauses : Selected_Clauses_Array;
+      country : Unbounded_String ) return Unbounded_String_List is
+         ls : Unbounded_String_List;
+   begin
+      
+      return ls;
+   end Col_Names;
+   
     
    function Col_Count( 
       clauses : Selected_Clauses_Array;
@@ -551,21 +560,21 @@ package body Model.SCP.Weights_Creator is
    use GNATCOLL.SQL.Exec;
    package d renames DB_Commons;
    
-      num_data_cols : constant Positive := Col_Count( the_run.selected_clauses, the_run.country );
-      num_data_rows : Positive;
-      conn          : Database_Connection;
-      d_cursor            : GNATCOLL.SQL.Exec.Direct_Cursor;
-      f_cursor            : GNATCOLL.SQL.Exec.Forward_Cursor;
-      frs_target_row      : Target_Dataset;
-      ps                  : GNATCOLL.SQL.Exec.Prepared_Statement;   
-      count               : Natural := 0;
-      frs_criteria        : d.Criteria;
-      mapped_target_data  : Vector( 1 .. num_data_cols );
-      targets_outfile_name :
+      num_data_cols        : constant Positive := Col_Count( the_run.selected_clauses, the_run.country );
+      num_data_rows        : Positive;
+      conn                 : Database_Connection;
+      d_cursor             : GNATCOLL.SQL.Exec.Direct_Cursor;
+      f_cursor             : GNATCOLL.SQL.Exec.Forward_Cursor;
+      frs_target_row       : Target_Dataset;
+      ps                   : GNATCOLL.SQL.Exec.Prepared_Statement;   
+      count                : Natural := 0;
+      frs_criteria         : d.Criteria;
+      mapped_target_data   : Vector( 1 .. num_data_cols );
       outfile_name         : constant String := "output/" & Filename_From_Run( the_run ) & ".tab";
-      targets_outfile_name : constant String := "output/" & Filename_From_Run( the_run ) & "-targets.tab"
-      outf               : File_Type;
-      targetsf           : File_Type;
+      targets_outfile_name : constant String := "output/" & Filename_From_Run( the_run ) & "-targets.tab";
+      outf                 : File_Type;
+      targetsf             : File_Type;
+      col_labels           : constant Unbounded_String_List := Col_Names( the_run.selected_clauses, the_run.country );
     begin
        
       Trace( log_trace,  "Begining run for : " & To_String( the_run ));
@@ -577,12 +586,8 @@ package body Model.SCP.Weights_Creator is
       conn := Connection_Pool.Lease;
       Target_Dataset_IO.Add_User_Id( frs_criteria, the_run.data_run_user_id );
       Target_Dataset_IO.Add_Run_Id( frs_criteria, the_run.data_run_id );
-      -- Target_Dataset_IO.Add_Year( frs_criteria, 2012, d.GE );
-      -- NO!! we want all years in the FRS dataset Target_Dataset_IO.Add_Year( frs_criteria, year );
       if the_run.country = SCO then
          Target_Dataset_IO.Add_Country_Scotland( frs_criteria, 1.0 );
-      -- elsif the_run.country = UK then
-         -- Target_Dataset_IO.Add_Country_UK( frs_criteria, 1.0 );
       elsif the_run.country = WAL then
          Target_Dataset_IO.Add_Country_Wales( frs_criteria, 1.0 );
       elsif the_run.country = NIR then
