@@ -541,7 +541,7 @@ package body Model.SCP.Weights_Creator is
          Censor_String( TS( targets_run.population_variant )) & "_" &
          Censor_String( TS( targets_run.macro_variant )) & "_" &
          Censor_String( the_run.data_start_year'Img ) & "_" &
-         Censor_String( the_run.data_end_year'Img ) & ".tab";
+         Censor_String( the_run.data_end_year'Img );
    end  Filename_From_Run;
    
    procedure Create_Weights( 
@@ -561,12 +561,16 @@ package body Model.SCP.Weights_Creator is
       count               : Natural := 0;
       frs_criteria        : d.Criteria;
       mapped_target_data  : Vector( 1 .. num_data_cols );
-      outfile_name       : constant String := "output/" & Filename_From_Run( the_run );
+      targets_outfile_name :
+      outfile_name         : constant String := "output/" & Filename_From_Run( the_run ) & ".tab";
+      targets_outfile_name : constant String := "output/" & Filename_From_Run( the_run ) & "-targets.tab"
       outf               : File_Type;
+      targetsf           : File_Type;
     begin
        
       Trace( log_trace,  "Begining run for : " & To_String( the_run ));
-      Create( outf, Out_File, outfile_name );   
+      Create( outf, Out_File, outfile_name );
+      Create( targetsf, Out_File, targets_outfile_name );
       Put_Line( outf, "run_id" & TAB & "user" & TAB & "frs_year" & TAB & "sernum" & TAB & "forecast_year" & TAB & "weight" );
 
       Connection_Pool.Initialise;
@@ -585,7 +589,7 @@ package body Model.SCP.Weights_Creator is
          Target_Dataset_IO.Add_Country_N_Ireland( frs_criteria, 1.0 );
       elsif the_run.country = ENG then
          Target_Dataset_IO.Add_Country_England( frs_criteria, 1.0 );
-      end if; -- and so on for Wales, Ireland; UK doesn't need this
+      end if; -- UK doesn't need this
       Target_Dataset_IO.Add_hbai_excluded( frs_criteria, False );
       Target_Dataset_IO.Add_Year( frs_criteria, the_run.data_start_year, d.GE );
       Target_Dataset_IO.Add_Year( frs_criteria, the_run.data_end_year, d.LE );
@@ -735,6 +739,7 @@ package body Model.SCP.Weights_Creator is
       Trace( log_trace,  "returning connection" );
       Connection_Pool.Return_Connection( conn );
       Close( outf );
+      Close( targetsf );
    end  Create_Weights; 
    
 end Model.SCP.Weights_Creator;
