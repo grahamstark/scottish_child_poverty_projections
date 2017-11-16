@@ -25,11 +25,11 @@ procedure Create_A_Run is
       the_run : Run;
       timestr : constant String := Formatting.Image( Clock );
    begin
-      the_run.run_id := 201000;
+      the_run.run_id := 201_000;
       the_run.user_id := 1;
       the_run.description := 
          TuS( "Attempt to emulate IFS Weights (From Create_A_Run.adb); created at " & timestr );
-      the_run.start_year := 2014;
+      the_run.start_year := 2016;
       the_run.end_year := 2021;
       the_run.macro_edition := 2017;
       the_run.households_edition := 2014;

@@ -39,13 +39,22 @@ package body Model.SCP.Weights_Creator is
    log_trace : GNATColl.Traces.Trace_Handle := GNATColl.Traces.Create( "MODEL.SCP.WEIGHTS_CREATOR" );
    use GNATColl.Traces;
    
-   procedure Print_Diffs( label : String; target_populations: Vector; new_populations : Vector ) is
+   procedure Print_Diffs( 
+      diffsf             : File_Type;
+      year               : Year_Number;
+      header             : String; 
+      labels             : Unbounded_String_List; 
+      target_populations : Vector;  
+      new_populations    : Vector ) is
    use Ada.Text_IO;
       diff : Amount;
    begin
-      Put_Line( label );
+      Put_Line( header );
+      Put_Line( year'Img );
       for c in target_populations'Range loop
          Int_IO.Put( c, 0 );
+         Put( Tab );
+         Put( Prettify_Image( TS( labels.Element( c ))));
          Put( Tab );
          Amount_IO.Put( target_populations( c ), 0, 3, 0 );
          Put( Tab );
@@ -360,66 +369,6 @@ package body Model.SCP.Weights_Creator is
       
       return ls;
    end Col_Names;
-   
-    
-   function Col_Count( 
-      clauses : Selected_Clauses_Array;
-      country : Unbounded_String ) return Positive is
-         count : Natural := 0;
-   begin
-      if clauses( household_type ) then
-         if country = UK or country = SCO then
-            Inc( count, 7 );
-         end if;
-         if country = UK or country = WAL then
-            -- Inc( count, 1 );
-            Inc( count, 12 );
-         end if;
-         if country = UK or country = NIR then
-            Inc( count, 5 );
-         end if;
-         if country = UK or country = ENG then
-            Inc( count, 7 ); -- was 8; see weighting note 
-         end if;
-            
-      end if;
-      if clauses( employment_by_sector ) then
-         Inc( count, 2 );
-      end if;
-      
-      -- household_all_households : Amount := 0.0;
-      if clauses( genders ) then
-         Inc( count, 2 );
-      end if;
-      if clauses( employment ) then      
-         Inc( count, 1 );
-      end if;
-      if clauses( employees ) then      
-         Inc( count, 1 );
-      end if;
-      if clauses( ilo_unemployment ) then
-         Inc( count, 1 );
-      end if;
-      if clauses( jsa_claimants ) then
-         Inc( count, 1 );
-      end if;
-      if clauses( by_year_ages_by_gender ) then
-         Inc( count, 162 );
-      end if;
-      if clauses( by_year_ages ) then
-         Inc( count, 81 );
-      end if;
-      if clauses( aggregate_ages ) then
-         Inc( count, 17 ); -- 8 );
-      end if;
-      if clauses( aggregate_ages_by_gender ) then
-         Inc( count, 34 );
-      end if;
-      if clauses( participation_rate ) then
-         Inc( count, 22 ); -- 26 with 075s
-      end if;
-      return count;
-   end Col_Count;
    
 
    procedure Fill_One_Row( 
@@ -852,7 +801,7 @@ package body Model.SCP.Weights_Creator is
    begin
       Put( targetsf, year'Img & TAB );
       for c in target_populations'Range loop
-         FIO.Put( targetsf, target_populations( c ), 14, 4 );
+         FIO.Put( targetsf, target_populations( c ), 2, 4, 0 );
          if c < target_populations'Last then
             Put( targetsf, TAB );
          else
@@ -868,7 +817,8 @@ package body Model.SCP.Weights_Creator is
    use GNATCOLL.SQL.Exec;
    package d renames DB_Commons;
    
-      num_data_cols        : constant Positive := Col_Count( the_run.selected_clauses, the_run.country );
+      col_labels           : constant Unbounded_String_List := Col_Names( the_run.selected_clauses, the_run.country );
+      num_data_cols        : constant Positive := Positive( col_labels.Length );
       num_data_rows        : Positive;
       conn                 : Database_Connection;
       d_cursor             : GNATCOLL.SQL.Exec.Direct_Cursor;
@@ -880,14 +830,16 @@ package body Model.SCP.Weights_Creator is
       mapped_target_data   : Vector( 1 .. num_data_cols );
       outfile_name         : constant String := "output/" & Filename_From_Run( the_run ) & ".tab";
       targets_outfile_name : constant String := "output/" & Filename_From_Run( the_run ) & "-targets.tab";
+      diffs_outfile_name   : constant String := "output/" & Filename_From_Run( the_run ) & "-diffs.tab";
       outf                 : File_Type;
       targetsf             : File_Type;
-      col_labels           : constant Unbounded_String_List := Col_Names( the_run.selected_clauses, the_run.country );
+      diffsf               : File_Type;
     begin
        
       Trace( log_trace,  "Begining run for : " & To_String( the_run ));
       Create( outf, Out_File, outfile_name );
       Create( targetsf, Out_File, targets_outfile_name );
+      Create( diffsf, Out_File, diffs_outfile_name );
       Put_Line( targetsf, TAB & col_labels.Join );
       Put_Line( outf, "run_id" & TAB & "user" & TAB & "frs_year" & TAB & "sernum" & TAB & "forecast_year" & TAB & "weight" );
 
@@ -1002,9 +954,10 @@ package body Model.SCP.Weights_Creator is
                for c in target_populations'Range loop
                   target_populations( c ) :=  mapped_target_data( c );                 
                end loop;
-               
                new_totals := Reweighter.Sum_Dataset( observations.all, initial_weights );
-               Print_Diffs( "CRUDE WEIGHTED", target_populations, new_totals );
+               
+               Print_Vector( targetsf, year, target_populations );
+               Print_Diffs( diffsf, year, "CRUDE WEIGHTED", col_labels, target_populations, new_totals );
                
                Assert(( for all r of mapped_target_data => r > 0.0 ), 
                   " there is a zero in target output row " & To_String( mapped_target_data ));
@@ -1044,7 +997,7 @@ package body Model.SCP.Weights_Creator is
                   end loop;
                end if;
                new_totals := Reweighter.Sum_Dataset( observations.all, weights );
-               Print_Diffs( "FINAL WEIGHTED", target_populations, new_totals );
+               Print_Diffs( diffsf, year, "FINAL WEIGHTED", col_labels, target_populations, new_totals );
             end;
          end loop Each_Year;
          Trace( log_trace,  "Done; freeing datasets" );
@@ -1055,6 +1008,7 @@ package body Model.SCP.Weights_Creator is
       Connection_Pool.Return_Connection( conn );
       Close( outf );
       Close( targetsf );
+      Close( diffsf );
    end  Create_Weights; 
    
 end Model.SCP.Weights_Creator;

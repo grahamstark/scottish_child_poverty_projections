@@ -23,7 +23,8 @@ project ScotCP is
 
    for Main use ( 
       "harness.adb",
-      "basic_scp_driver.adb" );
+      "basic_scp_driver.adb",
+      "create_a_run.adb");
    
    IncludeOpt := "";
    LibOpt     := "";

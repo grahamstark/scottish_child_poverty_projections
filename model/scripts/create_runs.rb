@@ -34,8 +34,13 @@ def clauseToString( clauses )
 end
 
 
-def insert1()        
-        clauseStr =  clauseToString( CLAUSES_MAP )
+def insert201000()       
+        clauses = CLAUSES_MAP
+        clauses['household_type'] = TRUE
+        clauses['aggregate_ages_by_gender' ] = TRUE
+        clauses['employment_by_sector' ] = TRUE
+        clauses['participation_rate'] = TRUE
+        clauseStr =  clauseToString( clauses )
         puts "clauseStr #{clauseStr}"
         # selected_clauses[:]
         INSERT_RUN_STMT.call(     
@@ -66,5 +71,5 @@ def insert1()
                 :uk_wide_only => TRUE  );
 end
         
-insert1()
+insert201000()
                 

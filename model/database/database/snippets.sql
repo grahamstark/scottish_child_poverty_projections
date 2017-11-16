@@ -1072,4 +1072,6 @@ update target_data.macro_forecasts set private_sector_employment = 26.8, public_
 update target_data.macro_forecasts set private_sector_employment = 27.0, public_sector_employment=5.12 where year=2019;
 update target_data.macro_forecasts set private_sector_employment = 27.1, public_sector_employment=5.09 where year=2020;
 update target_data.macro_forecasts set private_sector_employment = 27.3, public_sector_employment=5.01 where year=2021;
-        
+
+update target_data.macro_forecasts set private_sector_employment = private_sector_employment * 1000000;
+update target_data.macro_forecasts set public_sector_employment = public_sector_employment * 1000000;
