@@ -99,6 +99,6 @@ begin
    end case;
    end_time := Clock;
    elapsed := end_time - start_time;
-   Put_Line( "finished in " & Formatting.Image( elapsed ) & " secs " );
+   Put_Line( "finished in " & Formatting.Image( elapsed, True ) & " h:m:s " );
    
 end Basic_SCP_Driver;

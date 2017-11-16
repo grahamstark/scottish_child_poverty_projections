@@ -49,22 +49,23 @@ package body Model.SCP.Weights_Creator is
    use Ada.Text_IO;
       diff : Amount;
    begin
-      Put_Line( header );
-      Put_Line( year'Img );
+      Put_Line( diffsf, header );
+      Put_Line( diffsf, year'Img );
+      Put_Line( diffsf, "n"&TAB&"Varname"&TAB&"TARGET"&TAB&"Weighted_Data" ); 
       for c in target_populations'Range loop
-         Int_IO.Put( c, 0 );
-         Put( Tab );
-         Put( Prettify_Image( TS( labels.Element( c ))));
-         Put( Tab );
-         Amount_IO.Put( target_populations( c ), 0, 3, 0 );
-         Put( Tab );
-         Amount_IO.Put( new_populations( c ), 0, 3, 0 );
+         Int_IO.Put( diffsf, c, 0 );
+         Put( diffsf, Tab );
+         Put( diffsf, "'" & Prettify_Image( TS( labels.Element( c ))) & "'"  );
+         Put( diffsf, Tab );
+         Amount_IO.Put( diffsf, target_populations( c ), 0, 3, 0 );
+         Put( diffsf, Tab );
+         Amount_IO.Put( diffsf, new_populations( c ), 0, 3, 0 );
          if( target_populations( c ) /= 0.0 )then
             diff := 100.0*( new_populations( c )-target_populations( c ))/target_populations( c );
          end if;
-         Put( TAB );
-         Amount_IO.Put( diff, 0, 4 , 0 );               
-         New_Line;
+         Put( diffsf, TAB );
+         Amount_IO.Put( diffsf, diff, 0, 4 , 0 );               
+         New_Line( diffsf );
       end loop;
    end Print_Diffs;
 
