@@ -845,6 +845,22 @@ package body Model.SCP.Weights_Creator is
          Censor_String( the_run.data_end_year'Img );
    end  Filename_From_Run;
    
+   procedure Print_Vector( 
+      targetsf : File_Type;
+      year : Year_Number; 
+      target_populations : Vector ) is
+   begin
+      Put( targetsf, year'Img & TAB );
+      for c in target_populations'Range loop
+         FIO.Put( targetsf, target_populations( c ), 14, 4 );
+         if c < target_populations'Last then
+            Put( targetsf, TAB );
+         else
+            New_Line( targetsf );
+         end if;
+      end loop;
+   end Print_Vector;               
+   
    procedure Create_Weights( 
       the_run : Run;
       error   : out Eval_Error_Type ) is
@@ -985,16 +1001,6 @@ package body Model.SCP.Weights_Creator is
                Fill_One_Row( the_run.selected_clauses, the_run.country, targets, mapped_target_data, dummy ); 
                for c in target_populations'Range loop
                   target_populations( c ) :=  mapped_target_data( c );                 
-               end loop;
-               
-               Put( targetsf, year'Img & TAB );
-               for c in target_populations'Range loop
-                  Put( targetsf, target_populations( c )'Img );
-                  if c < target_populations'Last then
-                     Put( targetsf, TAB );
-                  else
-                     New_Line( targetsf );
-                  end if;
                end loop;
                
                new_totals := Reweighter.Sum_Dataset( observations.all, initial_weights );
