@@ -872,6 +872,7 @@ package body Model.SCP.Weights_Creator is
       Trace( log_trace,  "Begining run for : " & To_String( the_run ));
       Create( outf, Out_File, outfile_name );
       Create( targetsf, Out_File, targets_outfile_name );
+      Put_Line( targetsf, TAB & col_labels.Join );
       Put_Line( outf, "run_id" & TAB & "user" & TAB & "frs_year" & TAB & "sernum" & TAB & "forecast_year" & TAB & "weight" );
 
       Connection_Pool.Initialise;
@@ -985,6 +986,17 @@ package body Model.SCP.Weights_Creator is
                for c in target_populations'Range loop
                   target_populations( c ) :=  mapped_target_data( c );                 
                end loop;
+               
+               Put( targetsf, year'Img & TAB );
+               for c in target_populations'Range loop
+                  Put( targetsf, target_populations( c )'Img );
+                  if c < target_populations'Last then
+                     Put( targetsf, TAB );
+                  else
+                     New_Line( targetsf );
+                  end if;
+               end loop;
+               
                new_totals := Reweighter.Sum_Dataset( observations.all, initial_weights );
                Print_Diffs( "CRUDE WEIGHTED", target_populations, new_totals );
                
