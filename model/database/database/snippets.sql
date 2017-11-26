@@ -1075,3 +1075,70 @@ update target_data.macro_forecasts set private_sector_employment = 27.3, public_
 
 update target_data.macro_forecasts set private_sector_employment = private_sector_employment * 1000000;
 update target_data.macro_forecasts set public_sector_employment = public_sector_employment * 1000000;
+
+--
+-- add compressed household element to clauses (only works at end; see: https://www.postgresql.org/docs/9.1/static/functions-array.html
+--
+update target_data.run set selected_clauses = array_append( selected_clauses, 'f' );
+
+select 
+        run_id,
+        year,
+        other_hh,
+        one_adult_hh,
+        two_adult_hh,
+        other_hh +
+        one_adult_hh +
+        two_adult_hh as all_hhlds
+        
+from 
+        target_data.target_dataset
+where 
+        run_id in ( select run_id from target_data.run where run_type = 1 and country='UK');
+
+--
+-- I forgot to add this to the FRS parts of the targets
+--
+update target_data.target_dataset set 
+        other_hh = 
+                eng_hhld_a_couple_and_other_adults_no_dependent_children +
+                eng_hhld_households_with_one_dependent_child +
+                eng_hhld_households_with_two_dependent_children +
+                eng_hhld_households_with_three_dependent_children +
+                eng_hhld_other_households + 
+                sco_hhld_one_adult_one_child +
+                sco_hhld_one_adult_two_plus_children +
+                sco_hhld_two_plus_adult_one_plus_children +
+                sco_hhld_three_plus_person_all_adult +
+                wal_hhld_2_person_1_adult_1_child +
+                wal_hhld_3_person_no_children +
+                wal_hhld_3_person_2_adults_1_child +
+                wal_hhld_3_person_1_adult_2_children +
+                wal_hhld_4_person_no_children +
+                wal_hhld_4_person_2_plus_adults_1_plus_children +
+                wal_hhld_4_person_1_adult_3_children +
+                wal_hhld_5_plus_person_no_children +
+                wal_hhld_5_plus_person_2_plus_adults_1_plus_children +
+                wal_hhld_5_plus_person_1_adult_4_plus_children +
+                nir_hhld_other_households_without_children +
+                nir_hhld_one_adult_households_with_children +
+                nir_hhld_other_households_with_children,
+          
+        one_adult_hh = 
+                wal_hhld_1_person+
+                nir_hhld_one_adult_households +
+                eng_hhld_one_person_households_male +
+                eng_hhld_one_person_households_female +
+                sco_hhld_one_adult_male +
+                sco_hhld_one_adult_female,
+               
+        two_adult_hh =
+                sco_hhld_two_adults +
+                eng_hhld_one_family_and_no_others_couple_no_dependent_chi +
+                wal_hhld_2_person_no_children +      
+                nir_hhld_two_adults_without_children  
+where 
+        run_id in (
+                select run_id from target_data.run where run_type=0 and country='UK' );
+          
+        

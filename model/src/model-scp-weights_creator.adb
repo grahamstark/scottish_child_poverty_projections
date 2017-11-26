@@ -79,6 +79,7 @@ package body Model.SCP.Weights_Creator is
          ls.Add_To( "private_sector_employed" );
          ls.Add_To( "public_sector_employed" );
       end if;
+      
       if clauses( household_type ) then 
          if( country = SCO or country = UK ) then
             ls.Add_To( "sco_hhld_one_adult_male" );
@@ -120,7 +121,12 @@ package body Model.SCP.Weights_Creator is
             ls.Add_To( "wal_hhld_5_plus_person_2_plus_adults_1_plus_children" );
             ls.Add_To( "wal_hhld_5_plus_person_1_adult_4_plus_children" );
          end if;
+      elsif  clauses( compressed_household_type ) then 
+         ls.Add_To( "other_hh" );
+         ls.Add_To( "one_adult_hh" );
+         ls.Add_To( "two_adult_hh" );
       end if;
+      
       -- household_all_households : Amount := 0.0;
       if clauses( genders ) then
          ls.Add_To( "male" );
@@ -465,6 +471,10 @@ package body Model.SCP.Weights_Creator is
                -- targets.wal_hhld_5_plus_person_2_plus_adults_1_plus_children +
                -- targets.wal_hhld_5_plus_person_1_adult_4_plus_children );
          end if;
+     elsif clauses( compressed_household_type ) then
+         Add_Col( targets.other_hh );
+         Add_Col( targets.one_adult_hh );
+         Add_Col( targets.two_adult_hh );
       end if;
       -- household_all_households : Amount := 0.0;
       if clauses( genders ) then

@@ -80,7 +80,9 @@ package SCP_Types is
       ilo_unemployment,
       jsa_claimants,
       participation_rate,
-      employment_by_sector
+      employment_by_sector,
+      compressed_household_type,
+      spare_type
    );
    
    type Abs_Selected_Clauses_Array is array( Candidate_Clauses range <> ) of Boolean;

@@ -6,7 +6,7 @@ require './forecast_libs.rb'
 
 def readNI( lines )
        label = lines[0][1]
-       yearsStr = lines[1][2..-1]
+       yearsStr = lines[1][1..-1]
        years = []
        yearsStr.each{
                |ystr|
@@ -108,7 +108,7 @@ recType = 'households'
 variant = '1'
 
 # fname = ARGS[0]
-[ 'NIR', 'WAL'].each{ #'ENG'
+[ 'NIR' ].each{ #'ENG' , 'WAL'
         |country|
         case country
         when 'NIR' 
