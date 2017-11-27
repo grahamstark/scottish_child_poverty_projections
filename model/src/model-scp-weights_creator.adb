@@ -398,6 +398,7 @@ package body Model.SCP.Weights_Creator is
       
       Assert( not (clauses( by_year_ages ) and clauses( by_year_ages_by_gender )), " by_year_ages and by_year_ages_by_gender can't both be on " );
       Assert( not (clauses( aggregate_ages ) and clauses( aggregate_ages_by_gender )), " aggregate_ages and aggregate_ages_by_gender can't both be on " );
+      Assert( not (clauses( household_type ) and clauses( compressed_household_type )), " household_type and compressed_household_type can't both be on " );
        
       --
       -- this is a SCO/NI oversampling correction 

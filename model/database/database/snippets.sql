@@ -1079,7 +1079,9 @@ update target_data.macro_forecasts set public_sector_employment = public_sector_
 --
 -- add compressed household element to clauses (only works at end; see: https://www.postgresql.org/docs/9.1/static/functions-array.html
 --
-update target_data.run set selected_clauses = array_append( selected_clauses, 'f' );
+update target_data.run set selected_clauses = array_append( selected_clauses, 'f' )  where array_length( selected_clauses,1 ) = 13 ;
+
+update target_data.run set selected_clauses = 'f,f,f,f,f,f,f,f,f,f,f,f,f,f'  where array_length( selected_clauses,1 ) < 13 ;
 
 select 
         run_id,
