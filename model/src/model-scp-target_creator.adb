@@ -280,7 +280,8 @@ package body Model.SCP.Target_Creator is
                male_popn_yp1_2014.all_ages + female_popn_yp1_2014.all_ages );
             
             --
-            -- for hhlds, we 
+            -- for 2016 edn hhlds, we just scale the likely 2014 edition by total popn change
+            -- between the 2014 and 2016 forecasts for that year. Best we can do, I think.
             --
             hh_scaling : constant Amount :=  popn_2017_edn/popn_2014_edn;  
             
