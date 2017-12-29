@@ -234,13 +234,63 @@ package body Model.SCP.Target_Creator is
                edition  => the_run.population_edition,
                target_group => TuS( "MALES" )                           
             );
+            
+            --
+            -- overkill - just to scale hhlds
+            --
+            female_popn_2014 : constant Population_Forecasts := Population_Forecasts_IO.Retrieve_By_PK(
+               year     => year,
+               rec_type => TuS( "persons" ),
+               variant  => the_run.population_variant,
+               country  => the_run.country,
+               edition  => 2014,
+               target_group => TuS( "FEMALES" )                           
+            );
+            female_popn_yp1_2014 : constant Population_Forecasts := Population_Forecasts_IO.Retrieve_By_PK(
+               year     => year+1,
+               rec_type => TuS( "persons" ),
+               variant  => the_run.population_variant,
+               country  => the_run.country,
+               edition  => 2014,
+               target_group => TuS( "FEMALES" )                           
+            );
+            male_popn_2014 : constant Population_Forecasts := Population_Forecasts_IO.Retrieve_By_PK(
+               year     => year,
+               rec_type => PERSONS,
+               variant  => the_run.population_variant,
+               country  => the_run.country,
+               edition  => 2014,
+               target_group => TuS( "MALES" )                           
+            );
+            male_popn_yp1_2014 : constant Population_Forecasts := Population_Forecasts_IO.Retrieve_By_PK(
+               year     => year+1,
+               rec_type => PERSONS,
+               variant  => the_run.population_variant,
+               country  => the_run.country,
+               edition  => 2014,
+               target_group => TuS( "MALES" )                           
+            );
+            
+            popn_2017_edn : constant Amount := 
+               Q_Weighed_Av( 
+               male_popn.all_ages + female_popn.all_ages, 
+               male_popn_yp1.all_ages + female_popn_yp1.all_ages );
+            
+            popn_2014_edn : constant Amount := 
+               Q_Weighed_Av( 
+               male_popn_2014.all_ages + female_popn_2014.all_ages, 
+               male_popn_yp1_2014.all_ages + female_popn_yp1_2014.all_ages );
+            
+            hh_scaling : constant Amount :=  popn_2017_edn/popn_2014_edn;  
+            
             scottish_households : constant Households_Forecasts := Households_Forecasts_IO.Retrieve_By_PK(
                year     => year,
                rec_type => HOUSEHOLDS,
-               variant  => the_run.households_variant,
+               variant  => Nearest_HH_Variant( the_run.population_variant ),
                country  => SCO,
-               edition  => the_run.households_edition -- could just jam this on to 2014 ...
+               edition  => 2014 -- could just jam this on to 2014 ...
             );
+            
             
            targets     : Target_Dataset;  
             
