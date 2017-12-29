@@ -16,7 +16,7 @@ echo "making local backup; writing to $BACK_DIR"
 cp $DUMP_FILE.bz2 $BACK_DIR
 
 echo "copying to laptop"
-scp $DUMP_FILE.bz2 Latitude-3330:
+scp $DUMP_FILE.bz2 newlappy:
 
 echo "copying to projectsvr"
 scp $DUMP_FILE.bz2 projectsvr.virtual-worlds-research.com:

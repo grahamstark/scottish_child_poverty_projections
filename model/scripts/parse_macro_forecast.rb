@@ -27,6 +27,9 @@ def readMacro( lines, startCol, keyLineStart, out )
               end
               p += 1
         end
+        #
+        # skip to the financial year bit YYYY
+        #
         loop do
                 puts "lines[#{p}][1] #{lines[p][1]}\n"
                 break if lines[p][1] =~ /\//
