@@ -281,6 +281,9 @@ package body Model.SCP.Target_Creator is
                male_popn_2014.all_ages + female_popn_2014.all_ages, 
                male_popn_yp1_2014.all_ages + female_popn_yp1_2014.all_ages );
             
+            --
+            -- for hhlds, we 
+            --
             hh_scaling : constant Amount :=  popn_2017_edn/popn_2014_edn;  
             
             scottish_households : constant Households_Forecasts := Households_Forecasts_IO.Retrieve_By_PK(
