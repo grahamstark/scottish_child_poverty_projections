@@ -549,9 +549,9 @@ package body Model.SCP.Target_Creator is
                ages : Age_Range_Array := To_Array( targets );
                age_16_plus : Amount := Sum( ages, 16 );
             begin
-               null;
+               Log( "16 plus popn " & Format( age_16_plus ));
+               
             end;
-            Log( "16 plus popn " & Format( age_16_plus ));
             Log( To_String( targets )); 
             UKDS.Target_Data.Target_Dataset_IO.Save( targets );
          end;
