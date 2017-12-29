@@ -708,7 +708,8 @@ package body Ukds.target_data is
       a( 11 ) := popn.age_11;                                              
       a( 12 ) := popn.age_12;                                              
       a( 13 ) := popn.age_13;                                              
-      a( 14 ) := popn.age_14;                                              
+      a( 14 ) := popn.age_14;                                   
+      
       a( 15 ) := popn.age_15;                                              
       a( 16 ) := popn.age_16;                                              
       a( 17 ) := popn.age_17;                                              
@@ -806,7 +807,138 @@ package body Ukds.target_data is
          popn.age_110;                                              
       return a;                                              
    end To_Array;                                              
-                                                 
+
+   function To_Array( targets : Target_Dataset ) return Age_Range_Array is                                              
+      a : Age_Range_Array;                                              
+   begin                                              
+      a( 0 ) := targets.age_0_male + targets.age_0_female;                                              
+      a( 1 ) := targets.age_1_male + targets.age_1_female;                                              
+      a( 2 ) := targets.age_2_male + targets.age_2_female;                                              
+      a( 3 ) := targets.age_3_male + targets.age_3_female;                                              
+      a( 4 ) := targets.age_4_male + targets.age_4_female;                                              
+      a( 5 ) := targets.age_5_male + targets.age_5_female;                                              
+      a( 6 ) := targets.age_6_male + targets.age_6_female;                                              
+      a( 7 ) := targets.age_7_male + targets.age_7_female;                                              
+      a( 8 ) := targets.age_8_male + targets.age_8_female;                                              
+      a( 9 ) := targets.age_9_male + targets.age_9_female;                                              
+      a( 10 ) := targets.age_10_male + targets.age_10_female;                                              
+      a( 11 ) := targets.age_11_male + targets.age_11_female;                                              
+      a( 12 ) := targets.age_12_male + targets.age_12_female;                                              
+      a( 13 ) := targets.age_13_male + targets.age_13_female;                                              
+      a( 14 ) := targets.age_14_male + targets.age_14_female;                                   
+      
+      a( 15 ) := targets.age_15_male + targets.age_15_female;                                              
+      a( 16 ) := targets.age_16_male + targets.age_16_female;                                              
+      a( 17 ) := targets.age_17_male + targets.age_17_female;                                              
+      a( 18 ) := targets.age_18_male + targets.age_18_female;                                              
+      a( 19 ) := targets.age_19_male + targets.age_19_female;                                              
+      a( 20 ) := targets.age_20_male + targets.age_20_female;                                              
+      a( 21 ) := targets.age_21_male + targets.age_21_female;                                              
+      a( 22 ) := targets.age_22_male + targets.age_22_female;                                              
+      a( 23 ) := targets.age_23_male + targets.age_23_female;                                              
+      a( 24 ) := targets.age_24_male + targets.age_24_female;                                              
+      a( 25 ) := targets.age_25_male + targets.age_25_female;                                              
+      a( 26 ) := targets.age_26_male + targets.age_26_female;                                              
+      a( 27 ) := targets.age_27_male + targets.age_27_female;                                              
+      a( 28 ) := targets.age_28_male + targets.age_28_female;                                              
+      a( 29 ) := targets.age_29_male + targets.age_29_female;                                              
+      a( 30 ) := targets.age_30_male + targets.age_30_female;                                              
+      a( 31 ) := targets.age_31_male + targets.age_31_female;                                              
+      a( 32 ) := targets.age_32_male + targets.age_32_female;                                              
+      a( 33 ) := targets.age_33_male + targets.age_33_female;                                              
+      a( 34 ) := targets.age_34_male + targets.age_34_female;                                              
+      a( 35 ) := targets.age_35_male + targets.age_35_female;                                              
+      a( 36 ) := targets.age_36_male + targets.age_36_female;                                              
+      a( 37 ) := targets.age_37_male + targets.age_37_female;                                              
+      a( 38 ) := targets.age_38_male + targets.age_38_female;                                              
+      a( 39 ) := targets.age_39_male + targets.age_39_female;                                              
+      a( 40 ) := targets.age_40_male + targets.age_40_female;                                              
+      a( 41 ) := targets.age_41_male + targets.age_41_female;                                              
+      a( 42 ) := targets.age_42_male + targets.age_42_female;                                              
+      a( 43 ) := targets.age_43_male + targets.age_43_female;                                              
+      a( 44 ) := targets.age_44_male + targets.age_44_female;                                              
+      a( 45 ) := targets.age_45_male + targets.age_45_female;                                              
+      a( 46 ) := targets.age_46_male + targets.age_46_female;                                              
+      a( 47 ) := targets.age_47_male + targets.age_47_female;                                              
+      a( 48 ) := targets.age_48_male + targets.age_48_female;                                              
+      a( 49 ) := targets.age_49_male + targets.age_49_female;                                              
+      a( 50 ) := targets.age_50_male + targets.age_50_female;                                              
+      a( 51 ) := targets.age_51_male + targets.age_51_female;                                              
+      a( 52 ) := targets.age_52_male + targets.age_52_female;                                              
+      a( 53 ) := targets.age_53_male + targets.age_53_female;                                              
+      a( 54 ) := targets.age_54_male + targets.age_54_female;                                              
+      a( 55 ) := targets.age_55_male + targets.age_55_female;                                              
+      a( 56 ) := targets.age_56_male + targets.age_56_female;                                              
+      a( 57 ) := targets.age_57_male + targets.age_57_female;                                              
+      a( 58 ) := targets.age_58_male + targets.age_58_female;                                              
+      a( 59 ) := targets.age_59_male + targets.age_59_female;                                              
+      a( 60 ) := targets.age_60_male + targets.age_60_female;                                              
+      a( 61 ) := targets.age_61_male + targets.age_61_female;                                              
+      a( 62 ) := targets.age_62_male + targets.age_62_female;                                              
+      a( 63 ) := targets.age_63_male + targets.age_63_female;                                              
+      a( 64 ) := targets.age_64_male + targets.age_64_female;                                              
+      a( 65 ) := targets.age_65_male + targets.age_65_female;                                              
+      a( 66 ) := targets.age_66_male + targets.age_66_female;                                              
+      a( 67 ) := targets.age_67_male + targets.age_67_female;                                              
+      a( 68 ) := targets.age_68_male + targets.age_68_female;                                              
+      a( 69 ) := targets.age_69_male + targets.age_69_female;                                              
+      a( 70 ) := targets.age_70_male + targets.age_70_female;                                              
+      a( 71 ) := targets.age_71_male + targets.age_71_female;                                              
+      a( 72 ) := targets.age_72_male + targets.age_72_female;                                              
+      a( 73 ) := targets.age_73_male + targets.age_73_female;                                              
+      a( 74 ) := targets.age_74_male + targets.age_74_female;                                              
+      a( 75 ) := targets.age_75_male + targets.age_75_female;                                              
+      a( 76 ) := targets.age_76_male + targets.age_76_female;                                              
+      a( 77 ) := targets.age_77_male + targets.age_77_female;                                              
+      a( 78 ) := targets.age_78_male + targets.age_78_female;                                              
+      a( 79 ) := targets.age_79_male + targets.age_79_female;                                              
+      a( 80 ) := targets.age_80_male + targets.age_80_female;                                              
+      a( 81 ) := targets.age_81_male + targets.age_81_female;                                              
+      a( 82 ) := targets.age_82_male + targets.age_82_female;                                              
+      a( 83 ) := targets.age_83_male + targets.age_83_female;                                              
+      a( 84 ) := targets.age_84_male + targets.age_84_female;                                              
+      a( 85 ) := targets.age_85_male + targets.age_85_female;                                              
+      a( 86 ) := targets.age_86_male + targets.age_86_female;                                              
+      a( 87 ) := targets.age_87_male + targets.age_87_female;                                              
+      a( 88 ) := targets.age_88_male + targets.age_88_female;                                              
+      a( 89 ) := targets.age_89_male + targets.age_89_female;                                              
+      a( 90 ) := 
+         targets.age_90_male + targets.age_90_female +                                            
+         targets.age_91_male + targets.age_91_female +                                             
+         targets.age_92_male + targets.age_92_female +                                             
+         targets.age_93_male + targets.age_93_female +                                             
+         targets.age_94_male + targets.age_94_female +                                             
+         targets.age_95_male + targets.age_95_female +                                             
+         targets.age_96_male + targets.age_96_female +                                             
+         targets.age_97_male + targets.age_97_female +                                             
+         targets.age_98_male + targets.age_98_female +                                             
+         targets.age_99_male + targets.age_99_female +                                             
+         targets.age_100_male + targets.age_100_female +                                             
+         targets.age_102_male + targets.age_102_female +                                             
+         targets.age_103_male + targets.age_103_female +                                             
+         targets.age_104_male + targets.age_104_female +                                             
+         targets.age_105_male + targets.age_105_female +                                             
+         targets.age_106_male + targets.age_106_female +                                             
+         targets.age_107_male + targets.age_107_female +                                             
+         targets.age_108_male + targets.age_108_female +                                             
+         targets.age_109_male + targets.age_109_female +                                             
+         targets.age_110_male + targets.age_110_female;                                              
+      return a;                                              
+   end To_Array;
+   
+   function Sum( 
+      a     : Age_Range_Array;
+      start : Forecast_Age_Ranges  := Forecast_Age_Ranges'First; 
+      stop  : Forecast_Age_Ranges := Forecast_Age_Ranges'Last ) return Amount is
+      s : Amount := 0.0;
+   begin
+      for i in start .. stop loop
+         Inc( s, a(i));
+      end loop;
+      return s;
+   end Sum;
+   
+   
    -- === CUSTOM PROCS END ===
 
 end Ukds.target_data;

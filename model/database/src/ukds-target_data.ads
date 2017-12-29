@@ -1482,12 +1482,19 @@ package Ukds.target_data is
    -- === CUSTOM PROCS START ===
                                                  
    subtype Forecast_Age_Ranges is Natural range 0 .. 90;                                              
-   type Age_Range_Array is array( Forecast_Age_Ranges ) of Amount;                                               
+   type Age_Range_Array is array( Forecast_Age_Ranges ) of Amount;
+   
+   function Sum( 
+      a     : Age_Range_Array;
+      start : Forecast_Age_Ranges  := Forecast_Age_Ranges'First; 
+      stop  : Forecast_Age_Ranges := Forecast_Age_Ranges'Last ) return Amount; 
                                                 
    function To_Array( popn : Population_Forecasts ) return Age_Range_Array;       
         
    function To_Tab( weight : Output_Weights ) return String;     
-                                                 
+    
+   function To_Array( targets : Target_Dataset ) return Age_Range_Array;
+   
    -- === CUSTOM PROCS END ===
 
 end Ukds.target_data;

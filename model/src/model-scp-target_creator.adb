@@ -294,6 +294,14 @@ package body Model.SCP.Target_Creator is
                edition  => 2014 -- could just jam this on to 2014 ...
             );
             
+            macro_data : constant Macro_Forecasts := Macro_Forecasts_IO.Retrieve_By_PK(
+               year     => year,
+               rec_type => MACRO,
+               variant  => the_run.macro_variant,
+               country  => SCO, -- for now ..
+               edition  => the_run.macro_edition                   
+            );
+            
             
            targets     : Target_Dataset;  
             
@@ -304,6 +312,16 @@ package body Model.SCP.Target_Creator is
             targets.year := year;
             targets.sernum := Sernum_Value'First;
 
+            targets.sco_hhld_one_adult_male := scottish_households.one_adult_male * hh_scaling;
+            targets.sco_hhld_one_adult_female := scottish_households.one_adult_female * hh_scaling;
+            targets.sco_hhld_two_adults := scottish_households.two_adults  * hh_scaling;
+            targets.sco_hhld_one_adult_one_child := scottish_households.one_adult_one_child  * hh_scaling;
+            targets.sco_hhld_one_adult_two_plus_children := scottish_households.one_adult_two_plus_children * hh_scaling;
+            targets.sco_hhld_two_plus_adult_one_plus_children := scottish_households.two_plus_adult_one_plus_children * hh_scaling;
+            targets.sco_hhld_three_plus_person_all_adult := scottish_households.three_plus_person_all_adult * hh_scaling;
+            targets.household_all_households := targets.household_all_households + scottish_households.all_households * hh_scaling;
+            targets.country_scotland := scottish_households.all_households * hh_scaling;
+            
             targets.age_0_male := Q_Weighed_Av( male_popn.age_0, male_popn_yp1.age_0 );
             targets.age_0_female := Q_Weighed_Av( female_popn.age_0, female_popn_yp1.age_0 );
             targets.age_1_male := Q_Weighed_Av( male_popn.age_1, male_popn_yp1.age_1 );
@@ -527,6 +545,13 @@ package body Model.SCP.Target_Creator is
             targets.age_110_male := Q_Weighed_Av( male_popn.age_110, male_popn_yp1.age_110 );
             targets.age_110_female := Q_Weighed_Av( female_popn.age_110, female_popn_yp1.age_110 );
 
+            declare
+               ages : Age_Range_Array := To_Array( targets );
+               age_16_plus : Amount := Sum( ages, 16 );
+            begin
+               null;
+            end;
+            
             Log( To_String( targets )); 
             UKDS.Target_Data.Target_Dataset_IO.Save( targets );
          end;
@@ -553,6 +578,7 @@ package body Model.SCP.Target_Creator is
                edition  => the_run.population_edition,
                target_group => TuS( "FEMALES" )                           
             );
+            
             male_popn : constant Population_Forecasts := Population_Forecasts_IO.Retrieve_By_PK(
                year     => year,
                rec_type => PERSONS,
