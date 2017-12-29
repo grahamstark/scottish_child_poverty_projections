@@ -192,9 +192,7 @@ package body Model.SCP.Target_Creator is
    end Nearest_HH_Variant;
    
    procedure Create_Dataset( the_run : Run ) is
-      pop_crit : d.Criteria;
-      mac_crit : d.Criteria;
-      hh_crit : d.Criteria;
+      macro_data : Macro_Forecasts;
    begin
       -- Population_Forecasts_IO.Add_Variant( pop_crit, the_run.people_source ); 
       -- Households_Forecasts_IO.Add_Variant( hh_crit, the_run.household_source );
@@ -294,19 +292,19 @@ package body Model.SCP.Target_Creator is
                edition  => 2014 -- could just jam this on to 2014 ...
             );
             
-            macro_data : constant Macro_Forecasts := Macro_Forecasts_IO.Retrieve_By_PK(
-               year     => year,
-               rec_type => MACRO,
-               variant  => the_run.macro_variant,
-               country  => SCO, -- for now ..
-               edition  => the_run.macro_edition                   
-            );
-            
-            
-           targets     : Target_Dataset;  
+          targets     : Target_Dataset;  
             
          begin   
-
+            if year <= 2022 then
+                 macro_data  := Macro_Forecasts_IO.Retrieve_By_PK(
+                  year     => year,
+                  rec_type => MACRO,
+                  variant  => the_run.macro_variant,
+                  country  => SCO, -- for now ..
+                  edition  => the_run.macro_edition                   
+               );
+            end if; -- so keep last one if later
+         
             targets.run_id := the_run.run_id;
             targets.user_id := the_run.user_id;
             targets.year := year;
