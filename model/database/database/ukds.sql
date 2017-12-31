@@ -1,5 +1,5 @@
 --
--- created on 14-11-2017 by Mill
+-- created on 31-12-2017 by Mill
 --
 drop database if exists ukds;
 create database ukds with encoding 'UTF-8';
@@ -111,6 +111,7 @@ CREATE TABLE target_data.macro_forecasts(
        employment DOUBLE PRECISION default 0.0,
        employment_rate DOUBLE PRECISION default 0.0,
        employees DOUBLE PRECISION default 0.0,
+       employee_rate DOUBLE PRECISION default 0.0,
        ilo_unemployment DOUBLE PRECISION default 0.0,
        ilo_unemployment_rate DOUBLE PRECISION default 0.0,
        participation_rate DOUBLE PRECISION default 0.0,
@@ -627,6 +628,7 @@ CREATE TABLE target_data.target_dataset(
        age_108_female DOUBLE PRECISION default 0.0,
        age_109_female DOUBLE PRECISION default 0.0,
        age_110_female DOUBLE PRECISION default 0.0,
+       participation DOUBLE PRECISION default 0.0,
        participation_16_19_male DOUBLE PRECISION default 0.0,
        participation_20_24_male DOUBLE PRECISION default 0.0,
        participation_25_29_male DOUBLE PRECISION default 0.0,

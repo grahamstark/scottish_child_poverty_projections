@@ -61,22 +61,22 @@ package body Ukds.Target_Data.Macro_Forecasts_IO is
    -- Select all variables; substring to be competed with output from some criteria
    --
    SELECT_PART : constant String := "select " &
-         "year, rec_type, variant, country, edition, employment, employment_rate, employees, ilo_unemployment, ilo_unemployment_rate," &
-         "participation_rate, claimant_count, average_hours_worked, total_hours_worked, labour_share, compensation_of_employees, wages_and_salaries, employers_social_contributions, mixed_income, average_earnings_growth," &
-         "average_earnings_index, average_hourly_earnings_index, productivity_per_hour_index, productivity_per_worker_index, real_product_wage, real_consumption_wage, rpi, rpix, cpi, producer_output_prices," &
-         "mortgage_interest_payments, actual_rents_for_housing, consumer_expenditure_deflator, house_price_index, gdp_deflator, lfs_employment, real_household_disposable_income, real_consumption, real_gdp, lfs_employment_age_16_plus," &
-         "real_household_disposable_income_age_16_plus, real_consumption_age_16_plus, real_gdp_age_16_plus, private_sector_employment, public_sector_employment " &
+         "year, rec_type, variant, country, edition, employment, employment_rate, employees, employee_rate, ilo_unemployment," &
+         "ilo_unemployment_rate, participation_rate, claimant_count, average_hours_worked, total_hours_worked, labour_share, compensation_of_employees, wages_and_salaries, employers_social_contributions, mixed_income," &
+         "average_earnings_growth, average_earnings_index, average_hourly_earnings_index, productivity_per_hour_index, productivity_per_worker_index, real_product_wage, real_consumption_wage, rpi, rpix, cpi," &
+         "producer_output_prices, mortgage_interest_payments, actual_rents_for_housing, consumer_expenditure_deflator, house_price_index, gdp_deflator, lfs_employment, real_household_disposable_income, real_consumption, real_gdp," &
+         "lfs_employment_age_16_plus, real_household_disposable_income_age_16_plus, real_consumption_age_16_plus, real_gdp_age_16_plus, private_sector_employment, public_sector_employment " &
          " from target_data.macro_forecasts " ;
    
    --
    -- Insert all variables; substring to be competed with output from some criteria
    --
    INSERT_PART : constant String := "insert into target_data.macro_forecasts (" &
-         "year, rec_type, variant, country, edition, employment, employment_rate, employees, ilo_unemployment, ilo_unemployment_rate," &
-         "participation_rate, claimant_count, average_hours_worked, total_hours_worked, labour_share, compensation_of_employees, wages_and_salaries, employers_social_contributions, mixed_income, average_earnings_growth," &
-         "average_earnings_index, average_hourly_earnings_index, productivity_per_hour_index, productivity_per_worker_index, real_product_wage, real_consumption_wage, rpi, rpix, cpi, producer_output_prices," &
-         "mortgage_interest_payments, actual_rents_for_housing, consumer_expenditure_deflator, house_price_index, gdp_deflator, lfs_employment, real_household_disposable_income, real_consumption, real_gdp, lfs_employment_age_16_plus," &
-         "real_household_disposable_income_age_16_plus, real_consumption_age_16_plus, real_gdp_age_16_plus, private_sector_employment, public_sector_employment " &
+         "year, rec_type, variant, country, edition, employment, employment_rate, employees, employee_rate, ilo_unemployment," &
+         "ilo_unemployment_rate, participation_rate, claimant_count, average_hours_worked, total_hours_worked, labour_share, compensation_of_employees, wages_and_salaries, employers_social_contributions, mixed_income," &
+         "average_earnings_growth, average_earnings_index, average_hourly_earnings_index, productivity_per_hour_index, productivity_per_worker_index, real_product_wage, real_consumption_wage, rpi, rpix, cpi," &
+         "producer_output_prices, mortgage_interest_payments, actual_rents_for_housing, consumer_expenditure_deflator, house_price_index, gdp_deflator, lfs_employment, real_household_disposable_income, real_consumption, real_gdp," &
+         "lfs_employment_age_16_plus, real_household_disposable_income_age_16_plus, real_consumption_age_16_plus, real_gdp_age_16_plus, private_sector_employment, public_sector_employment " &
          " ) values " ;
 
    
@@ -91,52 +91,53 @@ package body Ukds.Target_Data.Macro_Forecasts_IO is
    UPDATE_PART : constant String := "update target_data.macro_forecasts set  ";
    function Get_Configured_Insert_Params( update_order : Boolean := False )  return GNATCOLL.SQL.Exec.SQL_Parameters is
    use GNATCOLL.SQL_Impl;
-      params : constant SQL_Parameters( 1 .. 45 ) := ( if update_order then (
+      params : constant SQL_Parameters( 1 .. 46 ) := ( if update_order then (
             1 => ( Parameter_Float, 0.0 ),   --  : employment (Amount)
             2 => ( Parameter_Float, 0.0 ),   --  : employment_rate (Amount)
             3 => ( Parameter_Float, 0.0 ),   --  : employees (Amount)
-            4 => ( Parameter_Float, 0.0 ),   --  : ilo_unemployment (Amount)
-            5 => ( Parameter_Float, 0.0 ),   --  : ilo_unemployment_rate (Amount)
-            6 => ( Parameter_Float, 0.0 ),   --  : participation_rate (Amount)
-            7 => ( Parameter_Float, 0.0 ),   --  : claimant_count (Amount)
-            8 => ( Parameter_Float, 0.0 ),   --  : average_hours_worked (Amount)
-            9 => ( Parameter_Float, 0.0 ),   --  : total_hours_worked (Amount)
-           10 => ( Parameter_Float, 0.0 ),   --  : labour_share (Amount)
-           11 => ( Parameter_Float, 0.0 ),   --  : compensation_of_employees (Amount)
-           12 => ( Parameter_Float, 0.0 ),   --  : wages_and_salaries (Amount)
-           13 => ( Parameter_Float, 0.0 ),   --  : employers_social_contributions (Amount)
-           14 => ( Parameter_Float, 0.0 ),   --  : mixed_income (Amount)
-           15 => ( Parameter_Float, 0.0 ),   --  : average_earnings_growth (Amount)
-           16 => ( Parameter_Float, 0.0 ),   --  : average_earnings_index (Amount)
-           17 => ( Parameter_Float, 0.0 ),   --  : average_hourly_earnings_index (Amount)
-           18 => ( Parameter_Float, 0.0 ),   --  : productivity_per_hour_index (Amount)
-           19 => ( Parameter_Float, 0.0 ),   --  : productivity_per_worker_index (Amount)
-           20 => ( Parameter_Float, 0.0 ),   --  : real_product_wage (Amount)
-           21 => ( Parameter_Float, 0.0 ),   --  : real_consumption_wage (Amount)
-           22 => ( Parameter_Float, 0.0 ),   --  : rpi (Amount)
-           23 => ( Parameter_Float, 0.0 ),   --  : rpix (Amount)
-           24 => ( Parameter_Float, 0.0 ),   --  : cpi (Amount)
-           25 => ( Parameter_Float, 0.0 ),   --  : producer_output_prices (Amount)
-           26 => ( Parameter_Float, 0.0 ),   --  : mortgage_interest_payments (Amount)
-           27 => ( Parameter_Float, 0.0 ),   --  : actual_rents_for_housing (Amount)
-           28 => ( Parameter_Float, 0.0 ),   --  : consumer_expenditure_deflator (Amount)
-           29 => ( Parameter_Float, 0.0 ),   --  : house_price_index (Amount)
-           30 => ( Parameter_Float, 0.0 ),   --  : gdp_deflator (Amount)
-           31 => ( Parameter_Float, 0.0 ),   --  : lfs_employment (Amount)
-           32 => ( Parameter_Float, 0.0 ),   --  : real_household_disposable_income (Amount)
-           33 => ( Parameter_Float, 0.0 ),   --  : real_consumption (Amount)
-           34 => ( Parameter_Float, 0.0 ),   --  : real_gdp (Amount)
-           35 => ( Parameter_Float, 0.0 ),   --  : lfs_employment_age_16_plus (Amount)
-           36 => ( Parameter_Float, 0.0 ),   --  : real_household_disposable_income_age_16_plus (Amount)
-           37 => ( Parameter_Float, 0.0 ),   --  : real_consumption_age_16_plus (Amount)
-           38 => ( Parameter_Float, 0.0 ),   --  : real_gdp_age_16_plus (Amount)
-           39 => ( Parameter_Float, 0.0 ),   --  : private_sector_employment (Amount)
-           40 => ( Parameter_Float, 0.0 ),   --  : public_sector_employment (Amount)
-           41 => ( Parameter_Integer, 0 ),   --  : year (Year_Number)
-           42 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : rec_type (Unbounded_String)
-           43 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : variant (Unbounded_String)
-           44 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : country (Unbounded_String)
-           45 => ( Parameter_Integer, 0 )   --  : edition (Year_Number)
+            4 => ( Parameter_Float, 0.0 ),   --  : employee_rate (Amount)
+            5 => ( Parameter_Float, 0.0 ),   --  : ilo_unemployment (Amount)
+            6 => ( Parameter_Float, 0.0 ),   --  : ilo_unemployment_rate (Amount)
+            7 => ( Parameter_Float, 0.0 ),   --  : participation_rate (Amount)
+            8 => ( Parameter_Float, 0.0 ),   --  : claimant_count (Amount)
+            9 => ( Parameter_Float, 0.0 ),   --  : average_hours_worked (Amount)
+           10 => ( Parameter_Float, 0.0 ),   --  : total_hours_worked (Amount)
+           11 => ( Parameter_Float, 0.0 ),   --  : labour_share (Amount)
+           12 => ( Parameter_Float, 0.0 ),   --  : compensation_of_employees (Amount)
+           13 => ( Parameter_Float, 0.0 ),   --  : wages_and_salaries (Amount)
+           14 => ( Parameter_Float, 0.0 ),   --  : employers_social_contributions (Amount)
+           15 => ( Parameter_Float, 0.0 ),   --  : mixed_income (Amount)
+           16 => ( Parameter_Float, 0.0 ),   --  : average_earnings_growth (Amount)
+           17 => ( Parameter_Float, 0.0 ),   --  : average_earnings_index (Amount)
+           18 => ( Parameter_Float, 0.0 ),   --  : average_hourly_earnings_index (Amount)
+           19 => ( Parameter_Float, 0.0 ),   --  : productivity_per_hour_index (Amount)
+           20 => ( Parameter_Float, 0.0 ),   --  : productivity_per_worker_index (Amount)
+           21 => ( Parameter_Float, 0.0 ),   --  : real_product_wage (Amount)
+           22 => ( Parameter_Float, 0.0 ),   --  : real_consumption_wage (Amount)
+           23 => ( Parameter_Float, 0.0 ),   --  : rpi (Amount)
+           24 => ( Parameter_Float, 0.0 ),   --  : rpix (Amount)
+           25 => ( Parameter_Float, 0.0 ),   --  : cpi (Amount)
+           26 => ( Parameter_Float, 0.0 ),   --  : producer_output_prices (Amount)
+           27 => ( Parameter_Float, 0.0 ),   --  : mortgage_interest_payments (Amount)
+           28 => ( Parameter_Float, 0.0 ),   --  : actual_rents_for_housing (Amount)
+           29 => ( Parameter_Float, 0.0 ),   --  : consumer_expenditure_deflator (Amount)
+           30 => ( Parameter_Float, 0.0 ),   --  : house_price_index (Amount)
+           31 => ( Parameter_Float, 0.0 ),   --  : gdp_deflator (Amount)
+           32 => ( Parameter_Float, 0.0 ),   --  : lfs_employment (Amount)
+           33 => ( Parameter_Float, 0.0 ),   --  : real_household_disposable_income (Amount)
+           34 => ( Parameter_Float, 0.0 ),   --  : real_consumption (Amount)
+           35 => ( Parameter_Float, 0.0 ),   --  : real_gdp (Amount)
+           36 => ( Parameter_Float, 0.0 ),   --  : lfs_employment_age_16_plus (Amount)
+           37 => ( Parameter_Float, 0.0 ),   --  : real_household_disposable_income_age_16_plus (Amount)
+           38 => ( Parameter_Float, 0.0 ),   --  : real_consumption_age_16_plus (Amount)
+           39 => ( Parameter_Float, 0.0 ),   --  : real_gdp_age_16_plus (Amount)
+           40 => ( Parameter_Float, 0.0 ),   --  : private_sector_employment (Amount)
+           41 => ( Parameter_Float, 0.0 ),   --  : public_sector_employment (Amount)
+           42 => ( Parameter_Integer, 0 ),   --  : year (Year_Number)
+           43 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : rec_type (Unbounded_String)
+           44 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : variant (Unbounded_String)
+           45 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : country (Unbounded_String)
+           46 => ( Parameter_Integer, 0 )   --  : edition (Year_Number)
       ) else (
             1 => ( Parameter_Integer, 0 ),   --  : year (Year_Number)
             2 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : rec_type (Unbounded_String)
@@ -146,43 +147,44 @@ package body Ukds.Target_Data.Macro_Forecasts_IO is
             6 => ( Parameter_Float, 0.0 ),   --  : employment (Amount)
             7 => ( Parameter_Float, 0.0 ),   --  : employment_rate (Amount)
             8 => ( Parameter_Float, 0.0 ),   --  : employees (Amount)
-            9 => ( Parameter_Float, 0.0 ),   --  : ilo_unemployment (Amount)
-           10 => ( Parameter_Float, 0.0 ),   --  : ilo_unemployment_rate (Amount)
-           11 => ( Parameter_Float, 0.0 ),   --  : participation_rate (Amount)
-           12 => ( Parameter_Float, 0.0 ),   --  : claimant_count (Amount)
-           13 => ( Parameter_Float, 0.0 ),   --  : average_hours_worked (Amount)
-           14 => ( Parameter_Float, 0.0 ),   --  : total_hours_worked (Amount)
-           15 => ( Parameter_Float, 0.0 ),   --  : labour_share (Amount)
-           16 => ( Parameter_Float, 0.0 ),   --  : compensation_of_employees (Amount)
-           17 => ( Parameter_Float, 0.0 ),   --  : wages_and_salaries (Amount)
-           18 => ( Parameter_Float, 0.0 ),   --  : employers_social_contributions (Amount)
-           19 => ( Parameter_Float, 0.0 ),   --  : mixed_income (Amount)
-           20 => ( Parameter_Float, 0.0 ),   --  : average_earnings_growth (Amount)
-           21 => ( Parameter_Float, 0.0 ),   --  : average_earnings_index (Amount)
-           22 => ( Parameter_Float, 0.0 ),   --  : average_hourly_earnings_index (Amount)
-           23 => ( Parameter_Float, 0.0 ),   --  : productivity_per_hour_index (Amount)
-           24 => ( Parameter_Float, 0.0 ),   --  : productivity_per_worker_index (Amount)
-           25 => ( Parameter_Float, 0.0 ),   --  : real_product_wage (Amount)
-           26 => ( Parameter_Float, 0.0 ),   --  : real_consumption_wage (Amount)
-           27 => ( Parameter_Float, 0.0 ),   --  : rpi (Amount)
-           28 => ( Parameter_Float, 0.0 ),   --  : rpix (Amount)
-           29 => ( Parameter_Float, 0.0 ),   --  : cpi (Amount)
-           30 => ( Parameter_Float, 0.0 ),   --  : producer_output_prices (Amount)
-           31 => ( Parameter_Float, 0.0 ),   --  : mortgage_interest_payments (Amount)
-           32 => ( Parameter_Float, 0.0 ),   --  : actual_rents_for_housing (Amount)
-           33 => ( Parameter_Float, 0.0 ),   --  : consumer_expenditure_deflator (Amount)
-           34 => ( Parameter_Float, 0.0 ),   --  : house_price_index (Amount)
-           35 => ( Parameter_Float, 0.0 ),   --  : gdp_deflator (Amount)
-           36 => ( Parameter_Float, 0.0 ),   --  : lfs_employment (Amount)
-           37 => ( Parameter_Float, 0.0 ),   --  : real_household_disposable_income (Amount)
-           38 => ( Parameter_Float, 0.0 ),   --  : real_consumption (Amount)
-           39 => ( Parameter_Float, 0.0 ),   --  : real_gdp (Amount)
-           40 => ( Parameter_Float, 0.0 ),   --  : lfs_employment_age_16_plus (Amount)
-           41 => ( Parameter_Float, 0.0 ),   --  : real_household_disposable_income_age_16_plus (Amount)
-           42 => ( Parameter_Float, 0.0 ),   --  : real_consumption_age_16_plus (Amount)
-           43 => ( Parameter_Float, 0.0 ),   --  : real_gdp_age_16_plus (Amount)
-           44 => ( Parameter_Float, 0.0 ),   --  : private_sector_employment (Amount)
-           45 => ( Parameter_Float, 0.0 )   --  : public_sector_employment (Amount)
+            9 => ( Parameter_Float, 0.0 ),   --  : employee_rate (Amount)
+           10 => ( Parameter_Float, 0.0 ),   --  : ilo_unemployment (Amount)
+           11 => ( Parameter_Float, 0.0 ),   --  : ilo_unemployment_rate (Amount)
+           12 => ( Parameter_Float, 0.0 ),   --  : participation_rate (Amount)
+           13 => ( Parameter_Float, 0.0 ),   --  : claimant_count (Amount)
+           14 => ( Parameter_Float, 0.0 ),   --  : average_hours_worked (Amount)
+           15 => ( Parameter_Float, 0.0 ),   --  : total_hours_worked (Amount)
+           16 => ( Parameter_Float, 0.0 ),   --  : labour_share (Amount)
+           17 => ( Parameter_Float, 0.0 ),   --  : compensation_of_employees (Amount)
+           18 => ( Parameter_Float, 0.0 ),   --  : wages_and_salaries (Amount)
+           19 => ( Parameter_Float, 0.0 ),   --  : employers_social_contributions (Amount)
+           20 => ( Parameter_Float, 0.0 ),   --  : mixed_income (Amount)
+           21 => ( Parameter_Float, 0.0 ),   --  : average_earnings_growth (Amount)
+           22 => ( Parameter_Float, 0.0 ),   --  : average_earnings_index (Amount)
+           23 => ( Parameter_Float, 0.0 ),   --  : average_hourly_earnings_index (Amount)
+           24 => ( Parameter_Float, 0.0 ),   --  : productivity_per_hour_index (Amount)
+           25 => ( Parameter_Float, 0.0 ),   --  : productivity_per_worker_index (Amount)
+           26 => ( Parameter_Float, 0.0 ),   --  : real_product_wage (Amount)
+           27 => ( Parameter_Float, 0.0 ),   --  : real_consumption_wage (Amount)
+           28 => ( Parameter_Float, 0.0 ),   --  : rpi (Amount)
+           29 => ( Parameter_Float, 0.0 ),   --  : rpix (Amount)
+           30 => ( Parameter_Float, 0.0 ),   --  : cpi (Amount)
+           31 => ( Parameter_Float, 0.0 ),   --  : producer_output_prices (Amount)
+           32 => ( Parameter_Float, 0.0 ),   --  : mortgage_interest_payments (Amount)
+           33 => ( Parameter_Float, 0.0 ),   --  : actual_rents_for_housing (Amount)
+           34 => ( Parameter_Float, 0.0 ),   --  : consumer_expenditure_deflator (Amount)
+           35 => ( Parameter_Float, 0.0 ),   --  : house_price_index (Amount)
+           36 => ( Parameter_Float, 0.0 ),   --  : gdp_deflator (Amount)
+           37 => ( Parameter_Float, 0.0 ),   --  : lfs_employment (Amount)
+           38 => ( Parameter_Float, 0.0 ),   --  : real_household_disposable_income (Amount)
+           39 => ( Parameter_Float, 0.0 ),   --  : real_consumption (Amount)
+           40 => ( Parameter_Float, 0.0 ),   --  : real_gdp (Amount)
+           41 => ( Parameter_Float, 0.0 ),   --  : lfs_employment_age_16_plus (Amount)
+           42 => ( Parameter_Float, 0.0 ),   --  : real_household_disposable_income_age_16_plus (Amount)
+           43 => ( Parameter_Float, 0.0 ),   --  : real_consumption_age_16_plus (Amount)
+           44 => ( Parameter_Float, 0.0 ),   --  : real_gdp_age_16_plus (Amount)
+           45 => ( Parameter_Float, 0.0 ),   --  : private_sector_employment (Amount)
+           46 => ( Parameter_Float, 0.0 )   --  : public_sector_employment (Amount)
       
       ));
    begin
@@ -193,7 +195,7 @@ package body Ukds.Target_Data.Macro_Forecasts_IO is
 
    function Get_Prepared_Insert_Statement return gse.Prepared_Statement is 
       ps : gse.Prepared_Statement; 
-      query : constant String := DB_Commons.Add_Schema_To_Query( INSERT_PART, SCHEMA_NAME ) & " ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $40, $41, $42, $43, $44, $45 )"; 
+      query : constant String := DB_Commons.Add_Schema_To_Query( INSERT_PART, SCHEMA_NAME ) & " ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $40, $41, $42, $43, $44, $45, $46 )"; 
    begin 
       ps := gse.Prepare( query, On_Server => True ); 
       return ps; 
@@ -241,7 +243,7 @@ package body Ukds.Target_Data.Macro_Forecasts_IO is
    function Get_Prepared_Update_Statement return gse.Prepared_Statement is 
       ps : gse.Prepared_Statement; 
       
-      query : constant String := DB_Commons.Add_Schema_To_Query( UPDATE_PART, SCHEMA_NAME ) & " employment = $1, employment_rate = $2, employees = $3, ilo_unemployment = $4, ilo_unemployment_rate = $5, participation_rate = $6, claimant_count = $7, average_hours_worked = $8, total_hours_worked = $9, labour_share = $10, compensation_of_employees = $11, wages_and_salaries = $12, employers_social_contributions = $13, mixed_income = $14, average_earnings_growth = $15, average_earnings_index = $16, average_hourly_earnings_index = $17, productivity_per_hour_index = $18, productivity_per_worker_index = $19, real_product_wage = $20, real_consumption_wage = $21, rpi = $22, rpix = $23, cpi = $24, producer_output_prices = $25, mortgage_interest_payments = $26, actual_rents_for_housing = $27, consumer_expenditure_deflator = $28, house_price_index = $29, gdp_deflator = $30, lfs_employment = $31, real_household_disposable_income = $32, real_consumption = $33, real_gdp = $34, lfs_employment_age_16_plus = $35, real_household_disposable_income_age_16_plus = $36, real_consumption_age_16_plus = $37, real_gdp_age_16_plus = $38, private_sector_employment = $39, public_sector_employment = $40 where year = $41 and rec_type = $42 and variant = $43 and country = $44 and edition = $45"; 
+      query : constant String := DB_Commons.Add_Schema_To_Query( UPDATE_PART, SCHEMA_NAME ) & " employment = $1, employment_rate = $2, employees = $3, employee_rate = $4, ilo_unemployment = $5, ilo_unemployment_rate = $6, participation_rate = $7, claimant_count = $8, average_hours_worked = $9, total_hours_worked = $10, labour_share = $11, compensation_of_employees = $12, wages_and_salaries = $13, employers_social_contributions = $14, mixed_income = $15, average_earnings_growth = $16, average_earnings_index = $17, average_hourly_earnings_index = $18, productivity_per_hour_index = $19, productivity_per_worker_index = $20, real_product_wage = $21, real_consumption_wage = $22, rpi = $23, rpix = $24, cpi = $25, producer_output_prices = $26, mortgage_interest_payments = $27, actual_rents_for_housing = $28, consumer_expenditure_deflator = $29, house_price_index = $30, gdp_deflator = $31, lfs_employment = $32, real_household_disposable_income = $33, real_consumption = $34, real_gdp = $35, lfs_employment_age_16_plus = $36, real_household_disposable_income_age_16_plus = $37, real_consumption_age_16_plus = $38, real_gdp_age_16_plus = $39, private_sector_employment = $40, public_sector_employment = $41 where year = $42 and rec_type = $43 and variant = $44 and country = $45 and edition = $46"; 
    begin 
       ps := gse.Prepare( 
         query, 
@@ -449,115 +451,118 @@ package body Ukds.Target_Data.Macro_Forecasts_IO is
          a_macro_forecasts.employees:= Amount'Value( gse.Value( cursor, 7 ));
       end if;
       if not gse.Is_Null( cursor, 8 )then
-         a_macro_forecasts.ilo_unemployment:= Amount'Value( gse.Value( cursor, 8 ));
+         a_macro_forecasts.employee_rate:= Amount'Value( gse.Value( cursor, 8 ));
       end if;
       if not gse.Is_Null( cursor, 9 )then
-         a_macro_forecasts.ilo_unemployment_rate:= Amount'Value( gse.Value( cursor, 9 ));
+         a_macro_forecasts.ilo_unemployment:= Amount'Value( gse.Value( cursor, 9 ));
       end if;
       if not gse.Is_Null( cursor, 10 )then
-         a_macro_forecasts.participation_rate:= Amount'Value( gse.Value( cursor, 10 ));
+         a_macro_forecasts.ilo_unemployment_rate:= Amount'Value( gse.Value( cursor, 10 ));
       end if;
       if not gse.Is_Null( cursor, 11 )then
-         a_macro_forecasts.claimant_count:= Amount'Value( gse.Value( cursor, 11 ));
+         a_macro_forecasts.participation_rate:= Amount'Value( gse.Value( cursor, 11 ));
       end if;
       if not gse.Is_Null( cursor, 12 )then
-         a_macro_forecasts.average_hours_worked:= Amount'Value( gse.Value( cursor, 12 ));
+         a_macro_forecasts.claimant_count:= Amount'Value( gse.Value( cursor, 12 ));
       end if;
       if not gse.Is_Null( cursor, 13 )then
-         a_macro_forecasts.total_hours_worked:= Amount'Value( gse.Value( cursor, 13 ));
+         a_macro_forecasts.average_hours_worked:= Amount'Value( gse.Value( cursor, 13 ));
       end if;
       if not gse.Is_Null( cursor, 14 )then
-         a_macro_forecasts.labour_share:= Amount'Value( gse.Value( cursor, 14 ));
+         a_macro_forecasts.total_hours_worked:= Amount'Value( gse.Value( cursor, 14 ));
       end if;
       if not gse.Is_Null( cursor, 15 )then
-         a_macro_forecasts.compensation_of_employees:= Amount'Value( gse.Value( cursor, 15 ));
+         a_macro_forecasts.labour_share:= Amount'Value( gse.Value( cursor, 15 ));
       end if;
       if not gse.Is_Null( cursor, 16 )then
-         a_macro_forecasts.wages_and_salaries:= Amount'Value( gse.Value( cursor, 16 ));
+         a_macro_forecasts.compensation_of_employees:= Amount'Value( gse.Value( cursor, 16 ));
       end if;
       if not gse.Is_Null( cursor, 17 )then
-         a_macro_forecasts.employers_social_contributions:= Amount'Value( gse.Value( cursor, 17 ));
+         a_macro_forecasts.wages_and_salaries:= Amount'Value( gse.Value( cursor, 17 ));
       end if;
       if not gse.Is_Null( cursor, 18 )then
-         a_macro_forecasts.mixed_income:= Amount'Value( gse.Value( cursor, 18 ));
+         a_macro_forecasts.employers_social_contributions:= Amount'Value( gse.Value( cursor, 18 ));
       end if;
       if not gse.Is_Null( cursor, 19 )then
-         a_macro_forecasts.average_earnings_growth:= Amount'Value( gse.Value( cursor, 19 ));
+         a_macro_forecasts.mixed_income:= Amount'Value( gse.Value( cursor, 19 ));
       end if;
       if not gse.Is_Null( cursor, 20 )then
-         a_macro_forecasts.average_earnings_index:= Amount'Value( gse.Value( cursor, 20 ));
+         a_macro_forecasts.average_earnings_growth:= Amount'Value( gse.Value( cursor, 20 ));
       end if;
       if not gse.Is_Null( cursor, 21 )then
-         a_macro_forecasts.average_hourly_earnings_index:= Amount'Value( gse.Value( cursor, 21 ));
+         a_macro_forecasts.average_earnings_index:= Amount'Value( gse.Value( cursor, 21 ));
       end if;
       if not gse.Is_Null( cursor, 22 )then
-         a_macro_forecasts.productivity_per_hour_index:= Amount'Value( gse.Value( cursor, 22 ));
+         a_macro_forecasts.average_hourly_earnings_index:= Amount'Value( gse.Value( cursor, 22 ));
       end if;
       if not gse.Is_Null( cursor, 23 )then
-         a_macro_forecasts.productivity_per_worker_index:= Amount'Value( gse.Value( cursor, 23 ));
+         a_macro_forecasts.productivity_per_hour_index:= Amount'Value( gse.Value( cursor, 23 ));
       end if;
       if not gse.Is_Null( cursor, 24 )then
-         a_macro_forecasts.real_product_wage:= Amount'Value( gse.Value( cursor, 24 ));
+         a_macro_forecasts.productivity_per_worker_index:= Amount'Value( gse.Value( cursor, 24 ));
       end if;
       if not gse.Is_Null( cursor, 25 )then
-         a_macro_forecasts.real_consumption_wage:= Amount'Value( gse.Value( cursor, 25 ));
+         a_macro_forecasts.real_product_wage:= Amount'Value( gse.Value( cursor, 25 ));
       end if;
       if not gse.Is_Null( cursor, 26 )then
-         a_macro_forecasts.rpi:= Amount'Value( gse.Value( cursor, 26 ));
+         a_macro_forecasts.real_consumption_wage:= Amount'Value( gse.Value( cursor, 26 ));
       end if;
       if not gse.Is_Null( cursor, 27 )then
-         a_macro_forecasts.rpix:= Amount'Value( gse.Value( cursor, 27 ));
+         a_macro_forecasts.rpi:= Amount'Value( gse.Value( cursor, 27 ));
       end if;
       if not gse.Is_Null( cursor, 28 )then
-         a_macro_forecasts.cpi:= Amount'Value( gse.Value( cursor, 28 ));
+         a_macro_forecasts.rpix:= Amount'Value( gse.Value( cursor, 28 ));
       end if;
       if not gse.Is_Null( cursor, 29 )then
-         a_macro_forecasts.producer_output_prices:= Amount'Value( gse.Value( cursor, 29 ));
+         a_macro_forecasts.cpi:= Amount'Value( gse.Value( cursor, 29 ));
       end if;
       if not gse.Is_Null( cursor, 30 )then
-         a_macro_forecasts.mortgage_interest_payments:= Amount'Value( gse.Value( cursor, 30 ));
+         a_macro_forecasts.producer_output_prices:= Amount'Value( gse.Value( cursor, 30 ));
       end if;
       if not gse.Is_Null( cursor, 31 )then
-         a_macro_forecasts.actual_rents_for_housing:= Amount'Value( gse.Value( cursor, 31 ));
+         a_macro_forecasts.mortgage_interest_payments:= Amount'Value( gse.Value( cursor, 31 ));
       end if;
       if not gse.Is_Null( cursor, 32 )then
-         a_macro_forecasts.consumer_expenditure_deflator:= Amount'Value( gse.Value( cursor, 32 ));
+         a_macro_forecasts.actual_rents_for_housing:= Amount'Value( gse.Value( cursor, 32 ));
       end if;
       if not gse.Is_Null( cursor, 33 )then
-         a_macro_forecasts.house_price_index:= Amount'Value( gse.Value( cursor, 33 ));
+         a_macro_forecasts.consumer_expenditure_deflator:= Amount'Value( gse.Value( cursor, 33 ));
       end if;
       if not gse.Is_Null( cursor, 34 )then
-         a_macro_forecasts.gdp_deflator:= Amount'Value( gse.Value( cursor, 34 ));
+         a_macro_forecasts.house_price_index:= Amount'Value( gse.Value( cursor, 34 ));
       end if;
       if not gse.Is_Null( cursor, 35 )then
-         a_macro_forecasts.lfs_employment:= Amount'Value( gse.Value( cursor, 35 ));
+         a_macro_forecasts.gdp_deflator:= Amount'Value( gse.Value( cursor, 35 ));
       end if;
       if not gse.Is_Null( cursor, 36 )then
-         a_macro_forecasts.real_household_disposable_income:= Amount'Value( gse.Value( cursor, 36 ));
+         a_macro_forecasts.lfs_employment:= Amount'Value( gse.Value( cursor, 36 ));
       end if;
       if not gse.Is_Null( cursor, 37 )then
-         a_macro_forecasts.real_consumption:= Amount'Value( gse.Value( cursor, 37 ));
+         a_macro_forecasts.real_household_disposable_income:= Amount'Value( gse.Value( cursor, 37 ));
       end if;
       if not gse.Is_Null( cursor, 38 )then
-         a_macro_forecasts.real_gdp:= Amount'Value( gse.Value( cursor, 38 ));
+         a_macro_forecasts.real_consumption:= Amount'Value( gse.Value( cursor, 38 ));
       end if;
       if not gse.Is_Null( cursor, 39 )then
-         a_macro_forecasts.lfs_employment_age_16_plus:= Amount'Value( gse.Value( cursor, 39 ));
+         a_macro_forecasts.real_gdp:= Amount'Value( gse.Value( cursor, 39 ));
       end if;
       if not gse.Is_Null( cursor, 40 )then
-         a_macro_forecasts.real_household_disposable_income_age_16_plus:= Amount'Value( gse.Value( cursor, 40 ));
+         a_macro_forecasts.lfs_employment_age_16_plus:= Amount'Value( gse.Value( cursor, 40 ));
       end if;
       if not gse.Is_Null( cursor, 41 )then
-         a_macro_forecasts.real_consumption_age_16_plus:= Amount'Value( gse.Value( cursor, 41 ));
+         a_macro_forecasts.real_household_disposable_income_age_16_plus:= Amount'Value( gse.Value( cursor, 41 ));
       end if;
       if not gse.Is_Null( cursor, 42 )then
-         a_macro_forecasts.real_gdp_age_16_plus:= Amount'Value( gse.Value( cursor, 42 ));
+         a_macro_forecasts.real_consumption_age_16_plus:= Amount'Value( gse.Value( cursor, 42 ));
       end if;
       if not gse.Is_Null( cursor, 43 )then
-         a_macro_forecasts.private_sector_employment:= Amount'Value( gse.Value( cursor, 43 ));
+         a_macro_forecasts.real_gdp_age_16_plus:= Amount'Value( gse.Value( cursor, 43 ));
       end if;
       if not gse.Is_Null( cursor, 44 )then
-         a_macro_forecasts.public_sector_employment:= Amount'Value( gse.Value( cursor, 44 ));
+         a_macro_forecasts.private_sector_employment:= Amount'Value( gse.Value( cursor, 44 ));
+      end if;
+      if not gse.Is_Null( cursor, 45 )then
+         a_macro_forecasts.public_sector_employment:= Amount'Value( gse.Value( cursor, 45 ));
       end if;
       return a_macro_forecasts;
    end Map_From_Cursor;
@@ -621,48 +626,49 @@ package body Ukds.Target_Data.Macro_Forecasts_IO is
       params( 1 ) := "+"( Float( a_macro_forecasts.employment ));
       params( 2 ) := "+"( Float( a_macro_forecasts.employment_rate ));
       params( 3 ) := "+"( Float( a_macro_forecasts.employees ));
-      params( 4 ) := "+"( Float( a_macro_forecasts.ilo_unemployment ));
-      params( 5 ) := "+"( Float( a_macro_forecasts.ilo_unemployment_rate ));
-      params( 6 ) := "+"( Float( a_macro_forecasts.participation_rate ));
-      params( 7 ) := "+"( Float( a_macro_forecasts.claimant_count ));
-      params( 8 ) := "+"( Float( a_macro_forecasts.average_hours_worked ));
-      params( 9 ) := "+"( Float( a_macro_forecasts.total_hours_worked ));
-      params( 10 ) := "+"( Float( a_macro_forecasts.labour_share ));
-      params( 11 ) := "+"( Float( a_macro_forecasts.compensation_of_employees ));
-      params( 12 ) := "+"( Float( a_macro_forecasts.wages_and_salaries ));
-      params( 13 ) := "+"( Float( a_macro_forecasts.employers_social_contributions ));
-      params( 14 ) := "+"( Float( a_macro_forecasts.mixed_income ));
-      params( 15 ) := "+"( Float( a_macro_forecasts.average_earnings_growth ));
-      params( 16 ) := "+"( Float( a_macro_forecasts.average_earnings_index ));
-      params( 17 ) := "+"( Float( a_macro_forecasts.average_hourly_earnings_index ));
-      params( 18 ) := "+"( Float( a_macro_forecasts.productivity_per_hour_index ));
-      params( 19 ) := "+"( Float( a_macro_forecasts.productivity_per_worker_index ));
-      params( 20 ) := "+"( Float( a_macro_forecasts.real_product_wage ));
-      params( 21 ) := "+"( Float( a_macro_forecasts.real_consumption_wage ));
-      params( 22 ) := "+"( Float( a_macro_forecasts.rpi ));
-      params( 23 ) := "+"( Float( a_macro_forecasts.rpix ));
-      params( 24 ) := "+"( Float( a_macro_forecasts.cpi ));
-      params( 25 ) := "+"( Float( a_macro_forecasts.producer_output_prices ));
-      params( 26 ) := "+"( Float( a_macro_forecasts.mortgage_interest_payments ));
-      params( 27 ) := "+"( Float( a_macro_forecasts.actual_rents_for_housing ));
-      params( 28 ) := "+"( Float( a_macro_forecasts.consumer_expenditure_deflator ));
-      params( 29 ) := "+"( Float( a_macro_forecasts.house_price_index ));
-      params( 30 ) := "+"( Float( a_macro_forecasts.gdp_deflator ));
-      params( 31 ) := "+"( Float( a_macro_forecasts.lfs_employment ));
-      params( 32 ) := "+"( Float( a_macro_forecasts.real_household_disposable_income ));
-      params( 33 ) := "+"( Float( a_macro_forecasts.real_consumption ));
-      params( 34 ) := "+"( Float( a_macro_forecasts.real_gdp ));
-      params( 35 ) := "+"( Float( a_macro_forecasts.lfs_employment_age_16_plus ));
-      params( 36 ) := "+"( Float( a_macro_forecasts.real_household_disposable_income_age_16_plus ));
-      params( 37 ) := "+"( Float( a_macro_forecasts.real_consumption_age_16_plus ));
-      params( 38 ) := "+"( Float( a_macro_forecasts.real_gdp_age_16_plus ));
-      params( 39 ) := "+"( Float( a_macro_forecasts.private_sector_employment ));
-      params( 40 ) := "+"( Float( a_macro_forecasts.public_sector_employment ));
-      params( 41 ) := "+"( Year_Number'Pos( a_macro_forecasts.year ));
-      params( 42 ) := "+"( aliased_rec_type'Access );
-      params( 43 ) := "+"( aliased_variant'Access );
-      params( 44 ) := "+"( aliased_country'Access );
-      params( 45 ) := "+"( Year_Number'Pos( a_macro_forecasts.edition ));
+      params( 4 ) := "+"( Float( a_macro_forecasts.employee_rate ));
+      params( 5 ) := "+"( Float( a_macro_forecasts.ilo_unemployment ));
+      params( 6 ) := "+"( Float( a_macro_forecasts.ilo_unemployment_rate ));
+      params( 7 ) := "+"( Float( a_macro_forecasts.participation_rate ));
+      params( 8 ) := "+"( Float( a_macro_forecasts.claimant_count ));
+      params( 9 ) := "+"( Float( a_macro_forecasts.average_hours_worked ));
+      params( 10 ) := "+"( Float( a_macro_forecasts.total_hours_worked ));
+      params( 11 ) := "+"( Float( a_macro_forecasts.labour_share ));
+      params( 12 ) := "+"( Float( a_macro_forecasts.compensation_of_employees ));
+      params( 13 ) := "+"( Float( a_macro_forecasts.wages_and_salaries ));
+      params( 14 ) := "+"( Float( a_macro_forecasts.employers_social_contributions ));
+      params( 15 ) := "+"( Float( a_macro_forecasts.mixed_income ));
+      params( 16 ) := "+"( Float( a_macro_forecasts.average_earnings_growth ));
+      params( 17 ) := "+"( Float( a_macro_forecasts.average_earnings_index ));
+      params( 18 ) := "+"( Float( a_macro_forecasts.average_hourly_earnings_index ));
+      params( 19 ) := "+"( Float( a_macro_forecasts.productivity_per_hour_index ));
+      params( 20 ) := "+"( Float( a_macro_forecasts.productivity_per_worker_index ));
+      params( 21 ) := "+"( Float( a_macro_forecasts.real_product_wage ));
+      params( 22 ) := "+"( Float( a_macro_forecasts.real_consumption_wage ));
+      params( 23 ) := "+"( Float( a_macro_forecasts.rpi ));
+      params( 24 ) := "+"( Float( a_macro_forecasts.rpix ));
+      params( 25 ) := "+"( Float( a_macro_forecasts.cpi ));
+      params( 26 ) := "+"( Float( a_macro_forecasts.producer_output_prices ));
+      params( 27 ) := "+"( Float( a_macro_forecasts.mortgage_interest_payments ));
+      params( 28 ) := "+"( Float( a_macro_forecasts.actual_rents_for_housing ));
+      params( 29 ) := "+"( Float( a_macro_forecasts.consumer_expenditure_deflator ));
+      params( 30 ) := "+"( Float( a_macro_forecasts.house_price_index ));
+      params( 31 ) := "+"( Float( a_macro_forecasts.gdp_deflator ));
+      params( 32 ) := "+"( Float( a_macro_forecasts.lfs_employment ));
+      params( 33 ) := "+"( Float( a_macro_forecasts.real_household_disposable_income ));
+      params( 34 ) := "+"( Float( a_macro_forecasts.real_consumption ));
+      params( 35 ) := "+"( Float( a_macro_forecasts.real_gdp ));
+      params( 36 ) := "+"( Float( a_macro_forecasts.lfs_employment_age_16_plus ));
+      params( 37 ) := "+"( Float( a_macro_forecasts.real_household_disposable_income_age_16_plus ));
+      params( 38 ) := "+"( Float( a_macro_forecasts.real_consumption_age_16_plus ));
+      params( 39 ) := "+"( Float( a_macro_forecasts.real_gdp_age_16_plus ));
+      params( 40 ) := "+"( Float( a_macro_forecasts.private_sector_employment ));
+      params( 41 ) := "+"( Float( a_macro_forecasts.public_sector_employment ));
+      params( 42 ) := "+"( Year_Number'Pos( a_macro_forecasts.year ));
+      params( 43 ) := "+"( aliased_rec_type'Access );
+      params( 44 ) := "+"( aliased_variant'Access );
+      params( 45 ) := "+"( aliased_country'Access );
+      params( 46 ) := "+"( Year_Number'Pos( a_macro_forecasts.edition ));
       
       gse.Execute( local_connection, UPDATE_PS, params );
       Check_Result( local_connection );
@@ -708,43 +714,44 @@ package body Ukds.Target_Data.Macro_Forecasts_IO is
       params( 6 ) := "+"( Float( a_macro_forecasts.employment ));
       params( 7 ) := "+"( Float( a_macro_forecasts.employment_rate ));
       params( 8 ) := "+"( Float( a_macro_forecasts.employees ));
-      params( 9 ) := "+"( Float( a_macro_forecasts.ilo_unemployment ));
-      params( 10 ) := "+"( Float( a_macro_forecasts.ilo_unemployment_rate ));
-      params( 11 ) := "+"( Float( a_macro_forecasts.participation_rate ));
-      params( 12 ) := "+"( Float( a_macro_forecasts.claimant_count ));
-      params( 13 ) := "+"( Float( a_macro_forecasts.average_hours_worked ));
-      params( 14 ) := "+"( Float( a_macro_forecasts.total_hours_worked ));
-      params( 15 ) := "+"( Float( a_macro_forecasts.labour_share ));
-      params( 16 ) := "+"( Float( a_macro_forecasts.compensation_of_employees ));
-      params( 17 ) := "+"( Float( a_macro_forecasts.wages_and_salaries ));
-      params( 18 ) := "+"( Float( a_macro_forecasts.employers_social_contributions ));
-      params( 19 ) := "+"( Float( a_macro_forecasts.mixed_income ));
-      params( 20 ) := "+"( Float( a_macro_forecasts.average_earnings_growth ));
-      params( 21 ) := "+"( Float( a_macro_forecasts.average_earnings_index ));
-      params( 22 ) := "+"( Float( a_macro_forecasts.average_hourly_earnings_index ));
-      params( 23 ) := "+"( Float( a_macro_forecasts.productivity_per_hour_index ));
-      params( 24 ) := "+"( Float( a_macro_forecasts.productivity_per_worker_index ));
-      params( 25 ) := "+"( Float( a_macro_forecasts.real_product_wage ));
-      params( 26 ) := "+"( Float( a_macro_forecasts.real_consumption_wage ));
-      params( 27 ) := "+"( Float( a_macro_forecasts.rpi ));
-      params( 28 ) := "+"( Float( a_macro_forecasts.rpix ));
-      params( 29 ) := "+"( Float( a_macro_forecasts.cpi ));
-      params( 30 ) := "+"( Float( a_macro_forecasts.producer_output_prices ));
-      params( 31 ) := "+"( Float( a_macro_forecasts.mortgage_interest_payments ));
-      params( 32 ) := "+"( Float( a_macro_forecasts.actual_rents_for_housing ));
-      params( 33 ) := "+"( Float( a_macro_forecasts.consumer_expenditure_deflator ));
-      params( 34 ) := "+"( Float( a_macro_forecasts.house_price_index ));
-      params( 35 ) := "+"( Float( a_macro_forecasts.gdp_deflator ));
-      params( 36 ) := "+"( Float( a_macro_forecasts.lfs_employment ));
-      params( 37 ) := "+"( Float( a_macro_forecasts.real_household_disposable_income ));
-      params( 38 ) := "+"( Float( a_macro_forecasts.real_consumption ));
-      params( 39 ) := "+"( Float( a_macro_forecasts.real_gdp ));
-      params( 40 ) := "+"( Float( a_macro_forecasts.lfs_employment_age_16_plus ));
-      params( 41 ) := "+"( Float( a_macro_forecasts.real_household_disposable_income_age_16_plus ));
-      params( 42 ) := "+"( Float( a_macro_forecasts.real_consumption_age_16_plus ));
-      params( 43 ) := "+"( Float( a_macro_forecasts.real_gdp_age_16_plus ));
-      params( 44 ) := "+"( Float( a_macro_forecasts.private_sector_employment ));
-      params( 45 ) := "+"( Float( a_macro_forecasts.public_sector_employment ));
+      params( 9 ) := "+"( Float( a_macro_forecasts.employee_rate ));
+      params( 10 ) := "+"( Float( a_macro_forecasts.ilo_unemployment ));
+      params( 11 ) := "+"( Float( a_macro_forecasts.ilo_unemployment_rate ));
+      params( 12 ) := "+"( Float( a_macro_forecasts.participation_rate ));
+      params( 13 ) := "+"( Float( a_macro_forecasts.claimant_count ));
+      params( 14 ) := "+"( Float( a_macro_forecasts.average_hours_worked ));
+      params( 15 ) := "+"( Float( a_macro_forecasts.total_hours_worked ));
+      params( 16 ) := "+"( Float( a_macro_forecasts.labour_share ));
+      params( 17 ) := "+"( Float( a_macro_forecasts.compensation_of_employees ));
+      params( 18 ) := "+"( Float( a_macro_forecasts.wages_and_salaries ));
+      params( 19 ) := "+"( Float( a_macro_forecasts.employers_social_contributions ));
+      params( 20 ) := "+"( Float( a_macro_forecasts.mixed_income ));
+      params( 21 ) := "+"( Float( a_macro_forecasts.average_earnings_growth ));
+      params( 22 ) := "+"( Float( a_macro_forecasts.average_earnings_index ));
+      params( 23 ) := "+"( Float( a_macro_forecasts.average_hourly_earnings_index ));
+      params( 24 ) := "+"( Float( a_macro_forecasts.productivity_per_hour_index ));
+      params( 25 ) := "+"( Float( a_macro_forecasts.productivity_per_worker_index ));
+      params( 26 ) := "+"( Float( a_macro_forecasts.real_product_wage ));
+      params( 27 ) := "+"( Float( a_macro_forecasts.real_consumption_wage ));
+      params( 28 ) := "+"( Float( a_macro_forecasts.rpi ));
+      params( 29 ) := "+"( Float( a_macro_forecasts.rpix ));
+      params( 30 ) := "+"( Float( a_macro_forecasts.cpi ));
+      params( 31 ) := "+"( Float( a_macro_forecasts.producer_output_prices ));
+      params( 32 ) := "+"( Float( a_macro_forecasts.mortgage_interest_payments ));
+      params( 33 ) := "+"( Float( a_macro_forecasts.actual_rents_for_housing ));
+      params( 34 ) := "+"( Float( a_macro_forecasts.consumer_expenditure_deflator ));
+      params( 35 ) := "+"( Float( a_macro_forecasts.house_price_index ));
+      params( 36 ) := "+"( Float( a_macro_forecasts.gdp_deflator ));
+      params( 37 ) := "+"( Float( a_macro_forecasts.lfs_employment ));
+      params( 38 ) := "+"( Float( a_macro_forecasts.real_household_disposable_income ));
+      params( 39 ) := "+"( Float( a_macro_forecasts.real_consumption ));
+      params( 40 ) := "+"( Float( a_macro_forecasts.real_gdp ));
+      params( 41 ) := "+"( Float( a_macro_forecasts.lfs_employment_age_16_plus ));
+      params( 42 ) := "+"( Float( a_macro_forecasts.real_household_disposable_income_age_16_plus ));
+      params( 43 ) := "+"( Float( a_macro_forecasts.real_consumption_age_16_plus ));
+      params( 44 ) := "+"( Float( a_macro_forecasts.real_gdp_age_16_plus ));
+      params( 45 ) := "+"( Float( a_macro_forecasts.private_sector_employment ));
+      params( 46 ) := "+"( Float( a_macro_forecasts.public_sector_employment ));
       gse.Execute( local_connection, SAVE_PS, params );  
       Check_Result( local_connection );
       if( is_local_connection )then
@@ -885,6 +892,13 @@ package body Ukds.Target_Data.Macro_Forecasts_IO is
    begin
       d.add_to_criteria( c, elem );
    end Add_employees;
+
+
+   procedure Add_employee_rate( c : in out d.Criteria; employee_rate : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "employee_rate", op, join, Long_Float( employee_rate ) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_employee_rate;
 
 
    procedure Add_ilo_unemployment( c : in out d.Criteria; ilo_unemployment : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
@@ -1204,6 +1218,13 @@ package body Ukds.Target_Data.Macro_Forecasts_IO is
    begin
       d.add_to_criteria( c, elem );
    end Add_employees_To_Orderings;
+
+
+   procedure Add_employee_rate_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "employee_rate", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_employee_rate_To_Orderings;
 
 
    procedure Add_ilo_unemployment_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   

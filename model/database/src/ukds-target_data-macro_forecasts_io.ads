@@ -105,6 +105,7 @@ package Ukds.Target_Data.Macro_Forecasts_IO is
    procedure Add_employment( c : in out d.Criteria; employment : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_employment_rate( c : in out d.Criteria; employment_rate : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_employees( c : in out d.Criteria; employees : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_employee_rate( c : in out d.Criteria; employee_rate : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_ilo_unemployment( c : in out d.Criteria; ilo_unemployment : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_ilo_unemployment_rate( c : in out d.Criteria; ilo_unemployment_rate : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_participation_rate( c : in out d.Criteria; participation_rate : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
@@ -153,6 +154,7 @@ package Ukds.Target_Data.Macro_Forecasts_IO is
    procedure Add_employment_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_employment_rate_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_employees_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_employee_rate_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_ilo_unemployment_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_ilo_unemployment_rate_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_participation_rate_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
@@ -194,7 +196,7 @@ package Ukds.Target_Data.Macro_Forecasts_IO is
    function Map_From_Cursor( cursor : GNATCOLL.SQL.Exec.Forward_Cursor ) return Ukds.Target_Data.Macro_Forecasts;
 
    -- 
-   -- returns an array of GNATColl SQL Parameters indexed 1 .. 45, as follows
+   -- returns an array of GNATColl SQL Parameters indexed 1 .. 46, as follows
    -- Pos  |       Name               | SQL Type           | Ada Type             | Default
    --    1 : year                     : Parameter_Integer  : Year_Number          :        0 
    --    2 : rec_type                 : Parameter_Text     : Unbounded_String     : null, Null_Unbounded_String 
@@ -204,43 +206,44 @@ package Ukds.Target_Data.Macro_Forecasts_IO is
    --    6 : employment               : Parameter_Float    : Amount               :      0.0 
    --    7 : employment_rate          : Parameter_Float    : Amount               :      0.0 
    --    8 : employees                : Parameter_Float    : Amount               :      0.0 
-   --    9 : ilo_unemployment         : Parameter_Float    : Amount               :      0.0 
-   --   10 : ilo_unemployment_rate    : Parameter_Float    : Amount               :      0.0 
-   --   11 : participation_rate       : Parameter_Float    : Amount               :      0.0 
-   --   12 : claimant_count           : Parameter_Float    : Amount               :      0.0 
-   --   13 : average_hours_worked     : Parameter_Float    : Amount               :      0.0 
-   --   14 : total_hours_worked       : Parameter_Float    : Amount               :      0.0 
-   --   15 : labour_share             : Parameter_Float    : Amount               :      0.0 
-   --   16 : compensation_of_employees : Parameter_Float    : Amount               :      0.0 
-   --   17 : wages_and_salaries       : Parameter_Float    : Amount               :      0.0 
-   --   18 : employers_social_contributions : Parameter_Float    : Amount               :      0.0 
-   --   19 : mixed_income             : Parameter_Float    : Amount               :      0.0 
-   --   20 : average_earnings_growth  : Parameter_Float    : Amount               :      0.0 
-   --   21 : average_earnings_index   : Parameter_Float    : Amount               :      0.0 
-   --   22 : average_hourly_earnings_index : Parameter_Float    : Amount               :      0.0 
-   --   23 : productivity_per_hour_index : Parameter_Float    : Amount               :      0.0 
-   --   24 : productivity_per_worker_index : Parameter_Float    : Amount               :      0.0 
-   --   25 : real_product_wage        : Parameter_Float    : Amount               :      0.0 
-   --   26 : real_consumption_wage    : Parameter_Float    : Amount               :      0.0 
-   --   27 : rpi                      : Parameter_Float    : Amount               :      0.0 
-   --   28 : rpix                     : Parameter_Float    : Amount               :      0.0 
-   --   29 : cpi                      : Parameter_Float    : Amount               :      0.0 
-   --   30 : producer_output_prices   : Parameter_Float    : Amount               :      0.0 
-   --   31 : mortgage_interest_payments : Parameter_Float    : Amount               :      0.0 
-   --   32 : actual_rents_for_housing : Parameter_Float    : Amount               :      0.0 
-   --   33 : consumer_expenditure_deflator : Parameter_Float    : Amount               :      0.0 
-   --   34 : house_price_index        : Parameter_Float    : Amount               :      0.0 
-   --   35 : gdp_deflator             : Parameter_Float    : Amount               :      0.0 
-   --   36 : lfs_employment           : Parameter_Float    : Amount               :      0.0 
-   --   37 : real_household_disposable_income : Parameter_Float    : Amount               :      0.0 
-   --   38 : real_consumption         : Parameter_Float    : Amount               :      0.0 
-   --   39 : real_gdp                 : Parameter_Float    : Amount               :      0.0 
-   --   40 : lfs_employment_age_16_plus : Parameter_Float    : Amount               :      0.0 
-   --   41 : real_household_disposable_income_age_16_plus : Parameter_Float    : Amount               :      0.0 
-   --   42 : real_consumption_age_16_plus : Parameter_Float    : Amount               :      0.0 
-   --   43 : real_gdp_age_16_plus     : Parameter_Float    : Amount               :      0.0 
-   --   44 : private_sector_employment : Parameter_Float    : Amount               :      0.0 
-   --   45 : public_sector_employment : Parameter_Float    : Amount               :      0.0 
+   --    9 : employee_rate            : Parameter_Float    : Amount               :      0.0 
+   --   10 : ilo_unemployment         : Parameter_Float    : Amount               :      0.0 
+   --   11 : ilo_unemployment_rate    : Parameter_Float    : Amount               :      0.0 
+   --   12 : participation_rate       : Parameter_Float    : Amount               :      0.0 
+   --   13 : claimant_count           : Parameter_Float    : Amount               :      0.0 
+   --   14 : average_hours_worked     : Parameter_Float    : Amount               :      0.0 
+   --   15 : total_hours_worked       : Parameter_Float    : Amount               :      0.0 
+   --   16 : labour_share             : Parameter_Float    : Amount               :      0.0 
+   --   17 : compensation_of_employees : Parameter_Float    : Amount               :      0.0 
+   --   18 : wages_and_salaries       : Parameter_Float    : Amount               :      0.0 
+   --   19 : employers_social_contributions : Parameter_Float    : Amount               :      0.0 
+   --   20 : mixed_income             : Parameter_Float    : Amount               :      0.0 
+   --   21 : average_earnings_growth  : Parameter_Float    : Amount               :      0.0 
+   --   22 : average_earnings_index   : Parameter_Float    : Amount               :      0.0 
+   --   23 : average_hourly_earnings_index : Parameter_Float    : Amount               :      0.0 
+   --   24 : productivity_per_hour_index : Parameter_Float    : Amount               :      0.0 
+   --   25 : productivity_per_worker_index : Parameter_Float    : Amount               :      0.0 
+   --   26 : real_product_wage        : Parameter_Float    : Amount               :      0.0 
+   --   27 : real_consumption_wage    : Parameter_Float    : Amount               :      0.0 
+   --   28 : rpi                      : Parameter_Float    : Amount               :      0.0 
+   --   29 : rpix                     : Parameter_Float    : Amount               :      0.0 
+   --   30 : cpi                      : Parameter_Float    : Amount               :      0.0 
+   --   31 : producer_output_prices   : Parameter_Float    : Amount               :      0.0 
+   --   32 : mortgage_interest_payments : Parameter_Float    : Amount               :      0.0 
+   --   33 : actual_rents_for_housing : Parameter_Float    : Amount               :      0.0 
+   --   34 : consumer_expenditure_deflator : Parameter_Float    : Amount               :      0.0 
+   --   35 : house_price_index        : Parameter_Float    : Amount               :      0.0 
+   --   36 : gdp_deflator             : Parameter_Float    : Amount               :      0.0 
+   --   37 : lfs_employment           : Parameter_Float    : Amount               :      0.0 
+   --   38 : real_household_disposable_income : Parameter_Float    : Amount               :      0.0 
+   --   39 : real_consumption         : Parameter_Float    : Amount               :      0.0 
+   --   40 : real_gdp                 : Parameter_Float    : Amount               :      0.0 
+   --   41 : lfs_employment_age_16_plus : Parameter_Float    : Amount               :      0.0 
+   --   42 : real_household_disposable_income_age_16_plus : Parameter_Float    : Amount               :      0.0 
+   --   43 : real_consumption_age_16_plus : Parameter_Float    : Amount               :      0.0 
+   --   44 : real_gdp_age_16_plus     : Parameter_Float    : Amount               :      0.0 
+   --   45 : private_sector_employment : Parameter_Float    : Amount               :      0.0 
+   --   46 : public_sector_employment : Parameter_Float    : Amount               :      0.0 
    function Get_Configured_Insert_Params( update_order : Boolean := False ) return GNATCOLL.SQL.Exec.SQL_Parameters;
 
 

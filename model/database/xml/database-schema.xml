@@ -146,6 +146,7 @@
                    <column name='employment' description='Employment' default='0.0' type='REAL' adaTypeName='Amount'/>
                    <column name='employment_rate' description='Employment rate' default='0.0' type='REAL' adaTypeName='Amount'/>
                    <column name='employees' description='Employees' default='0.0' type='REAL' adaTypeName='Amount'/>
+                   <column name='employee_rate' description='Employees' default='0.0' type='REAL' adaTypeName='Amount'/>
                    <column name='ilo_unemployment' description='ILO unemployment' default='0.0' type='REAL' adaTypeName='Amount'/>
                    <column name='ilo_unemployment_rate' description='ILO unemployment rate' default='0.0' type='REAL' adaTypeName='Amount'/>
                    <column name='participation_rate' description='Participation rate' default='0.0' type='REAL' adaTypeName='Amount'/>
@@ -697,7 +698,9 @@
                   <column name='age_109_female' description='age_109_female' default='0.0' type='REAL' adaTypeName='Amount'/>
                   <column name='age_110_female' description='age_110_female' default='0.0' type='REAL' adaTypeName='Amount'/>
 
-                  <column name='participation_16_19_male' type='REAL' adaTypeName='Amount' default='0.0'  />
+                  <column name='participation' type='REAL' adaTypeName='Amount' default='0.0' description='all ages both genders'  />
+
+                   <column name='participation_16_19_male' type='REAL' adaTypeName='Amount' default='0.0'  />
                    <column name='participation_20_24_male' type='REAL' adaTypeName='Amount' default='0.0'  />
                    <column name='participation_25_29_male' type='REAL' adaTypeName='Amount' default='0.0'  />
                    <column name='participation_30_34_male' type='REAL' adaTypeName='Amount' default='0.0'  />

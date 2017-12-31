@@ -9,6 +9,7 @@ require './forecast_libs'
 $OBR_TO_SFC_MAP = {
         "employment" => NIL,
         "employment_rate" => "v_16_plus_employment_rate",
+        "employee_rate" => "v_16_plus_employee_rate",
         "employees" => "v_16_plus_employees_in_employment",
         "ilo_unemployment" => "v_16_plus_unemployment_level",
         "ilo_unemployment_rate" => "ilo_unemployment_rate",

@@ -88,10 +88,10 @@ package body Ukds.Target_Data.Target_Dataset_IO is
          "age_78_female, age_79_female, age_80_female, age_81_female, age_82_female, age_83_female, age_84_female, age_85_female, age_86_female, age_87_female," &
          "age_88_female, age_89_female, age_90_female, age_91_female, age_92_female, age_93_female, age_94_female, age_95_female, age_96_female, age_97_female," &
          "age_98_female, age_99_female, age_100_female, age_101_female, age_102_female, age_103_female, age_104_female, age_105_female, age_106_female, age_107_female," &
-         "age_108_female, age_109_female, age_110_female, participation_16_19_male, participation_20_24_male, participation_25_29_male, participation_30_34_male, participation_35_39_male, participation_40_44_male, participation_45_49_male," &
-         "participation_50_54_male, participation_55_59_male, participation_60_64_male, participation_65_69_male, participation_70_74_male, participation_75_plus_male, participation_16_19_female, participation_20_24_female, participation_25_29_female, participation_30_34_female," &
-         "participation_35_39_female, participation_40_44_female, participation_45_49_female, participation_50_54_female, participation_55_59_female, participation_60_64_female, participation_65_69_female, participation_70_74_female, participation_75_plus_female, one_adult_hh," &
-         "two_adult_hh, other_hh " &
+         "age_108_female, age_109_female, age_110_female, participation, participation_16_19_male, participation_20_24_male, participation_25_29_male, participation_30_34_male, participation_35_39_male, participation_40_44_male," &
+         "participation_45_49_male, participation_50_54_male, participation_55_59_male, participation_60_64_male, participation_65_69_male, participation_70_74_male, participation_75_plus_male, participation_16_19_female, participation_20_24_female, participation_25_29_female," &
+         "participation_30_34_female, participation_35_39_female, participation_40_44_female, participation_45_49_female, participation_50_54_female, participation_55_59_female, participation_60_64_female, participation_65_69_female, participation_70_74_female, participation_75_plus_female," &
+         "one_adult_hh, two_adult_hh, other_hh " &
          " from target_data.target_dataset " ;
    
    --
@@ -125,10 +125,10 @@ package body Ukds.Target_Data.Target_Dataset_IO is
          "age_78_female, age_79_female, age_80_female, age_81_female, age_82_female, age_83_female, age_84_female, age_85_female, age_86_female, age_87_female," &
          "age_88_female, age_89_female, age_90_female, age_91_female, age_92_female, age_93_female, age_94_female, age_95_female, age_96_female, age_97_female," &
          "age_98_female, age_99_female, age_100_female, age_101_female, age_102_female, age_103_female, age_104_female, age_105_female, age_106_female, age_107_female," &
-         "age_108_female, age_109_female, age_110_female, participation_16_19_male, participation_20_24_male, participation_25_29_male, participation_30_34_male, participation_35_39_male, participation_40_44_male, participation_45_49_male," &
-         "participation_50_54_male, participation_55_59_male, participation_60_64_male, participation_65_69_male, participation_70_74_male, participation_75_plus_male, participation_16_19_female, participation_20_24_female, participation_25_29_female, participation_30_34_female," &
-         "participation_35_39_female, participation_40_44_female, participation_45_49_female, participation_50_54_female, participation_55_59_female, participation_60_64_female, participation_65_69_female, participation_70_74_female, participation_75_plus_female, one_adult_hh," &
-         "two_adult_hh, other_hh " &
+         "age_108_female, age_109_female, age_110_female, participation, participation_16_19_male, participation_20_24_male, participation_25_29_male, participation_30_34_male, participation_35_39_male, participation_40_44_male," &
+         "participation_45_49_male, participation_50_54_male, participation_55_59_male, participation_60_64_male, participation_65_69_male, participation_70_74_male, participation_75_plus_male, participation_16_19_female, participation_20_24_female, participation_25_29_female," &
+         "participation_30_34_female, participation_35_39_female, participation_40_44_female, participation_45_49_female, participation_50_54_female, participation_55_59_female, participation_60_64_female, participation_65_69_female, participation_70_74_female, participation_75_plus_female," &
+         "one_adult_hh, two_adult_hh, other_hh " &
          " ) values " ;
 
    
@@ -143,7 +143,7 @@ package body Ukds.Target_Data.Target_Dataset_IO is
    UPDATE_PART : constant String := "update target_data.target_dataset set  ";
    function Get_Configured_Insert_Params( update_order : Boolean := False )  return GNATCOLL.SQL.Exec.SQL_Parameters is
    use GNATCOLL.SQL_Impl;
-      params : constant SQL_Parameters( 1 .. 302 ) := ( if update_order then (
+      params : constant SQL_Parameters( 1 .. 303 ) := ( if update_order then (
             1 => ( Parameter_Integer, 0 ),   --  : hbai_excluded (Boolean)
             2 => ( Parameter_Float, 0.0 ),   --  : country_uk (Amount)
             3 => ( Parameter_Float, 0.0 ),   --  : country_scotland (Amount)
@@ -413,39 +413,40 @@ package body Ukds.Target_Data.Target_Dataset_IO is
            267 => ( Parameter_Float, 0.0 ),   --  : age_108_female (Amount)
            268 => ( Parameter_Float, 0.0 ),   --  : age_109_female (Amount)
            269 => ( Parameter_Float, 0.0 ),   --  : age_110_female (Amount)
-           270 => ( Parameter_Float, 0.0 ),   --  : participation_16_19_male (Amount)
-           271 => ( Parameter_Float, 0.0 ),   --  : participation_20_24_male (Amount)
-           272 => ( Parameter_Float, 0.0 ),   --  : participation_25_29_male (Amount)
-           273 => ( Parameter_Float, 0.0 ),   --  : participation_30_34_male (Amount)
-           274 => ( Parameter_Float, 0.0 ),   --  : participation_35_39_male (Amount)
-           275 => ( Parameter_Float, 0.0 ),   --  : participation_40_44_male (Amount)
-           276 => ( Parameter_Float, 0.0 ),   --  : participation_45_49_male (Amount)
-           277 => ( Parameter_Float, 0.0 ),   --  : participation_50_54_male (Amount)
-           278 => ( Parameter_Float, 0.0 ),   --  : participation_55_59_male (Amount)
-           279 => ( Parameter_Float, 0.0 ),   --  : participation_60_64_male (Amount)
-           280 => ( Parameter_Float, 0.0 ),   --  : participation_65_69_male (Amount)
-           281 => ( Parameter_Float, 0.0 ),   --  : participation_70_74_male (Amount)
-           282 => ( Parameter_Float, 0.0 ),   --  : participation_75_plus_male (Amount)
-           283 => ( Parameter_Float, 0.0 ),   --  : participation_16_19_female (Amount)
-           284 => ( Parameter_Float, 0.0 ),   --  : participation_20_24_female (Amount)
-           285 => ( Parameter_Float, 0.0 ),   --  : participation_25_29_female (Amount)
-           286 => ( Parameter_Float, 0.0 ),   --  : participation_30_34_female (Amount)
-           287 => ( Parameter_Float, 0.0 ),   --  : participation_35_39_female (Amount)
-           288 => ( Parameter_Float, 0.0 ),   --  : participation_40_44_female (Amount)
-           289 => ( Parameter_Float, 0.0 ),   --  : participation_45_49_female (Amount)
-           290 => ( Parameter_Float, 0.0 ),   --  : participation_50_54_female (Amount)
-           291 => ( Parameter_Float, 0.0 ),   --  : participation_55_59_female (Amount)
-           292 => ( Parameter_Float, 0.0 ),   --  : participation_60_64_female (Amount)
-           293 => ( Parameter_Float, 0.0 ),   --  : participation_65_69_female (Amount)
-           294 => ( Parameter_Float, 0.0 ),   --  : participation_70_74_female (Amount)
-           295 => ( Parameter_Float, 0.0 ),   --  : participation_75_plus_female (Amount)
-           296 => ( Parameter_Float, 0.0 ),   --  : one_adult_hh (Amount)
-           297 => ( Parameter_Float, 0.0 ),   --  : two_adult_hh (Amount)
-           298 => ( Parameter_Float, 0.0 ),   --  : other_hh (Amount)
-           299 => ( Parameter_Integer, 0 ),   --  : run_id (Integer)
-           300 => ( Parameter_Integer, 0 ),   --  : user_id (Integer)
-           301 => ( Parameter_Integer, 0 ),   --  : year (Year_Number)
-           302 => ( Parameter_Bigint, 0 )   --  : sernum (Sernum_Value)
+           270 => ( Parameter_Float, 0.0 ),   --  : participation (Amount)
+           271 => ( Parameter_Float, 0.0 ),   --  : participation_16_19_male (Amount)
+           272 => ( Parameter_Float, 0.0 ),   --  : participation_20_24_male (Amount)
+           273 => ( Parameter_Float, 0.0 ),   --  : participation_25_29_male (Amount)
+           274 => ( Parameter_Float, 0.0 ),   --  : participation_30_34_male (Amount)
+           275 => ( Parameter_Float, 0.0 ),   --  : participation_35_39_male (Amount)
+           276 => ( Parameter_Float, 0.0 ),   --  : participation_40_44_male (Amount)
+           277 => ( Parameter_Float, 0.0 ),   --  : participation_45_49_male (Amount)
+           278 => ( Parameter_Float, 0.0 ),   --  : participation_50_54_male (Amount)
+           279 => ( Parameter_Float, 0.0 ),   --  : participation_55_59_male (Amount)
+           280 => ( Parameter_Float, 0.0 ),   --  : participation_60_64_male (Amount)
+           281 => ( Parameter_Float, 0.0 ),   --  : participation_65_69_male (Amount)
+           282 => ( Parameter_Float, 0.0 ),   --  : participation_70_74_male (Amount)
+           283 => ( Parameter_Float, 0.0 ),   --  : participation_75_plus_male (Amount)
+           284 => ( Parameter_Float, 0.0 ),   --  : participation_16_19_female (Amount)
+           285 => ( Parameter_Float, 0.0 ),   --  : participation_20_24_female (Amount)
+           286 => ( Parameter_Float, 0.0 ),   --  : participation_25_29_female (Amount)
+           287 => ( Parameter_Float, 0.0 ),   --  : participation_30_34_female (Amount)
+           288 => ( Parameter_Float, 0.0 ),   --  : participation_35_39_female (Amount)
+           289 => ( Parameter_Float, 0.0 ),   --  : participation_40_44_female (Amount)
+           290 => ( Parameter_Float, 0.0 ),   --  : participation_45_49_female (Amount)
+           291 => ( Parameter_Float, 0.0 ),   --  : participation_50_54_female (Amount)
+           292 => ( Parameter_Float, 0.0 ),   --  : participation_55_59_female (Amount)
+           293 => ( Parameter_Float, 0.0 ),   --  : participation_60_64_female (Amount)
+           294 => ( Parameter_Float, 0.0 ),   --  : participation_65_69_female (Amount)
+           295 => ( Parameter_Float, 0.0 ),   --  : participation_70_74_female (Amount)
+           296 => ( Parameter_Float, 0.0 ),   --  : participation_75_plus_female (Amount)
+           297 => ( Parameter_Float, 0.0 ),   --  : one_adult_hh (Amount)
+           298 => ( Parameter_Float, 0.0 ),   --  : two_adult_hh (Amount)
+           299 => ( Parameter_Float, 0.0 ),   --  : other_hh (Amount)
+           300 => ( Parameter_Integer, 0 ),   --  : run_id (Integer)
+           301 => ( Parameter_Integer, 0 ),   --  : user_id (Integer)
+           302 => ( Parameter_Integer, 0 ),   --  : year (Year_Number)
+           303 => ( Parameter_Bigint, 0 )   --  : sernum (Sernum_Value)
       ) else (
             1 => ( Parameter_Integer, 0 ),   --  : run_id (Integer)
             2 => ( Parameter_Integer, 0 ),   --  : user_id (Integer)
@@ -720,35 +721,36 @@ package body Ukds.Target_Data.Target_Dataset_IO is
            271 => ( Parameter_Float, 0.0 ),   --  : age_108_female (Amount)
            272 => ( Parameter_Float, 0.0 ),   --  : age_109_female (Amount)
            273 => ( Parameter_Float, 0.0 ),   --  : age_110_female (Amount)
-           274 => ( Parameter_Float, 0.0 ),   --  : participation_16_19_male (Amount)
-           275 => ( Parameter_Float, 0.0 ),   --  : participation_20_24_male (Amount)
-           276 => ( Parameter_Float, 0.0 ),   --  : participation_25_29_male (Amount)
-           277 => ( Parameter_Float, 0.0 ),   --  : participation_30_34_male (Amount)
-           278 => ( Parameter_Float, 0.0 ),   --  : participation_35_39_male (Amount)
-           279 => ( Parameter_Float, 0.0 ),   --  : participation_40_44_male (Amount)
-           280 => ( Parameter_Float, 0.0 ),   --  : participation_45_49_male (Amount)
-           281 => ( Parameter_Float, 0.0 ),   --  : participation_50_54_male (Amount)
-           282 => ( Parameter_Float, 0.0 ),   --  : participation_55_59_male (Amount)
-           283 => ( Parameter_Float, 0.0 ),   --  : participation_60_64_male (Amount)
-           284 => ( Parameter_Float, 0.0 ),   --  : participation_65_69_male (Amount)
-           285 => ( Parameter_Float, 0.0 ),   --  : participation_70_74_male (Amount)
-           286 => ( Parameter_Float, 0.0 ),   --  : participation_75_plus_male (Amount)
-           287 => ( Parameter_Float, 0.0 ),   --  : participation_16_19_female (Amount)
-           288 => ( Parameter_Float, 0.0 ),   --  : participation_20_24_female (Amount)
-           289 => ( Parameter_Float, 0.0 ),   --  : participation_25_29_female (Amount)
-           290 => ( Parameter_Float, 0.0 ),   --  : participation_30_34_female (Amount)
-           291 => ( Parameter_Float, 0.0 ),   --  : participation_35_39_female (Amount)
-           292 => ( Parameter_Float, 0.0 ),   --  : participation_40_44_female (Amount)
-           293 => ( Parameter_Float, 0.0 ),   --  : participation_45_49_female (Amount)
-           294 => ( Parameter_Float, 0.0 ),   --  : participation_50_54_female (Amount)
-           295 => ( Parameter_Float, 0.0 ),   --  : participation_55_59_female (Amount)
-           296 => ( Parameter_Float, 0.0 ),   --  : participation_60_64_female (Amount)
-           297 => ( Parameter_Float, 0.0 ),   --  : participation_65_69_female (Amount)
-           298 => ( Parameter_Float, 0.0 ),   --  : participation_70_74_female (Amount)
-           299 => ( Parameter_Float, 0.0 ),   --  : participation_75_plus_female (Amount)
-           300 => ( Parameter_Float, 0.0 ),   --  : one_adult_hh (Amount)
-           301 => ( Parameter_Float, 0.0 ),   --  : two_adult_hh (Amount)
-           302 => ( Parameter_Float, 0.0 )   --  : other_hh (Amount)
+           274 => ( Parameter_Float, 0.0 ),   --  : participation (Amount)
+           275 => ( Parameter_Float, 0.0 ),   --  : participation_16_19_male (Amount)
+           276 => ( Parameter_Float, 0.0 ),   --  : participation_20_24_male (Amount)
+           277 => ( Parameter_Float, 0.0 ),   --  : participation_25_29_male (Amount)
+           278 => ( Parameter_Float, 0.0 ),   --  : participation_30_34_male (Amount)
+           279 => ( Parameter_Float, 0.0 ),   --  : participation_35_39_male (Amount)
+           280 => ( Parameter_Float, 0.0 ),   --  : participation_40_44_male (Amount)
+           281 => ( Parameter_Float, 0.0 ),   --  : participation_45_49_male (Amount)
+           282 => ( Parameter_Float, 0.0 ),   --  : participation_50_54_male (Amount)
+           283 => ( Parameter_Float, 0.0 ),   --  : participation_55_59_male (Amount)
+           284 => ( Parameter_Float, 0.0 ),   --  : participation_60_64_male (Amount)
+           285 => ( Parameter_Float, 0.0 ),   --  : participation_65_69_male (Amount)
+           286 => ( Parameter_Float, 0.0 ),   --  : participation_70_74_male (Amount)
+           287 => ( Parameter_Float, 0.0 ),   --  : participation_75_plus_male (Amount)
+           288 => ( Parameter_Float, 0.0 ),   --  : participation_16_19_female (Amount)
+           289 => ( Parameter_Float, 0.0 ),   --  : participation_20_24_female (Amount)
+           290 => ( Parameter_Float, 0.0 ),   --  : participation_25_29_female (Amount)
+           291 => ( Parameter_Float, 0.0 ),   --  : participation_30_34_female (Amount)
+           292 => ( Parameter_Float, 0.0 ),   --  : participation_35_39_female (Amount)
+           293 => ( Parameter_Float, 0.0 ),   --  : participation_40_44_female (Amount)
+           294 => ( Parameter_Float, 0.0 ),   --  : participation_45_49_female (Amount)
+           295 => ( Parameter_Float, 0.0 ),   --  : participation_50_54_female (Amount)
+           296 => ( Parameter_Float, 0.0 ),   --  : participation_55_59_female (Amount)
+           297 => ( Parameter_Float, 0.0 ),   --  : participation_60_64_female (Amount)
+           298 => ( Parameter_Float, 0.0 ),   --  : participation_65_69_female (Amount)
+           299 => ( Parameter_Float, 0.0 ),   --  : participation_70_74_female (Amount)
+           300 => ( Parameter_Float, 0.0 ),   --  : participation_75_plus_female (Amount)
+           301 => ( Parameter_Float, 0.0 ),   --  : one_adult_hh (Amount)
+           302 => ( Parameter_Float, 0.0 ),   --  : two_adult_hh (Amount)
+           303 => ( Parameter_Float, 0.0 )   --  : other_hh (Amount)
       
       ));
    begin
@@ -759,7 +761,7 @@ package body Ukds.Target_Data.Target_Dataset_IO is
 
    function Get_Prepared_Insert_Statement return gse.Prepared_Statement is 
       ps : gse.Prepared_Statement; 
-      query : constant String := DB_Commons.Add_Schema_To_Query( INSERT_PART, SCHEMA_NAME ) & " ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $40, $41, $42, $43, $44, $45, $46, $47, $48, $49, $50, $51, $52, $53, $54, $55, $56, $57, $58, $59, $60, $61, $62, $63, $64, $65, $66, $67, $68, $69, $70, $71, $72, $73, $74, $75, $76, $77, $78, $79, $80, $81, $82, $83, $84, $85, $86, $87, $88, $89, $90, $91, $92, $93, $94, $95, $96, $97, $98, $99, $100, $101, $102, $103, $104, $105, $106, $107, $108, $109, $110, $111, $112, $113, $114, $115, $116, $117, $118, $119, $120, $121, $122, $123, $124, $125, $126, $127, $128, $129, $130, $131, $132, $133, $134, $135, $136, $137, $138, $139, $140, $141, $142, $143, $144, $145, $146, $147, $148, $149, $150, $151, $152, $153, $154, $155, $156, $157, $158, $159, $160, $161, $162, $163, $164, $165, $166, $167, $168, $169, $170, $171, $172, $173, $174, $175, $176, $177, $178, $179, $180, $181, $182, $183, $184, $185, $186, $187, $188, $189, $190, $191, $192, $193, $194, $195, $196, $197, $198, $199, $200, $201, $202, $203, $204, $205, $206, $207, $208, $209, $210, $211, $212, $213, $214, $215, $216, $217, $218, $219, $220, $221, $222, $223, $224, $225, $226, $227, $228, $229, $230, $231, $232, $233, $234, $235, $236, $237, $238, $239, $240, $241, $242, $243, $244, $245, $246, $247, $248, $249, $250, $251, $252, $253, $254, $255, $256, $257, $258, $259, $260, $261, $262, $263, $264, $265, $266, $267, $268, $269, $270, $271, $272, $273, $274, $275, $276, $277, $278, $279, $280, $281, $282, $283, $284, $285, $286, $287, $288, $289, $290, $291, $292, $293, $294, $295, $296, $297, $298, $299, $300, $301, $302 )"; 
+      query : constant String := DB_Commons.Add_Schema_To_Query( INSERT_PART, SCHEMA_NAME ) & " ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $40, $41, $42, $43, $44, $45, $46, $47, $48, $49, $50, $51, $52, $53, $54, $55, $56, $57, $58, $59, $60, $61, $62, $63, $64, $65, $66, $67, $68, $69, $70, $71, $72, $73, $74, $75, $76, $77, $78, $79, $80, $81, $82, $83, $84, $85, $86, $87, $88, $89, $90, $91, $92, $93, $94, $95, $96, $97, $98, $99, $100, $101, $102, $103, $104, $105, $106, $107, $108, $109, $110, $111, $112, $113, $114, $115, $116, $117, $118, $119, $120, $121, $122, $123, $124, $125, $126, $127, $128, $129, $130, $131, $132, $133, $134, $135, $136, $137, $138, $139, $140, $141, $142, $143, $144, $145, $146, $147, $148, $149, $150, $151, $152, $153, $154, $155, $156, $157, $158, $159, $160, $161, $162, $163, $164, $165, $166, $167, $168, $169, $170, $171, $172, $173, $174, $175, $176, $177, $178, $179, $180, $181, $182, $183, $184, $185, $186, $187, $188, $189, $190, $191, $192, $193, $194, $195, $196, $197, $198, $199, $200, $201, $202, $203, $204, $205, $206, $207, $208, $209, $210, $211, $212, $213, $214, $215, $216, $217, $218, $219, $220, $221, $222, $223, $224, $225, $226, $227, $228, $229, $230, $231, $232, $233, $234, $235, $236, $237, $238, $239, $240, $241, $242, $243, $244, $245, $246, $247, $248, $249, $250, $251, $252, $253, $254, $255, $256, $257, $258, $259, $260, $261, $262, $263, $264, $265, $266, $267, $268, $269, $270, $271, $272, $273, $274, $275, $276, $277, $278, $279, $280, $281, $282, $283, $284, $285, $286, $287, $288, $289, $290, $291, $292, $293, $294, $295, $296, $297, $298, $299, $300, $301, $302, $303 )"; 
    begin 
       ps := gse.Prepare( query, On_Server => True ); 
       return ps; 
@@ -806,7 +808,7 @@ package body Ukds.Target_Data.Target_Dataset_IO is
    function Get_Prepared_Update_Statement return gse.Prepared_Statement is 
       ps : gse.Prepared_Statement; 
       
-      query : constant String := DB_Commons.Add_Schema_To_Query( UPDATE_PART, SCHEMA_NAME ) & " hbai_excluded = $1, country_uk = $2, country_scotland = $3, country_england = $4, country_wales = $5, country_n_ireland = $6, household_all_households = $7, sco_hhld_one_adult_male = $8, sco_hhld_one_adult_female = $9, sco_hhld_two_adults = $10, sco_hhld_one_adult_one_child = $11, sco_hhld_one_adult_two_plus_children = $12, sco_hhld_two_plus_adult_one_plus_children = $13, sco_hhld_three_plus_person_all_adult = $14, eng_hhld_one_person_households_male = $15, eng_hhld_one_person_households_female = $16, eng_hhld_one_family_and_no_others_couple_no_dependent_chi = $17, eng_hhld_a_couple_and_other_adults_no_dependent_children = $18, eng_hhld_households_with_one_dependent_child = $19, eng_hhld_households_with_two_dependent_children = $20, eng_hhld_households_with_three_dependent_children = $21, eng_hhld_other_households = $22, nir_hhld_one_adult_households = $23, nir_hhld_two_adults_without_children = $24, nir_hhld_other_households_without_children = $25, nir_hhld_one_adult_households_with_children = $26, nir_hhld_other_households_with_children = $27, wal_hhld_1_person = $28, wal_hhld_2_person_no_children = $29, wal_hhld_2_person_1_adult_1_child = $30, wal_hhld_3_person_no_children = $31, wal_hhld_3_person_2_adults_1_child = $32, wal_hhld_3_person_1_adult_2_children = $33, wal_hhld_4_person_no_children = $34, wal_hhld_4_person_2_plus_adults_1_plus_children = $35, wal_hhld_4_person_1_adult_3_children = $36, wal_hhld_5_plus_person_no_children = $37, wal_hhld_5_plus_person_2_plus_adults_1_plus_children = $38, wal_hhld_5_plus_person_1_adult_4_plus_children = $39, male = $40, female = $41, employed = $42, employee = $43, ilo_unemployed = $44, jsa_claimant = $45, private_sector_employed = $46, public_sector_employed = $47, age_0_male = $48, age_1_male = $49, age_2_male = $50, age_3_male = $51, age_4_male = $52, age_5_male = $53, age_6_male = $54, age_7_male = $55, age_8_male = $56, age_9_male = $57, age_10_male = $58, age_11_male = $59, age_12_male = $60, age_13_male = $61, age_14_male = $62, age_15_male = $63, age_16_male = $64, age_17_male = $65, age_18_male = $66, age_19_male = $67, age_20_male = $68, age_21_male = $69, age_22_male = $70, age_23_male = $71, age_24_male = $72, age_25_male = $73, age_26_male = $74, age_27_male = $75, age_28_male = $76, age_29_male = $77, age_30_male = $78, age_31_male = $79, age_32_male = $80, age_33_male = $81, age_34_male = $82, age_35_male = $83, age_36_male = $84, age_37_male = $85, age_38_male = $86, age_39_male = $87, age_40_male = $88, age_41_male = $89, age_42_male = $90, age_43_male = $91, age_44_male = $92, age_45_male = $93, age_46_male = $94, age_47_male = $95, age_48_male = $96, age_49_male = $97, age_50_male = $98, age_51_male = $99, age_52_male = $100, age_53_male = $101, age_54_male = $102, age_55_male = $103, age_56_male = $104, age_57_male = $105, age_58_male = $106, age_59_male = $107, age_60_male = $108, age_61_male = $109, age_62_male = $110, age_63_male = $111, age_64_male = $112, age_65_male = $113, age_66_male = $114, age_67_male = $115, age_68_male = $116, age_69_male = $117, age_70_male = $118, age_71_male = $119, age_72_male = $120, age_73_male = $121, age_74_male = $122, age_75_male = $123, age_76_male = $124, age_77_male = $125, age_78_male = $126, age_79_male = $127, age_80_male = $128, age_81_male = $129, age_82_male = $130, age_83_male = $131, age_84_male = $132, age_85_male = $133, age_86_male = $134, age_87_male = $135, age_88_male = $136, age_89_male = $137, age_90_male = $138, age_91_male = $139, age_92_male = $140, age_93_male = $141, age_94_male = $142, age_95_male = $143, age_96_male = $144, age_97_male = $145, age_98_male = $146, age_99_male = $147, age_100_male = $148, age_101_male = $149, age_102_male = $150, age_103_male = $151, age_104_male = $152, age_105_male = $153, age_106_male = $154, age_107_male = $155, age_108_male = $156, age_109_male = $157, age_110_male = $158, age_0_female = $159, age_1_female = $160, age_2_female = $161, age_3_female = $162, age_4_female = $163, age_5_female = $164, age_6_female = $165, age_7_female = $166, age_8_female = $167, age_9_female = $168, age_10_female = $169, age_11_female = $170, age_12_female = $171, age_13_female = $172, age_14_female = $173, age_15_female = $174, age_16_female = $175, age_17_female = $176, age_18_female = $177, age_19_female = $178, age_20_female = $179, age_21_female = $180, age_22_female = $181, age_23_female = $182, age_24_female = $183, age_25_female = $184, age_26_female = $185, age_27_female = $186, age_28_female = $187, age_29_female = $188, age_30_female = $189, age_31_female = $190, age_32_female = $191, age_33_female = $192, age_34_female = $193, age_35_female = $194, age_36_female = $195, age_37_female = $196, age_38_female = $197, age_39_female = $198, age_40_female = $199, age_41_female = $200, age_42_female = $201, age_43_female = $202, age_44_female = $203, age_45_female = $204, age_46_female = $205, age_47_female = $206, age_48_female = $207, age_49_female = $208, age_50_female = $209, age_51_female = $210, age_52_female = $211, age_53_female = $212, age_54_female = $213, age_55_female = $214, age_56_female = $215, age_57_female = $216, age_58_female = $217, age_59_female = $218, age_60_female = $219, age_61_female = $220, age_62_female = $221, age_63_female = $222, age_64_female = $223, age_65_female = $224, age_66_female = $225, age_67_female = $226, age_68_female = $227, age_69_female = $228, age_70_female = $229, age_71_female = $230, age_72_female = $231, age_73_female = $232, age_74_female = $233, age_75_female = $234, age_76_female = $235, age_77_female = $236, age_78_female = $237, age_79_female = $238, age_80_female = $239, age_81_female = $240, age_82_female = $241, age_83_female = $242, age_84_female = $243, age_85_female = $244, age_86_female = $245, age_87_female = $246, age_88_female = $247, age_89_female = $248, age_90_female = $249, age_91_female = $250, age_92_female = $251, age_93_female = $252, age_94_female = $253, age_95_female = $254, age_96_female = $255, age_97_female = $256, age_98_female = $257, age_99_female = $258, age_100_female = $259, age_101_female = $260, age_102_female = $261, age_103_female = $262, age_104_female = $263, age_105_female = $264, age_106_female = $265, age_107_female = $266, age_108_female = $267, age_109_female = $268, age_110_female = $269, participation_16_19_male = $270, participation_20_24_male = $271, participation_25_29_male = $272, participation_30_34_male = $273, participation_35_39_male = $274, participation_40_44_male = $275, participation_45_49_male = $276, participation_50_54_male = $277, participation_55_59_male = $278, participation_60_64_male = $279, participation_65_69_male = $280, participation_70_74_male = $281, participation_75_plus_male = $282, participation_16_19_female = $283, participation_20_24_female = $284, participation_25_29_female = $285, participation_30_34_female = $286, participation_35_39_female = $287, participation_40_44_female = $288, participation_45_49_female = $289, participation_50_54_female = $290, participation_55_59_female = $291, participation_60_64_female = $292, participation_65_69_female = $293, participation_70_74_female = $294, participation_75_plus_female = $295, one_adult_hh = $296, two_adult_hh = $297, other_hh = $298 where run_id = $299 and user_id = $300 and year = $301 and sernum = $302"; 
+      query : constant String := DB_Commons.Add_Schema_To_Query( UPDATE_PART, SCHEMA_NAME ) & " hbai_excluded = $1, country_uk = $2, country_scotland = $3, country_england = $4, country_wales = $5, country_n_ireland = $6, household_all_households = $7, sco_hhld_one_adult_male = $8, sco_hhld_one_adult_female = $9, sco_hhld_two_adults = $10, sco_hhld_one_adult_one_child = $11, sco_hhld_one_adult_two_plus_children = $12, sco_hhld_two_plus_adult_one_plus_children = $13, sco_hhld_three_plus_person_all_adult = $14, eng_hhld_one_person_households_male = $15, eng_hhld_one_person_households_female = $16, eng_hhld_one_family_and_no_others_couple_no_dependent_chi = $17, eng_hhld_a_couple_and_other_adults_no_dependent_children = $18, eng_hhld_households_with_one_dependent_child = $19, eng_hhld_households_with_two_dependent_children = $20, eng_hhld_households_with_three_dependent_children = $21, eng_hhld_other_households = $22, nir_hhld_one_adult_households = $23, nir_hhld_two_adults_without_children = $24, nir_hhld_other_households_without_children = $25, nir_hhld_one_adult_households_with_children = $26, nir_hhld_other_households_with_children = $27, wal_hhld_1_person = $28, wal_hhld_2_person_no_children = $29, wal_hhld_2_person_1_adult_1_child = $30, wal_hhld_3_person_no_children = $31, wal_hhld_3_person_2_adults_1_child = $32, wal_hhld_3_person_1_adult_2_children = $33, wal_hhld_4_person_no_children = $34, wal_hhld_4_person_2_plus_adults_1_plus_children = $35, wal_hhld_4_person_1_adult_3_children = $36, wal_hhld_5_plus_person_no_children = $37, wal_hhld_5_plus_person_2_plus_adults_1_plus_children = $38, wal_hhld_5_plus_person_1_adult_4_plus_children = $39, male = $40, female = $41, employed = $42, employee = $43, ilo_unemployed = $44, jsa_claimant = $45, private_sector_employed = $46, public_sector_employed = $47, age_0_male = $48, age_1_male = $49, age_2_male = $50, age_3_male = $51, age_4_male = $52, age_5_male = $53, age_6_male = $54, age_7_male = $55, age_8_male = $56, age_9_male = $57, age_10_male = $58, age_11_male = $59, age_12_male = $60, age_13_male = $61, age_14_male = $62, age_15_male = $63, age_16_male = $64, age_17_male = $65, age_18_male = $66, age_19_male = $67, age_20_male = $68, age_21_male = $69, age_22_male = $70, age_23_male = $71, age_24_male = $72, age_25_male = $73, age_26_male = $74, age_27_male = $75, age_28_male = $76, age_29_male = $77, age_30_male = $78, age_31_male = $79, age_32_male = $80, age_33_male = $81, age_34_male = $82, age_35_male = $83, age_36_male = $84, age_37_male = $85, age_38_male = $86, age_39_male = $87, age_40_male = $88, age_41_male = $89, age_42_male = $90, age_43_male = $91, age_44_male = $92, age_45_male = $93, age_46_male = $94, age_47_male = $95, age_48_male = $96, age_49_male = $97, age_50_male = $98, age_51_male = $99, age_52_male = $100, age_53_male = $101, age_54_male = $102, age_55_male = $103, age_56_male = $104, age_57_male = $105, age_58_male = $106, age_59_male = $107, age_60_male = $108, age_61_male = $109, age_62_male = $110, age_63_male = $111, age_64_male = $112, age_65_male = $113, age_66_male = $114, age_67_male = $115, age_68_male = $116, age_69_male = $117, age_70_male = $118, age_71_male = $119, age_72_male = $120, age_73_male = $121, age_74_male = $122, age_75_male = $123, age_76_male = $124, age_77_male = $125, age_78_male = $126, age_79_male = $127, age_80_male = $128, age_81_male = $129, age_82_male = $130, age_83_male = $131, age_84_male = $132, age_85_male = $133, age_86_male = $134, age_87_male = $135, age_88_male = $136, age_89_male = $137, age_90_male = $138, age_91_male = $139, age_92_male = $140, age_93_male = $141, age_94_male = $142, age_95_male = $143, age_96_male = $144, age_97_male = $145, age_98_male = $146, age_99_male = $147, age_100_male = $148, age_101_male = $149, age_102_male = $150, age_103_male = $151, age_104_male = $152, age_105_male = $153, age_106_male = $154, age_107_male = $155, age_108_male = $156, age_109_male = $157, age_110_male = $158, age_0_female = $159, age_1_female = $160, age_2_female = $161, age_3_female = $162, age_4_female = $163, age_5_female = $164, age_6_female = $165, age_7_female = $166, age_8_female = $167, age_9_female = $168, age_10_female = $169, age_11_female = $170, age_12_female = $171, age_13_female = $172, age_14_female = $173, age_15_female = $174, age_16_female = $175, age_17_female = $176, age_18_female = $177, age_19_female = $178, age_20_female = $179, age_21_female = $180, age_22_female = $181, age_23_female = $182, age_24_female = $183, age_25_female = $184, age_26_female = $185, age_27_female = $186, age_28_female = $187, age_29_female = $188, age_30_female = $189, age_31_female = $190, age_32_female = $191, age_33_female = $192, age_34_female = $193, age_35_female = $194, age_36_female = $195, age_37_female = $196, age_38_female = $197, age_39_female = $198, age_40_female = $199, age_41_female = $200, age_42_female = $201, age_43_female = $202, age_44_female = $203, age_45_female = $204, age_46_female = $205, age_47_female = $206, age_48_female = $207, age_49_female = $208, age_50_female = $209, age_51_female = $210, age_52_female = $211, age_53_female = $212, age_54_female = $213, age_55_female = $214, age_56_female = $215, age_57_female = $216, age_58_female = $217, age_59_female = $218, age_60_female = $219, age_61_female = $220, age_62_female = $221, age_63_female = $222, age_64_female = $223, age_65_female = $224, age_66_female = $225, age_67_female = $226, age_68_female = $227, age_69_female = $228, age_70_female = $229, age_71_female = $230, age_72_female = $231, age_73_female = $232, age_74_female = $233, age_75_female = $234, age_76_female = $235, age_77_female = $236, age_78_female = $237, age_79_female = $238, age_80_female = $239, age_81_female = $240, age_82_female = $241, age_83_female = $242, age_84_female = $243, age_85_female = $244, age_86_female = $245, age_87_female = $246, age_88_female = $247, age_89_female = $248, age_90_female = $249, age_91_female = $250, age_92_female = $251, age_93_female = $252, age_94_female = $253, age_95_female = $254, age_96_female = $255, age_97_female = $256, age_98_female = $257, age_99_female = $258, age_100_female = $259, age_101_female = $260, age_102_female = $261, age_103_female = $262, age_104_female = $263, age_105_female = $264, age_106_female = $265, age_107_female = $266, age_108_female = $267, age_109_female = $268, age_110_female = $269, participation = $270, participation_16_19_male = $271, participation_20_24_male = $272, participation_25_29_male = $273, participation_30_34_male = $274, participation_35_39_male = $275, participation_40_44_male = $276, participation_45_49_male = $277, participation_50_54_male = $278, participation_55_59_male = $279, participation_60_64_male = $280, participation_65_69_male = $281, participation_70_74_male = $282, participation_75_plus_male = $283, participation_16_19_female = $284, participation_20_24_female = $285, participation_25_29_female = $286, participation_30_34_female = $287, participation_35_39_female = $288, participation_40_44_female = $289, participation_45_49_female = $290, participation_50_54_female = $291, participation_55_59_female = $292, participation_60_64_female = $293, participation_65_69_female = $294, participation_70_74_female = $295, participation_75_plus_female = $296, one_adult_hh = $297, two_adult_hh = $298, other_hh = $299 where run_id = $300 and user_id = $301 and year = $302 and sernum = $303"; 
    begin 
       ps := gse.Prepare( 
         query, 
@@ -1872,91 +1874,94 @@ package body Ukds.Target_Data.Target_Dataset_IO is
          a_target_dataset.age_110_female:= Amount'Value( gse.Value( cursor, 272 ));
       end if;
       if not gse.Is_Null( cursor, 273 )then
-         a_target_dataset.participation_16_19_male:= Amount'Value( gse.Value( cursor, 273 ));
+         a_target_dataset.participation:= Amount'Value( gse.Value( cursor, 273 ));
       end if;
       if not gse.Is_Null( cursor, 274 )then
-         a_target_dataset.participation_20_24_male:= Amount'Value( gse.Value( cursor, 274 ));
+         a_target_dataset.participation_16_19_male:= Amount'Value( gse.Value( cursor, 274 ));
       end if;
       if not gse.Is_Null( cursor, 275 )then
-         a_target_dataset.participation_25_29_male:= Amount'Value( gse.Value( cursor, 275 ));
+         a_target_dataset.participation_20_24_male:= Amount'Value( gse.Value( cursor, 275 ));
       end if;
       if not gse.Is_Null( cursor, 276 )then
-         a_target_dataset.participation_30_34_male:= Amount'Value( gse.Value( cursor, 276 ));
+         a_target_dataset.participation_25_29_male:= Amount'Value( gse.Value( cursor, 276 ));
       end if;
       if not gse.Is_Null( cursor, 277 )then
-         a_target_dataset.participation_35_39_male:= Amount'Value( gse.Value( cursor, 277 ));
+         a_target_dataset.participation_30_34_male:= Amount'Value( gse.Value( cursor, 277 ));
       end if;
       if not gse.Is_Null( cursor, 278 )then
-         a_target_dataset.participation_40_44_male:= Amount'Value( gse.Value( cursor, 278 ));
+         a_target_dataset.participation_35_39_male:= Amount'Value( gse.Value( cursor, 278 ));
       end if;
       if not gse.Is_Null( cursor, 279 )then
-         a_target_dataset.participation_45_49_male:= Amount'Value( gse.Value( cursor, 279 ));
+         a_target_dataset.participation_40_44_male:= Amount'Value( gse.Value( cursor, 279 ));
       end if;
       if not gse.Is_Null( cursor, 280 )then
-         a_target_dataset.participation_50_54_male:= Amount'Value( gse.Value( cursor, 280 ));
+         a_target_dataset.participation_45_49_male:= Amount'Value( gse.Value( cursor, 280 ));
       end if;
       if not gse.Is_Null( cursor, 281 )then
-         a_target_dataset.participation_55_59_male:= Amount'Value( gse.Value( cursor, 281 ));
+         a_target_dataset.participation_50_54_male:= Amount'Value( gse.Value( cursor, 281 ));
       end if;
       if not gse.Is_Null( cursor, 282 )then
-         a_target_dataset.participation_60_64_male:= Amount'Value( gse.Value( cursor, 282 ));
+         a_target_dataset.participation_55_59_male:= Amount'Value( gse.Value( cursor, 282 ));
       end if;
       if not gse.Is_Null( cursor, 283 )then
-         a_target_dataset.participation_65_69_male:= Amount'Value( gse.Value( cursor, 283 ));
+         a_target_dataset.participation_60_64_male:= Amount'Value( gse.Value( cursor, 283 ));
       end if;
       if not gse.Is_Null( cursor, 284 )then
-         a_target_dataset.participation_70_74_male:= Amount'Value( gse.Value( cursor, 284 ));
+         a_target_dataset.participation_65_69_male:= Amount'Value( gse.Value( cursor, 284 ));
       end if;
       if not gse.Is_Null( cursor, 285 )then
-         a_target_dataset.participation_75_plus_male:= Amount'Value( gse.Value( cursor, 285 ));
+         a_target_dataset.participation_70_74_male:= Amount'Value( gse.Value( cursor, 285 ));
       end if;
       if not gse.Is_Null( cursor, 286 )then
-         a_target_dataset.participation_16_19_female:= Amount'Value( gse.Value( cursor, 286 ));
+         a_target_dataset.participation_75_plus_male:= Amount'Value( gse.Value( cursor, 286 ));
       end if;
       if not gse.Is_Null( cursor, 287 )then
-         a_target_dataset.participation_20_24_female:= Amount'Value( gse.Value( cursor, 287 ));
+         a_target_dataset.participation_16_19_female:= Amount'Value( gse.Value( cursor, 287 ));
       end if;
       if not gse.Is_Null( cursor, 288 )then
-         a_target_dataset.participation_25_29_female:= Amount'Value( gse.Value( cursor, 288 ));
+         a_target_dataset.participation_20_24_female:= Amount'Value( gse.Value( cursor, 288 ));
       end if;
       if not gse.Is_Null( cursor, 289 )then
-         a_target_dataset.participation_30_34_female:= Amount'Value( gse.Value( cursor, 289 ));
+         a_target_dataset.participation_25_29_female:= Amount'Value( gse.Value( cursor, 289 ));
       end if;
       if not gse.Is_Null( cursor, 290 )then
-         a_target_dataset.participation_35_39_female:= Amount'Value( gse.Value( cursor, 290 ));
+         a_target_dataset.participation_30_34_female:= Amount'Value( gse.Value( cursor, 290 ));
       end if;
       if not gse.Is_Null( cursor, 291 )then
-         a_target_dataset.participation_40_44_female:= Amount'Value( gse.Value( cursor, 291 ));
+         a_target_dataset.participation_35_39_female:= Amount'Value( gse.Value( cursor, 291 ));
       end if;
       if not gse.Is_Null( cursor, 292 )then
-         a_target_dataset.participation_45_49_female:= Amount'Value( gse.Value( cursor, 292 ));
+         a_target_dataset.participation_40_44_female:= Amount'Value( gse.Value( cursor, 292 ));
       end if;
       if not gse.Is_Null( cursor, 293 )then
-         a_target_dataset.participation_50_54_female:= Amount'Value( gse.Value( cursor, 293 ));
+         a_target_dataset.participation_45_49_female:= Amount'Value( gse.Value( cursor, 293 ));
       end if;
       if not gse.Is_Null( cursor, 294 )then
-         a_target_dataset.participation_55_59_female:= Amount'Value( gse.Value( cursor, 294 ));
+         a_target_dataset.participation_50_54_female:= Amount'Value( gse.Value( cursor, 294 ));
       end if;
       if not gse.Is_Null( cursor, 295 )then
-         a_target_dataset.participation_60_64_female:= Amount'Value( gse.Value( cursor, 295 ));
+         a_target_dataset.participation_55_59_female:= Amount'Value( gse.Value( cursor, 295 ));
       end if;
       if not gse.Is_Null( cursor, 296 )then
-         a_target_dataset.participation_65_69_female:= Amount'Value( gse.Value( cursor, 296 ));
+         a_target_dataset.participation_60_64_female:= Amount'Value( gse.Value( cursor, 296 ));
       end if;
       if not gse.Is_Null( cursor, 297 )then
-         a_target_dataset.participation_70_74_female:= Amount'Value( gse.Value( cursor, 297 ));
+         a_target_dataset.participation_65_69_female:= Amount'Value( gse.Value( cursor, 297 ));
       end if;
       if not gse.Is_Null( cursor, 298 )then
-         a_target_dataset.participation_75_plus_female:= Amount'Value( gse.Value( cursor, 298 ));
+         a_target_dataset.participation_70_74_female:= Amount'Value( gse.Value( cursor, 298 ));
       end if;
       if not gse.Is_Null( cursor, 299 )then
-         a_target_dataset.one_adult_hh:= Amount'Value( gse.Value( cursor, 299 ));
+         a_target_dataset.participation_75_plus_female:= Amount'Value( gse.Value( cursor, 299 ));
       end if;
       if not gse.Is_Null( cursor, 300 )then
-         a_target_dataset.two_adult_hh:= Amount'Value( gse.Value( cursor, 300 ));
+         a_target_dataset.one_adult_hh:= Amount'Value( gse.Value( cursor, 300 ));
       end if;
       if not gse.Is_Null( cursor, 301 )then
-         a_target_dataset.other_hh:= Amount'Value( gse.Value( cursor, 301 ));
+         a_target_dataset.two_adult_hh:= Amount'Value( gse.Value( cursor, 301 ));
+      end if;
+      if not gse.Is_Null( cursor, 302 )then
+         a_target_dataset.other_hh:= Amount'Value( gse.Value( cursor, 302 ));
       end if;
       return a_target_dataset;
    end Map_From_Cursor;
@@ -2283,39 +2288,40 @@ package body Ukds.Target_Data.Target_Dataset_IO is
       params( 267 ) := "+"( Float( a_target_dataset.age_108_female ));
       params( 268 ) := "+"( Float( a_target_dataset.age_109_female ));
       params( 269 ) := "+"( Float( a_target_dataset.age_110_female ));
-      params( 270 ) := "+"( Float( a_target_dataset.participation_16_19_male ));
-      params( 271 ) := "+"( Float( a_target_dataset.participation_20_24_male ));
-      params( 272 ) := "+"( Float( a_target_dataset.participation_25_29_male ));
-      params( 273 ) := "+"( Float( a_target_dataset.participation_30_34_male ));
-      params( 274 ) := "+"( Float( a_target_dataset.participation_35_39_male ));
-      params( 275 ) := "+"( Float( a_target_dataset.participation_40_44_male ));
-      params( 276 ) := "+"( Float( a_target_dataset.participation_45_49_male ));
-      params( 277 ) := "+"( Float( a_target_dataset.participation_50_54_male ));
-      params( 278 ) := "+"( Float( a_target_dataset.participation_55_59_male ));
-      params( 279 ) := "+"( Float( a_target_dataset.participation_60_64_male ));
-      params( 280 ) := "+"( Float( a_target_dataset.participation_65_69_male ));
-      params( 281 ) := "+"( Float( a_target_dataset.participation_70_74_male ));
-      params( 282 ) := "+"( Float( a_target_dataset.participation_75_plus_male ));
-      params( 283 ) := "+"( Float( a_target_dataset.participation_16_19_female ));
-      params( 284 ) := "+"( Float( a_target_dataset.participation_20_24_female ));
-      params( 285 ) := "+"( Float( a_target_dataset.participation_25_29_female ));
-      params( 286 ) := "+"( Float( a_target_dataset.participation_30_34_female ));
-      params( 287 ) := "+"( Float( a_target_dataset.participation_35_39_female ));
-      params( 288 ) := "+"( Float( a_target_dataset.participation_40_44_female ));
-      params( 289 ) := "+"( Float( a_target_dataset.participation_45_49_female ));
-      params( 290 ) := "+"( Float( a_target_dataset.participation_50_54_female ));
-      params( 291 ) := "+"( Float( a_target_dataset.participation_55_59_female ));
-      params( 292 ) := "+"( Float( a_target_dataset.participation_60_64_female ));
-      params( 293 ) := "+"( Float( a_target_dataset.participation_65_69_female ));
-      params( 294 ) := "+"( Float( a_target_dataset.participation_70_74_female ));
-      params( 295 ) := "+"( Float( a_target_dataset.participation_75_plus_female ));
-      params( 296 ) := "+"( Float( a_target_dataset.one_adult_hh ));
-      params( 297 ) := "+"( Float( a_target_dataset.two_adult_hh ));
-      params( 298 ) := "+"( Float( a_target_dataset.other_hh ));
-      params( 299 ) := "+"( Integer'Pos( a_target_dataset.run_id ));
-      params( 300 ) := "+"( Integer'Pos( a_target_dataset.user_id ));
-      params( 301 ) := "+"( Year_Number'Pos( a_target_dataset.year ));
-      params( 302 ) := As_Bigint( a_target_dataset.sernum );
+      params( 270 ) := "+"( Float( a_target_dataset.participation ));
+      params( 271 ) := "+"( Float( a_target_dataset.participation_16_19_male ));
+      params( 272 ) := "+"( Float( a_target_dataset.participation_20_24_male ));
+      params( 273 ) := "+"( Float( a_target_dataset.participation_25_29_male ));
+      params( 274 ) := "+"( Float( a_target_dataset.participation_30_34_male ));
+      params( 275 ) := "+"( Float( a_target_dataset.participation_35_39_male ));
+      params( 276 ) := "+"( Float( a_target_dataset.participation_40_44_male ));
+      params( 277 ) := "+"( Float( a_target_dataset.participation_45_49_male ));
+      params( 278 ) := "+"( Float( a_target_dataset.participation_50_54_male ));
+      params( 279 ) := "+"( Float( a_target_dataset.participation_55_59_male ));
+      params( 280 ) := "+"( Float( a_target_dataset.participation_60_64_male ));
+      params( 281 ) := "+"( Float( a_target_dataset.participation_65_69_male ));
+      params( 282 ) := "+"( Float( a_target_dataset.participation_70_74_male ));
+      params( 283 ) := "+"( Float( a_target_dataset.participation_75_plus_male ));
+      params( 284 ) := "+"( Float( a_target_dataset.participation_16_19_female ));
+      params( 285 ) := "+"( Float( a_target_dataset.participation_20_24_female ));
+      params( 286 ) := "+"( Float( a_target_dataset.participation_25_29_female ));
+      params( 287 ) := "+"( Float( a_target_dataset.participation_30_34_female ));
+      params( 288 ) := "+"( Float( a_target_dataset.participation_35_39_female ));
+      params( 289 ) := "+"( Float( a_target_dataset.participation_40_44_female ));
+      params( 290 ) := "+"( Float( a_target_dataset.participation_45_49_female ));
+      params( 291 ) := "+"( Float( a_target_dataset.participation_50_54_female ));
+      params( 292 ) := "+"( Float( a_target_dataset.participation_55_59_female ));
+      params( 293 ) := "+"( Float( a_target_dataset.participation_60_64_female ));
+      params( 294 ) := "+"( Float( a_target_dataset.participation_65_69_female ));
+      params( 295 ) := "+"( Float( a_target_dataset.participation_70_74_female ));
+      params( 296 ) := "+"( Float( a_target_dataset.participation_75_plus_female ));
+      params( 297 ) := "+"( Float( a_target_dataset.one_adult_hh ));
+      params( 298 ) := "+"( Float( a_target_dataset.two_adult_hh ));
+      params( 299 ) := "+"( Float( a_target_dataset.other_hh ));
+      params( 300 ) := "+"( Integer'Pos( a_target_dataset.run_id ));
+      params( 301 ) := "+"( Integer'Pos( a_target_dataset.user_id ));
+      params( 302 ) := "+"( Year_Number'Pos( a_target_dataset.year ));
+      params( 303 ) := As_Bigint( a_target_dataset.sernum );
       
       gse.Execute( local_connection, UPDATE_PS, params );
       Check_Result( local_connection );
@@ -2623,35 +2629,36 @@ package body Ukds.Target_Data.Target_Dataset_IO is
       params( 271 ) := "+"( Float( a_target_dataset.age_108_female ));
       params( 272 ) := "+"( Float( a_target_dataset.age_109_female ));
       params( 273 ) := "+"( Float( a_target_dataset.age_110_female ));
-      params( 274 ) := "+"( Float( a_target_dataset.participation_16_19_male ));
-      params( 275 ) := "+"( Float( a_target_dataset.participation_20_24_male ));
-      params( 276 ) := "+"( Float( a_target_dataset.participation_25_29_male ));
-      params( 277 ) := "+"( Float( a_target_dataset.participation_30_34_male ));
-      params( 278 ) := "+"( Float( a_target_dataset.participation_35_39_male ));
-      params( 279 ) := "+"( Float( a_target_dataset.participation_40_44_male ));
-      params( 280 ) := "+"( Float( a_target_dataset.participation_45_49_male ));
-      params( 281 ) := "+"( Float( a_target_dataset.participation_50_54_male ));
-      params( 282 ) := "+"( Float( a_target_dataset.participation_55_59_male ));
-      params( 283 ) := "+"( Float( a_target_dataset.participation_60_64_male ));
-      params( 284 ) := "+"( Float( a_target_dataset.participation_65_69_male ));
-      params( 285 ) := "+"( Float( a_target_dataset.participation_70_74_male ));
-      params( 286 ) := "+"( Float( a_target_dataset.participation_75_plus_male ));
-      params( 287 ) := "+"( Float( a_target_dataset.participation_16_19_female ));
-      params( 288 ) := "+"( Float( a_target_dataset.participation_20_24_female ));
-      params( 289 ) := "+"( Float( a_target_dataset.participation_25_29_female ));
-      params( 290 ) := "+"( Float( a_target_dataset.participation_30_34_female ));
-      params( 291 ) := "+"( Float( a_target_dataset.participation_35_39_female ));
-      params( 292 ) := "+"( Float( a_target_dataset.participation_40_44_female ));
-      params( 293 ) := "+"( Float( a_target_dataset.participation_45_49_female ));
-      params( 294 ) := "+"( Float( a_target_dataset.participation_50_54_female ));
-      params( 295 ) := "+"( Float( a_target_dataset.participation_55_59_female ));
-      params( 296 ) := "+"( Float( a_target_dataset.participation_60_64_female ));
-      params( 297 ) := "+"( Float( a_target_dataset.participation_65_69_female ));
-      params( 298 ) := "+"( Float( a_target_dataset.participation_70_74_female ));
-      params( 299 ) := "+"( Float( a_target_dataset.participation_75_plus_female ));
-      params( 300 ) := "+"( Float( a_target_dataset.one_adult_hh ));
-      params( 301 ) := "+"( Float( a_target_dataset.two_adult_hh ));
-      params( 302 ) := "+"( Float( a_target_dataset.other_hh ));
+      params( 274 ) := "+"( Float( a_target_dataset.participation ));
+      params( 275 ) := "+"( Float( a_target_dataset.participation_16_19_male ));
+      params( 276 ) := "+"( Float( a_target_dataset.participation_20_24_male ));
+      params( 277 ) := "+"( Float( a_target_dataset.participation_25_29_male ));
+      params( 278 ) := "+"( Float( a_target_dataset.participation_30_34_male ));
+      params( 279 ) := "+"( Float( a_target_dataset.participation_35_39_male ));
+      params( 280 ) := "+"( Float( a_target_dataset.participation_40_44_male ));
+      params( 281 ) := "+"( Float( a_target_dataset.participation_45_49_male ));
+      params( 282 ) := "+"( Float( a_target_dataset.participation_50_54_male ));
+      params( 283 ) := "+"( Float( a_target_dataset.participation_55_59_male ));
+      params( 284 ) := "+"( Float( a_target_dataset.participation_60_64_male ));
+      params( 285 ) := "+"( Float( a_target_dataset.participation_65_69_male ));
+      params( 286 ) := "+"( Float( a_target_dataset.participation_70_74_male ));
+      params( 287 ) := "+"( Float( a_target_dataset.participation_75_plus_male ));
+      params( 288 ) := "+"( Float( a_target_dataset.participation_16_19_female ));
+      params( 289 ) := "+"( Float( a_target_dataset.participation_20_24_female ));
+      params( 290 ) := "+"( Float( a_target_dataset.participation_25_29_female ));
+      params( 291 ) := "+"( Float( a_target_dataset.participation_30_34_female ));
+      params( 292 ) := "+"( Float( a_target_dataset.participation_35_39_female ));
+      params( 293 ) := "+"( Float( a_target_dataset.participation_40_44_female ));
+      params( 294 ) := "+"( Float( a_target_dataset.participation_45_49_female ));
+      params( 295 ) := "+"( Float( a_target_dataset.participation_50_54_female ));
+      params( 296 ) := "+"( Float( a_target_dataset.participation_55_59_female ));
+      params( 297 ) := "+"( Float( a_target_dataset.participation_60_64_female ));
+      params( 298 ) := "+"( Float( a_target_dataset.participation_65_69_female ));
+      params( 299 ) := "+"( Float( a_target_dataset.participation_70_74_female ));
+      params( 300 ) := "+"( Float( a_target_dataset.participation_75_plus_female ));
+      params( 301 ) := "+"( Float( a_target_dataset.one_adult_hh ));
+      params( 302 ) := "+"( Float( a_target_dataset.two_adult_hh ));
+      params( 303 ) := "+"( Float( a_target_dataset.other_hh ));
       gse.Execute( local_connection, SAVE_PS, params );  
       Check_Result( local_connection );
       if( is_local_connection )then
@@ -4625,6 +4632,13 @@ package body Ukds.Target_Data.Target_Dataset_IO is
    begin
       d.add_to_criteria( c, elem );
    end Add_age_110_female;
+
+
+   procedure Add_participation( c : in out d.Criteria; participation : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "participation", op, join, Long_Float( participation ) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_participation;
 
 
    procedure Add_participation_16_19_male( c : in out d.Criteria; participation_16_19_male : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
@@ -6743,6 +6757,13 @@ package body Ukds.Target_Data.Target_Dataset_IO is
    begin
       d.add_to_criteria( c, elem );
    end Add_age_110_female_To_Orderings;
+
+
+   procedure Add_participation_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "participation", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_participation_To_Orderings;
 
 
    procedure Add_participation_16_19_male_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   

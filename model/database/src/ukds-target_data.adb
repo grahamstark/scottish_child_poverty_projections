@@ -294,6 +294,7 @@ package body Ukds.target_data is
          "age_108_female = " & rec.age_108_female'Img &
          "age_109_female = " & rec.age_109_female'Img &
          "age_110_female = " & rec.age_110_female'Img &
+         "participation = " & rec.participation'Img &
          "participation_16_19_male = " & rec.participation_16_19_male'Img &
          "participation_20_24_male = " & rec.participation_20_24_male'Img &
          "participation_25_29_male = " & rec.participation_25_29_male'Img &
@@ -544,6 +545,7 @@ package body Ukds.target_data is
          "employment = " & rec.employment'Img &
          "employment_rate = " & rec.employment_rate'Img &
          "employees = " & rec.employees'Img &
+         "employee_rate = " & rec.employee_rate'Img &
          "ilo_unemployment = " & rec.ilo_unemployment'Img &
          "ilo_unemployment_rate = " & rec.ilo_unemployment_rate'Img &
          "participation_rate = " & rec.participation_rate'Img &
@@ -933,7 +935,7 @@ package body Ukds.target_data is
       s : Amount := 0.0;
    begin
       for i in start .. stop loop
-         Inc( s, a(i));
+         Inc( s, a(i));         
       end loop;
       return s;
    end Sum;

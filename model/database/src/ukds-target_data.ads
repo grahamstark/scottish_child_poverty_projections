@@ -311,6 +311,7 @@ package Ukds.target_data is
       age_108_female : Amount := 0.0;
       age_109_female : Amount := 0.0;
       age_110_female : Amount := 0.0;
+      participation : Amount := 0.0;
       participation_16_19_male : Amount := 0.0;
       participation_20_24_male : Amount := 0.0;
       participation_25_29_male : Amount := 0.0;
@@ -625,6 +626,7 @@ package Ukds.target_data is
          age_108_female => 0.0,
          age_109_female => 0.0,
          age_110_female => 0.0,
+         participation => 0.0,
          participation_16_19_male => 0.0,
          participation_20_24_male => 0.0,
          participation_25_29_male => 0.0,
@@ -1136,6 +1138,7 @@ package Ukds.target_data is
       employment : Amount := 0.0;
       employment_rate : Amount := 0.0;
       employees : Amount := 0.0;
+      employee_rate : Amount := 0.0;
       ilo_unemployment : Amount := 0.0;
       ilo_unemployment_rate : Amount := 0.0;
       participation_rate : Amount := 0.0;
@@ -1193,6 +1196,7 @@ package Ukds.target_data is
          employment => 0.0,
          employment_rate => 0.0,
          employees => 0.0,
+         employee_rate => 0.0,
          ilo_unemployment => 0.0,
          ilo_unemployment_rate => 0.0,
          participation_rate => 0.0,

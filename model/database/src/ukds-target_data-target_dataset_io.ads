@@ -369,6 +369,7 @@ package Ukds.Target_Data.Target_Dataset_IO is
    procedure Add_age_108_female( c : in out d.Criteria; age_108_female : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_age_109_female( c : in out d.Criteria; age_109_female : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_age_110_female( c : in out d.Criteria; age_110_female : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_participation( c : in out d.Criteria; participation : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_participation_16_19_male( c : in out d.Criteria; participation_16_19_male : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_participation_20_24_male( c : in out d.Criteria; participation_20_24_male : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_participation_25_29_male( c : in out d.Criteria; participation_25_29_male : Amount; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
@@ -674,6 +675,7 @@ package Ukds.Target_Data.Target_Dataset_IO is
    procedure Add_age_108_female_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_age_109_female_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_age_110_female_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_participation_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_participation_16_19_male_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_participation_20_24_male_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_participation_25_29_male_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
@@ -707,7 +709,7 @@ package Ukds.Target_Data.Target_Dataset_IO is
    function Map_From_Cursor( cursor : GNATCOLL.SQL.Exec.Forward_Cursor ) return Ukds.Target_Data.Target_Dataset;
 
    -- 
-   -- returns an array of GNATColl SQL Parameters indexed 1 .. 302, as follows
+   -- returns an array of GNATColl SQL Parameters indexed 1 .. 303, as follows
    -- Pos  |       Name               | SQL Type           | Ada Type             | Default
    --    1 : run_id                   : Parameter_Integer  : Integer              :        0 
    --    2 : user_id                  : Parameter_Integer  : Integer              :        0 
@@ -982,35 +984,36 @@ package Ukds.Target_Data.Target_Dataset_IO is
    --  271 : age_108_female           : Parameter_Float    : Amount               :      0.0 
    --  272 : age_109_female           : Parameter_Float    : Amount               :      0.0 
    --  273 : age_110_female           : Parameter_Float    : Amount               :      0.0 
-   --  274 : participation_16_19_male : Parameter_Float    : Amount               :      0.0 
-   --  275 : participation_20_24_male : Parameter_Float    : Amount               :      0.0 
-   --  276 : participation_25_29_male : Parameter_Float    : Amount               :      0.0 
-   --  277 : participation_30_34_male : Parameter_Float    : Amount               :      0.0 
-   --  278 : participation_35_39_male : Parameter_Float    : Amount               :      0.0 
-   --  279 : participation_40_44_male : Parameter_Float    : Amount               :      0.0 
-   --  280 : participation_45_49_male : Parameter_Float    : Amount               :      0.0 
-   --  281 : participation_50_54_male : Parameter_Float    : Amount               :      0.0 
-   --  282 : participation_55_59_male : Parameter_Float    : Amount               :      0.0 
-   --  283 : participation_60_64_male : Parameter_Float    : Amount               :      0.0 
-   --  284 : participation_65_69_male : Parameter_Float    : Amount               :      0.0 
-   --  285 : participation_70_74_male : Parameter_Float    : Amount               :      0.0 
-   --  286 : participation_75_plus_male : Parameter_Float    : Amount               :      0.0 
-   --  287 : participation_16_19_female : Parameter_Float    : Amount               :      0.0 
-   --  288 : participation_20_24_female : Parameter_Float    : Amount               :      0.0 
-   --  289 : participation_25_29_female : Parameter_Float    : Amount               :      0.0 
-   --  290 : participation_30_34_female : Parameter_Float    : Amount               :      0.0 
-   --  291 : participation_35_39_female : Parameter_Float    : Amount               :      0.0 
-   --  292 : participation_40_44_female : Parameter_Float    : Amount               :      0.0 
-   --  293 : participation_45_49_female : Parameter_Float    : Amount               :      0.0 
-   --  294 : participation_50_54_female : Parameter_Float    : Amount               :      0.0 
-   --  295 : participation_55_59_female : Parameter_Float    : Amount               :      0.0 
-   --  296 : participation_60_64_female : Parameter_Float    : Amount               :      0.0 
-   --  297 : participation_65_69_female : Parameter_Float    : Amount               :      0.0 
-   --  298 : participation_70_74_female : Parameter_Float    : Amount               :      0.0 
-   --  299 : participation_75_plus_female : Parameter_Float    : Amount               :      0.0 
-   --  300 : one_adult_hh             : Parameter_Float    : Amount               :      0.0 
-   --  301 : two_adult_hh             : Parameter_Float    : Amount               :      0.0 
-   --  302 : other_hh                 : Parameter_Float    : Amount               :      0.0 
+   --  274 : participation            : Parameter_Float    : Amount               :      0.0 
+   --  275 : participation_16_19_male : Parameter_Float    : Amount               :      0.0 
+   --  276 : participation_20_24_male : Parameter_Float    : Amount               :      0.0 
+   --  277 : participation_25_29_male : Parameter_Float    : Amount               :      0.0 
+   --  278 : participation_30_34_male : Parameter_Float    : Amount               :      0.0 
+   --  279 : participation_35_39_male : Parameter_Float    : Amount               :      0.0 
+   --  280 : participation_40_44_male : Parameter_Float    : Amount               :      0.0 
+   --  281 : participation_45_49_male : Parameter_Float    : Amount               :      0.0 
+   --  282 : participation_50_54_male : Parameter_Float    : Amount               :      0.0 
+   --  283 : participation_55_59_male : Parameter_Float    : Amount               :      0.0 
+   --  284 : participation_60_64_male : Parameter_Float    : Amount               :      0.0 
+   --  285 : participation_65_69_male : Parameter_Float    : Amount               :      0.0 
+   --  286 : participation_70_74_male : Parameter_Float    : Amount               :      0.0 
+   --  287 : participation_75_plus_male : Parameter_Float    : Amount               :      0.0 
+   --  288 : participation_16_19_female : Parameter_Float    : Amount               :      0.0 
+   --  289 : participation_20_24_female : Parameter_Float    : Amount               :      0.0 
+   --  290 : participation_25_29_female : Parameter_Float    : Amount               :      0.0 
+   --  291 : participation_30_34_female : Parameter_Float    : Amount               :      0.0 
+   --  292 : participation_35_39_female : Parameter_Float    : Amount               :      0.0 
+   --  293 : participation_40_44_female : Parameter_Float    : Amount               :      0.0 
+   --  294 : participation_45_49_female : Parameter_Float    : Amount               :      0.0 
+   --  295 : participation_50_54_female : Parameter_Float    : Amount               :      0.0 
+   --  296 : participation_55_59_female : Parameter_Float    : Amount               :      0.0 
+   --  297 : participation_60_64_female : Parameter_Float    : Amount               :      0.0 
+   --  298 : participation_65_69_female : Parameter_Float    : Amount               :      0.0 
+   --  299 : participation_70_74_female : Parameter_Float    : Amount               :      0.0 
+   --  300 : participation_75_plus_female : Parameter_Float    : Amount               :      0.0 
+   --  301 : one_adult_hh             : Parameter_Float    : Amount               :      0.0 
+   --  302 : two_adult_hh             : Parameter_Float    : Amount               :      0.0 
+   --  303 : other_hh                 : Parameter_Float    : Amount               :      0.0 
    function Get_Configured_Insert_Params( update_order : Boolean := False ) return GNATCOLL.SQL.Exec.SQL_Parameters;
 
 
