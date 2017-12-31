@@ -1,18 +1,20 @@
 --
 -- this stuff is just to force compilation - borrowed from auto test case.
 --
-with Ada.Exceptions;
+with Ada.Calendar.Formatting;
+with Ada.Calendar;
 with Ada.Command_Line;
-with Ada.Text_IO;
+with Ada.Exceptions;
 with Ada.Strings.Unbounded;
+with Ada.Text_IO;
+
+with Base_Model_Types;
 with SCP_Types;
 with Text_Utils;
-with Ada.Calendar;
-with Ada.Calendar.Formatting;
-with Base_Model_Types;
+with UKDS.Target_Data.Run_IO;
 with UKDS.Target_Data;
 with Weighting_Commons;
-with UKDS.Target_Data.Run_IO;
+with Model.SCP.Target_Creator;
 
 procedure Create_A_Run is
    
@@ -61,42 +63,42 @@ procedure Create_A_Run is
       Run_IO.Save( the_run );
    end Create_201000;
    
-   procedure Create_Targets_201001 is
+   procedure Create_Targets_100_120_to_100_132 is
       the_run : Run;
       timestr : constant String := Formatting.Image( Clock );
       targets_run_id : Positive := 100_120;
-      target_populations : array( 1 .. 15 ) of Unbounded_String := (      
+      target_populations : array( 1 .. 13 ) of Unbounded_String := (      
          1 => ppp, -- principal projection
          2 => hhh, -- high population variant
          3 => hpp, -- high fertility variant
          4 => lll, -- low population variant
          5 => lpp, -- low fertility variant
          6 => php, -- high life expectancy variant
-         7 => pjp, -- moderately high life expectancy variant
-         8 => pkp, -- moderately low life expectancy variant
-         9 => plp, -- low life expectancy variant
-         10 => pph, -- high migration variant
-         11 => ppl, -- low migration variant
-         12 => ppq, -- 0% future EU migration variant (not National Statistics)
-         13 => ppr, -- 50% future EU migration variant (not National Statistics)
-         14 => pps, -- 150% future EU migration variant (not National Statistics)
-         15 => ppz ); -- zero net migration variant (natural change only)      
+         -- 7 => pjp, -- moderately high life expectancy variant (not in 2014)
+         -- 8 => pkp, -- moderately low life expectancy variant (not in 2014)
+         7 => plp, -- low life expectancy variant
+         8 => pph, -- high migration variant
+         9 => ppl, -- low migration variant
+         10 => ppq, -- 0% future EU migration variant (not National Statistics)
+         11 => ppr, -- 50% future EU migration variant (not National Statistics)
+         12 => pps, -- 150% future EU migration variant (not National Statistics)
+         13 => ppz ); -- zero net migration variant (natural change only)      
    begin
 
       for pop_targ of target_populations loop
          the_run.run_id := targets_run_id;
          the_run.user_id := 1;
          the_run.description := 
-            TuS( "Scottish Targetset using FCS Macro and 2016 edition population forecasts; variant" & TS( pop_targ ) & " created at: " & timestr );
+            TuS( "Scottish Targetset using FCS Macro and 2016 edition population forecasts; variant: '" & TS( pop_targ ) & "' created at: " & timestr );
          the_run.start_year := 2016;
-         the_run.end_year := 2040;
+         the_run.end_year := 2038; -- last hhld and 2014 ppn forecast year -1 since we're using financial
          the_run.macro_edition := 2017;
          the_run.households_edition := 2014;
          the_run.population_edition := 2016;
          the_run.country := SCO;
          the_run.households_variant := PPP; -- this is ignored and set automatically
          the_run.population_variant := pop_targ;
-         the_run.macro_variant := BASELINE;
+         the_run.macro_variant := BASELINE; -- pro-tem this is hard-wor
          the_run.run_type := target_generation;
          -- the_run.weighting_function := constrained_chi_square;
          -- the_run.weighting_lower_bound := 0.1;
@@ -115,9 +117,10 @@ procedure Create_A_Run is
          -- the_run.data_end_year := 2015;
          -- the_run.uk_wide_only := True;
          Run_IO.Save( the_run );
+         -- Model.SCP.Target_Creator.Create_Dataset( the_run );
          Inc( targets_run_id );
       end loop;
-   end Create_Targets_201001;
+   end Create_Targets_100_120_to_100_132;
 
    
    procedure Create_201001 is
@@ -158,5 +161,6 @@ procedure Create_A_Run is
    end Create_201001;
   
 begin
-   Create_201001;   
+   -- Create_201001;
+   Create_Targets_100_120_to_100_132;
 end Create_A_Run;

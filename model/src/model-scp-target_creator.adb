@@ -314,6 +314,11 @@ package body Model.SCP.Target_Creator is
             targets.year := year;
             targets.sernum := Sernum_Value'First;
 
+            Log(  " year " & year'Img &
+                  " hh scaling " & Format( hh_scaling*100.0 ) & "% " &
+                  " popn 2017 edn " & Format( popn_2017_edn ) &
+                  " popn 2014 edn " & Format( popn_2014_edn ));
+            
             targets.sco_hhld_one_adult_male := scottish_households.one_adult_male * hh_scaling;
             targets.sco_hhld_one_adult_female := scottish_households.one_adult_female * hh_scaling;
             targets.sco_hhld_two_adults := scottish_households.two_adults  * hh_scaling;
@@ -554,7 +559,11 @@ package body Model.SCP.Target_Creator is
                Log( "16 plus popn " & Format( age_16_plus ));
                targets.employed := macro_data.employment_rate * age_16_plus/100.0;
                targets.participation := macro_data.participation_rate * age_16_plus/100.0;
-               targets.ilo_unemployed := macro_data.ilo_unemployment_rate * age_16_plus / 100.0;
+               targets.ilo_unemployed := macro_data.ilo_unemployment_rate * targets.participation / 100.0;
+               Log( "on year " & year'Img & " unemp. rate " & Format( macro_data.ilo_unemployment_rate ) &
+                    "age_16_plus " & Format( age_16_plus ) & " => ilo unemployed " & 
+                    Format( targets.ilo_unemployed ));
+                    
                targets.employee := macro_data.employee_rate * age_16_plus / 100.0;
             end;
             Log( To_String( targets )); 

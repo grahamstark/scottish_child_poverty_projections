@@ -1557,3 +1557,10 @@ update target_data.target_dataset set
         coalesce( participation_75_plus_female, 0.0 ) where       
 run_id = 999996 or run_id =  999997 or run_id =  999998;
         
+--
+-- make popn forecast labels consistent between 2014 and 2016 editions
+--
+update target_data.forecast_variant set variant = 'ppq' where variant = 'zeroeu';
+update target_data.forecast_variant set variant = 'ppr' where variant = 'eu-50pc';
+update target_data.forecast_variant set variant = 'pps' where variant = 'eu-150pc';
+
