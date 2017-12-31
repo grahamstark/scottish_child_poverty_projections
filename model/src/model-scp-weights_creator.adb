@@ -132,6 +132,10 @@ package body Model.SCP.Weights_Creator is
          ls.Add_To( "male" );
          ls.Add_To( "female" );
       end if;
+      
+      if clauses( single_participation_rate ) then      
+            ls.Add_To( "single_participation" );
+      end if;
       if clauses( employment ) then      
             ls.Add_To( "employed" );
       end if;
@@ -481,6 +485,9 @@ package body Model.SCP.Weights_Creator is
       if clauses( genders ) then
          Add_Col( targets.male );
          Add_Col( targets.female );
+      end if;
+      if clauses( single_participation_rate ) then      
+            Add_Col( targets.participation );
       end if;
       if clauses( employment ) then      
             Add_Col( targets.employed );

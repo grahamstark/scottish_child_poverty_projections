@@ -122,6 +122,41 @@ procedure Create_A_Run is
       end loop;
    end Create_Targets_100_120_to_100_132;
 
+   procedure Create_Weights_200_120_to_200_132 is
+      targets_run_id : Positive := 100_120;
+      run_id         : Positive := 200_120;
+      the_run : Run;
+      timestr : constant String := Formatting.Image( Clock );
+   begin
+      for r in 0 .. 12 loop
+         the_run.description := 
+            TuS( "Scottish weights using FCS Macro and 2016 edition population forecasts; variant: '" & targets_run_id'Img & "' created at: " & timestr );
+         the_run.start_year := 2016;
+         the_run.end_year := 2038;
+         the_run.run_type := weights_generation;
+         the_run.weighting_function := constrained_chi_square;
+         the_run.weighting_lower_bound := 0.1;
+         the_run.weighting_upper_bound := 4.0;
+         the_run.targets_run_id := targets_run_id;
+         the_run.targets_run_user_id := 1;
+         the_run.data_run_id := 999998;
+         the_run.data_run_user_id := 1;
+         the_run.country := SCO;
+         the_run.selected_clauses := (
+            household_type => True,
+            aggregate_ages_by_gender  => True,
+            single_participation_rate => True,
+            employees                 => True,
+            employment                => True,
+            ilo_unemployment          => True,
+            others                    => False );
+         the_run.data_start_year := 2012;
+         the_run.data_end_year := 2015;
+         Run_IO.Save( the_run );
+         Inc( targets_run_id );
+         Inc( run_id );
+      end loop;
+   end Create_Weights_200_120_to_200_132;     
    
    procedure Create_201001 is
       the_run : Run;
@@ -162,5 +197,6 @@ procedure Create_A_Run is
   
 begin
    -- Create_201001;
-   Create_Targets_100_120_to_100_132;
+   -- Create_Targets_100_120_to_100_132;
+   Create_Weights_200_120_to_200_132;
 end Create_A_Run;
