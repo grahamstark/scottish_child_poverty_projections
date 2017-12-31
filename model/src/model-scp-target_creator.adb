@@ -549,10 +549,10 @@ package body Model.SCP.Target_Creator is
                age_16_plus : Amount := Sum( ages, 16 );
             begin
                Log( "16 plus popn " & Format( age_16_plus ));
-               targets.employment := macro.employment_rate * age_16_plus/100.0;
-               targets.participation := macro.participation_rate * age_16_plus/100.0;
-               targets.ilo_unemployed := macro.ilo_unemployment_rate * age_16_plus / 100.0;
-               targets.employee := macro.employee_rate * age_16_plus / 100.0;
+               targets.employed := macro_data.employment_rate * age_16_plus/100.0;
+               targets.participation := macro_data.participation_rate * age_16_plus/100.0;
+               targets.ilo_unemployed := macro_data.ilo_unemployment_rate * age_16_plus / 100.0;
+               targets.employee := macro_data.employee_rate * age_16_plus / 100.0;
             end;
             Log( To_String( targets )); 
             UKDS.Target_Data.Target_Dataset_IO.Save( targets );
