@@ -82,6 +82,7 @@ package SCP_Types is
       participation_rate,
       employment_by_sector,
       compressed_household_type,
+      single_participation_rate,      
       spare_type
    );
    

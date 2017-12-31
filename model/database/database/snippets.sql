@@ -1079,7 +1079,7 @@ update target_data.macro_forecasts set public_sector_employment = public_sector_
 --
 -- add compressed household element to clauses (only works at end; see: https://www.postgresql.org/docs/9.1/static/functions-array.html
 --
-update target_data.run set selected_clauses = array_append( selected_clauses, 'f' )  where array_length( selected_clauses,1 ) = 13 ;
+update target_data.run set selected_clauses = array_append( selected_clauses, 'f' )  where array_length( selected_clauses,1 ) = 14 ;
 
 update target_data.run set selected_clauses = 'f,f,f,f,f,f,f,f,f,f,f,f,f,f'  where array_length( selected_clauses,1 ) < 13 ;
 
@@ -1524,3 +1524,36 @@ where
         variant='ppr' and target_group in ( 'MALES', 'FEMALES' ) and country='SCO'
 group by year order by year;
                 
+--
+-- update the FRS targets with an aggregate participation figure from the age/sex ones
+--
+update target_data.target_dataset set 
+   participation = 
+        coalesce( participation_16_19_male, 0.0 ) +
+        coalesce( participation_20_24_male, 0.0 ) +
+        coalesce( participation_25_29_male, 0.0 ) +
+        coalesce( participation_30_34_male, 0.0 ) +
+        coalesce( participation_35_39_male, 0.0 ) +
+        coalesce( participation_40_44_male, 0.0 ) +
+        coalesce( participation_45_49_male, 0.0 ) +
+        coalesce( participation_50_54_male, 0.0 ) +
+        coalesce( participation_55_59_male, 0.0 ) +
+        coalesce( participation_60_64_male, 0.0 ) +
+        coalesce( participation_65_69_male, 0.0 ) +
+        coalesce( participation_70_74_male, 0.0 ) +
+        coalesce( participation_75_plus_male, 0.0 ) +
+        coalesce( participation_16_19_female, 0.0 ) +
+        coalesce( participation_20_24_female, 0.0 ) +
+        coalesce( participation_25_29_female, 0.0 ) +
+        coalesce( participation_30_34_female, 0.0 ) +
+        coalesce( participation_35_39_female, 0.0 ) +
+        coalesce( participation_40_44_female, 0.0 ) +
+        coalesce( participation_45_49_female, 0.0 ) +
+        coalesce( participation_50_54_female, 0.0 ) +
+        coalesce( participation_55_59_female, 0.0 ) +
+        coalesce( participation_60_64_female, 0.0 ) +
+        coalesce( participation_65_69_female, 0.0 ) +
+        coalesce( participation_70_74_female, 0.0 ) +
+        coalesce( participation_75_plus_female, 0.0 ) where       
+run_id = 999996 or run_id =  999997 or run_id =  999998;
+        

@@ -1017,6 +1017,7 @@ package body Model.SCP.FRS_Creator is
                   end;
                   
                   if adult.DVIL04A /= 4 then -- not inactive == active in our terms
+                     Inc( targets.participation );
                      case adult.age80 is
                         when 16 .. 19 => if( adult.sex = 1 ) then 
                            Inc( targets.participation_16_19_male ); 

@@ -161,7 +161,7 @@ package body Model.SCP.Target_Creator is
  
    --
    -- we only have 3 2014 hhld variants; choose the nearest to some person projection
-   --
+   -- 
    function Nearest_HH_Variant( popn_variant : Unbounded_String ) return Unbounded_String is
       hht : Unbounded_String;
    begin
@@ -191,6 +191,9 @@ package body Model.SCP.Target_Creator is
       return hht;
    end Nearest_HH_Variant;
    
+   --
+   -- CAREFUL! This is a hacked Scotland only version
+   --
    procedure Create_Dataset( the_run : Run ) is
       macro_data : Macro_Forecasts;
    begin
@@ -301,7 +304,7 @@ package body Model.SCP.Target_Creator is
                   year     => year,
                   rec_type => MACRO,
                   variant  => the_run.macro_variant,
-                  country  => SCO, -- for now ..
+                  country  => the_run.country, -- for now ..
                   edition  => the_run.macro_edition                   
                );
             end if; -- so keep last one if later
