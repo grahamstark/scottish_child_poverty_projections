@@ -62,7 +62,52 @@ procedure Create_A_Run is
       the_run.uk_wide_only := True;
       Run_IO.Save( the_run );
    end Create_201000;
+
+      procedure Create_Targets_100_140_to_100_148 is
+      the_run : Run;
+      timestr : constant String := Formatting.Image( Clock );
+      targets_run_id : Positive := 100_120;
+      target_populations : array( 1 .. 9 ) of Unbounded_String := (      
+         1 => ppp, -- principal projection
+         2 => hhh, -- high population variant
+         3 => hpp, -- high fertility variant
+         4 => lpp, -- low fertility variant
+         5 => php, -- high life expectancy variant
+         6 => plp, -- low life expectancy variant
+         7 => pph, -- high migration variant
+         8 => ppl, -- low migration variant
+         9 => ppz ); -- zero net migration variant (natural change only)      
+   begin
+
+      for pop_targ of target_populations loop
+         the_run.run_id := targets_run_id;
+         the_run.user_id := 1;
+         the_run.description := 
+            TuS( "UK Targetset using OBR November Macro and 2016 edition population forecasts; variant: '" & TS( pop_targ ) & "' created at: " & timestr );
+         the_run.start_year := 2016;
+         the_run.end_year := 2038; -- last hhld and 2014 ppn forecast year -1 since we're using financial
+         the_run.macro_edition := 2017;
+         the_run.households_edition := 2014;
+         the_run.population_edition := 2016;
+         the_run.country := UK;
+         the_run.households_variant := PPP; -- this is ignored and set automatically
+         the_run.population_variant := pop_targ;
+         the_run.macro_variant := BASELINE; -- pro-tem this is hard-wor
+         the_run.run_type := target_generation;
+         the_run.targets_run_id := targets_run_id;
+         the_run.targets_run_user_id := 1;
+         the_run.data_run_id := 999998;
+         the_run.data_run_user_id := 1;
+         Run_IO.Save( the_run );
+         Inc( targets_run_id );
+      end loop;
+   end Create_Targets_100_140_to_100_148;
+
    
+   
+   --
+   -- These are the main Scottish ones using 2016 popns and the SFC forecasts
+   --
    procedure Create_Targets_100_120_to_100_132 is
       the_run : Run;
       timestr : constant String := Formatting.Image( Clock );
@@ -200,5 +245,6 @@ procedure Create_A_Run is
 begin
    -- Create_201001;
    -- Create_Targets_100_120_to_100_132;
-   Create_Weights_200_120_to_200_132;
+   -- Create_Weights_200_120_to_200_132;
+   Create_Targets_100_140_to_100_148;
 end Create_A_Run;

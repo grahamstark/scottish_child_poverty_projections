@@ -335,7 +335,7 @@ package body Model.SCP.Target_Creator is
             targets.sco_hhld_one_adult_two_plus_children := scottish_households.one_adult_two_plus_children * hh_scaling;
             targets.sco_hhld_two_plus_adult_one_plus_children := scottish_households.two_plus_adult_one_plus_children * hh_scaling;
             targets.sco_hhld_three_plus_person_all_adult := scottish_households.three_plus_person_all_adult * hh_scaling;
-
+            
             targets.one_adult_hh := uk_hhlds.one_adult_hh * hh_scaling;
             targets.two_adult_hh := uk_hhlds.two_adult_hh * hh_scaling;
             targets.other_hh := uk_hhlds.other_hh * hh_scaling;
