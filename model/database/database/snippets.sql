@@ -1564,3 +1564,79 @@ update target_data.forecast_variant set variant = 'ppq' where variant = 'zeroeu'
 update target_data.forecast_variant set variant = 'ppr' where variant = 'eu-50pc';
 update target_data.forecast_variant set variant = 'pps' where variant = 'eu-150pc';
 
+insert into target_data.forecast_variant( rec_type, variant, country, edition, source, description ) values
+( 'households', 'ppp', 'UK', 2014 , 'ons', 'principal projection; aggregated over 4 countries' );                           
+
+SET search_path TO target_data,public,frs;
+--
+-- load data into our summary hh type table
+--
+insert into uk_households select
+
+        households_forecasts.year,
+        'households',
+        'ppp',
+        'UK',
+        2014,
+                --
+                -- SCO
+                --
+                households_forecasts.one_adult_one_child +
+                households_forecasts.one_adult_two_plus_children +
+                households_forecasts.two_plus_adult_one_plus_children +
+                households_forecasts.three_plus_person_all_adult +
+                --
+                -- WAL
+                --
+                wales_households.v_2_person_1_adult_1_child +
+                wales_households.v_3_person_no_children +
+                wales_households.v_3_person_2_adults_1_child +
+                wales_households.v_3_person_1_adult_2_children +
+                wales_households.v_4_person_no_children +
+                wales_households.v_4_person_2_plus_adults_1_plus_children +
+                wales_households.v_4_person_1_adult_3_children +
+                wales_households.v_5_plus_person_no_children +
+                wales_households.v_5_plus_person_2_plus_adults_1_plus_children +
+                wales_households.v_5_plus_person_1_adult_4_plus_children +
+                --
+                -- NIR
+                --
+                nireland_households.other_households_without_children + 
+                nireland_households.one_adult_households_with_children + 
+                nireland_households.other_households_with_children +
+                --
+                -- ENG
+                --
+                england_households.a_couple_and_one_or_more_other_adults_no_dependent_children +
+                england_households.households_with_one_dependent_child +
+                england_households.households_with_two_dependent_children +
+                england_households.households_with_three_dependent_children +
+                england_households.other_households,           
+                  
+
+                households_forecasts.two_adults +
+                england_households.one_family_and_no_others_couple_no_dependent_children +
+                wales_households.v_2_person_no_children +
+                nireland_households.two_adults_without_children,
+               
+               
+                households_forecasts.one_adult_male + 
+                households_forecasts.one_adult_female +
+                england_households.one_person_households_male +
+                england_households.one_person_households_female +
+                wales_households.v_1_person +
+                nireland_households.one_adult_households
+from
+        households_forecasts,
+        england_households,
+        wales_households,
+        nireland_households
+
+--
+-- note we only have 2012 edition for NIRE, and only 2014 for the others.
+--
+where  households_forecasts.year =  england_households.year and
+       england_households.year = wales_households.year and
+       wales_households.year = nireland_households.year and 
+       households_forecasts.variant = 'ppp';
+       

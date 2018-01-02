@@ -663,6 +663,44 @@ package Ukds.target_data is
    function To_String( rec : Target_Dataset ) return String;
 
    --
+   -- record modelling Uk_Households : HH Projections for UK; 3 variants only since this is all we can merge country ones to
+   --
+   type Uk_Households is record
+      year : Year_Number := 1970;
+      rec_type : Unbounded_String := To_Unbounded_String( "persons" );
+      variant : Unbounded_String := MISSING_W_KEY;
+      country : Unbounded_String := MISSING_W_KEY;
+      edition : Year_Number := 1970;
+      one_adult_hh : Amount := 0.0;
+      two_adult_hh : Amount := 0.0;
+      other_hh : Amount := 0.0;
+   end record;
+   --
+   -- container for Uk_Households : HH Projections for UK; 3 variants only since this is all we can merge country ones to
+   --
+   package Uk_Households_List_Package is new Ada.Containers.Vectors
+      (Element_Type => Uk_Households,
+      Index_Type => Positive );
+   subtype Uk_Households_List is Uk_Households_List_Package.Vector;
+   --
+   -- default value for Uk_Households : HH Projections for UK; 3 variants only since this is all we can merge country ones to
+   --
+   Null_Uk_Households : constant Uk_Households := (
+         year => 1970,
+         rec_type => To_Unbounded_String( "persons" ),
+         variant => MISSING_W_KEY,
+         country => MISSING_W_KEY,
+         edition => 1970,
+         one_adult_hh => 0.0,
+         two_adult_hh => 0.0,
+         other_hh => 0.0
+   );
+   --
+   -- simple print routine for Uk_Households : HH Projections for UK; 3 variants only since this is all we can merge country ones to
+   --
+   function To_String( rec : Uk_Households ) return String;
+
+   --
    -- record modelling England_Households : HH Projections for england in original format
    --
    type England_Households is record

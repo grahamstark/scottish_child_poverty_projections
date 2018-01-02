@@ -1,5 +1,5 @@
 --
--- created on 31-12-2017 by Mill
+-- created on 02-01-2018 by Mill
 --
 drop database if exists ukds;
 create database ukds with encoding 'UTF-8';
@@ -352,6 +352,19 @@ CREATE TABLE target_data.england_households(
        other_households DOUBLE PRECISION default 0.0,
        CONSTRAINT england_households_pk PRIMARY KEY( year, rec_type, variant, country, edition ),
        CONSTRAINT england_households_FK_0 FOREIGN KEY( rec_type, variant, country, edition) references forecast_variant( rec_type, variant, country, edition ) on delete CASCADE on update CASCADE
+);
+
+CREATE TABLE target_data.uk_households( 
+       year INTEGER not null default 1970,
+       rec_type TEXT not null default 'persons',
+       variant TEXT not null,
+       country TEXT not null,
+       edition INTEGER not null default 1970,
+       one_adult_hh DOUBLE PRECISION default 0.0,
+       two_adult_hh DOUBLE PRECISION default 0.0,
+       other_hh DOUBLE PRECISION default 0.0,
+       CONSTRAINT uk_households_pk PRIMARY KEY( year, rec_type, variant, country, edition ),
+       CONSTRAINT uk_households_FK_0 FOREIGN KEY( rec_type, variant, country, edition) references forecast_variant( rec_type, variant, country, edition ) on delete CASCADE on update CASCADE
 );
 
 CREATE TABLE target_data.target_dataset( 

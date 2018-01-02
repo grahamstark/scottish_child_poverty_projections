@@ -129,6 +129,8 @@ procedure Create_A_Run is
       timestr : constant String := Formatting.Image( Clock );
    begin
       for r in 0 .. 12 loop
+         the_run.run_id := run_id;
+         the_run.user_id := 1;
          the_run.description := 
             TuS( "Scottish weights using FCS Macro and 2016 edition population forecasts; variant: '" & targets_run_id'Img & "' created at: " & timestr );
          the_run.start_year := 2016;
@@ -143,9 +145,9 @@ procedure Create_A_Run is
          the_run.data_run_user_id := 1;
          the_run.country := SCO;
          the_run.selected_clauses := (
-            household_type => True,
+            household_type            => True,
             aggregate_ages_by_gender  => True,
-            single_participation_rate => True,
+            single_participation_rate => False,
             employees                 => True,
             employment                => True,
             ilo_unemployment          => True,

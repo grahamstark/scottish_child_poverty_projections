@@ -327,6 +327,20 @@ package body Ukds.target_data is
    end to_String;
 
 
+   function To_String( rec : Uk_Households ) return String is
+   begin
+      return  "Uk_Households: " &
+         "year = " & rec.year'Img &
+         "rec_type = " & To_String( rec.rec_type ) &
+         "variant = " & To_String( rec.variant ) &
+         "country = " & To_String( rec.country ) &
+         "edition = " & rec.edition'Img &
+         "one_adult_hh = " & rec.one_adult_hh'Img &
+         "two_adult_hh = " & rec.two_adult_hh'Img &
+         "other_hh = " & rec.other_hh'Img;
+   end to_String;
+
+
    function To_String( rec : England_Households ) return String is
    begin
       return  "England_Households: " &

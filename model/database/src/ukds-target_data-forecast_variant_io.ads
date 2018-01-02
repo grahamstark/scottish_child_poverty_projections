@@ -93,6 +93,7 @@ package Ukds.Target_Data.Forecast_Variant_IO is
    function Retrieve_Associated_Ukds_Target_Data_Nireland_Households( a_forecast_variant : Ukds.Target_Data.Forecast_Variant; connection : Database_Connection := null ) return Ukds.Target_Data.Nireland_Households_List;
    function Retrieve_Associated_Ukds_Target_Data_Households_Forecasts( a_forecast_variant : Ukds.Target_Data.Forecast_Variant; connection : Database_Connection := null ) return Ukds.Target_Data.Households_Forecasts_List;
    function Retrieve_Associated_Ukds_Target_Data_Population_Forecasts( a_forecast_variant : Ukds.Target_Data.Forecast_Variant; connection : Database_Connection := null ) return Ukds.Target_Data.Population_Forecasts_List;
+   function Retrieve_Associated_Ukds_Target_Data_Uk_Households( a_forecast_variant : Ukds.Target_Data.Forecast_Variant; connection : Database_Connection := null ) return Ukds.Target_Data.Uk_Households_List;
    function Retrieve_Associated_Ukds_Target_Data_England_Households( a_forecast_variant : Ukds.Target_Data.Forecast_Variant; connection : Database_Connection := null ) return Ukds.Target_Data.England_Households_List;
    function Retrieve_Associated_Ukds_Target_Data_Wales_Households( a_forecast_variant : Ukds.Target_Data.Forecast_Variant; connection : Database_Connection := null ) return Ukds.Target_Data.Wales_Households_List;
 

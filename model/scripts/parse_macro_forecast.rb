@@ -14,13 +14,15 @@ def readMacro( lines, startCol, keyLineStart, out )
               if(( ! lines[p][startCol].nil? ) && ( lines[p][startCol] =~ /#{keyLineStart}/ ))
                         lines[p][startCol..-1].each{
                                 |l|
-                                puts "p = #{p} l '#{l}'\n"
-                                if l =~ /(.*)\(.*/
-                                        l = $1
+                                if not l.nil? then
+                                        puts "p = #{p} l '#{l}'\n"
+                                        if l =~ /(.*)\(.*/
+                                                l = $1
+                                        end
+                                        l.gsub!( 'billion', '' )
+                                        key = censor( l )
+                                        keys << key
                                 end
-                                l.gsub!( 'billion', '' )
-                                key = censor( l )
-                                keys << key
                         }
                         puts "made keys as #{out[:keys]}; breaking"
                         break;
@@ -72,25 +74,50 @@ end
 
 out = {:pos=>0,:data=>{}, :label=>'', :years=>[], :keys=>[] }
 source = 'obr'
-['gdp_per_capita','prices','employment'].each{
+
+#
+# hacked together Nov 2017 version
+# '1.5' ignored for now - need to parse > 1 line for header can't be arsed.
+['1.6','1.7'].each{
         |which|
-        fullFName = "#{DATA_PATH}/#{source}/obr_forecast_#{which}.tab"
+        fullFName = "#{DATA_PATH}/#{source}/Nov_2017/obr_nov_#{which}.tab"
         puts fullFName;
         lines = toCSV( fullFName );
         case which
-        when 'gdp_per_capita' then
+        when '1.5' then
                         out = readMacro( lines, 2, 'LFS', out )
-        when 'prices' then                  
+        when '1.7' then                  
                         out = readMacro( lines, 11, 'RPI', out )
-        when 'employment' then              
+        when '1.6' then              
                         out = readMacro( lines, 2, 'Employment', out )
         end
         
 }
 
+#
+# March 2017 version
+#
+if false then
+        ['gdp_per_capita','prices','employment'].each{
+                |which|
+                fullFName = "#{DATA_PATH}/#{source}/obr_forecast_#{which}.tab"
+                puts fullFName;
+                lines = toCSV( fullFName );
+                case which
+                when 'gdp_per_capita' then
+                                out = readMacro( lines, 2, 'LFS', out )
+                when 'prices' then                  
+                                out = readMacro( lines, 11, 'RPI', out )
+                when 'employment' then              
+                                out = readMacro( lines, 2, 'Employment', out )
+                end
+                
+        }
+end
+
 p out
 country = 'UK'
-edition = 2017
+edition = 2018 # fuckup!!! 2 2017 versions... 
 recType = 'macro'
 variant = 'baseline'
 fname='obr_forecast_gdp_per_capita.tab'
