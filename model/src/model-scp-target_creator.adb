@@ -19,6 +19,7 @@ with Ukds.Target_Data.Households_Forecasts_IO;
 with Ukds.Target_Data.England_Households_IO;
 with Ukds.Target_Data.Wales_Households_IO;
 with Ukds.Target_Data.Nireland_Households_IO;
+with Ukds.Target_Data.UK_Households_IO;
 with Ukds.Target_Data.Obr_Participation_Rates_IO;
 
 with Ukds.Target_Data.Population_Forecasts_IO;
@@ -296,7 +297,15 @@ package body Model.SCP.Target_Creator is
                edition  => 2014 -- could just jam this on to 2014 ...
             );
             
-          targets     : Target_Dataset;  
+            uk_hhlds : constant UK_Households := UK_Households_IO.Retrieve_By_PK(
+               year     => year,
+               rec_type => HOUSEHOLDS,
+               variant  => PPP, -- all we have here .. Nearest_HH_Variant( the_run.population_variant ),
+               country  => UK,
+               edition  => 2014 -- could just jam this on to 2014 ...
+            );
+            
+           targets     : Target_Dataset;  
             
          begin   
             if year <= 2022 then
@@ -326,6 +335,11 @@ package body Model.SCP.Target_Creator is
             targets.sco_hhld_one_adult_two_plus_children := scottish_households.one_adult_two_plus_children * hh_scaling;
             targets.sco_hhld_two_plus_adult_one_plus_children := scottish_households.two_plus_adult_one_plus_children * hh_scaling;
             targets.sco_hhld_three_plus_person_all_adult := scottish_households.three_plus_person_all_adult * hh_scaling;
+
+            targets.one_adult_hh := uk_hhlds.one_adult_hh * hh_scaling;
+            targets.two_adult_hh := uk_hhlds.two_adult_hh * hh_scaling;
+            targets.other_hh := uk_hhlds.other_hh * hh_scaling;
+            
             targets.household_all_households := targets.household_all_households + scottish_households.all_households * hh_scaling;
             targets.country_scotland := scottish_households.all_households * hh_scaling;
             
@@ -563,8 +577,14 @@ package body Model.SCP.Target_Creator is
                Log( "on year " & year'Img & " unemp. rate " & Format( macro_data.ilo_unemployment_rate ) &
                     "age_16_plus " & Format( age_16_plus ) & " => ilo unemployed " & 
                     Format( targets.ilo_unemployed ));
-                    
-               targets.employee := macro_data.employee_rate * age_16_plus / 100.0;
+               --
+               -- I messed up employee rates between UK and SCO.
+               -- 
+               if the_run.country = SCO then                      
+                  targets.employee := macro_data.employee_rate * age_16_plus / 100.0;
+               else
+                  targets.employee := macro_data.employee_rate * targets.employed / 100.0;
+               end if;
             end;
             Log( To_String( targets )); 
             UKDS.Target_Data.Target_Dataset_IO.Save( targets );

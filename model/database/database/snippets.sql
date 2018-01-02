@@ -1640,3 +1640,9 @@ where  households_forecasts.year =  england_households.year and
        wales_households.year = nireland_households.year and 
        households_forecasts.variant = 'ppp';
        
+--
+-- variants in common between editions
+-- change UK ..
+--
+select distinct variant from target_data.population forecasts where edition=2014 and country='UK' intersect
+select distinct variant from target_data.population forecasts where edition=2016 and country='UK';
