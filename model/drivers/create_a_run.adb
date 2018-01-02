@@ -85,7 +85,7 @@ procedure Create_A_Run is
          the_run.description := 
             TuS( "UK Targetset using OBR November Macro and 2016 edition population forecasts; variant: '" & TS( pop_targ ) & "' created at: " & timestr );
          the_run.start_year := 2016;
-         the_run.end_year := 2038; -- last hhld and 2014 ppn forecast year -1 since we're using financial
+         the_run.end_year := 2037; -- IRE hhlds only go this far.
          the_run.macro_edition := 2017;
          the_run.households_edition := 2014;
          the_run.population_edition := 2016;
