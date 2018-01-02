@@ -93,6 +93,7 @@ procedure Create_A_Run is
          the_run.households_variant := PPP; -- this is ignored and set automatically
          the_run.population_variant := pop_targ;
          the_run.macro_variant := BASELINE; -- pro-tem this is hard-wor
+         the_run.macro_edition := 2018;
          the_run.run_type := target_generation;
          the_run.targets_run_id := targets_run_id;
          the_run.targets_run_user_id := 1;
@@ -226,9 +227,9 @@ procedure Create_A_Run is
          the_run.targets_run_user_id := 1;
          the_run.data_run_id := 999998;
          the_run.data_run_user_id := 1;
-         the_run.country := SCO;
+         the_run.country := UK;
          the_run.selected_clauses := (
-            household_type            => True,
+            compressed_household_type => True,
             aggregate_ages_by_gender  => True,
             single_participation_rate => False,
             employees                 => True,
@@ -283,8 +284,8 @@ procedure Create_A_Run is
   
 begin
    -- Create_201001;
-   -- Create_Targets_100_120_to_100_132;
-   -- Create_Weights_200_120_to_200_132;
-   -- Create_Targets_100_140_to_100_148;
+   Create_Targets_100_120_to_100_132;
+   Create_Weights_200_120_to_200_132;
+   Create_Targets_100_140_to_100_148;
    Create_Weights_200_140_to_200_148;
 end Create_A_Run;

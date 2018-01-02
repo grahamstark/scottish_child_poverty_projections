@@ -340,7 +340,16 @@ package body Model.SCP.Target_Creator is
             targets.two_adult_hh := uk_hhlds.two_adult_hh * hh_scaling;
             targets.other_hh := uk_hhlds.other_hh * hh_scaling;
             
-            targets.household_all_households := targets.household_all_households + scottish_households.all_households * hh_scaling;
+            if( the_run.country = SCO ) then
+               targets.household_all_households := scottish_households.all_households * hh_scaling;
+               -- fixme WAL NIR
+            else
+               targets.household_all_households := 
+                     targets.one_adult_hh + 
+                     targets.two_adult_hh +
+                     targets.other_hh;
+            end if;
+            
             targets.country_scotland := scottish_households.all_households * hh_scaling;
             
             targets.age_0_male := Q_Weighed_Av( male_popn.age_0, male_popn_yp1.age_0 );
@@ -583,7 +592,7 @@ package body Model.SCP.Target_Creator is
                if the_run.country = SCO then                      
                   targets.employee := macro_data.employee_rate * age_16_plus / 100.0;
                else
-                  targets.employee := macro_data.employee_rate * targets.employed / 100.0;
+                  targets.employee := macro_data.employee_rate * targets.employed;
                end if;
             end;
             Log( To_String( targets )); 
