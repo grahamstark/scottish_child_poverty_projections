@@ -62,6 +62,7 @@ procedure Create_A_Run is
       the_run.uk_wide_only := True;
       Run_IO.Save( the_run );
    end Create_201000;
+   
 
    procedure Create_Targets_100_140_to_100_148 is
       the_run : Run;
@@ -212,13 +213,13 @@ procedure Create_A_Run is
       the_run : Run;
       timestr : constant String := Formatting.Image( Clock );
    begin
-      for r in 0 .. 12 loop
+      for r in 0 .. 8 loop
          the_run.run_id := run_id;
          the_run.user_id := 1;
          the_run.description := 
             TuS( "UK weights using OBR Macro November 2017 edn and 2016 edition population forecasts; variant: '" & targets_run_id'Img & "' created at: " & timestr );
          the_run.start_year := 2016;
-         the_run.end_year := 2038;
+         the_run.end_year := 2037;
          the_run.run_type := weights_generation;
          the_run.weighting_function := constrained_chi_square;
          the_run.weighting_lower_bound := 0.1;
@@ -242,7 +243,45 @@ procedure Create_A_Run is
          Inc( targets_run_id );
          Inc( run_id );
       end loop;
-   end Create_Weights_200_140_to_200_148;     
+   end Create_Weights_200_140_to_200_148;
+   
+   procedure Create_Weights_200_150_to_200_158 is
+      targets_run_id : Positive := 100_140;
+      run_id         : Positive := 200_150;
+      the_run : Run;
+      timestr : constant String := Formatting.Image( Clock );
+   begin
+      for r in 0 .. 8 loop
+         the_run.run_id := run_id;
+         the_run.user_id := 1;
+         the_run.description := 
+            TuS( "UK weights using OBR Macro November 2017 edn and 2016 edition population forecasts; single FRS year; variant: '" & targets_run_id'Img & "' created at: " & timestr );
+         the_run.start_year := 2016;
+         the_run.end_year := 2037;
+         the_run.run_type := weights_generation;
+         the_run.weighting_function := constrained_chi_square;
+         the_run.weighting_lower_bound := 0.1;
+         the_run.weighting_upper_bound := 4.0;
+         the_run.targets_run_id := targets_run_id;
+         the_run.targets_run_user_id := 1;
+         the_run.data_run_id := 999998;
+         the_run.data_run_user_id := 1;
+         the_run.country := UK;
+         the_run.selected_clauses := (
+            compressed_household_type => True,
+            aggregate_ages_by_gender  => True,
+            single_participation_rate => False,
+            employees                 => True,
+            employment                => True,
+            ilo_unemployment          => True,
+            others                    => False );
+         the_run.data_start_year := 2015;
+         the_run.data_end_year := 2015;
+         Run_IO.Save( the_run );
+         Inc( targets_run_id );
+         Inc( run_id );
+      end loop;
+   end Create_Weights_200_150_to_200_158;     
    
    
    procedure Create_201001 is
@@ -284,8 +323,10 @@ procedure Create_A_Run is
   
 begin
    -- Create_201001;
-   Create_Targets_100_120_to_100_132;
-   Create_Weights_200_120_to_200_132;
-   Create_Targets_100_140_to_100_148;
+   -- Create_Targets_100_120_to_100_132;
+   -- Create_Weights_200_120_to_200_132;
+   -- Create_Targets_100_140_to_100_148;
    Create_Weights_200_140_to_200_148;
+   Create_Weights_200_150_to_200_158;
+   
 end Create_A_Run;
