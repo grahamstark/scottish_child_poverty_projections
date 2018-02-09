@@ -21,21 +21,21 @@ set timefmt "%Y"
 set format y "%1.0f"
 
 set xlabel "Year"
-set xrange [2016:2034]
+set xrange [2017:2034]
 # set xdata time
 set key left top
 # set grid
 set key autotitle columnhead
 
 list=system('ls output/hr/*-targets.tab')
-
+set key left top
+        
 do for [filename in list ]{                  
         basename = system( 'basename '.filename )
         print filename
-        set key left top
         
         set output sprintf('../docs/report/images/%s-hhlds.svg', basename )
-        set yrange [0:900000]
+        # set yrange [0:900000]
         set title "Projected Households"
         set ylabel "Households"
         plot     filename using 1:2 with lines ls 1, \
@@ -48,20 +48,20 @@ do for [filename in list ]{
         unset output
         
         set output sprintf('../docs/report/images/%s-employment.svg', basename )
-        set yrange [0:2800000]
+        # set yrange [0:2800000]
         set title "Employment, Unemployment and Employees"
         set ylabel "Population"
-        set key right bottom
+        # set key right bottom
         plot    filename using 1:9 with lines ls 1, \
                 filename using 1:10 with lines ls 2, \
                 filename using 1:11 with lines ls 3
         unset output
         
         set output sprintf('../docs/report/images/%s-children.svg', basename )
-        set yrange [0:200000]
+        # set yrange [0:200000]
         set title "Children"
         set ylabel "Population"
-        set key right bottom
+        # set key right bottom
         plot    filename using 1:12 with lines ls 1, \
                 filename using 1:13 with lines ls 2, \
                 filename using 1:14 with lines ls 3, \
@@ -75,10 +75,10 @@ do for [filename in list ]{
 
 
 set output '../docs/report/images/all-households-variants.svg'
-set yrange [2000000:3000000]
+# set yrange [2000000:3000000]
 set title "Households"
 set ylabel "Total Households, Forecast Variants"
-set key right bottom
+# set key right bottom
 plot \
         'output/hr/200120_sco_2016_2038_ppp_ppp_baseline_2012_2015-targets.tab' using 1:(($2+$3+$4+$5+$6+$7)) title "Principal" with lines ls 1, \
         'output/hr/200121_sco_2016_2038_ppp_hhh_baseline_2012_2015-targets.tab' using 1:($2+$3+$4+$5+$6+$7) title "High Population" with lines ls 2, \
@@ -96,10 +96,10 @@ plot \
 unset output;
 
 set output '../docs/report/images/employment-variants.svg'
-set yrange [100000:2800000]
+# set yrange [100000:2800000]
 set title "Total Employment, Forecast Variants"
 set ylabel "Employment"
-set key right bottom
+# set key right bottom
 plot \
         'output/hr/200120_sco_2016_2038_ppp_ppp_baseline_2012_2015-targets.tab' using 1:10 title "Principal" with lines ls 1, \
         'output/hr/200121_sco_2016_2038_ppp_hhh_baseline_2012_2015-targets.tab' using 1:10 title "High Population" with lines ls 2, \
@@ -117,10 +117,10 @@ plot \
 unset output;
 
 set output '../docs/report/images/all-children-variants.svg'
-set yrange [800000:1300000]
+# set yrange [800000:1300000]
 set title "Numbers of Children, Forecast Variants"
 set ylabel "Children"
-set key right bottom
+# set key right bottom
 plot \
         'output/hr/200120_sco_2016_2038_ppp_ppp_baseline_2012_2015-targets.tab' using 1:(($12+$13+$14+$29+$30+$31)) title "Principal" with lines ls 1, \
         'output/hr/200121_sco_2016_2038_ppp_hhh_baseline_2012_2015-targets.tab' using 1:($12+$13+$14+$29+$30+$31) title "High Population" with lines ls 2, \
@@ -138,10 +138,10 @@ plot \
 unset output;
 
 set output '../docs/report/images/population-variants.svg'
-set yrange [500000:6000000]
+# set yrange [500000:6000000]
 set title "Scottish Population, Forecast Variants"
 set ylabel "People"
-set key right bottom
+# set key right bottom
 plot \
         'output/hr/200120_sco_2016_2038_ppp_ppp_baseline_2012_2015-targets.tab' using 1:($12+$13+$14+$15+$16+$17+$18+$19+$20+$21+$22+$23+$24+$25+$26+$27+$28+$29+$30+$31+$32+$33+$34+$35+$36+$37+$38+$39+$40+$41+$42+$43+$44+$45) title "Principal" with lines ls 1, \
         'output/hr/200121_sco_2016_2038_ppp_hhh_baseline_2012_2015-targets.tab' using 1:($12+$13+$14+$15+$16+$17+$18+$19+$20+$21+$22+$23+$24+$25+$26+$27+$28+$29+$30+$31+$32+$33+$34+$35+$36+$37+$38+$39+$40+$41+$42+$43+$44+$45) title "High Population" with lines ls 2, \
