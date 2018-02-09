@@ -24,7 +24,7 @@ set xlabel "Year"
 set xrange [2016:2034]
 # set xdata time
 set key left top
-set grid
+# set grid
 set key autotitle columnhead
 
 list=system('ls output/hr/*-targets.tab')
@@ -38,22 +38,23 @@ do for [filename in list ]{
         set yrange [0:900000]
         set title "Projected Households"
         set ylabel "Households"
-        plot     filename using 1:2 with linespoints ls 1, \
-                 filename using 1:3 with linespoints  ls 2, \
-                 filename using 1:4 with linespoints  ls 3, \
-                 filename using 1:5 with linespoints  ls 4, \
-                 filename using 1:6 with linespoints  ls 5, \
-                 filename using 1:7 with linespoints  ls 6, \
-                 filename using 1:8 with linespoints  ls 7
+        plot     filename using 1:2 with lines ls 1, \
+                 filename using 1:3 with lines  ls 2, \
+                 filename using 1:4 with lines  ls 3, \
+                 filename using 1:5 with lines  ls 4, \
+                 filename using 1:6 with lines  ls 5, \
+                 filename using 1:7 with lines  ls 6, \
+                 filename using 1:8 with lines  ls 7
         unset output
         
         set output sprintf('../docs/report/images/%s-employment.svg', basename )
         set yrange [0:2800000]
-        set title "Employment"
+        set title "Employment, Unemployment and Employees"
         set ylabel "Population"
-        plot    filename using 1:9 with linespoints ls 1, \
-                filename using 1:10 with linespoints ls 2, \
-                filename using 1:11 with linespoints ls 3
+        set key right bottom
+        plot    filename using 1:9 with lines ls 1, \
+                filename using 1:10 with lines ls 2, \
+                filename using 1:11 with lines ls 3
         unset output
         
         set output sprintf('../docs/report/images/%s-children.svg', basename )
@@ -61,79 +62,77 @@ do for [filename in list ]{
         set title "Children"
         set ylabel "Population"
         set key right bottom
-        plot    filename using 1:12 with linespoints ls 1, \
-                filename using 1:13 with linespoints ls 2, \
-                filename using 1:14 with linespoints ls 3, \
-                filename using 1:15 with linespoints ls 4, \
-                filename using 1:29 with linespoints ls 5, \
-                filename using 1:30 with linespoints ls 6, \
-                filename using 1:31 with linespoints ls 7, \
-                filename using 1:32 with linespoints ls 8
+        plot    filename using 1:12 with lines ls 1, \
+                filename using 1:13 with lines ls 2, \
+                filename using 1:14 with lines ls 3, \
+                filename using 1:15 with lines ls 4, \
+                filename using 1:29 with lines ls 5, \
+                filename using 1:30 with lines ls 6, \
+                filename using 1:31 with lines ls 7, \
+                filename using 1:32 with lines ls 8
         unset output
 }
 
 
-plot set output '../docs/report/images/all-households.svg'
+set output '../docs/report/images/all-households-variants.svg'
 set yrange [0:3000000]
 set title "Households"
-set ytitle "Total Households, Forecast Variants"
+set ylabel "Total Households, Forecast Variants"
 set key right bottom
 plot \
-        'output/hr/200120_sco_2016_2038_ppp_ppp_baseline_2012_2015-targets.tab' using 1:(($2+$3+$4+$5+$6+$7)) title "Principal" with linespoints ls 1, \
-        'output/hr/200121_sco_2016_2038_ppp_hhh_baseline_2012_2015-targets.tab' using 1:($2+$3+$4+$5+$6+$7) title "High Population" with linespoints ls 2, \
-        'output/hr/200122_sco_2016_2038_ppp_hpp_baseline_2012_2015-targets.tab' using 1:($2+$3+$4+$5+$6+$7) title "High Fertility" with linespoints ls 3, \
-        'output/hr/200123_sco_2016_2038_ppp_lll_baseline_2012_2015-targets.tab' using 1:($2+$3+$4+$5+$6+$7) title "Low Population" with linespoints ls 4, \
-        'output/hr/200124_sco_2016_2038_ppp_lpp_baseline_2012_2015-targets.tab' using 1:($2+$3+$4+$5+$6+$7) title "Low Fertility" with linespoints ls 5, \
-        'output/hr/200125_sco_2016_2038_ppp_php_baseline_2012_2015-targets.tab' using 1:($2+$3+$4+$5+$6+$7) title "High Life Expectancy" with linespoints ls 6, \
-        'output/hr/200126_sco_2016_2038_ppp_plp_baseline_2012_2015-targets.tab' using 1:($2+$3+$4+$5+$6+$7) title "Low Life Expectancy" with linespoints ls 7, \
-        'output/hr/200127_sco_2016_2038_ppp_pph_baseline_2012_2015-targets.tab' using 1:($2+$3+$4+$5+$6+$7) title "High Migration" with linespoints ls 8, \
-        'output/hr/200128_sco_2016_2038_ppp_ppl_baseline_2012_2015-targets.tab' using 1:($2+$3+$4+$5+$6+$7) title "Low Migration" with linespoints ls 9, \
-        'output/hr/200129_sco_2016_2038_ppp_ppq_baseline_2012_2015-targets.tab' using 1:($2+$3+$4+$5+$6+$7) title "0% Future EU Migration" with linespoints ls 10, \
-        'output/hr/200130_sco_2016_2038_ppp_ppr_baseline_2012_2015-targets.tab' using 1:($2+$3+$4+$5+$6+$7) title "50% Future EU Migration" with linespoints ls 11, \
-        'output/hr/200131_sco_2016_2038_ppp_pps_baseline_2012_2015-targets.tab' using 1:($2+$3+$4+$5+$6+$7) title "150% Future EU Migration" with linespoints ls 12, \
-        'output/hr/200132_sco_2016_2038_ppp_ppz_baseline_2012_2015-targets.tab' using 1:($2+$3+$4+$5+$6+$7) title "Zero Net Migration" with linespoints  ls 13
+        'output/hr/200120_sco_2016_2038_ppp_ppp_baseline_2012_2015-targets.tab' using 1:(($2+$3+$4+$5+$6+$7)) title "Principal" with lines ls 1, \
+        'output/hr/200121_sco_2016_2038_ppp_hhh_baseline_2012_2015-targets.tab' using 1:($2+$3+$4+$5+$6+$7) title "High Population" with lines ls 2, \
+        'output/hr/200122_sco_2016_2038_ppp_hpp_baseline_2012_2015-targets.tab' using 1:($2+$3+$4+$5+$6+$7) title "High Fertility" with lines ls 3, \
+        'output/hr/200123_sco_2016_2038_ppp_lll_baseline_2012_2015-targets.tab' using 1:($2+$3+$4+$5+$6+$7) title "Low Population" with lines ls 4, \
+        'output/hr/200124_sco_2016_2038_ppp_lpp_baseline_2012_2015-targets.tab' using 1:($2+$3+$4+$5+$6+$7) title "Low Fertility" with lines ls 5, \
+        'output/hr/200125_sco_2016_2038_ppp_php_baseline_2012_2015-targets.tab' using 1:($2+$3+$4+$5+$6+$7) title "High Life Expectancy" with lines ls 6, \
+        'output/hr/200126_sco_2016_2038_ppp_plp_baseline_2012_2015-targets.tab' using 1:($2+$3+$4+$5+$6+$7) title "Low Life Expectancy" with lines ls 7, \
+        'output/hr/200127_sco_2016_2038_ppp_pph_baseline_2012_2015-targets.tab' using 1:($2+$3+$4+$5+$6+$7) title "High Migration" with lines ls 8, \
+        'output/hr/200128_sco_2016_2038_ppp_ppl_baseline_2012_2015-targets.tab' using 1:($2+$3+$4+$5+$6+$7) title "Low Migration" with lines ls 9, \
+        'output/hr/200129_sco_2016_2038_ppp_ppq_baseline_2012_2015-targets.tab' using 1:($2+$3+$4+$5+$6+$7) title "0% Future EU Migration" with lines ls 10, \
+        'output/hr/200130_sco_2016_2038_ppp_ppr_baseline_2012_2015-targets.tab' using 1:($2+$3+$4+$5+$6+$7) title "50% Future EU Migration" with lines ls 11, \
+        'output/hr/200131_sco_2016_2038_ppp_pps_baseline_2012_2015-targets.tab' using 1:($2+$3+$4+$5+$6+$7) title "150% Future EU Migration" with lines ls 12, \
+        'output/hr/200132_sco_2016_2038_ppp_ppz_baseline_2012_2015-targets.tab' using 1:($2+$3+$4+$5+$6+$7) title "Zero Net Migration" with lines  ls 13
 unset output;
 
-plot set output '../docs/report/images/employment.svg'
+set output '../docs/report/images/employment-variants.svg'
 set yrange [0:1000000]
 set title "Total Employment, Forecast Variants"
-set ytitle "Employment"
+set ylabel "Employment"
 set key right bottom
 plot \
-        'output/hr/200120_sco_2016_2038_ppp_ppp_baseline_2012_2015-targets.tab' using 1:(($12+$13+$14+$29+$30+$31)) title "Principal" with linespoints ls 1, \
-        'output/hr/200121_sco_2016_2038_ppp_hhh_baseline_2012_2015-targets.tab' using 1:($12+$13+$14+$29+$30+$31) title "High Population" with linespoints ls 2, \
-        'output/hr/200122_sco_2016_2038_ppp_hpp_baseline_2012_2015-targets.tab' using 1:($12+$13+$14+$29+$30+$31) title "High Fertility" with linespoints ls 3, \
-        'output/hr/200123_sco_2016_2038_ppp_lll_baseline_2012_2015-targets.tab' using 1:($12+$13+$14+$29+$30+$31) title "Low Population" with linespoints ls 4, \
-        'output/hr/200124_sco_2016_2038_ppp_lpp_baseline_2012_2015-targets.tab' using 1:($12+$13+$14+$29+$30+$31) title "Low Fertility" with linespoints  ls 5, \
-        'output/hr/200125_sco_2016_2038_ppp_php_baseline_2012_2015-targets.tab' using 1:($12+$13+$14+$29+$30+$31) title "High Life Expectancy" with linespoints  ls 6, \
-        'output/hr/200126_sco_2016_2038_ppp_plp_baseline_2012_2015-targets.tab' using 1:($12+$13+$14+$29+$30+$31) title "Low Life Expectancy" with linespoints ls 7, \
-        'output/hr/200127_sco_2016_2038_ppp_pph_baseline_2012_2015-targets.tab' using 1:($12+$13+$14+$29+$30+$31) title "High Migration" with linespoints ls 8, \
-        'output/hr/200128_sco_2016_2038_ppp_ppl_baseline_2012_2015-targets.tab' using 1:($12+$13+$14+$29+$30+$31) title "Low Migration" with linespoints ls 9, \
-        'output/hr/200129_sco_2016_2038_ppp_ppq_baseline_2012_2015-targets.tab' using 1:($12+$13+$14+$29+$30+$31) title "0% Future EU Migration" with linespoints ls 10, \
-        'output/hr/200130_sco_2016_2038_ppp_ppr_baseline_2012_2015-targets.tab' using 1:($12+$13+$14+$29+$30+$31) title "50% Future EU Migration" with linespoints ls 11, \
-        'output/hr/200131_sco_2016_2038_ppp_pps_baseline_2012_2015-targets.tab' using 1:($12+$13+$14+$29+$30+$31) title "150% Future EU Migration" with linespoints ls 12, \
-        'output/hr/200132_sco_2016_2038_ppp_ppz_baseline_2012_2015-targets.tab' using 1:($12+$13+$14+$29+$30+$31) title "Zero Net Migration" with linespoints  ls 13
+        'output/hr/200120_sco_2016_2038_ppp_ppp_baseline_2012_2015-targets.tab' using 1:10 title "Principal" with lines ls 1, \
+        'output/hr/200121_sco_2016_2038_ppp_hhh_baseline_2012_2015-targets.tab' using 1:10 title "High Population" with lines ls 2, \
+        'output/hr/200122_sco_2016_2038_ppp_hpp_baseline_2012_2015-targets.tab' using 1:10 title "High Fertility" with lines ls 3, \
+        'output/hr/200123_sco_2016_2038_ppp_lll_baseline_2012_2015-targets.tab' using 1:10 title "Low Population" with lines ls 4, \
+        'output/hr/200124_sco_2016_2038_ppp_lpp_baseline_2012_2015-targets.tab' using 1:10 title "Low Fertility" with lines  ls 5, \
+        'output/hr/200125_sco_2016_2038_ppp_php_baseline_2012_2015-targets.tab' using 1:10 title "High Life Expectancy" with lines  ls 6, \
+        'output/hr/200126_sco_2016_2038_ppp_plp_baseline_2012_2015-targets.tab' using 1:10 title "Low Life Expectancy" with lines ls 7, \
+        'output/hr/200127_sco_2016_2038_ppp_pph_baseline_2012_2015-targets.tab' using 1:10 title "High Migration" with lines ls 8, \
+        'output/hr/200128_sco_2016_2038_ppp_ppl_baseline_2012_2015-targets.tab' using 1:10 title "Low Migration" with lines ls 9, \
+        'output/hr/200129_sco_2016_2038_ppp_ppq_baseline_2012_2015-targets.tab' using 1:10 title "0% Future EU Migration" with lines ls 10, \
+        'output/hr/200130_sco_2016_2038_ppp_ppr_baseline_2012_2015-targets.tab' using 1:10 title "50% Future EU Migration" with lines ls 11, \
+        'output/hr/200131_sco_2016_2038_ppp_pps_baseline_2012_2015-targets.tab' using 1:10 title "150% Future EU Migration" with lines ls 12, \
+        'output/hr/200132_sco_2016_2038_ppp_ppz_baseline_2012_2015-targets.tab' using 1:10 title "Zero Net Migration" with lines  ls 13
 unset output;
 
-plot set output '../docs/report/images/all-children.svg'
-set yrange [0:1000000]
+set output '../docs/report/images/all-children-variants.svg'
+set yrange [0:1300000]
 set title "Numbers of Children, Forecast Variants"
-set ytitle "Children"
+set ylabel "Children"
 set key right bottom
 plot \
-        'output/hr/200120_sco_2016_2038_ppp_ppp_baseline_2012_2015-targets.tab' using 1:(($12+$13+$14+$29+$30+$31)) title "Principal" with linespoints ls 1, \
-        'output/hr/200121_sco_2016_2038_ppp_hhh_baseline_2012_2015-targets.tab' using 1:($12+$13+$14+$29+$30+$31) title "High Population" with linespoints ls 2, \
-        'output/hr/200122_sco_2016_2038_ppp_hpp_baseline_2012_2015-targets.tab' using 1:($12+$13+$14+$29+$30+$31) title "High Fertility" with linespoints ls 3, \
-        'output/hr/200123_sco_2016_2038_ppp_lll_baseline_2012_2015-targets.tab' using 1:($12+$13+$14+$29+$30+$31) title "Low Population" with linespoints ls 4, \
-        'output/hr/200124_sco_2016_2038_ppp_lpp_baseline_2012_2015-targets.tab' using 1:($12+$13+$14+$29+$30+$31) title "Low Fertility" with linespoints  ls 5, \
-        'output/hr/200125_sco_2016_2038_ppp_php_baseline_2012_2015-targets.tab' using 1:($12+$13+$14+$29+$30+$31) title "High Life Expectancy" with linespoints  ls 6, \
-        'output/hr/200126_sco_2016_2038_ppp_plp_baseline_2012_2015-targets.tab' using 1:($12+$13+$14+$29+$30+$31) title "Low Life Expectancy" with linespoints ls 7, \
-        'output/hr/200127_sco_2016_2038_ppp_pph_baseline_2012_2015-targets.tab' using 1:($12+$13+$14+$29+$30+$31) title "High Migration" with linespoints ls 8, \
-        'output/hr/200128_sco_2016_2038_ppp_ppl_baseline_2012_2015-targets.tab' using 1:($12+$13+$14+$29+$30+$31) title "Low Migration" with linespoints ls 9, \
-        'output/hr/200129_sco_2016_2038_ppp_ppq_baseline_2012_2015-targets.tab' using 1:($12+$13+$14+$29+$30+$31) title "0% Future EU Migration" with linespoints ls 10, \
-        'output/hr/200130_sco_2016_2038_ppp_ppr_baseline_2012_2015-targets.tab' using 1:($12+$13+$14+$29+$30+$31) title "50% Future EU Migration" with linespoints ls 11, \
-        'output/hr/200131_sco_2016_2038_ppp_pps_baseline_2012_2015-targets.tab' using 1:($12+$13+$14+$29+$30+$31) title "150% Future EU Migration" with linespoints ls 12, \
-        'output/hr/200132_sco_2016_2038_ppp_ppz_baseline_2012_2015-targets.tab' using 1:($12+$13+$14+$29+$30+$31) title "Zero Net Migration" with linespoints  ls 13
+        'output/hr/200120_sco_2016_2038_ppp_ppp_baseline_2012_2015-targets.tab' using 1:(($12+$13+$14+$29+$30+$31)) title "Principal" with lines ls 1, \
+        'output/hr/200121_sco_2016_2038_ppp_hhh_baseline_2012_2015-targets.tab' using 1:($12+$13+$14+$29+$30+$31) title "High Population" with lines ls 2, \
+        'output/hr/200122_sco_2016_2038_ppp_hpp_baseline_2012_2015-targets.tab' using 1:($12+$13+$14+$29+$30+$31) title "High Fertility" with lines ls 3, \
+        'output/hr/200123_sco_2016_2038_ppp_lll_baseline_2012_2015-targets.tab' using 1:($12+$13+$14+$29+$30+$31) title "Low Population" with lines ls 4, \
+        'output/hr/200124_sco_2016_2038_ppp_lpp_baseline_2012_2015-targets.tab' using 1:($12+$13+$14+$29+$30+$31) title "Low Fertility" with lines  ls 5, \
+        'output/hr/200125_sco_2016_2038_ppp_php_baseline_2012_2015-targets.tab' using 1:($12+$13+$14+$29+$30+$31) title "High Life Expectancy" with lines  ls 6, \
+        'output/hr/200126_sco_2016_2038_ppp_plp_baseline_2012_2015-targets.tab' using 1:($12+$13+$14+$29+$30+$31) title "Low Life Expectancy" with lines ls 7, \
+        'output/hr/200127_sco_2016_2038_ppp_pph_baseline_2012_2015-targets.tab' using 1:($12+$13+$14+$29+$30+$31) title "High Migration" with lines ls 8, \
+        'output/hr/200128_sco_2016_2038_ppp_ppl_baseline_2012_2015-targets.tab' using 1:($12+$13+$14+$29+$30+$31) title "Low Migration" with lines ls 9, \
+        'output/hr/200129_sco_2016_2038_ppp_ppq_baseline_2012_2015-targets.tab' using 1:($12+$13+$14+$29+$30+$31) title "0% Future EU Migration" with lines ls 10, \
+        'output/hr/200130_sco_2016_2038_ppp_ppr_baseline_2012_2015-targets.tab' using 1:($12+$13+$14+$29+$30+$31) title "50% Future EU Migration" with lines ls 11, \
+        'output/hr/200131_sco_2016_2038_ppp_pps_baseline_2012_2015-targets.tab' using 1:($12+$13+$14+$29+$30+$31) title "150% Future EU Migration" with lines ls 12, \
+        'output/hr/200132_sco_2016_2038_ppp_ppz_baseline_2012_2015-targets.tab' using 1:($12+$13+$14+$29+$30+$31) title "Zero Net Migration" with lines  ls 13
 unset output;
-
-    
