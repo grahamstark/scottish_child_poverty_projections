@@ -1,3 +1,4 @@
+1,$s/\tYear/Year/g
 1,$s/sco_hhld_one_adult_male/Year\tOne Adult Male/g
 1,$s/sco_hhld_one_adult_female/One Adult Female/g
 1,$s/sco_hhld_two_adults/Two Adults/g
@@ -6,7 +7,7 @@
 1,$s/sco_hhld_two_plus_adult_one_plus_children/2+ Adults with Children/g
 1,$s/sco_hhld_three_plus_person_all_adult/Three+ Adults, no children/g
 1,$s/ilo_unemployed/ILO Unemployed/g
-1,$s/employed/Employed, Inc Self-Employed/g
+1,$s/\temployed/\tEmployed, Inc. Self-Employed/g
 1,$s/employee/Employees/g
 1,$s/0-4_male/0-4 Male/g
 1,$s/5-10_male/5-10 Male/g
