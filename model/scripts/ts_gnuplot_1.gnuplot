@@ -1,5 +1,7 @@
 set terminal svg size 800,600 enhanced butt solid
-          
+set terminal png size 800,600
+         
+
 set style line 1 lt rgb "#ba5050" dt 1
 set style line 2 lt rgb "#8250ba" dt 2
 set style line 3 lt rgb "#5062ba" dt 3
@@ -34,7 +36,7 @@ do for [filename in list ]{
         basename = system( 'basename '.filename )
         print filename
         
-        set output sprintf('../docs/report/images/%s-hhlds.svg', basename )
+        set output sprintf('../docs/report/images/%s-hhlds.png', basename )
         # set yrange [0:900000]
         set title "Projected Households"
         set ylabel "Households"
@@ -47,7 +49,7 @@ do for [filename in list ]{
                  filename using 1:8 with lines  ls 7
         unset output
         
-        set output sprintf('../docs/report/images/%s-employment.svg', basename )
+        set output sprintf('../docs/report/images/%s-employment.png', basename )
         # set yrange [0:2800000]
         set title "Employment, Unemployment and Employees"
         set ylabel "Population"
@@ -57,7 +59,7 @@ do for [filename in list ]{
                 filename using 1:11 with lines ls 3
         unset output
         
-        set output sprintf('../docs/report/images/%s-children.svg', basename )
+        set output sprintf('../docs/report/images/%s-children.png', basename )
         # set yrange [0:200000]
         set title "Children"
         set ylabel "Population"
@@ -74,7 +76,7 @@ do for [filename in list ]{
 }
 
 
-set output '../docs/report/images/all-households-variants.svg'
+set output '../docs/report/images/all-households-variants.png'
 # set yrange [2000000:3000000]
 set title "Households"
 set ylabel "Total Households, Forecast Variants"
@@ -95,7 +97,7 @@ plot \
         'output/hr/200132_sco_2016_2038_ppp_ppz_baseline_2012_2015-targets.tab' using 1:($2+$3+$4+$5+$6+$7) title "Zero Net Migration" with lines  ls 13
 unset output;
 
-set output '../docs/report/images/employment-variants.svg'
+set output '../docs/report/images/employment-variants.png'
 # set yrange [100000:2800000]
 set title "Total Employment, Forecast Variants"
 set ylabel "Employment"
@@ -116,7 +118,7 @@ plot \
         'output/hr/200132_sco_2016_2038_ppp_ppz_baseline_2012_2015-targets.tab' using 1:10 title "Zero Net Migration" with lines  ls 13
 unset output;
 
-set output '../docs/report/images/all-children-variants.svg'
+set output '../docs/report/images/all-children-variants.png'
 # set yrange [800000:1300000]
 set title "Numbers of Children, Forecast Variants"
 set ylabel "Children"
@@ -137,7 +139,7 @@ plot \
         'output/hr/200132_sco_2016_2038_ppp_ppz_baseline_2012_2015-targets.tab' using 1:($12+$13+$14+$29+$30+$31) title "Zero Net Migration" with lines  ls 13
 unset output;
 
-set output '../docs/report/images/population-variants.svg'
+set output '../docs/report/images/population-variants.png'
 # set yrange [500000:6000000]
 set title "Scottish Population, Forecast Variants"
 set ylabel "People"

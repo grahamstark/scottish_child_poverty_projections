@@ -1255,7 +1255,7 @@ update target_data.population_forecasts set all_ages =
                 coalesce( age_107, 0.0 ) +
                 coalesce( age_108, 0.0 ) +
                 coalesce( age_109, 0.0 ) +
-                coalesce( age_110, 0.0 ));
+                coalesce( age_110, 0.0 ) where rec_type = 'persons' and variant = 'lll' and country = 'UK' and edition =  2014 ;
 
                 
 select 

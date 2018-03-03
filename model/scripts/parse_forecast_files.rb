@@ -53,7 +53,7 @@ loop do
         varStmt = "insert into target_data.forecast_variant( rec_type, variant, country, edition, source, description, url, filename ) values( '#{recType}', '#{variant}', '#{country}', '#{edition}', '#{source}', '#{out[:label]}', null, '#{fname}' )"                
         # if( recType != 'households')
                 if( p == 0 )
-                        CONNECTION.run( varStmt )
+                        # CONNECTION.run( varStmt )
                 end
                 loadBlockToDB( out, variant, country, edition, recType )
         # else
