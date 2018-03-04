@@ -54,6 +54,21 @@ package body Model.SCP.Weights_Creator is
       end case;
    end Op;
    
+
+   procedure Operate( 
+      x   : in out Vector;
+      pos : Starts_Stops_A;
+      v   : in out Data_Changes_Array;
+      ops : Data_Ops_Array ) is
+   begin
+      for r in Candidate_Clauses'Range loop
+         if pos( r ).start > 0 then
+            for p in pos( r ).start .. pos( r ).stop loop
+               Op( x( p ), v( r ), ops( r )); 
+            end loop;
+         end if;
+      end loop;
+   end Operate;
    
    
    procedure Print_Diffs( 
@@ -404,9 +419,9 @@ package body Model.SCP.Weights_Creator is
       country        : Unbounded_String;
       targets        : Target_Dataset;
       row            : out Vector;
-      initial_weight : out Amount ) is
+      initial_weight : out Amount;
+      start_stops    : out Starts_Stops_A) is
 
-      start_stops : Starts_Stops_A := ( others => ( start=>0, stop=>0 ));
       p : Natural := 0;
       tmp : Amount;
          
@@ -437,14 +452,14 @@ package body Model.SCP.Weights_Creator is
       row := ( others => 0.0 );
 
       if clauses( employment_by_sector ) then
-         start_stops( employment_by_sector ).start := p;
+         start_stops( employment_by_sector ).start := p + 1+1;
          Add_Col( targets.private_sector_employed );
          Add_Col( targets.public_sector_employed );
          start_stops( employment_by_sector ).stop := p;
       end if;
 
       if clauses( household_type ) then 
-         start_stops( household_type ).start := p;
+         start_stops( household_type ).start := p + 1;
          if( country = SCO or country = UK ) then
             Add_Col( targets.sco_hhld_one_adult_male );
             Add_Col( targets.sco_hhld_one_adult_female );
@@ -499,7 +514,7 @@ package body Model.SCP.Weights_Creator is
          end if;
          start_stops( household_type ).stop := p;
      elsif clauses( compressed_household_type ) then
-         start_stops( compressed_household_type ).start := p;
+         start_stops( compressed_household_type ).start := p + 1;
          Add_Col( targets.other_hh );
          Add_Col( targets.one_adult_hh );
          Add_Col( targets.two_adult_hh );
@@ -507,38 +522,38 @@ package body Model.SCP.Weights_Creator is
       end if;
       -- household_all_households : Amount := 0.0;
       if clauses( genders ) then
-         start_stops( genders ).start := p;
+         start_stops( genders ).start := p + 1;
          Add_Col( targets.male );
          Add_Col( targets.female );
          start_stops( genders ).stop := p;
       end if;
       if clauses( single_participation_rate ) then      
-         start_stops( single_participation_rate ).start := p;
+         start_stops( single_participation_rate ).start := p + 1;
          Add_Col( targets.participation );
          start_stops( single_participation_rate ).stop := p;
       end if;
       if clauses( employment ) then      
-         start_stops( employment ).start := p;
+         start_stops( employment ).start := p + 1;
          Add_Col( targets.employed );
          start_stops( employment ).stop := p;
       end if;
       if clauses( employees ) then      
-         start_stops( employees ).start := p;
+         start_stops( employees ).start := p + 1;
          Add_Col( targets.employee );
          start_stops( employees ).stop := p;
       end if;
       if clauses( ilo_unemployment ) then
-         start_stops( ilo_unemployment ).start := p;
+         start_stops( ilo_unemployment ).start := p + 1;
          Add_Col( targets.ilo_unemployed );
          start_stops( ilo_unemployment ).stop := p;
       end if;
       if clauses( jsa_claimants ) then
-         start_stops( jsa_claimants ).start := p;
+         start_stops( jsa_claimants ).start := p + 1;
          Add_Col( targets.jsa_claimant );
          start_stops( jsa_claimants ).stop := p;
       end if;
       if clauses( by_year_ages_by_gender ) then
-         start_stops( by_year_ages_by_gender ).start := p;
+         start_stops( by_year_ages_by_gender ).start := p + 1;
          Add_Col( targets.age_0_male );
          Add_Col( targets.age_1_male );
          Add_Col( targets.age_2_male );
@@ -721,7 +736,7 @@ package body Model.SCP.Weights_Creator is
       end if;
 
       if clauses( aggregate_ages_by_gender ) then
-         start_stops( aggregate_ages_by_gender ).start := p;
+         start_stops( aggregate_ages_by_gender ).start := p + 1;
          tmp := targets.age_0_male + targets.age_1_male + targets.age_2_male + targets.age_3_male + targets.age_4_male;
          Add_Col( tmp );
          tmp := targets.age_5_male + targets.age_6_male + targets.age_7_male + targets.age_8_male + targets.age_9_male + targets.age_10_male;
@@ -807,7 +822,7 @@ package body Model.SCP.Weights_Creator is
          start_stops( aggregate_ages_by_gender ).stop := p;
       end if;      
       if clauses( participation_rate ) then
-         start_stops( participation_rate ).start := p;
+         start_stops( participation_rate ).start := p + 1;
          -- Add_Col( targets.participation_16_19_male );
          Add_Col( targets.participation_20_24_male );
          Add_Col( targets.participation_25_29_male );
@@ -895,6 +910,7 @@ package body Model.SCP.Weights_Creator is
       outf                 : File_Type;
       targetsf             : File_Type;
       diffsf               : File_Type;
+      start_stops          : Starts_Stops_A := ( others => ( start=>0, stop=>0 ));
     begin
        
       Trace( log_trace,  "Begining run for : " & To_String( the_run ));
@@ -968,7 +984,7 @@ package body Model.SCP.Weights_Creator is
          Load_Main_Dataset:
          for row in 1 .. num_data_rows loop
             frs_target_row := Target_Dataset_IO.Map_From_Cursor( f_cursor );
-            Fill_One_Row( the_run.selected_clauses, the_run.country, frs_target_row, mapped_frs_data, by_country_sample_frequencies( row ));
+            Fill_One_Row( the_run.selected_clauses, the_run.country, frs_target_row, mapped_frs_data, by_country_sample_frequencies( row ), start_stops );
             Trace( log_trace,  "made row " &row'Img & "=" & To_String( mapped_frs_data ));
             for col in mapped_target_data'Range loop
                observations.all( row, col ) :=  mapped_frs_data( col );                 
@@ -1011,7 +1027,7 @@ package body Model.SCP.Weights_Creator is
                Trace( log_trace,  "Initial Weight : " & Format( uniform_weight ));
                Trace( log_trace,  "Base Target : " & Format( base_target ));
                -- typecasting thing .. 
-               Fill_One_Row( the_run.selected_clauses, the_run.country, targets, mapped_target_data, dummy ); 
+               Fill_One_Row( the_run.selected_clauses, the_run.country, targets, mapped_target_data, dummy, start_stops ); 
                for c in target_populations'Range loop
                   target_populations( c ) :=  mapped_target_data( c );                 
                end loop;
