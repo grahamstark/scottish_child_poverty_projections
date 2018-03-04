@@ -437,14 +437,14 @@ package body Model.SCP.Weights_Creator is
       row := ( others => 0.0 );
 
       if clauses( employment_by_sector ) then
-         start_stops( employment_by_sector ) := p;
+         start_stops( employment_by_sector ).start := p;
          Add_Col( targets.private_sector_employed );
          Add_Col( targets.public_sector_employed );
-         start_stops( employment_by_sector ) := p;
+         start_stops( employment_by_sector ).stop := p;
       end if;
 
       if clauses( household_type ) then 
-         start_stops( household_type ) := p;
+         start_stops( household_type ).start := p;
          if( country = SCO or country = UK ) then
             Add_Col( targets.sco_hhld_one_adult_male );
             Add_Col( targets.sco_hhld_one_adult_female );
@@ -497,48 +497,48 @@ package body Model.SCP.Weights_Creator is
                -- targets.wal_hhld_5_plus_person_2_plus_adults_1_plus_children +
                -- targets.wal_hhld_5_plus_person_1_adult_4_plus_children );
          end if;
-         start_stops( household_type ) := p;
+         start_stops( household_type ).stop := p;
      elsif clauses( compressed_household_type ) then
-         start_stops( compressed_household_type ) := p;
+         start_stops( compressed_household_type ).start := p;
          Add_Col( targets.other_hh );
          Add_Col( targets.one_adult_hh );
          Add_Col( targets.two_adult_hh );
-         start_stops( compressed_household_type ) := p;
+         start_stops( compressed_household_type ).stop := p;
       end if;
       -- household_all_households : Amount := 0.0;
       if clauses( genders ) then
-         start_stops( genders ) := p;
+         start_stops( genders ).start := p;
          Add_Col( targets.male );
          Add_Col( targets.female );
-         start_stops( genders ) := p;
+         start_stops( genders ).stop := p;
       end if;
       if clauses( single_participation_rate ) then      
-         start_stops( single_participation_rate ) := p;
+         start_stops( single_participation_rate ).start := p;
          Add_Col( targets.participation );
-         start_stops( single_participation_rate ) := p;
+         start_stops( single_participation_rate ).stop := p;
       end if;
       if clauses( employment ) then      
-         start_stops( employment ) := p;
+         start_stops( employment ).start := p;
          Add_Col( targets.employed );
-         start_stops( employment ) := p;
+         start_stops( employment ).stop := p;
       end if;
       if clauses( employees ) then      
-         start_stops( employee ) := p;
+         start_stops( employees ).start := p;
          Add_Col( targets.employee );
-         start_stops( employee ) := p;
+         start_stops( employees ).stop := p;
       end if;
       if clauses( ilo_unemployment ) then
-         start_stops( ilo_unemployment ) := p;
+         start_stops( ilo_unemployment ).start := p;
          Add_Col( targets.ilo_unemployed );
-         start_stops( ilo_unemployment ) := p;
+         start_stops( ilo_unemployment ).stop := p;
       end if;
       if clauses( jsa_claimants ) then
-         start_stops( jsa_claimants ) := p;
+         start_stops( jsa_claimants ).start := p;
          Add_Col( targets.jsa_claimant );
-         start_stops( jsa_claimants ) := p;
+         start_stops( jsa_claimants ).stop := p;
       end if;
       if clauses( by_year_ages_by_gender ) then
-         start_stops( by_year_ages_by_gender ) := p;
+         start_stops( by_year_ages_by_gender ).start := p;
          Add_Col( targets.age_0_male );
          Add_Col( targets.age_1_male );
          Add_Col( targets.age_2_male );
@@ -717,11 +717,11 @@ package body Model.SCP.Weights_Creator is
             targets.age_104_female + targets.age_105_female + targets.age_106_female + targets.age_107_female + 
             targets.age_108_female + targets.age_109_female + targets.age_110_female;
          Add_Col( tmp );
-         start_stops( by_year_ages_by_gender ) := p;
+         start_stops( by_year_ages_by_gender ).stop := p;
       end if;
 
       if clauses( aggregate_ages_by_gender ) then
-         start_stops( aggregate_ages_by_gender ) := p;
+         start_stops( aggregate_ages_by_gender ).start := p;
          tmp := targets.age_0_male + targets.age_1_male + targets.age_2_male + targets.age_3_male + targets.age_4_male;
          Add_Col( tmp );
          tmp := targets.age_5_male + targets.age_6_male + targets.age_7_male + targets.age_8_male + targets.age_9_male + targets.age_10_male;
@@ -804,10 +804,10 @@ package body Model.SCP.Weights_Creator is
             targets.age_105_female + targets.age_106_female + targets.age_107_female + targets.age_108_female + 
             targets.age_109_female + targets.age_110_female;
          Add_Col( tmp );
-         start_stops( aggregate_ages_by_gender ) := p;
+         start_stops( aggregate_ages_by_gender ).stop := p;
       end if;      
       if clauses( participation_rate ) then
-         start_stops( participation_rate ) := p;
+         start_stops( participation_rate ).start := p;
          -- Add_Col( targets.participation_16_19_male );
          Add_Col( targets.participation_20_24_male );
          Add_Col( targets.participation_25_29_male );
@@ -834,7 +834,7 @@ package body Model.SCP.Weights_Creator is
          Add_Col( targets.participation_65_69_female );
          Add_Col( targets.participation_70_74_female );
          -- Add_Col( targets.participation_75_plus_female );
-         start_stops( participation_rate ) := p;
+         start_stops( participation_rate ).stop := p;
       end if;
       Assert( p = row'Length, " not all rows filled " & p'Img & " vs " & row'Length'Img );
     end Fill_One_Row;
