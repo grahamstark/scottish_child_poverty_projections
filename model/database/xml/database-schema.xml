@@ -116,6 +116,28 @@
                                 arrayAdaIndexTypeName='Candidate_Clauses'                        
                                 arrayName='Selected_Clauses_Array'
                                 description="Which parts of DS we choose to weight on"/>
+                  <column name="data_changes"  
+                                required="false"
+                                type="REAL"
+                                adaTypeName='AMOUNT' 
+                                isArray='true'
+                                default='0.0'
+                                arrayIsExternallyDefined='true'
+                                arrayIndexType='ENUM'                        
+                                arrayAdaIndexTypeName='Candidate_Clauses'                        
+                                arrayName='Data_Changes_Array'
+                                description="Which parts of DS we choose to weight on"/>
+                  <column name="data_ops"  
+                                required="false"
+                                type="INTEGER"
+                                adaTypeName='S_Operation_Type' 
+                                isArray='true'
+                                default='0'
+                                arrayIsExternallyDefined='true'
+                                arrayIndexType='ENUM'                        
+                                arrayAdaIndexTypeName='Candidate_Clauses'                        
+                                arrayName='Data_Ops_Array'
+                                description="Which parts of DS we choose to weight on"/>
 
                   
                </table>

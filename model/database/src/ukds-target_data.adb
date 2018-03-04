@@ -638,7 +638,9 @@ package body Ukds.target_data is
          "data_run_id = " & rec.data_run_id'Img &
          "data_run_user_id = " & rec.data_run_user_id'Img &
          "uk_wide_only = " & rec.uk_wide_only'Img &
-         "selected_clauses = " & Selected_Clauses_Array_Package.To_String( rec.selected_clauses );
+         "selected_clauses = " & Selected_Clauses_Array_Package.To_String( rec.selected_clauses ) &
+         "data_changes = " & Data_Changes_Array_Package.To_String( rec.data_changes ) &
+         "data_ops = " & Data_Ops_Array_Package.To_String( rec.data_ops );
    end to_String;
 
 

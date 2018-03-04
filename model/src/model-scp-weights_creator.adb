@@ -34,10 +34,30 @@ package body Model.SCP.Weights_Creator is
    use Ada.Text_IO;
    use Ada.Calendar;
    use Ada.Strings.Unbounded;
+   
+   type Pos_R is record
+      start : Natural := 0;
+      stop  : Natural := 0;
+   end record;
+   
+   type Starts_Stops_A is array( Candidate_Clauses ) of Pos_R;
+   
+   start_stops : Starts_Stops_A := ( others => ( start=>0, stop=>0 ));
 
 
    log_trace : GNATColl.Traces.Trace_Handle := GNATColl.Traces.Create( "MODEL.SCP.WEIGHTS_CREATOR" );
    use GNATColl.Traces;
+   
+   procedure Op( x : in out Amount; v : Amount; op : S_Operation_Type ) is
+   begin
+      case op is
+         when NOOP    => null;
+         when OP_ADD  => x := x + v;
+         when OP_MULT => x := x * v;
+      end case;
+   end Op;
+   
+   
    
    procedure Print_Diffs( 
       diffsf             : File_Type;

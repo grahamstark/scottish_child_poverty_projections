@@ -65,7 +65,7 @@ package body Ukds.Target_Data.Run_IO is
    SELECT_PART : constant String := "select " &
          "run_id, user_id, run_type, description, country, macro_variant, macro_edition, households_variant, households_edition, population_variant," &
          "population_edition, start_year, end_year, data_start_year, data_end_year, weighting_function, weighting_lower_bound, weighting_upper_bound, targets_run_id, targets_run_user_id," &
-         "data_run_id, data_run_user_id, uk_wide_only, selected_clauses " &
+         "data_run_id, data_run_user_id, uk_wide_only, selected_clauses, data_changes, data_ops " &
          " from target_data.run " ;
    
    --
@@ -74,7 +74,7 @@ package body Ukds.Target_Data.Run_IO is
    INSERT_PART : constant String := "insert into target_data.run (" &
          "run_id, user_id, run_type, description, country, macro_variant, macro_edition, households_variant, households_edition, population_variant," &
          "population_edition, start_year, end_year, data_start_year, data_end_year, weighting_function, weighting_lower_bound, weighting_upper_bound, targets_run_id, targets_run_user_id," &
-         "data_run_id, data_run_user_id, uk_wide_only, selected_clauses " &
+         "data_run_id, data_run_user_id, uk_wide_only, selected_clauses, data_changes, data_ops " &
          " ) values " ;
 
    
@@ -89,7 +89,7 @@ package body Ukds.Target_Data.Run_IO is
    UPDATE_PART : constant String := "update target_data.run set  ";
    function Get_Configured_Insert_Params( update_order : Boolean := False )  return GNATCOLL.SQL.Exec.SQL_Parameters is
    use GNATCOLL.SQL_Impl;
-      params : constant SQL_Parameters( 1 .. 24 ) := ( if update_order then (
+      params : constant SQL_Parameters( 1 .. 26 ) := ( if update_order then (
             1 => ( Parameter_Integer, 0 ),   --  : run_type (Type_Of_Run)
             2 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : description (Unbounded_String)
             3 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : country (Unbounded_String)
@@ -112,8 +112,10 @@ package body Ukds.Target_Data.Run_IO is
            20 => ( Parameter_Integer, 0 ),   --  : data_run_user_id (Integer)
            21 => ( Parameter_Integer, 0 ),   --  : uk_wide_only (Boolean)
            22 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : selected_clauses (Boolean)
-           23 => ( Parameter_Integer, 0 ),   --  : run_id (Integer)
-           24 => ( Parameter_Integer, 0 )   --  : user_id (Integer)
+           23 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : data_changes (AMOUNT)
+           24 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : data_ops (S_Operation_Type)
+           25 => ( Parameter_Integer, 0 ),   --  : run_id (Integer)
+           26 => ( Parameter_Integer, 0 )   --  : user_id (Integer)
       ) else (
             1 => ( Parameter_Integer, 0 ),   --  : run_id (Integer)
             2 => ( Parameter_Integer, 0 ),   --  : user_id (Integer)
@@ -138,7 +140,9 @@ package body Ukds.Target_Data.Run_IO is
            21 => ( Parameter_Integer, 0 ),   --  : data_run_id (Integer)
            22 => ( Parameter_Integer, 0 ),   --  : data_run_user_id (Integer)
            23 => ( Parameter_Integer, 0 ),   --  : uk_wide_only (Boolean)
-           24 => ( Parameter_Text, null, Null_Unbounded_String )   --  : selected_clauses (Boolean)
+           24 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : selected_clauses (Boolean)
+           25 => ( Parameter_Text, null, Null_Unbounded_String ),   --  : data_changes (AMOUNT)
+           26 => ( Parameter_Text, null, Null_Unbounded_String )   --  : data_ops (S_Operation_Type)
       
       ));
    begin
@@ -149,7 +153,7 @@ package body Ukds.Target_Data.Run_IO is
 
    function Get_Prepared_Insert_Statement return gse.Prepared_Statement is 
       ps : gse.Prepared_Statement; 
-      query : constant String := DB_Commons.Add_Schema_To_Query( INSERT_PART, SCHEMA_NAME ) & " ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24 )"; 
+      query : constant String := DB_Commons.Add_Schema_To_Query( INSERT_PART, SCHEMA_NAME ) & " ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26 )"; 
    begin 
       ps := gse.Prepare( query, On_Server => True ); 
       return ps; 
@@ -194,7 +198,7 @@ package body Ukds.Target_Data.Run_IO is
    function Get_Prepared_Update_Statement return gse.Prepared_Statement is 
       ps : gse.Prepared_Statement; 
       
-      query : constant String := DB_Commons.Add_Schema_To_Query( UPDATE_PART, SCHEMA_NAME ) & " run_type = $1, description = $2, country = $3, macro_variant = $4, macro_edition = $5, households_variant = $6, households_edition = $7, population_variant = $8, population_edition = $9, start_year = $10, end_year = $11, data_start_year = $12, data_end_year = $13, weighting_function = $14, weighting_lower_bound = $15, weighting_upper_bound = $16, targets_run_id = $17, targets_run_user_id = $18, data_run_id = $19, data_run_user_id = $20, uk_wide_only = $21, selected_clauses = $22 where run_id = $23 and user_id = $24"; 
+      query : constant String := DB_Commons.Add_Schema_To_Query( UPDATE_PART, SCHEMA_NAME ) & " run_type = $1, description = $2, country = $3, macro_variant = $4, macro_edition = $5, households_variant = $6, households_edition = $7, population_variant = $8, population_edition = $9, start_year = $10, end_year = $11, data_start_year = $12, data_end_year = $13, weighting_function = $14, weighting_lower_bound = $15, weighting_upper_bound = $16, targets_run_id = $17, targets_run_user_id = $18, data_run_id = $19, data_run_user_id = $20, uk_wide_only = $21, selected_clauses = $22, data_changes = $23, data_ops = $24 where run_id = $25 and user_id = $26"; 
    begin 
       ps := gse.Prepare( 
         query, 
@@ -452,6 +456,20 @@ package body Ukds.Target_Data.Run_IO is
             Selected_Clauses_Array_Package.SQL_Map_To_Array( s, a_run.selected_clauses );
          end;
       end if;
+      if not gse.Is_Null( cursor, 24 )then
+         declare
+            s : constant String := gse.Value( cursor, 24 );
+         begin
+            Data_Changes_Array_Package.SQL_Map_To_Array( s, a_run.data_changes );
+         end;
+      end if;
+      if not gse.Is_Null( cursor, 25 )then
+         declare
+            s : constant String := gse.Value( cursor, 25 );
+         begin
+            Data_Ops_Array_Package.SQL_Map_To_Array( s, a_run.data_ops );
+         end;
+      end if;
       return a_run;
    end Map_From_Cursor;
 
@@ -505,6 +523,8 @@ package body Ukds.Target_Data.Run_IO is
       aliased_households_variant : aliased String := To_String( a_run.households_variant );
       aliased_population_variant : aliased String := To_String( a_run.population_variant );
       aliased_selected_clauses : aliased String := Selected_Clauses_Array_Package.Array_To_SQL_String( a_run.selected_clauses );
+      aliased_data_changes : aliased String := Data_Changes_Array_Package.Array_To_SQL_String( a_run.data_changes );
+      aliased_data_ops : aliased String := Data_Ops_Array_Package.Array_To_SQL_String( a_run.data_ops );
    begin
       if( connection = null )then
           local_connection := Connection_Pool.Lease;
@@ -536,8 +556,10 @@ package body Ukds.Target_Data.Run_IO is
       params( 20 ) := "+"( Integer'Pos( a_run.data_run_user_id ));
       params( 21 ) := "+"( Boolean'Pos( a_run.uk_wide_only ));
       params( 22 ) := "+"( aliased_selected_clauses'Access );
-      params( 23 ) := "+"( Integer'Pos( a_run.run_id ));
-      params( 24 ) := "+"( Integer'Pos( a_run.user_id ));
+      params( 23 ) := "+"( aliased_data_changes'Access );
+      params( 24 ) := "+"( aliased_data_ops'Access );
+      params( 25 ) := "+"( Integer'Pos( a_run.run_id ));
+      params( 26 ) := "+"( Integer'Pos( a_run.user_id ));
       
       gse.Execute( local_connection, UPDATE_PS, params );
       Check_Result( local_connection );
@@ -563,6 +585,8 @@ package body Ukds.Target_Data.Run_IO is
       aliased_households_variant : aliased String := To_String( a_run.households_variant );
       aliased_population_variant : aliased String := To_String( a_run.population_variant );
       aliased_selected_clauses : aliased String := Selected_Clauses_Array_Package.Array_To_SQL_String( a_run.selected_clauses );
+      aliased_data_changes : aliased String := Data_Changes_Array_Package.Array_To_SQL_String( a_run.data_changes );
+      aliased_data_ops : aliased String := Data_Ops_Array_Package.Array_To_SQL_String( a_run.data_ops );
    begin
       if( connection = null )then
           local_connection := Connection_Pool.Lease;
@@ -602,6 +626,8 @@ package body Ukds.Target_Data.Run_IO is
       params( 22 ) := "+"( Integer'Pos( a_run.data_run_user_id ));
       params( 23 ) := "+"( Boolean'Pos( a_run.uk_wide_only ));
       params( 24 ) := "+"( aliased_selected_clauses'Access );
+      params( 25 ) := "+"( aliased_data_changes'Access );
+      params( 26 ) := "+"( aliased_data_ops'Access );
       gse.Execute( local_connection, SAVE_PS, params );  
       Check_Result( local_connection );
       if( is_local_connection )then
@@ -885,6 +911,20 @@ package body Ukds.Target_Data.Run_IO is
    end Add_selected_clauses;
 
 
+   procedure Add_data_changes( c : in out d.Criteria; data_changes : Data_Changes_Array; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "data_changes", op, join, Data_Changes_Array_Package.Array_To_SQL_String( data_changes ) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_data_changes;
+
+
+   procedure Add_data_ops( c : in out d.Criteria; data_ops : Data_Ops_Array; op : d.operation_type:= d.eq; join : d.join_type := d.join_and ) is   
+   elem : d.Criterion := d.Make_Criterion_Element( "data_ops", op, join, Data_Ops_Array_Package.Array_To_SQL_String( data_ops ) );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_data_ops;
+
+
    
    --
    -- functions to add an ordering to a criteria
@@ -1055,6 +1095,20 @@ package body Ukds.Target_Data.Run_IO is
    begin
       d.add_to_criteria( c, elem );
    end Add_selected_clauses_To_Orderings;
+
+
+   procedure Add_data_changes_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "data_changes", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_data_changes_To_Orderings;
+
+
+   procedure Add_data_ops_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc ) is   
+   elem : d.Order_By_Element := d.Make_Order_By_Element( "data_ops", direction  );
+   begin
+      d.add_to_criteria( c, elem );
+   end Add_data_ops_To_Orderings;
 
 
 

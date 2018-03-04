@@ -7,7 +7,6 @@ package SCP_Types is
    use Ada.Calendar;
    use Base_Model_Types;
    use Ada.Strings.Unbounded;
-   
    type Countries is (
       SCO_C,
       ENG_C,
@@ -87,7 +86,20 @@ package SCP_Types is
    );
    
    type Abs_Selected_Clauses_Array is array( Candidate_Clauses range <> ) of Boolean;
-   subtype Selected_Clauses_Array is Abs_Selected_Clauses_Array( Candidate_Clauses'Range ); 
+   subtype Selected_Clauses_Array is Abs_Selected_Clauses_Array( Candidate_Clauses'Range );
+   
+   type Abs_Data_Changes_Array is array( Candidate_Clauses range <> ) of Amount;
+   subtype Data_Changes_Array is Abs_Data_Changes_Array( Candidate_Clauses'Range );
+   
+   -- !!!! FFF !!! This is just because I can't quickly hack mill's array
+   -- thing to use enums or chars
+   subtype S_Operation_Type is Integer range 0 .. 2; -- ( noop, add, multiply );
+   NOOP    : constant S_Operation_Type := 0;
+   OP_ADD  : constant S_Operation_Type := 1;
+   OP_MULT : constant S_Operation_Type := 2;
+   
+   type Abs_Data_Ops_Array is array( Candidate_Clauses range <> ) of S_Operation_Type;
+   subtype Data_Ops_Array is Abs_Data_Ops_Array( Candidate_Clauses'Range ); 
 
    type Weights_Index is record
       year   : Year_Number;

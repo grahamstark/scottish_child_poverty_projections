@@ -1340,6 +1340,8 @@ package Ukds.target_data is
       data_run_user_id : Integer := 1;
       uk_wide_only : Boolean := false;
       selected_clauses : Selected_Clauses_Array := ( others => false );
+      data_changes : Data_Changes_Array := ( others => 0.0 );
+      data_ops : Data_Ops_Array := ( others => 0 );
    end record;
    --
    -- container for Run : 
@@ -1375,7 +1377,9 @@ package Ukds.target_data is
          data_run_id => 0,
          data_run_user_id => 1,
          uk_wide_only => false,
-         selected_clauses => ( others => false )
+         selected_clauses => ( others => false ),
+         data_changes => ( others => 0.0 ),
+         data_ops => ( others => 0 )
    );
    --
    -- simple print routine for Run : 

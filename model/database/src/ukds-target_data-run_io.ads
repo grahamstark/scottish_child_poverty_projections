@@ -125,6 +125,8 @@ package Ukds.Target_Data.Run_IO is
    procedure Add_data_run_user_id( c : in out d.Criteria; data_run_user_id : Integer; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_uk_wide_only( c : in out d.Criteria; uk_wide_only : Boolean; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    procedure Add_selected_clauses( c : in out d.Criteria; selected_clauses : Selected_Clauses_Array; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_data_changes( c : in out d.Criteria; data_changes : Data_Changes_Array; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
+   procedure Add_data_ops( c : in out d.Criteria; data_ops : Data_Ops_Array; op : d.operation_type:= d.eq; join : d.join_type := d.join_and );
    --
    -- functions to add an ordering to a criteria
    --
@@ -152,11 +154,13 @@ package Ukds.Target_Data.Run_IO is
    procedure Add_data_run_user_id_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_uk_wide_only_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
    procedure Add_selected_clauses_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_data_changes_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
+   procedure Add_data_ops_To_Orderings( c : in out d.Criteria; direction : d.Asc_Or_Desc );
 
    function Map_From_Cursor( cursor : GNATCOLL.SQL.Exec.Forward_Cursor ) return Ukds.Target_Data.Run;
 
    -- 
-   -- returns an array of GNATColl SQL Parameters indexed 1 .. 24, as follows
+   -- returns an array of GNATColl SQL Parameters indexed 1 .. 26, as follows
    -- Pos  |       Name               | SQL Type           | Ada Type             | Default
    --    1 : run_id                   : Parameter_Integer  : Integer              :        0 
    --    2 : user_id                  : Parameter_Integer  : Integer              :        0 
@@ -182,6 +186,8 @@ package Ukds.Target_Data.Run_IO is
    --   22 : data_run_user_id         : Parameter_Integer  : Integer              :        0 
    --   23 : uk_wide_only             : Parameter_Integer  : Boolean              :        0 
    --   24 : selected_clauses         : Parameter_Text     : Boolean              : null, Null_Unbounded_String 
+   --   25 : data_changes             : Parameter_Text     : AMOUNT               : null, Null_Unbounded_String 
+   --   26 : data_ops                 : Parameter_Text     : S_Operation_Type     : null, Null_Unbounded_String 
    function Get_Configured_Insert_Params( update_order : Boolean := False ) return GNATCOLL.SQL.Exec.SQL_Parameters;
 
 
