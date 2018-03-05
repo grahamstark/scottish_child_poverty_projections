@@ -58,12 +58,21 @@ package body Model.SCP.Weights_Creator is
    procedure Operate( 
       x   : in out Vector;
       pos : Starts_Stops_A;
-      v   : in out Data_Changes_Array;
+      v   : Data_Changes_Array;
       ops : Data_Ops_Array ) is
    begin
       for r in Candidate_Clauses'Range loop
+         Trace( log_trace,  
+            "Operate: clause " & r'Img &
+            " start " &  pos( r ).start'Img & 
+            " stop " & pos( r ).stop'Img );
          if pos( r ).start > 0 then
             for p in pos( r ).start .. pos( r ).stop loop
+               Trace( log_trace,  
+                  "Operate; pos " & p'Img &
+                  " op " & ops( r )'Img & 
+                  " value " & Format( v( r )) & 
+                  " x " & Format( x( p ) ));
                Op( x( p ), v( r ), ops( r )); 
             end loop;
          end if;
@@ -1029,8 +1038,9 @@ package body Model.SCP.Weights_Creator is
                -- typecasting thing .. 
                Fill_One_Row( the_run.selected_clauses, the_run.country, targets, mapped_target_data, dummy, start_stops ); 
                for c in target_populations'Range loop
-                  target_populations( c ) :=  mapped_target_data( c );                 
+                  target_populations( c ) :=  mapped_target_data( c );    
                end loop;
+               Operate( target_populations, start_stops, the_run.data_changes, the_run.data_ops );
                new_totals := Reweighter.Sum_Dataset( observations.all, initial_weights );
                
                Print_Vector( targetsf, year, target_populations );
