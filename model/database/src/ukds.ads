@@ -33,6 +33,8 @@ package Ukds is
    -- === CUSTOM TYPES END ===
 
 
+   package Data_Changes_Array_Package is new Float_Mapper( Index=> Candidate_Clauses, Data_Type=>AMOUNT, Array_Type=> Abs_Data_Changes_Array );
+   package Data_Ops_Array_Package is new Discrete_Mapper( Index=> Candidate_Clauses, Data_Type=>S_Operation_Type, Array_Type=> Abs_Data_Ops_Array );
    package Selected_Clauses_Array_Package is new Boolean_Mapper( Index=> Candidate_Clauses, Array_Type=> Abs_Selected_Clauses_Array );
 
 

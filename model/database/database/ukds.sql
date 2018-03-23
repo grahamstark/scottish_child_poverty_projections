@@ -1,5 +1,5 @@
 --
--- created on 02-01-2018 by Mill
+-- created on 04-03-2018 by Mill
 --
 drop database if exists ukds;
 create database ukds with encoding 'UTF-8';
@@ -88,6 +88,8 @@ CREATE TABLE target_data.run(
        data_run_user_id INTEGER default 1,
        uk_wide_only BOOLEAN default false,
        selected_clauses BOOLEAN[] ,
+       data_changes DOUBLE PRECISION[] ,
+       data_ops INTEGER[] ,
        CONSTRAINT run_pk PRIMARY KEY( run_id, user_id )
 );
 

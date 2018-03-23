@@ -1,7 +1,10 @@
-
 # set terminal svg size 800,600 enhanced butt solid
 # set terminal svg size 800,600 fixed enhanced butt solid
           
+set terminal svg size 800,600 enhanced butt solid
+# set terminal png size 800,600
+         
+
 set style line 1 lt rgb "#ba5050" dt 1
 set style line 2 lt rgb "#8250ba" dt 2
 set style line 3 lt rgb "#5062ba" dt 3
@@ -53,6 +56,7 @@ do for [filename in list ]{
                  filename using 1:8 with lines  ls 7
         # unset output
         unset table
+
         # set output sprintf('../docs/report/images/%s-employment.svg', basename )
         set table sprintf('../docs/report/images/%s-employment.tab', basename )
         # set yrange [0:2800000]
@@ -64,8 +68,10 @@ do for [filename in list ]{
                 filename using 1:11 with lines ls 3
         # unset output
         unset table
+
         # set output sprintf('../docs/report/images/%s-children.svg', basename )
         set table sprintf('../docs/report/images/%s-children.tab', basename )
+
         # set yrange [0:200000]
         set title "Children"
         set ylabel "Population"
@@ -168,7 +174,7 @@ plot \
 unset table;
 
 # set output '../docs/report/images/population-variants.svg'
-set table '../docs/report/images/population-variants.svg'
+set table '../docs/report/images/population-variants.tab'
 # set yrange [500000:6000000]
 set title "Scottish Population, Forecast Variants"
 set ylabel "People"
